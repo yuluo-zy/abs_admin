@@ -3,6 +3,7 @@ import { isSSR } from '@/utils/is';
 import storage from '@/utils/storage';
 
 const defaultTheme = storage.getItem('arco-theme') || 'light';
+
 function changeTheme(newTheme?: 'string') {
   if ((newTheme || defaultTheme) === 'dark') {
     document.body.setAttribute('arco-theme', 'dark');
@@ -21,17 +22,17 @@ export interface GlobalState {
   settings?: typeof defaultSettings;
   userInfo?: {
     name?: string;
-    avatar?: string;
     job?: string;
     organization?: string;
     location?: string;
     email?: string;
   };
+  menu?;
 }
 
 const initialState: GlobalState = {
   theme: defaultTheme,
-  settings: defaultSettings,
+  settings: defaultSettings
 };
 
 export default function store(state = initialState, action) {
@@ -45,14 +46,14 @@ export default function store(state = initialState, action) {
 
       return {
         ...state,
-        theme,
+        theme
       };
     }
     case 'update-settings': {
       const { settings } = action.payload;
       return {
         ...state,
-        settings,
+        settings
       };
     }
     case 'update-userInfo': {
@@ -60,7 +61,14 @@ export default function store(state = initialState, action) {
       return {
         ...state,
         userLoading,
-        userInfo,
+        userInfo
+      };
+    }
+    case 'update-userMenu': {
+      const { menu } = action.payload;
+      return {
+        ...state,
+        menu
       };
     }
     default:

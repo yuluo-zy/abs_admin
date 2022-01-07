@@ -20,6 +20,7 @@ export default function LoginForm() {
   const [rememberPassword, setRememberPassword] = useState(false);
   const t = useLocale();
 
+
   function afterLoginSuccess(result: UserToken) {
     // 记住密码
     if (rememberPassword) {
@@ -86,7 +87,6 @@ export default function LoginForm() {
         >
           <Input
             prefix={<IconUser />}
-            placeholder='用户名：admin'
             onPressEnter={onSubmitClick}
           />
         </Form.Item>

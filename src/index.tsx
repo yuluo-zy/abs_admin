@@ -14,7 +14,7 @@ import Login from './pages/login';
 import checkLogin from './utils/checkLogin';
 import storage from './utils/storage';
 import './mock';
-import { userInfo } from '@/api/user';
+import { userInfo, userMenu } from '@/api/user';
 
 const store = createStore(rootReducer);
 
@@ -42,9 +42,20 @@ function Index() {
     });
   }
 
+  function fetchUserMenu() {
+    userMenu().then((res) => {
+      store.dispatch({
+        type: 'update-userMenu',
+        payload: { userInfo: res.data.result }
+      });
+    });
+  }
+
+
   useEffect(() => {
     if (checkLogin()) {
       fetchUserInfo();
+      fetchUserMenu();
     } else if (window.location.pathname !== '/login') {
       window.location.href = '/login';
     }
