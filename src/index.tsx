@@ -6,8 +6,7 @@ import { Provider } from 'react-redux';
 import { ConfigProvider } from '@arco-design/web-react';
 import zhCN from '@arco-design/web-react/es/locale/zh-CN';
 import enUS from '@arco-design/web-react/es/locale/en-US';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import axios from 'axios';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import rootReducer from './store';
 import PageLayout from './layout';
 import { GlobalContext } from './context';
@@ -15,11 +14,12 @@ import Login from './pages/login';
 import checkLogin from './utils/checkLogin';
 import storage from './utils/storage';
 import './mock';
+import { userInfo } from '@/api/user';
 
 const store = createStore(rootReducer);
 
 function Index() {
-  const defaultLang = storage.getItem('arco-lang') || 'en-US';
+  const defaultLang = storage.getItem('arco-lang') || 'zh-CN';
   const [lang, setLang] = useState(defaultLang);
 
   function getArcoLocale() {
@@ -34,10 +34,10 @@ function Index() {
   }
 
   function fetchUserInfo() {
-    axios.get('/api/user/userInfo').then((res) => {
+    userInfo().then((res) => {
       store.dispatch({
         type: 'update-userInfo',
-        payload: { userInfo: res.data },
+        payload: { userInfo: res.data.result }
       });
     });
   }
@@ -56,7 +56,7 @@ function Index() {
 
   const contextValue = {
     lang,
-    setLang,
+    setLang
   };
 
   return (
@@ -65,21 +65,21 @@ function Index() {
         locale={getArcoLocale()}
         componentConfig={{
           Card: {
-            bordered: false,
+            bordered: false
           },
           List: {
-            bordered: false,
+            bordered: false
           },
           Table: {
-            border: false,
-          },
+            border: false
+          }
         }}
       >
         <Provider store={store}>
           <GlobalContext.Provider value={contextValue}>
             <Switch>
-              <Route path="/login" component={Login} />
-              <Route path="/" component={PageLayout} />
+              <Route path='/login' component={Login} />
+              <Route path='/' component={PageLayout} />
             </Switch>
           </GlobalContext.Provider>
         </Provider>

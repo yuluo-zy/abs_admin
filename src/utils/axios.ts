@@ -1,45 +1,29 @@
 import axios from 'axios';
-import { Notification } from '@arco-design/web-react';
 
 axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '/api' : '/api';
-axios.defaults.headers['Content-Type'] = 'application/json';
-axios.defaults.timeout = 1000;
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.timeout = 30000;
 
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem('userToken');
+  // eslint-disable-next-line no-console
+  console.log(token);
   token && (config.headers['Access-Token'] = `${token}`);
   config.data = JSON.stringify(config.data);
   return config;
 }, (error) => {
-  Notification.error({ title: 'Error', content: 'system error!' });
+  // 对请求错误做些什么
   Promise.reject(error);
 });
 
 axios.interceptors.response.use(res => {
-  if (res.status && res.status == 200 && res.data.success === false) {
-    Notification.error({ title: 'Error', content: res.data.message });
-    return;
-  }
-  return res;
-}, err => {
   // eslint-disable-next-line no-console
-  console.log(err);
-  if (err.response.status == 504 || err.response.status == 404) {
-    Notification.error({ content: '服务器被吃了⊙﹏⊙∥' });
-  } else if (err.response.status == 403) {
-    Notification.error({ content: '权限不足,请联系管理员!' });
-  } else if (err.response.status == 401) {
-    Notification.error({ content: '登录过期请 重新登录!' });
-    localStorage.setItem('userToken', null);
-    localStorage.setItem('userStatus', null);
-    window.setTimeout(() => {
-      window.location.href = '/login';
-    }, 3000);
-
-  } else {
-    Notification.error({ content: 'system error!' });
-  }
-  return Promise.reject(err);
+  console.log(res);
+  return res;
+}, error => {
+  // eslint-disable-next-line no-console
+  console.log(error);
+  return Promise.reject(error);
 });
 const Axios = ({
                  method,
@@ -58,7 +42,9 @@ const Axios = ({
   }
 
   if (method === 'delete') {
-    return axios.delete(url, { data });
+    return axios.delete(url, {
+      params: data
+    });
   }
 
   if (method === 'put') {

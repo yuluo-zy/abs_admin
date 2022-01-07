@@ -6,6 +6,7 @@ if (!isSSR) {
   Mock.XHR.prototype.withCredentials = true;
 
   setupMock({
+    mock: false,
     setup: () => {
       // 用户信息
       Mock.mock(new RegExp('/api/user/userInfo'), () => {
@@ -25,7 +26,7 @@ if (!isSSR) {
           verified: Mock.Random.boolean(),
           phoneNumber: /177[*]{6}[0-9]{2}/,
           accountId: /[a-z]{4}[-][0-9]{8}/,
-          registrationTime: Mock.Random.datetime('yyyy-MM-dd HH:mm:ss'),
+          registrationTime: Mock.Random.datetime('yyyy-MM-dd HH:mm:ss')
         });
       });
 
@@ -35,25 +36,25 @@ if (!isSSR) {
         if (!userName) {
           return {
             status: 'error',
-            msg: '用户名不能为空',
+            msg: '用户名不能为空'
           };
         }
         if (!password) {
           return {
             status: 'error',
-            msg: '密码不能为空',
+            msg: '密码不能为空'
           };
         }
         if (userName === 'admin' && password === 'admin') {
           return {
-            status: 'ok',
+            status: 'ok'
           };
         }
         return {
           status: 'error',
-          msg: '账号或者密码错误',
+          msg: '账号或者密码错误'
         };
       });
-    },
+    }
   });
 }
