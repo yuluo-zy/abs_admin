@@ -167,7 +167,7 @@ function CardList() {
   const getData = async () => {
     const requestList = cardInfo.map(async (info) => {
       const { data } = await axios
-        .get(`/api/multi-dimension/card?type=${info.type}`)
+        .get(`/api/muti-dimension/card?type=${info.type}`)
         .catch(() => ({ data: {} }));
       return {
         ...data,

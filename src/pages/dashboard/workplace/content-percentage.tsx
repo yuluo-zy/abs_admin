@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Spin, Typography } from '@arco-design/web-react';
+import { Card, Spin } from '@arco-design/web-react';
 import { DonutChart } from 'bizcharts';
 import axios from 'axios';
-import useLocale from '@/utils/useLocale';
-import locale from './locale';
+import useLocale from './locale/useLocale';
 
 function PopularContent() {
-  const t = useLocale(locale);
+  const t = useLocale();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -27,10 +26,10 @@ function PopularContent() {
   }, []);
 
   return (
-    <Card>
-      <Typography.Title heading={6}>
-        {t['workplace.contentPercentage']}
-      </Typography.Title>
+    <Card
+      title={t['workplace.contentPercentage']}
+      headerStyle={{ borderBottom: 0 }}
+    >
       <Spin loading={loading} style={{ display: 'block' }}>
         <DonutChart
           autoFit

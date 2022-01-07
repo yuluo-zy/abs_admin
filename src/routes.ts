@@ -1,16 +1,6 @@
-import auth, { AuthParams } from '@/utils/authentication';
-import { useEffect, useMemo, useState } from 'react';
-
-export type Route = AuthParams & {
-  name: string;
-  key: string;
-  breadcrumb?: boolean;
-  children?: Route[];
-};
-
 export const defaultRoute = 'dashboard/workplace';
 
-export const routes: Route[] = [
+export const routes = [
   {
     name: 'menu.dashboard',
     key: 'dashboard',
@@ -22,9 +12,6 @@ export const routes: Route[] = [
       {
         name: 'menu.dashboard.monitor',
         key: 'dashboard/monitor',
-        requiredPermissions: [
-          { resource: 'menu.dashboard.monitor', actions: ['write'] },
-        ],
       },
     ],
   },
@@ -35,24 +22,10 @@ export const routes: Route[] = [
       {
         name: 'menu.visualization.dataAnalysis',
         key: 'visualization/data-analysis',
-        requiredPermissions: [
-          { resource: 'menu.visualization.dataAnalysis', actions: ['read'] },
-        ],
       },
       {
         name: 'menu.visualization.multiDimensionDataAnalysis',
         key: 'visualization/multi-dimension-data-analysis',
-        requiredPermissions: [
-          {
-            resource: 'menu.visualization.dataAnalysis',
-            actions: ['read', 'write'],
-          },
-          {
-            resource: 'menu.visualization.multiDimensionDataAnalysis',
-            actions: ['write'],
-          },
-        ],
-        oneOfPerm: true,
       },
     ],
   },
@@ -77,16 +50,10 @@ export const routes: Route[] = [
       {
         name: 'menu.form.group',
         key: 'form/group',
-        requiredPermissions: [
-          { resource: 'menu.form.group', actions: ['read', 'write'] },
-        ],
       },
       {
         name: 'menu.form.step',
         key: 'form/step',
-        requiredPermissions: [
-          { resource: 'menu.form.step', actions: ['read'] },
-        ],
       },
     ],
   },
@@ -147,28 +114,6 @@ export const routes: Route[] = [
         name: 'menu.user.setting',
         key: 'user/setting',
       },
-      {
-        name: 'menu.user.manage',
-        key: 'user/manage',
-      },
-      {
-        name: 'menu.user.role',
-        key: 'user/role',
-      },
-      {
-        name: 'menu.user.permission',
-        key: 'user/permission',
-      },
-    ],
-  },
-  {
-    name: 'product.management',
-    key: 'product',
-    children: [
-      {
-        name: 'product.management.add',
-        key: 'product/demand',
-      },
     ],
   },
 ];
@@ -183,65 +128,3 @@ export const getName = (path: string, routes) => {
     }
   });
 };
-
-export const generatePermission = (role: string) => {
-  const actions = role === 'admin' ? ['*'] : ['read'];
-  const result = {};
-  routes.forEach((item) => {
-    if (item.children) {
-      item.children.forEach((child) => {
-        result[child.name] = actions;
-      });
-    }
-  });
-  return result;
-};
-
-const useRoute = (userPermission): [Route[], string] => {
-  const filterRoute = (routes: Route[], arr = []): Route[] => {
-    if (!routes.length) {
-      return [];
-    }
-    for (const route of routes) {
-      const { requiredPermissions, oneOfPerm } = route;
-      let visible = true;
-      if (requiredPermissions) {
-        visible = auth({ requiredPermissions, oneOfPerm }, userPermission);
-      }
-
-      if (!visible) {
-        continue;
-      }
-      if (route.children && route.children.length) {
-        const newRoute = { ...route, children: [] };
-        filterRoute(route.children, newRoute.children);
-        if (newRoute.children.length) {
-          arr.push(newRoute);
-        }
-      } else {
-        arr.push({ ...route });
-      }
-    }
-
-    return arr;
-  };
-
-  const [permissionRoute, setPermissionRoute] = useState(routes);
-
-  useEffect(() => {
-    const newRoutes = filterRoute(routes);
-    setPermissionRoute(newRoutes);
-  }, [userPermission]);
-
-  const defaultRoute = useMemo(() => {
-    const first = permissionRoute[0];
-    if (first) {
-      return first?.children?.[0]?.key || first.key;
-    }
-    return '';
-  }, [permissionRoute]);
-
-  return [permissionRoute, defaultRoute];
-};
-
-export default useRoute;

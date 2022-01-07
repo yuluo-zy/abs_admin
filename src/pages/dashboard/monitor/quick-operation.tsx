@@ -6,13 +6,12 @@ import {
   IconSwap,
   IconTags,
 } from '@arco-design/web-react/icon';
-import useLocale from '@/utils/useLocale';
-import locale from './locale';
+import useLocale from './locale/useLocale';
 
 export default function QuickOperation() {
-  const t = useLocale(locale);
+  const t = useLocale();
   return (
-    <Card>
+    <Card bordered={false}>
       <Typography.Title style={{ marginTop: 0, marginBottom: 16 }} heading={6}>
         {t['monitor.title.quickOperation']}
       </Typography.Title>

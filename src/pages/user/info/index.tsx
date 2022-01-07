@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import {
   Typography,
   Grid,
-  Link,
+  Button,
   Result,
   Skeleton,
 } from '@arco-design/web-react';
@@ -43,20 +43,19 @@ function UserInfo() {
         <Col span={16}>
           <Card className={styles.wrapper}>
             <div className={styles['card-title-wrapper']}>
-              <Title heading={6} style={{ marginBottom: '20px' }}>
-                {t['userInfo.title.project']}
-              </Title>
-              <Link>{t['userInfo.btn.more']}</Link>
+              <Title heading={6}>{t['userInfo.title.project']}</Title>
+              <Button type="text">{t['userInfo.btn.more']}</Button>
             </div>
             <MyProject />
           </Card>
         </Col>
         <Col span={8}>
           <Card className={styles.wrapper}>
-            <div className={styles['card-title-wrapper']}>
-              <Title heading={6} style={{ marginBottom: '12px' }}>
-                {t['userInfo.title.team']}
-              </Title>
+            <div
+              className={styles['card-title-wrapper']}
+              style={{ marginBottom: '5px' }}
+            >
+              <Title heading={6}>{t['userInfo.title.team']}</Title>
             </div>
             <MyTeam />
           </Card>
@@ -66,10 +65,8 @@ function UserInfo() {
         <Col span={16}>
           <Card className={styles.wrapper}>
             <div className={styles['card-title-wrapper']}>
-              <Title heading={6} style={{ marginBottom: '8px' }}>
-                {t['userInfo.title.news']}
-              </Title>
-              <Link>{t['userInfo.btn.all']}</Link>
+              <Title heading={6}>{t['userInfo.title.news']}</Title>
+              <Button type="text">{t['userInfo.btn.all']}</Button>
             </div>
             <LatestNews />
           </Card>

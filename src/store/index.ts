@@ -1,6 +1,23 @@
 import defaultSettings from '../settings.json';
+import { isSSR } from '@/utils/is';
+import storage from '@/utils/storage';
+
+const defaultTheme = storage.getItem('arco-theme') || 'light';
+function changeTheme(newTheme?: 'string') {
+  if ((newTheme || defaultTheme) === 'dark') {
+    document.body.setAttribute('arco-theme', 'dark');
+  } else {
+    document.body.removeAttribute('arco-theme');
+  }
+}
+
+// init page theme
+if (!isSSR) {
+  changeTheme();
+}
 
 export interface GlobalState {
+  theme?: string;
   settings?: typeof defaultSettings;
   userInfo?: {
     name?: string;
@@ -9,20 +26,28 @@ export interface GlobalState {
     organization?: string;
     location?: string;
     email?: string;
-    permissions: Record<string, string[]>;
   };
-  menu?;
 }
 
 const initialState: GlobalState = {
+  theme: defaultTheme,
   settings: defaultSettings,
-  userInfo: {
-    permissions: {},
-  },
 };
 
 export default function store(state = initialState, action) {
   switch (action.type) {
+    case 'toggle-theme': {
+      const { theme } = action.payload;
+      if (theme === 'light' || theme === 'dark') {
+        localStorage.setItem('arco-theme', theme);
+        changeTheme(theme);
+      }
+
+      return {
+        ...state,
+        theme,
+      };
+    }
     case 'update-settings': {
       const { settings } = action.payload;
       return {
@@ -31,18 +56,11 @@ export default function store(state = initialState, action) {
       };
     }
     case 'update-userInfo': {
-      const { userInfo = initialState.userInfo, userLoading } = action.payload;
+      const { userInfo = {}, userLoading } = action.payload;
       return {
         ...state,
         userLoading,
         userInfo,
-      };
-    }
-    case 'update-userMenu': {
-      const { menu } = action.payload;
-      return {
-        ...state,
-        menu,
       };
     }
     default:

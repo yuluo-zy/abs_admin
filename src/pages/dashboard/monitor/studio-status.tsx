@@ -6,11 +6,10 @@ import {
   Space,
   Descriptions,
 } from '@arco-design/web-react';
-import useLocale from '@/utils/useLocale';
-import locale from './locale';
+import useLocale from './locale/useLocale';
 
 export default function StudioStatus() {
-  const t = useLocale(locale);
+  const t = useLocale();
   const dataStatus = [
     {
       label: (
@@ -78,7 +77,7 @@ export default function StudioStatus() {
   ];
 
   return (
-    <Card>
+    <Card bordered={false}>
       <Space align="start">
         <Typography.Title
           style={{ marginTop: 0, marginBottom: 16 }}

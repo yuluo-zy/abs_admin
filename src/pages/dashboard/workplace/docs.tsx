@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link, Card, Typography } from '@arco-design/web-react';
-import useLocale from '@/utils/useLocale';
-import locale from './locale';
+import { Link, Card } from '@arco-design/web-react';
+import useLocale from './locale/useLocale';
 import styles from './style/docs.module.less';
 
 const links = {
@@ -11,14 +10,14 @@ const links = {
   materialMarket: 'https://arco.design/material/',
 };
 function QuickOperation() {
-  const t = useLocale(locale);
+  const t = useLocale();
 
   return (
-    <Card>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography.Title heading={6}>{t['workplace.docs']}</Typography.Title>
-        <Link>{t['workplace.seeMore']}</Link>
-      </div>
+    <Card
+      title={t['workplace.docs']}
+      extra={<Link>{t['workplace.seeMore']}</Link>}
+      headerStyle={{ borderBottom: 0 }}
+    >
       <div className={styles.docs}>
         {Object.entries(links).map(([key, value]) => (
           <Link className={styles.link} key={key} href={value} target="_blank">

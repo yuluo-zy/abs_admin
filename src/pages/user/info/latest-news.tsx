@@ -30,7 +30,7 @@ function LatestNews() {
       dataSource={data}
       render={(item, index) => {
         return (
-          <List.Item key={index} style={{ padding: '24px 20px 24px 0px' }}>
+          <List.Item key={index} style={{ padding: '24px 20px' }}>
             {loading ? (
               <Skeleton
                 animation

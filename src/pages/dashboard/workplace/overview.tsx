@@ -1,7 +1,6 @@
 import React, { useState, useEffect, ReactNode } from 'react';
 import {
   Grid,
-  Card,
   Typography,
   Divider,
   Skeleton,
@@ -11,8 +10,7 @@ import { useSelector } from 'react-redux';
 import { IconCaretUp } from '@arco-design/web-react/icon';
 import OverviewAreaLine from '@/components/Chart/overview-area-line';
 import axios from 'axios';
-import locale from './locale';
-import useLocale from '@/utils/useLocale';
+import useLocale from './locale/useLocale';
 import styles from './style/overview.module.less';
 import IconCalendar from './assets/calendar.svg';
 import IconComments from './assets/comments.svg';
@@ -59,7 +57,7 @@ type DataType = {
 function Overview() {
   const [data, setData] = useState<DataType>({});
   const [loading, setLoading] = useState(true);
-  const t = useLocale(locale);
+  const t = useLocale();
 
   const userInfo = useSelector((state: any) => state.userInfo || {});
 
@@ -80,8 +78,8 @@ function Overview() {
   }, []);
 
   return (
-    <Card>
-      <Typography.Title heading={5}>
+    <div className={styles.container}>
+      <Typography.Title heading={5} style={{ marginTop: 0 }}>
         {t['workplace.welcomeBack']}
         {userInfo.name}
       </Typography.Title>
@@ -149,7 +147,7 @@ function Overview() {
         </div>
         <OverviewAreaLine data={data.chartData} loading={loading} />
       </div>
-    </Card>
+    </div>
   );
 }
 

@@ -13,7 +13,6 @@ function AddCard(props: AddCardProps) {
       className={cs(styles['card-block'], styles['add-card'])}
       title={null}
       bordered={true}
-      size="small"
     >
       <div className={styles.content}>
         <div className={styles['add-icon']}>

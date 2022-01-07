@@ -9,12 +9,7 @@ import ColorPanel from './color';
 import IconButton from '../NavBar/IconButton';
 import useLocale from '@/utils/useLocale';
 
-interface SettingProps {
-  trigger?: React.ReactElement;
-}
-
-function Setting(props: SettingProps) {
-  const { trigger } = props;
+function Setting() {
   const [visible, setVisible] = useState(false);
   const locale = useLocale();
   const settings = useSelector((state: GlobalState) => state.settings);
@@ -25,14 +20,8 @@ function Setting(props: SettingProps) {
   }
 
   return (
-    <>
-      {trigger ? (
-        React.cloneElement(trigger as React.ReactElement, {
-          onClick: () => setVisible(true),
-        })
-      ) : (
-        <IconButton icon={<IconSettings />} onClick={() => setVisible(true)} />
-      )}
+    <li>
+      <IconButton icon={<IconSettings />} onClick={() => setVisible(true)} />
       <Drawer
         width={300}
         title={
@@ -65,7 +54,7 @@ function Setting(props: SettingProps) {
         />
         <Alert content={locale['settings.alertContent']} />
       </Drawer>
-    </>
+    </li>
   );
 }
 

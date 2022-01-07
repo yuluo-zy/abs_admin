@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Space } from '@arco-design/web-react';
+import { Grid } from '@arco-design/web-react';
 import Overview from './overview';
 import PopularContents from './popular-contents';
 import ContentPercentage from './content-percentage';
@@ -16,25 +16,39 @@ const gutter = 16;
 
 function Workplace() {
   return (
-    <Space size={16} align="start">
-      <Space size={16} direction="vertical">
-        <Overview />
-        <Row gutter={gutter}>
-          <Col span={12}>
+    <div className={styles.container}>
+      <div className={styles.left}>
+        <div className={styles.panel}>
+          <Overview />
+        </div>
+        <Row style={{ marginTop: gutter }}>
+          <Col
+            flex={1}
+            className={styles.panel}
+            style={{ marginRight: gutter }}
+          >
             <PopularContents />
           </Col>
-          <Col span={12}>
+          <Col flex={1} className={styles.panel}>
             <ContentPercentage />
           </Col>
         </Row>
-      </Space>
-      <Space className={styles.right} size={16} direction="vertical">
-        <Shortcuts />
-        <Carousel />
-        <Announcement />
-        <Docs />
-      </Space>
-    </Space>
+      </div>
+      <div className={styles.right}>
+        <div className={styles.panel}>
+          <Shortcuts />
+        </div>
+        <div className={styles.panel} style={{ marginTop: gutter }}>
+          <Carousel />
+        </div>
+        <div className={styles.panel} style={{ marginTop: gutter }}>
+          <Announcement />
+        </div>
+        <div className={styles.panel} style={{ marginTop: gutter }}>
+          <Docs />
+        </div>
+      </div>
+    </div>
   );
 }
 

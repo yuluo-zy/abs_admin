@@ -9,13 +9,12 @@ import {
 } from '@arco-design/web-react';
 import { IconDownload, IconFaceSmileFill } from '@arco-design/web-react/icon';
 import axios from 'axios';
-import useLocale from '@/utils/useLocale';
-import locale from './locale';
+import useLocale from './locale/useLocale';
 import MessageList from './message-list';
 import styles from './style/index.module.less';
 
 export default function ChatPanel() {
-  const t = useLocale(locale);
+  const t = useLocale();
   const [messageList, setMessageList] = useState([]);
   const [loading, setLoading] = useState(false);
 

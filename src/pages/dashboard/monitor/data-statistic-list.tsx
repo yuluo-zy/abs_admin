@@ -1,11 +1,10 @@
 import { Table, Tag, Typography } from '@arco-design/web-react';
 import React from 'react';
-import useLocale from '@/utils/useLocale';
-import locale from './locale';
+import useLocale from './locale/useLocale';
 import styles from './style/index.module.less';
 
 export default function QuickOperation() {
-  const t = useLocale(locale);
+  const t = useLocale();
   const columns = [
     {
       title: t['monitor.list.title.order'],

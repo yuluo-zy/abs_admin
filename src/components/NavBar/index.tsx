@@ -1,30 +1,27 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import {
-  Avatar,
-  Button,
-  Divider,
-  Dropdown,
-  Input,
-  Menu,
-  Message,
-  Notification,
-  Select,
   Tooltip,
+  Input,
+  Avatar,
+  Select,
+  Dropdown,
+  Menu,
+  Divider,
+  Message,
 } from '@arco-design/web-react';
 import {
-  IconDashboard,
-  IconExperiment,
-  IconInteraction,
   IconLanguage,
-  IconMoonFill,
   IconNotification,
-  IconPoweroff,
-  IconSettings,
   IconSunFill,
-  IconTag,
+  IconMoonFill,
   IconUser,
+  IconSettings,
+  IconPoweroff,
+  IconExperiment,
+  IconDashboard,
+  IconInteraction,
 } from '@arco-design/web-react/icon';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { GlobalState } from '@/store';
 import { GlobalContext } from '@/context';
 import useLocale from '@/utils/useLocale';
@@ -32,39 +29,22 @@ import Logo from '@/assets/logo.svg';
 import MessageBox from '@/components/MessageBox';
 import IconButton from './IconButton';
 import Settings from '../Settings';
+import storage from '@/utils/storage';
 import styles from './style/index.module.less';
 import defaultLocale from '@/locale';
-import useStorage from '@/utils/useStorage';
-import { generatePermission } from '@/routes';
-import { loginOut } from '@/api/login';
+import { defaultRoute } from '@/routes';
 
-function Navbar({ show }: { show: boolean }) {
+function Navbar() {
   const t = useLocale();
+  const theme = useSelector((state: GlobalState) => state.theme);
   const userInfo = useSelector((state: GlobalState) => state.userInfo);
   const dispatch = useDispatch();
 
-  const [_, setUserStatus] = useStorage('userStatus');
-  const [role, setRole] = useStorage('userRole', 'admin');
-
-  const get_avatar = (user_name: string): string => {
-    const user_url = encodeURI(user_name);
-    return `https://avatars.dicebear.com/v2/human/${user_url}.svg?options[mood][]=happy`;
-  };
-
-  const { setLang, lang, theme, setTheme } = useContext(GlobalContext);
+  const { setLang } = useContext(GlobalContext);
 
   function logout() {
-    setUserStatus('logout');
+    storage.setItem('userStatus', 'logout');
     window.location.href = '/login';
-    loginOut().then((r) => {
-      const { success } = r.data;
-      if (success === true) {
-        Notification.success({
-          title: 'Success',
-          content: t['menu.user.setting.login.out'],
-        });
-      }
-    });
   }
 
   function onMenuItemClick(key) {
@@ -75,55 +55,12 @@ function Navbar({ show }: { show: boolean }) {
     }
   }
 
-  useEffect(() => {
-    dispatch({
-      type: 'update-userInfo',
-      payload: {
-        userInfo: {
-          ...userInfo,
-          permissions: generatePermission(role),
-        },
-      },
-    });
-  }, [role]);
-
-  if (!show) {
-    return (
-      <div className={styles['fixed-settings']}>
-        <Settings
-          trigger={
-            <Button icon={<IconSettings />} type="primary" size="large" />
-          }
-        />
-      </div>
-    );
-  }
-
-  const handleChangeRole = () => {
-    const newRole = role === 'admin' ? 'user' : 'admin';
-    setRole(newRole);
-  };
-
   const droplist = (
     <Menu onClickMenuItem={onMenuItemClick}>
-      <Menu.SubMenu
-        key="role"
-        title={
-          <>
-            <IconUser className={styles['dropdown-icon']} />
-            <span className={styles['user-role']}>
-              {role === 'admin'
-                ? t['menu.user.role.admin']
-                : t['menu.user.role.user']}
-            </span>
-          </>
-        }
-      >
-        <Menu.Item onClick={handleChangeRole} key="switch role">
-          <IconTag className={styles['dropdown-icon']} />
-          {t['menu.user.switchRoles']}
-        </Menu.Item>
-      </Menu.SubMenu>
+      <Menu.Item key="user info">
+        <IconUser className={styles['dropdown-icon']} />
+        {t['menu.user.info']}
+      </Menu.Item>
       <Menu.Item key="setting">
         <IconSettings className={styles['dropdown-icon']} />
         {t['menu.user.setting']}
@@ -146,7 +83,6 @@ function Navbar({ show }: { show: boolean }) {
           {t['menu.list.cardList']}
         </Menu.Item>
       </Menu.SubMenu>
-
       <Divider style={{ margin: '4px 0' }} />
       <Menu.Item key="logout">
         <IconPoweroff className={styles['dropdown-icon']} />
@@ -160,17 +96,12 @@ function Navbar({ show }: { show: boolean }) {
       <div className={styles.left}>
         <div className={styles.logo}>
           <Logo />
-          <div className={styles['logo-name']}>
-            ESPRESSIF Custom Manufacturing Service
-          </div>
+          <div className={styles['logo-name']}>Arco Pro</div>
         </div>
       </div>
       <ul className={styles.right}>
         <li>
-          <Input.Search
-            className={styles.round}
-            placeholder={t['navbar.search.placeholder']}
-          />
+          <Input.Search className={styles.round} placeholder="Please search" />
         </li>
         <li>
           <Select
@@ -179,7 +110,7 @@ function Navbar({ show }: { show: boolean }) {
               { label: '中文', value: 'zh-CN' },
               { label: 'English', value: 'en-US' },
             ]}
-            value={lang}
+            value={storage.getItem('arco-lang')}
             triggerProps={{
               autoAlignPopupWidth: false,
               autoAlignPopupMinWidth: true,
@@ -187,6 +118,7 @@ function Navbar({ show }: { show: boolean }) {
             }}
             trigger="hover"
             onChange={(value) => {
+              storage.setItem('arco-lang', value);
               setLang(value);
               const nextLang = defaultLocale[value];
               Message.info(`${nextLang['message.lang.tips']}${value}`);
@@ -207,8 +139,13 @@ function Navbar({ show }: { show: boolean }) {
             }
           >
             <IconButton
-              icon={theme !== 'dark' ? <IconMoonFill /> : <IconSunFill />}
-              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+              icon={theme === 'light' ? <IconMoonFill /> : <IconSunFill />}
+              onClick={() =>
+                dispatch({
+                  type: 'toggle-theme',
+                  payload: { theme: theme === 'light' ? 'dark' : 'light' },
+                })
+              }
             />
           </Tooltip>
         </li>
@@ -217,7 +154,7 @@ function Navbar({ show }: { show: boolean }) {
           <li>
             <Dropdown droplist={droplist} position="br">
               <Avatar size={32} style={{ cursor: 'pointer' }}>
-                <img src={get_avatar(userInfo.name)} alt={userInfo.name} />
+                <img alt="avatar" src={userInfo.avatar} />
               </Avatar>
             </Dropdown>
           </li>

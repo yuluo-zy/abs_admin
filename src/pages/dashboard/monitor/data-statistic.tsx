@@ -1,22 +1,21 @@
 import { Button, Card, Radio, Tabs } from '@arco-design/web-react';
 import React from 'react';
-import useLocale from '@/utils/useLocale';
-import locale from './locale';
+import useLocale from './locale/useLocale';
 import DataStatisticList from './data-statistic-list';
 import styles from './style/index.module.less';
 
 export default function DataStatistic() {
-  const t = useLocale(locale);
+  const t = useLocale();
   return (
-    <Card>
+    <Card bordered={false}>
       <Tabs defaultActiveTab="liveMethod">
         <Tabs.TabPane
           key="liveMethod"
           title={t['monitor.tab.title.liveMethod']}
         />
         <Tabs.TabPane
-          key="onlineUsers"
-          title={t['monitor.tab.title.onlineUsers']}
+          key="virtualPopulation"
+          title={t['monitor.tab.title.virtualPopulation']}
         />
       </Tabs>
       <div className={styles['data-statistic-content']}>
