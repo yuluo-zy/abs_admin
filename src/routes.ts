@@ -1,19 +1,26 @@
 export const defaultRoute = 'dashboard/workplace';
 
-export const routes = [
+export interface Menu {
+  name: string,
+  key: string,
+  children?: Array<Menu>,
+  breadcrumb?: boolean
+}
+
+export const routes: Array<Menu> = [
   {
     name: 'menu.dashboard',
     key: 'dashboard',
     children: [
       {
         name: 'menu.dashboard.workplace',
-        key: 'dashboard/workplace',
+        key: 'dashboard/workplace'
       },
       {
         name: 'menu.dashboard.monitor',
-        key: 'dashboard/monitor',
-      },
-    ],
+        key: 'dashboard/monitor'
+      }
+    ]
   },
   {
     name: 'menu.visualization',
@@ -21,13 +28,13 @@ export const routes = [
     children: [
       {
         name: 'menu.visualization.dataAnalysis',
-        key: 'visualization/data-analysis',
+        key: 'visualization/data-analysis'
       },
       {
         name: 'menu.visualization.multiDimensionDataAnalysis',
-        key: 'visualization/multi-dimension-data-analysis',
-      },
-    ],
+        key: 'visualization/multi-dimension-data-analysis'
+      }
+    ]
   },
   {
     name: 'menu.list',
@@ -35,13 +42,13 @@ export const routes = [
     children: [
       {
         name: 'menu.list.searchTable',
-        key: 'list/search-table',
+        key: 'list/search-table'
       },
       {
         name: 'menu.list.cardList',
-        key: 'list/card',
-      },
-    ],
+        key: 'list/card'
+      }
+    ]
   },
   {
     name: 'menu.form',
@@ -49,13 +56,13 @@ export const routes = [
     children: [
       {
         name: 'menu.form.group',
-        key: 'form/group',
+        key: 'form/group'
       },
       {
         name: 'menu.form.step',
-        key: 'form/step',
-      },
-    ],
+        key: 'form/step'
+      }
+    ]
   },
   {
     name: 'menu.profile',
@@ -63,9 +70,9 @@ export const routes = [
     children: [
       {
         name: 'menu.profile.basic',
-        key: 'profile/basic',
-      },
-    ],
+        key: 'profile/basic'
+      }
+    ]
   },
 
   {
@@ -75,14 +82,14 @@ export const routes = [
       {
         name: 'menu.result.success',
         key: 'result/success',
-        breadcrumb: false,
+        breadcrumb: false
       },
       {
         name: 'menu.result.error',
         key: 'result/error',
-        breadcrumb: false,
-      },
-    ],
+        breadcrumb: false
+      }
+    ]
   },
   {
     name: 'menu.exception',
@@ -90,17 +97,17 @@ export const routes = [
     children: [
       {
         name: 'menu.exception.403',
-        key: 'exception/403',
+        key: 'exception/403'
       },
       {
         name: 'menu.exception.404',
-        key: 'exception/404',
+        key: 'exception/404'
       },
       {
         name: 'menu.exception.500',
-        key: 'exception/500',
-      },
-    ],
+        key: 'exception/500'
+      }
+    ]
   },
   {
     name: 'menu.user',
@@ -108,14 +115,26 @@ export const routes = [
     children: [
       {
         name: 'menu.user.info',
-        key: 'user/info',
+        key: 'user/info'
       },
       {
         name: 'menu.user.setting',
-        key: 'user/setting',
+        key: 'user/setting'
       },
-    ],
-  },
+      {
+        name: 'menu.user.manage',
+        key: 'user/manage'
+      }
+      // {
+      //   name: 'menu.user.role',
+      //   key: 'user/role'
+      // },
+      // {
+      //   name: 'menu.user.permission',
+      //   key: 'user/permission'
+      // }
+    ]
+  }
 ];
 
 export const getName = (path: string, routes) => {

@@ -52,7 +52,7 @@ const i18n = {
     'message.seeMore': 'SeeMore',
     'message.empty': 'Empty',
     'message.empty.tips': 'No Content',
-    'message.lang.tips': 'Language switch to ',
+    'message.lang.tips': 'Language switch to '
   },
   'zh-CN': {
     'menu.dashboard': '仪表盘',
@@ -62,7 +62,7 @@ const i18n = {
     'menu.form': '表单页',
     'menu.profile': '详情页',
     'menu.visualization': '数据可视化',
-    'menu.user': '个人中心',
+    'menu.user': '账户中心',
     'menu.exception.403': '403',
     'menu.exception.404': '404',
     'menu.exception.500': '500',
@@ -78,6 +78,9 @@ const i18n = {
     'menu.result.success': '成功页',
     'menu.user.info': '用户信息',
     'menu.user.setting': '用户设置',
+    'menu.user.manage': '用户管理',
+    'menu.user.role': '角色管理',
+    'menu.user.permission': '权限管理',
     'menu.dashboard.workplace': '工作台',
     'navbar.logout': '退出登录',
     'settings.title': '页面配置',
@@ -106,8 +109,8 @@ const i18n = {
     'message.seeMore': '查看更多',
     'message.empty': '清空',
     'message.empty.tips': '暂无内容',
-    'message.lang.tips': '语言切换至 ',
-  },
+    'message.lang.tips': '语言切换至 '
+  }
 };
 
 export default i18n;

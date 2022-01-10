@@ -34,7 +34,7 @@ function Index() {
   }
 
   function fetchUserInfo() {
-    userInfo().then((res) => {
+    return userInfo().then((res) => {
       store.dispatch({
         type: 'update-userInfo',
         payload: { userInfo: res.data.result }
@@ -43,7 +43,7 @@ function Index() {
   }
 
   function fetchUserMenu() {
-    userMenu().then((res) => {
+    return userMenu().then((res) => {
       store.dispatch({
         type: 'update-userMenu',
         payload: { userInfo: res.data.result }
@@ -54,8 +54,10 @@ function Index() {
 
   useEffect(() => {
     if (checkLogin()) {
-      fetchUserInfo();
-      fetchUserMenu();
+      Promise.all([fetchUserInfo(), fetchUserMenu()]).then(
+        // todo 完成异步加载
+        // this.setState({ loading: false })
+      );
     } else if (window.location.pathname !== '/login') {
       window.location.href = '/login';
     }

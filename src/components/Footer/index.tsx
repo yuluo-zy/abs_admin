@@ -8,7 +8,7 @@ function Footer(props: FooterProps = {}) {
   const { className, ...restProps } = props;
   return (
     <Layout.Footer className={cs(styles.footer, className)} {...restProps}>
-      Arco Design Pro
+      ESPRESSIF @2021 乐鑫信息科技（上海）股份有限公司
     </Layout.Footer>
   );
 }
