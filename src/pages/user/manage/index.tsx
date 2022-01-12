@@ -1,23 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useLocale from '@/utils/useLocale';
 import locale from './locale';
 import SearchList from '@/components/List';
-import { addUser, getUserList } from '@/api/user';
+import { addUser, getUserList, putUserLock, removeUser } from '@/api/user';
 import styles from '@/components/List/style/index.module.less';
-import { Badge, Button, Form, Input, Message, Select, Typography } from '@arco-design/web-react';
+import { Badge, Button, Form, Input, Message, Modal, Popconfirm, Select, Typography } from '@arco-design/web-react';
 import { CallBackHandle } from '@/components/type';
+import { IconDelete, IconEdit, IconLock } from '@arco-design/web-react/icon';
+import { SearchItem } from '@/components/List/search-form';
 
 
 function UserManage() {
   const { Text } = Typography;
   const t = useLocale(locale);
 
-  const getColumns = (callback: (record: Record<string, any>, type: string) => Promise<void>) => {
+  const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+
+  const getColumns = (callback: () => void) => {
     return [
       {
         title: t['userTable.columns.id'],
         dataIndex: 'id',
-        render: (value) => <Text copyable>{value}</Text>,
+        render: (value) => <Text>{value}</Text>,
         width: 70
       },
       {
@@ -41,7 +46,7 @@ function UserManage() {
         dataIndex: 'locked',
         width: 100,
         render: (x) => {
-          if (x !== 0) {
+          if (x === 1) {
             return <Badge status='error' text={t['userTable.columns.locked']} />;
           }
           return <Badge status='success' text={t['userTable.columns.unlock']} />;
@@ -53,13 +58,43 @@ function UserManage() {
         width: 100,
         headerCellStyle: { paddingLeft: '15px' },
         render: (_, record) => (
-          <Button
-            type='text'
-            size='small'
-            onClick={() => callback(record, 'view')}
-          >
-            {t['userTable.columns.operations.view']}
-          </Button>
+          <>
+            <div className={styles['content-button']}>
+              <Button
+                icon={<IconEdit />}
+                onClick={() => {
+                  setVisible(!visible);
+                }}>
+              </Button>
+
+              <Popconfirm
+                title={t['userTable.columns.user.operation.lock']}
+                onOk={() => {
+                  putUserLock(record.id, { locked: record.locked === 0 ? 1 : 0 }).then(res => {
+                    if (res.data.success === true) {
+                      callback();
+                      Message.info({ content: 'ok' });
+                    }
+                  });
+                }}>
+                <Button icon={<IconLock />} />
+              </Popconfirm>
+
+              <Popconfirm
+                title={t['userTable.columns.user.operation.delete']}
+                onOk={() => {
+                  removeUser({ ids: [record.id] }).then(res => {
+                    if (res.data.success === true) {
+                      callback();
+                      Message.info({ content: 'ok' });
+                    }
+                  });
+                }}
+              >
+                <Button icon={<IconDelete />} />
+              </Popconfirm>
+            </div>
+          </>
         )
       }
     ];
@@ -75,14 +110,12 @@ function UserManage() {
       span: 17
     }
   };
-
   const noLabelLayout = {
     wrapperCol: {
       span: 17,
       offset: 7
     }
   };
-
   const createUser = (props: CallBackHandle) => {
     return (
       <div style={{
@@ -156,6 +189,25 @@ function UserManage() {
     );
   };
 
+  const selectItem: Array<SearchItem> = [{
+    name: t['userTable.columns.id'],
+    field: 'id',
+    type: 'input'
+  },
+    {
+      name: t['userTable.columns.name'],
+      field: 'username',
+      type: 'input'
+    },
+    {
+      name: t['userTable.columns.lock'],
+      field: 'locked',
+      type: 'select',
+      options: [t['userTable.columns.unlock'], t['userTable.columns.locked']]
+    }
+  ];
+
+
   return (
     <div>
       <SearchList name={t['manage.list.name']}
@@ -167,7 +219,27 @@ function UserManage() {
                   download={false}
                   upload={false}
                   fetchRemoteData={getUserList}
-                  getColumns={getColumns} />
+                  getColumns={getColumns}
+                  select={true}
+                  selectItem={selectItem}
+      />
+      <Modal
+        title={t['userTable.columns.operations.edit']}
+        visible={visible}
+        footer={null}
+        confirmLoading={confirmLoading}
+        onCancel={() => {
+          setVisible(false);
+          setConfirmLoading(false);
+        }}
+      >
+        {createUser({
+          confirmCallback: () => {
+            setVisible(false);
+            setConfirmLoading(false);
+          }
+        })}
+      </Modal>
     </div>
   );
 }

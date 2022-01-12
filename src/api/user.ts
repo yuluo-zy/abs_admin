@@ -29,6 +29,6 @@ export const putUserPassword = (id: number, data) => {
   return httpPost('/user/' + id + '/change/password', data);
 };
 
-export const putUserLock = (id: number) => {
-  return httpPut('/user/' + id + '/lock');
+export const putUserLock = (id: number, data) => {
+  return httpPut('/user/' + id + '/lock', data);
 };

@@ -1,11 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import {
-  Table,
-  Card,
-  PaginationProps,
-  Button,
-  Space,
-} from '@arco-design/web-react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Button, Card, PaginationProps, Space, Table } from '@arco-design/web-react';
 import { IconDownload, IconPlus } from '@arco-design/web-react/icon';
 import axios from 'axios';
 import useLocale from '@/utils/useLocale';
@@ -23,6 +17,7 @@ function SearchTable() {
   const t = useLocale(locale);
 
   const tableCallback = async (record, type) => {
+    // eslint-disable-next-line no-console
     console.log(record, type);
   };
 
@@ -34,7 +29,7 @@ function SearchTable() {
     showTotal: true,
     pageSize: 10,
     current: 1,
-    pageSizeChangeResetCurrent: true,
+    pageSizeChangeResetCurrent: true
   });
   const [loading, setLoading] = useState(true);
   const [formParams, setFormParams] = useState({});
@@ -51,8 +46,8 @@ function SearchTable() {
         params: {
           page: current,
           pageSize,
-          ...formParams,
-        },
+          ...formParams
+        }
       })
       .then((res) => {
         setData(res.data.list);
@@ -60,7 +55,7 @@ function SearchTable() {
           ...pagination,
           current,
           pageSize,
-          total: res.data.total,
+          total: res.data.total
         });
         setLoading(false);
       });
@@ -83,7 +78,7 @@ function SearchTable() {
         <SearchForm onSearch={handleSearch} />
         <div className={styles['button-group']}>
           <Space>
-            <Button type="primary" icon={<IconPlus />}>
+            <Button type='primary' icon={<IconPlus />}>
               {t['searchTable.operations.add']}
             </Button>
             <Button>{t['searchTable.operations.upload']}</Button>
@@ -95,7 +90,7 @@ function SearchTable() {
           </Space>
         </div>
         <Table
-          rowKey="id"
+          rowKey='id'
           loading={loading}
           onChange={onChangeTable}
           pagination={pagination}

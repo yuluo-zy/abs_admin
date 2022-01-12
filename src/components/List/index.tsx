@@ -3,7 +3,7 @@ import { Button, Card, Modal, PaginationProps, Space, Table } from '@arco-design
 import { IconDownload, IconPlus } from '@arco-design/web-react/icon';
 import { AxiosResponse } from 'axios';
 import useLocale from '@/utils/useLocale';
-import SearchForm from './form';
+import SearchForm, { SearchItem } from './search-form';
 import locale from './locale';
 import styles from './style/index.module.less';
 import { Data } from '@/utils/httpRequest';
@@ -16,20 +16,22 @@ export interface ListProps {
   addName?: string,
   download: boolean,
   upload: boolean,
-  getColumns: (callback: (record: Record<string, any>, type: string) => Promise<void>) => any
+  getColumns: (callback: () => void) => any
   addCancel?: () => void
+  select?: boolean
+  selectItem?: Array<SearchItem>
 }
 
 export default function SearchList(props: ListProps) {
   const t = useLocale(locale);
-  const tableCallback = async (record, type) => {
-    // eslint-disable-next-line no-console
-    console.log(record, type);
+  const [called, setCalled] = useState(true);
+  const tableCallback = async () => {
+    setCalled(!called);
   };
-  const { name, fetchRemoteData, add, download, upload, getColumns, addName, addCancel } = props;
+  const { name, fetchRemoteData, add, download, upload, getColumns, addName, addCancel, select, selectItem } = props;
 
   const [data, setData] = useState([]);
-  const columns = useMemo(() => getColumns(tableCallback), []);
+  const columns = useMemo(() => getColumns(tableCallback), [called]);
 
   const [pagination, setPatination] = useState<PaginationProps>({
     sizeCanChange: true,
@@ -44,7 +46,7 @@ export default function SearchList(props: ListProps) {
 
   useEffect(() => {
     fetchData();
-  }, [pagination.current, pagination.pageSize, JSON.stringify(formParams)]);
+  }, [pagination.current, pagination.pageSize, called, JSON.stringify(formParams)]);
 
   function fetchData() {
     const { current, pageSize } = pagination;
@@ -86,7 +88,7 @@ export default function SearchList(props: ListProps) {
         title={name}
         headerStyle={{ border: 'none', height: 'auto', paddingTop: '20px' }}
       >
-        <SearchForm onSearch={handleSearch} />
+        {select && (<><SearchForm onSearch={handleSearch} searchItem={selectItem} /></>)}
         <div className={styles['button-group']}>
           <Space>
             {add && (<>

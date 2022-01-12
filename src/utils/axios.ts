@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Notification } from '@arco-design/web-react';
 
 axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '/api' : '/api';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.headers['Content-Type'] = 'application/json';
 axios.defaults.timeout = 1000;
 
 axios.interceptors.request.use((config) => {
@@ -50,9 +50,7 @@ const Axios = ({
   }
 
   if (method === 'delete') {
-    return axios.delete(url, {
-      params: data
-    });
+    return axios.delete(url, { data });
   }
 
   if (method === 'put') {
