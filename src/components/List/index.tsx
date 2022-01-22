@@ -3,10 +3,11 @@ import { Button, Card, Modal, PaginationProps, Space, Table } from '@arco-design
 import { IconDownload, IconPlus } from '@arco-design/web-react/icon';
 import { AxiosResponse } from 'axios';
 import useLocale from '@/utils/useLocale';
-import SearchForm, { SearchItem } from './search-form';
+import SearchForm from './search-form';
 import locale from './locale';
 import styles from './style/index.module.less';
 import { Data } from '@/utils/httpRequest';
+import { SearchItem } from "@/components/type";
 
 
 export interface ListProps {

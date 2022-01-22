@@ -1,16 +1,36 @@
-import { RulesProps } from '@arco-design/web-react';
+import { RulesProps } from "@arco-design/web-react";
+
+export type Recordable<T = any> = Record<string, T>;
+
+export type ReadonlyRecordable<T = any> = Readonly<Record<string, T>>;
 
 export interface CallBackHandle {
   confirmCallback?: () => void;
   cancelCallback?: () => void;
 }
 
-export interface SearchItem {
-  name: string,
+export interface FormItemProps {
+  label?: string,
+  type: "input" | "select" | "date" | "multiple" | "rate",
+  onChange?: () => void,
   field: string,
-  type: 'input' | 'select' | 'date' | 'multiple',
-  options?: Array<string>,
-  rules?: RulesProps[]
+  options?: Array<ReadonlyRecordable | string>,
+  rules?: RulesProps[],
+  placeholder?: string
+  node?: never
+}
+
+export interface FormProps {
+  formItemLayout?: never,
+  form?: never
+  onValuesChange: () => void,
+  formItem: Array<FormItemProps>
+  onSubmit: () => void
+  onRest?: () => void
+}
+
+export interface SearchItem extends FormItemProps {
+  name: string,
 }
 
 export interface ModeProps {
