@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Button, Card, Modal, PaginationProps, Space, Table } from '@arco-design/web-react';
+import { Button, Modal, PaginationProps, Space, Table } from '@arco-design/web-react';
 import { IconDownload, IconPlus } from '@arco-design/web-react/icon';
 import { AxiosResponse } from 'axios';
 import useLocale from '@/utils/useLocale';
@@ -7,7 +7,8 @@ import SearchForm from './search-form';
 import locale from './locale';
 import styles from './style/index.module.less';
 import { Data } from '@/utils/httpRequest';
-import { SearchItem } from "@/components/type";
+import { SearchItem } from '@/components/type';
+import DynamicCard from '@/components/Dynamic/Card';
 
 
 export interface ListProps {
@@ -60,12 +61,15 @@ export default function SearchList(props: ListProps) {
     )
       .then((res) => {
         setData(res.data.result.data);
-        setPatination({
-          ...pagination,
-          current,
-          pageSize,
-          total: res.data.result.totalCount
-        });
+        if (res.data.result.totalCount) {
+          setPatination({
+            ...pagination,
+            current,
+            pageSize,
+            total: res.data.result.totalCount
+          });
+        }
+
         setLoading(false);
       });
   }
@@ -85,10 +89,7 @@ export default function SearchList(props: ListProps) {
 
   return (
     <div>
-      <Card
-        title={name}
-        headerStyle={{ border: 'none', height: 'auto', paddingTop: '20px' }}
-      >
+      <DynamicCard title={name}>
         {select && (<><SearchForm onSearch={handleSearch} searchItem={selectItem} /></>)}
         <div className={styles['button-group']}>
           <Space>
@@ -135,7 +136,7 @@ export default function SearchList(props: ListProps) {
           columns={columns}
           data={data}
         />
-      </Card>
+      </DynamicCard>
     </div>
   );
 }

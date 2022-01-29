@@ -124,15 +124,15 @@ export const routes: Array<Menu> = [
       {
         name: 'menu.user.manage',
         key: 'user/manage'
+      },
+      {
+        name: 'menu.user.role',
+        key: 'user/role'
+      },
+      {
+        name: 'menu.user.permission',
+        key: 'user/permission'
       }
-      // {
-      //   name: 'menu.user.role',
-      //   key: 'user/role'
-      // },
-      // {
-      //   name: 'menu.user.permission',
-      //   key: 'user/permission'
-      // }
     ]
   }
 ];

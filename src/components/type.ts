@@ -42,3 +42,8 @@ export interface ModeProps {
   footer: boolean
   formItem: Array<SearchItem>
 }
+
+export interface DynamicCardProps {
+  title: string;
+  children: any;
+}

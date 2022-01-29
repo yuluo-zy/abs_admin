@@ -5,7 +5,7 @@ import SearchList from '@/components/List';
 import { addUser, getUserList, putUserLock, removeUser } from '@/api/user';
 import styles from '@/components/List/style/index.module.less';
 import { Badge, Button, Form, Input, Message, Modal, Popconfirm, Select, Typography } from '@arco-design/web-react';
-import { CallBackHandle, SearchItem } from "@/components/type";
+import { CallBackHandle, SearchItem } from '@/components/type';
 import { IconDelete, IconEdit, IconLock } from '@arco-design/web-react/icon';
 
 

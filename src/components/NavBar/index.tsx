@@ -79,8 +79,8 @@ function Navbar() {
       <div className={styles.left}>
         <div className={styles.logo}>
           <Logo />
-          <div className={styles['logo-name']}>Arco Pro</div>
         </div>
+        <div className={styles['logo-name']}>ESPRESSIF Custom Manufacturing Service</div>
       </div>
       <ul className={styles.right}>
         <li>

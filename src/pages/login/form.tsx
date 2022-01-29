@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input, Link, Space } from '@arco-design/web-react';
+import { Button, Checkbox, Form, Input, Space } from '@arco-design/web-react';
 import { FormInstance } from '@arco-design/web-react/es/Form';
 import { IconLock, IconUser } from '@arco-design/web-react/icon';
 import { defaultRoute } from '@/routes';
@@ -104,7 +104,6 @@ export default function LoginForm() {
             <Checkbox checked={rememberPassword} onChange={setRememberPassword}>
               {t['login.system.password.save']}
             </Checkbox>
-            <Link>{t['login.system.password.forget']}</Link>
           </div>
           <Button type='primary' long onClick={onSubmitClick} loading={loading}>
             {t['login.system.login']}
