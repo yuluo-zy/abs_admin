@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, DatePicker, Form, Input, Select } from '@arco-design/web-react';
+import { Button, DatePicker, Form, Input, InputNumber, Select } from '@arco-design/web-react';
 import useLocale from '@/utils/useLocale';
 import styles from './style/index.module.less';
 import { FormItemProps, FormProps } from '@/components/type';
@@ -15,7 +15,7 @@ function DynamicForm(props: FormProps) {
   const { formItemLayout, data } = props;
 
   const DynamicFormItem = (props: { item: FormItemProps; index: number }) => {
-    
+
     const { item, index } = props;
     if (item.type === 'input') {
       return <FormItem key={index} required={item.required} label={item.label} field={item.field}><Input
@@ -26,14 +26,13 @@ function DynamicForm(props: FormProps) {
         type={'password'}
         allowClear /></FormItem>;
     }
+    if (item.type === 'number') {
+      return <FormItem key={index} required={item.required} label={item.label} field={item.field}><InputNumber /></FormItem>;
+    }
     if (item.type === 'select') {
       return <FormItem key={index} required={item.required} label={item.label} field={item.field}>
         <Select
-          options={item.options.map((item, index) => ({
-            label: item,
-            value: index
-          }))}
-
+          options= {item.options}
           allowClear
         />
       </FormItem>;
@@ -41,10 +40,7 @@ function DynamicForm(props: FormProps) {
     if (item.type === 'multiple') {
       return <FormItem key={index} required={item.required} label={item.label} field={item.field}>
         <Select
-          options={item.options.map((item, index) => ({
-            label: item,
-            value: index
-          }))}
+          options= {item.options}
           mode={'multiple'}
           allowClear
         />

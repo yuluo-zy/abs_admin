@@ -19,10 +19,11 @@ export interface FormItemProps {
     'date' |
     'multiple' |
     'rate' |
-    'password',
+    'password' |
+    'number',
   onChange?: () => void,
   field: string,
-  options?: Array<ReadonlyRecordable | string>,
+  options?: any,
   rules?: RulesProps[],
   placeholder?: string,
   required?: boolean,
