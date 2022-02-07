@@ -13,6 +13,7 @@ import DynamicModal from '@/components/Dynamic/Modal';
 export default function SearchList(props: ListProps) {
   const t = useLocale(locale);
   const [called, setCalled] = useState(true);
+
   const tableCallback = async () => {
     setCalled(!called);
   };
@@ -96,6 +97,7 @@ export default function SearchList(props: ListProps) {
                     confirmCallback: () => {
                       setVisible(false);
                       setConfirmLoading(false);
+                      tableCallback();
                     }
                   })}
                 </DynamicModal>

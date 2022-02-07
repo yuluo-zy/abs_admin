@@ -12,12 +12,19 @@ function DynamicForm(props: FormProps) {
   const [form] = Form.useForm();
   const t = useLocale(locale);
   const FormItem = Form.Item;
-  const { formItemLayout } = props;
+  const { formItemLayout, data } = props;
 
-  const DynamicFormItem = (props: {item: FormItemProps, index: number}) => {
-    const {item, index} = props
+  const DynamicFormItem = (props: { item: FormItemProps; index: number }) => {
+    
+    const { item, index } = props;
     if (item.type === 'input') {
-      return <FormItem key={index} required={item.required} label={item.label}  field={item.field}><Input allowClear /></FormItem>;
+      return <FormItem key={index} required={item.required} label={item.label} field={item.field}><Input
+        allowClear /></FormItem>;
+    }
+    if (item.type === 'password') {
+      return <FormItem key={index} required={item.required} label={item.label} field={item.field}><Input
+        type={'password'}
+        allowClear /></FormItem>;
     }
     if (item.type === 'select') {
       return <FormItem key={index} required={item.required} label={item.label} field={item.field}>
@@ -26,6 +33,7 @@ function DynamicForm(props: FormProps) {
             label: item,
             value: index
           }))}
+
           allowClear
         />
       </FormItem>;
@@ -55,18 +63,21 @@ function DynamicForm(props: FormProps) {
     <div style={{ paddingRight: '2rem' }}>
       <Form
         form={form}
+        id={props.title}
         {...formItemLayout}
         scrollToFirstError
         labelAlign='left'
+        initialValues={data}
       >
-          {props.formItem.map(
-            (item, index) => DynamicFormItem({ item, index})
-          )}
+        {props.formItem.map(
+          (item, index) => DynamicFormItem({ item, index })
+        )}
       </Form>
       <div className={styles['right-button']}>
         <Button type='primary' icon={<IconCheck />} onClick={() => {
           const values = form.getFieldsValue();
           props.onSubmit(values);
+          form.resetFields();
         }}>
           {t['form.submit']}
         </Button>

@@ -11,7 +11,7 @@ function DynamicModal(props: ModeProps) {
       footer={null}
       confirmLoading={props.confirmLoading}
       onCancel={() => {
-        props.onCancel()
+        props.onCancel?.()
       }}
     >
       {props.children}

@@ -14,7 +14,12 @@ export interface CallBackHandle {
 
 export interface FormItemProps {
   label?: string,
-  type: "input" | "select" | "date" | "multiple" | "rate",
+  type: 'input' |
+    'select' |
+    'date' |
+    'multiple' |
+    'rate' |
+    'password',
   onChange?: () => void,
   field: string,
   options?: Array<ReadonlyRecordable | string>,
@@ -25,8 +30,11 @@ export interface FormItemProps {
 }
 
 export interface FormProps {
+  title: string,
   formItemLayout?: Recordable,
-  form?: never
+  form?: any,
+  // 这里的数据是说明这是预填充数据
+  data?: Recordable
   onValuesChange?: () => void,
   formItem: Array<FormItemProps>
   onSubmit: (value) => void
@@ -39,11 +47,11 @@ export interface SearchItem extends FormItemProps {
 
 export interface ModeProps {
   title: string
-  visible: boolean,
-  confirmLoading: boolean,
+  visible?: boolean,
+  confirmLoading?: boolean,
   onCancel?: () => void,
   onOk?: () => void,
-  footer: boolean
+  footer?: boolean
   children: any
 }
 
