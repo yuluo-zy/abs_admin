@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Button, Modal, PaginationProps, Space, Table } from '@arco-design/web-react';
+import { Button, PaginationProps, Space, Table } from '@arco-design/web-react';
 import { IconDownload, IconPlus } from '@arco-design/web-react/icon';
 import useLocale from '@/utils/useLocale';
 import SearchForm from './search-form';
@@ -7,6 +7,7 @@ import locale from './locale';
 import styles from './style/index.module.less';
 import DynamicCard from '@/components/Dynamic/Card';
 import { ListProps } from '@/components/type';
+import DynamicModal from '@/components/Dynamic/Modal';
 
 
 export default function SearchList(props: ListProps) {
@@ -15,7 +16,7 @@ export default function SearchList(props: ListProps) {
   const tableCallback = async () => {
     setCalled(!called);
   };
-  const { name, fetchRemoteData, add, download, upload, getColumns, addName, addCancel, select, selectItem } = props;
+  const { name, fetchRemoteData, add, download, upload, getColumns, addName, select, selectItem } = props;
 
   const [data, setData] = useState([]);
   const columns = useMemo(() => getColumns(tableCallback), [called]);
@@ -33,7 +34,6 @@ export default function SearchList(props: ListProps) {
 
   useEffect(() => {
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagination.current, pagination.pageSize, called, JSON.stringify(formParams)]);
 
   function fetchData() {
@@ -83,24 +83,22 @@ export default function SearchList(props: ListProps) {
                 <Button type='primary' icon={<IconPlus />} onClick={() => setVisible(true)}>
                   {t['searchTable.operations.add']}
                 </Button>
-                <Modal
-                  title={addName}
-                  visible={visible}
-                  footer={null}
-                  confirmLoading={confirmLoading}
-                  onCancel={() => {
-                    setVisible(false);
-                    setConfirmLoading(false);
-                    addCancel();
-                  }}
-                >
+
+                <DynamicModal title={addName}
+                              visible={visible}
+                              footer={null}
+                              confirmLoading={confirmLoading}
+                              onCancel={() => {
+                                setVisible(false);
+                                setConfirmLoading(false);
+                              }}>
                   {add({
                     confirmCallback: () => {
                       setVisible(false);
                       setConfirmLoading(false);
                     }
                   })}
-                </Modal>
+                </DynamicModal>
               </>
             )}
             {upload === true && (<>  <Button>{t['searchTable.operations.upload']}</Button> </>)}

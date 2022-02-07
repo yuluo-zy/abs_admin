@@ -4,9 +4,11 @@ import locale from './locale';
 import SearchList from '@/components/Dynamic/List';
 import { addUser, getUserList, putUserLock, removeUser } from '@/api/user';
 import styles from '@/components/Dynamic/List/style/index.module.less';
-import { Badge, Button, Form, Input, Message, Modal, Popconfirm, Select, Typography } from '@arco-design/web-react';
-import { CallBackHandle, SearchItem } from '@/components/type';
+import { Badge, Button, Message, Popconfirm, Typography } from '@arco-design/web-react';
+import { CallBackHandle, FormItemProps, SearchItem } from '@/components/type';
 import { IconDelete, IconEdit, IconLock } from '@arco-design/web-react/icon';
+import DynamicModal from '@/components/Dynamic/Modal';
+import DynamicForm from '@/components/Dynamic/Form';
 
 
 function UserManage() {
@@ -99,92 +101,53 @@ function UserManage() {
     ];
   };
 
-  const FormItem = Form.Item;
-  const [form] = Form.useForm();
-  const formItemLayout = {
-    labelCol: {
-      span: 7
+
+  // 用来创建 增加 用户的表单
+  const createUserItem: Array<FormItemProps> = [
+    {
+      label: t['userTable.columns.user.name'],
+      type: 'input',
+      field: 'username',
+      required: true,
+      rules: [{ required: true, message: t['userTable.columns.user.name.error'], minLength: 2 }]
     },
-    wrapperCol: {
-      span: 17
+    {
+      label: t['userTable.columns.user.password'],
+      field: 'password',
+      type: 'input',
+      required: true,
+      rules: [{ required: true, message: t['userTable.columns.user.password.error'], minLength: 8 }]
+    },
+    {
+      label: t['userTable.columns.user.role'],
+      field: 'roleIdList',
+      type: 'multiple',
+      rules: [
+        {
+          type: 'array',
+          minLength: 1,
+          message: t['userTable.columns.user.role.error']
+        }
+      ],
+      required: true,
+      options: ['1', '2', '3', '4', '5']
     }
-  };
-  const noLabelLayout = {
-    wrapperCol: {
-      span: 17,
-      offset: 7
-    }
-  };
+
+  ];
   const createUser = (props: CallBackHandle) => {
     return (
-      <div style={{
-        paddingRight: '2rem'
-      }}
-      >
-        <Form
-          {...formItemLayout}
-          scrollToFirstError
-          form={form}
-        >
-
-          <FormItem
-            label={t['userTable.columns.user.name']}
-            field='username'
-            rules={[{ required: true, message: t['userTable.columns.user.name.error'], minLength: 2 }]}
-          >
-            <Input placeholder='please enter...' />
-          </FormItem>
-          <FormItem
-            label={t['userTable.columns.user.password']}
-            field='password'
-            rules={[{ required: true, message: t['userTable.columns.user.password.error'], minLength: 8 }]}
-          >
-            <Input type='password' placeholder='please enter...' />
-          </FormItem>
-
-          <FormItem
-            label={t['userTable.columns.user.role']}
-            required
-            field='roleIdList'
-            rules={[
-              {
-                type: 'array',
-                minLength: 1,
-                message: t['userTable.columns.user.role.error']
-              }
-            ]}
-          >
-            <Select mode='multiple' allowCreate placeholder='please select' options={['1', '2', '3', '4', '5']} />
-          </FormItem>
-
-          <FormItem {...noLabelLayout}>
-            <Button
-              onClick={async () => {
-                await form.validate();
-                await addUser(form.getFieldsValue()).then(res => {
-                    if (res.data.success === true) {
-                      Message.success(t['userTable.columns.user.operation.success']);
-                      form.resetFields();
-                      props.confirmCallback();
-                    }
-                  }
-                );
-              }}
-              type='primary'
-              style={{ marginRight: 24 }}
-            >
-              {t['userTable.columns.user.operation.submit']}
-            </Button>
-            <Button
-              onClick={() => {
-                form.resetFields();
-              }}
-            >
-              {t['userTable.columns.user.operation.reset']}
-            </Button>
-          </FormItem>
-        </Form>
-      </div>
+      <DynamicForm formItem={createUserItem}
+                   onSubmit={
+                     (async value => {
+                       await addUser(value).then(res => {
+                         if (res.data.success === true) {
+                           Message.success(t['userTable.columns.user.operation.success']);
+                           props.confirmCallback();
+                         }
+                       });
+                     })
+                   }
+      />
     );
   };
 
@@ -212,9 +175,6 @@ function UserManage() {
       <SearchList name={t['manage.list.name']}
                   add={createUser}
                   addName={t['userTable.columns.operations.add']}
-                  addCancel={() => {
-                    form.resetFields();
-                  }}
                   download={false}
                   upload={false}
                   fetchRemoteData={getUserList}
@@ -222,7 +182,7 @@ function UserManage() {
                   select={true}
                   selectItem={selectItem}
       />
-      <Modal
+      <DynamicModal
         title={t['userTable.columns.operations.edit']}
         visible={visible}
         footer={null}
@@ -238,7 +198,7 @@ function UserManage() {
             setConfirmLoading(false);
           }
         })}
-      </Modal>
+      </DynamicModal>
     </div>
   );
 }

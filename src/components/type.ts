@@ -3,9 +3,9 @@ import { AxiosResponse } from 'axios';
 import { Data } from '@/utils/httpRequest';
 import React from 'react';
 
-export type Recordable<T = never> = Record<string, T>;
+export type Recordable<T = any> = Record<string, T>;
 
-export type ReadonlyRecordable<T = never> = Readonly<Record<string, T>>;
+export type ReadonlyRecordable<T = any> = Readonly<Record<string, T>>;
 
 export interface CallBackHandle {
   confirmCallback?: () => void;
@@ -19,14 +19,15 @@ export interface FormItemProps {
   field: string,
   options?: Array<ReadonlyRecordable | string>,
   rules?: RulesProps[],
-  placeholder?: string
+  placeholder?: string,
+  required?: boolean,
   node?: never
 }
 
 export interface FormProps {
-  formItemLayout?: never,
+  formItemLayout?: Recordable,
   form?: never
-  onValuesChange: () => void,
+  onValuesChange?: () => void,
   formItem: Array<FormItemProps>
   onSubmit: (value) => void
   onRest?: () => void
@@ -40,10 +41,10 @@ export interface ModeProps {
   title: string
   visible: boolean,
   confirmLoading: boolean,
-  onCancel: () => void,
-  onOk: () => void,
+  onCancel?: () => void,
+  onOk?: () => void,
   footer: boolean
-  children: never
+  children: any
 }
 
 export interface DynamicCardProps {
@@ -59,7 +60,6 @@ export interface ListProps {
   download: boolean,
   upload: boolean,
   getColumns: (callback: () => void) => any
-  addCancel?: () => void
   select?: boolean
   selectItem?: Array<SearchItem>
 }

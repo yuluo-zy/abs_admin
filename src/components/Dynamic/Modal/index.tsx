@@ -2,6 +2,7 @@ import { Modal } from '@arco-design/web-react';
 import React from 'react';
 import { ModeProps } from '@/components/type';
 
+
 function DynamicModal(props: ModeProps) {
   return (
     <Modal
@@ -10,12 +11,11 @@ function DynamicModal(props: ModeProps) {
       footer={null}
       confirmLoading={props.confirmLoading}
       onCancel={() => {
-        props.onCancel?.();
+        props.onCancel()
       }}
     >
       {props.children}
-    </Modal>
-  );
+    </Modal>);
 }
 
 export default DynamicModal;

@@ -5,26 +5,22 @@ import styles from './style/index.module.less';
 import { FormItemProps, FormProps } from '@/components/type';
 import locale from './locale';
 import dayjs from 'dayjs';
-import { IconRefresh, IconSearch } from '@arco-design/web-react/icon';
+import { IconCheck, IconRefresh } from '@arco-design/web-react/icon';
 
 
 function DynamicForm(props: FormProps) {
   const [form] = Form.useForm();
   const t = useLocale(locale);
   const FormItem = Form.Item;
-
   const { formItemLayout } = props;
-
 
   const DynamicFormItem = (props: {item: FormItemProps, index: number}) => {
     const {item, index} = props
     if (item.type === 'input') {
-      // eslint-disable-next-line no-console
-      console.log(index)
-      return <FormItem label={item.label}  field={item.field}><Input allowClear /></FormItem>;
+      return <FormItem key={index} required={item.required} label={item.label}  field={item.field}><Input allowClear /></FormItem>;
     }
     if (item.type === 'select') {
-      return <FormItem label={item.label} field={item.field}>
+      return <FormItem key={index} required={item.required} label={item.label} field={item.field}>
         <Select
           options={item.options.map((item, index) => ({
             label: item,
@@ -35,7 +31,7 @@ function DynamicForm(props: FormProps) {
       </FormItem>;
     }
     if (item.type === 'multiple') {
-      return <FormItem label={item.label} field={item.field}>
+      return <FormItem key={index} required={item.required} label={item.label} field={item.field}>
         <Select
           options={item.options.map((item, index) => ({
             label: item,
@@ -47,12 +43,12 @@ function DynamicForm(props: FormProps) {
       </FormItem>;
     }
     if (item.type === 'date') {
-      return <FormItem label={item.label} field={item.field}>
+      return <FormItem key={index} required={item.required} label={item.label} field={item.field}>
         <DatePicker.RangePicker allowClear style={{ width: '100%' }}
                                 disabledDate={(date) => dayjs(date).isAfter(dayjs())} />
       </FormItem>;
     }
-    return <Input allowClear />;
+    return <Input key={index} allowClear />;
   };
 
   return (
@@ -68,16 +64,16 @@ function DynamicForm(props: FormProps) {
           )}
       </Form>
       <div className={styles['right-button']}>
-        <Button type='primary' icon={<IconSearch />} onClick={() => {
+        <Button type='primary' icon={<IconCheck />} onClick={() => {
           const values = form.getFieldsValue();
           props.onSubmit(values);
         }}>
-          {t['form.search']}
+          {t['form.submit']}
         </Button>
 
         <Button icon={<IconRefresh />} onClick={() => {
           form.resetFields();
-          props.onRest();
+          props.onRest?.();
         }}>
           {t['form.reset']}
         </Button>
