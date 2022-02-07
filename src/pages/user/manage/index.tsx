@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import useLocale from '@/utils/useLocale';
 import locale from './locale';
-import SearchList from '@/components/List';
+import SearchList from '@/components/Dynamic/List';
 import { addUser, getUserList, putUserLock, removeUser } from '@/api/user';
-import styles from '@/components/List/style/index.module.less';
+import styles from '@/components/Dynamic/List/style/index.module.less';
 import { Badge, Button, Form, Input, Message, Modal, Popconfirm, Select, Typography } from '@arco-design/web-react';
 import { CallBackHandle, SearchItem } from '@/components/type';
 import { IconDelete, IconEdit, IconLock } from '@arco-design/web-react/icon';

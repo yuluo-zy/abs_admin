@@ -2,7 +2,7 @@ import React from 'react';
 import useLocale from '@/utils/useLocale';
 import locale from '@/pages/user/permission/locale';
 import { getPermission } from '@/api/permission';
-import SearchList from '@/components/List';
+import SearchList from '@/components/Dynamic/List';
 import { Badge, Dropdown, Menu } from '@arco-design/web-react';
 
 

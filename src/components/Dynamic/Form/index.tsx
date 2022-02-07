@@ -1,174 +1,84 @@
-import React, { useMemo } from 'react';
-import {
-  Button,
-  DatePicker,
-  Form,
-  Grid,
-  Input,
-  InputNumber,
-  Select,
-} from '@arco-design/web-react';
+import React from 'react';
+import { Button, DatePicker, Form, Input, Select } from '@arco-design/web-react';
 import useLocale from '@/utils/useLocale';
 import styles from './style/index.module.less';
 import { FormItemProps, FormProps } from '@/components/type';
 import locale from './locale';
 import dayjs from 'dayjs';
-import { IconCheck, IconRefresh } from '@arco-design/web-react/icon';
-import useDebounce from '@/utils/useSelf';
-import cs from 'classnames';
+import { IconRefresh, IconSearch } from '@arco-design/web-react/icon';
 
-const { Row, Col } = Grid;
 
 function DynamicForm(props: FormProps) {
   const [form] = Form.useForm();
   const t = useLocale(locale);
   const FormItem = Form.Item;
 
-  const DynamicFormItem = (props: { item: FormItemProps; index: number }) => {
-    const { item, index } = props;
+  const { formItemLayout } = props;
+
+
+  const DynamicFormItem = (props: {item: FormItemProps, index: number}) => {
+    const {item, index} = props
     if (item.type === 'input') {
-      return (
-        <FormItem
-          key={index}
-          required={item.required}
-          label={item.label}
-          field={item.field}
-        >
-          <Input allowClear />
-        </FormItem>
-      );
-    }
-    if (item.type === 'password') {
-      return (
-        <FormItem
-          key={index}
-          required={item.required}
-          label={item.label}
-          field={item.field}
-        >
-          <Input type={'password'} allowClear />
-        </FormItem>
-      );
-    }
-    if (item.type === 'number') {
-      return (
-        <FormItem
-          key={index}
-          required={item.required}
-          label={item.label}
-          field={item.field}
-        >
-          <InputNumber />
-        </FormItem>
-      );
+      // eslint-disable-next-line no-console
+      console.log(index)
+      return <FormItem label={item.label}  field={item.field}><Input allowClear /></FormItem>;
     }
     if (item.type === 'select') {
-      return (
-        <FormItem
-          key={index}
-          required={item.required}
-          label={item.label}
-          field={item.field}
-        >
-          <Select options={item.options} allowClear />
-        </FormItem>
-      );
+      return <FormItem label={item.label} field={item.field}>
+        <Select
+          options={item.options.map((item, index) => ({
+            label: item,
+            value: index
+          }))}
+          allowClear
+        />
+      </FormItem>;
     }
     if (item.type === 'multiple') {
-      return (
-        <FormItem
-          key={index}
-          required={item.required}
-          label={item.label}
-          field={item.field}
-        >
-          <Select options={item.options} mode={'multiple'} allowClear />
-        </FormItem>
-      );
+      return <FormItem label={item.label} field={item.field}>
+        <Select
+          options={item.options.map((item, index) => ({
+            label: item,
+            value: index
+          }))}
+          mode={'multiple'}
+          allowClear
+        />
+      </FormItem>;
     }
     if (item.type === 'date') {
-      return (
-        <FormItem
-          key={index}
-          required={item.required}
-          label={item.label}
-          field={item.field}
-        >
-          <DatePicker.RangePicker
-            allowClear
-            style={{ width: '100%' }}
-            disabledDate={(date) => dayjs(date).isAfter(dayjs())}
-          />
-        </FormItem>
-      );
+      return <FormItem label={item.label} field={item.field}>
+        <DatePicker.RangePicker allowClear style={{ width: '100%' }}
+                                disabledDate={(date) => dayjs(date).isAfter(dayjs())} />
+      </FormItem>;
     }
-    return <Input key={index} allowClear />;
+    return <Input allowClear />;
   };
-  const { className } = props;
-
-  const DynamicFormNode = useMemo(() => {
-    const round = Math.random();
-    if (props.col) {
-      return (
-        <Form
-          key={round}
-          form={form}
-          id={props.title}
-          {...props.formItemLayout}
-          scrollToFirstError
-          labelAlign="left"
-          initialValues={props.data}
-        >
-          <Row gutter={24}>
-            {props.formItem.map((item, index) => {
-              return (
-                <Col key={index} span={Math.floor(24 / props.col)}>
-                  {DynamicFormItem({ item, index })}
-                </Col>
-              );
-            })}
-          </Row>
-        </Form>
-      );
-    }
-    return (
-      <Form
-        key={round}
-        form={form}
-        id={props.title}
-        {...props.formItemLayout}
-        scrollToFirstError
-        labelAlign="left"
-        initialValues={props.data}
-      >
-        {props.formItem.map((item, index) => DynamicFormItem({ item, index }))}
-      </Form>
-    );
-  }, [props.data]);
 
   return (
-    <div style={{ paddingRight: '2rem' }} className={cs(className)}>
-      <div>{DynamicFormNode}</div>
-      <div>{props.children}</div>
+    <div style={{ paddingRight: '2rem' }}>
+      <Form
+        form={form}
+        {...formItemLayout}
+        scrollToFirstError
+        labelAlign='left'
+      >
+          {props.formItem.map(
+            (item, index) => DynamicFormItem({ item, index})
+          )}
+      </Form>
       <div className={styles['right-button']}>
-        <Button
-          type="primary"
-          icon={<IconCheck />}
-          onClick={useDebounce(() => {
-            const values = form.getFieldsValue();
-            props.onSubmit(values);
-          })}
-        >
-          {t['form.submit']}
+        <Button type='primary' icon={<IconSearch />} onClick={() => {
+          const values = form.getFieldsValue();
+          props.onSubmit(values);
+        }}>
+          {t['form.search']}
         </Button>
 
-        <Button
-          icon={<IconRefresh />}
-          onClick={useDebounce(() => {
-            form.resetFields();
-            props.onRest?.();
-          }, 100)}
-        >
+        <Button icon={<IconRefresh />} onClick={() => {
+          form.resetFields();
+          props.onRest();
+        }}>
           {t['form.reset']}
         </Button>
       </div>

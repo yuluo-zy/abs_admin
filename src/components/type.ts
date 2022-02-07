@@ -1,8 +1,11 @@
-import { RulesProps } from "@arco-design/web-react";
+import { RulesProps } from '@arco-design/web-react';
+import { AxiosResponse } from 'axios';
+import { Data } from '@/utils/httpRequest';
+import React from 'react';
 
-export type Recordable<T = any> = Record<string, T>;
+export type Recordable<T = never> = Record<string, T>;
 
-export type ReadonlyRecordable<T = any> = Readonly<Record<string, T>>;
+export type ReadonlyRecordable<T = never> = Readonly<Record<string, T>>;
 
 export interface CallBackHandle {
   confirmCallback?: () => void;
@@ -25,7 +28,7 @@ export interface FormProps {
   form?: never
   onValuesChange: () => void,
   formItem: Array<FormItemProps>
-  onSubmit: () => void
+  onSubmit: (value) => void
   onRest?: () => void
 }
 
@@ -40,10 +43,23 @@ export interface ModeProps {
   onCancel: () => void,
   onOk: () => void,
   footer: boolean
-  formItem: Array<SearchItem>
+  children: never
 }
 
 export interface DynamicCardProps {
   title: string;
   children: any;
+}
+
+export interface ListProps {
+  name: string,
+  fetchRemoteData: (props) => Promise<AxiosResponse<Data>>,
+  add?: (props) => React.ReactNode,
+  addName?: string,
+  download: boolean,
+  upload: boolean,
+  getColumns: (callback: () => void) => any
+  addCancel?: () => void
+  select?: boolean
+  selectItem?: Array<SearchItem>
 }
