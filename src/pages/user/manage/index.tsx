@@ -3,7 +3,7 @@ import useLocale from '@/utils/useLocale';
 import locale from './locale';
 import SearchList from '@/components/Dynamic/List';
 import { addUser, getUserList, putUser, putUserLock, putUserPassword, removeUser } from '@/api/user';
-import styles from '@/components/Dynamic/List/style/index.module.less';
+import styles from '@/style/pages.module.less';
 import { Badge, Button, Message, Popconfirm, Typography } from '@arco-design/web-react';
 import { CallBackHandle, FormItemProps, SearchItem } from '@/components/type';
 import { IconDelete, IconEdit, IconLock, IconUser } from '@arco-design/web-react/icon';

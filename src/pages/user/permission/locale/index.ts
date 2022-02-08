@@ -15,7 +15,9 @@ const i18n = {
     'permission.list.operate.edit': '编辑',
     'permission.list.operate.same.level': '添加同级节点',
     'permission.list.operate.next.level': '添加下级节点',
-    'permission.list.operate.error': '字段不能为空'
+    'permission.list.operate.error': '字段不能为空',
+    'permission.list.operate.success': '操作成功',
+    'permission.list.operate.delete': '确认要删除本权限吗?'
   }
 };
 

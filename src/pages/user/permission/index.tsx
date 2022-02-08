@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import useLocale from '@/utils/useLocale';
 import locale from '@/pages/user/permission/locale';
-import { getPermission } from '@/api/permission';
+import { deletePermission, getPermission, postPermission, putPermission } from '@/api/permission';
 import SearchList from '@/components/Dynamic/List';
-import { Badge, Dropdown, Menu } from '@arco-design/web-react';
+import { Badge, Button, Dropdown, Menu, Message, Popconfirm } from '@arco-design/web-react';
 import { FormItemProps } from '@/components/type';
 import DynamicModal from '@/components/Dynamic/Modal';
 import DynamicForm from '@/components/Dynamic/Form';
+import { IconDelete } from '@arco-design/web-react/icon';
 
 
 function UserPermission() {
@@ -15,7 +16,8 @@ function UserPermission() {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [formProps, setFormProps] = useState(null);
-  const [permission, setPermission] = useState(null);
+  const permission = useRef(null);
+  const [updateInfo, setUpdateInfo] = useState(null);
 
   const permissionProps: Array<FormItemProps> = [
     {
@@ -59,110 +61,157 @@ function UserPermission() {
     }
   ];
 
-  const update = (type: 'UpdateSelf' | 'SameLevel' | 'LowerLevel') => {
+  const colseMode = (update) => {
+    setVisible(false);
+    setConfirmLoading(false);
+    if (update) {
+      setUpdateInfo(update);
+    }
+  };
+
+
+  const update = (type: 'UpdateSelf' | 'SameLevel' | 'LowerLevel', record) => {
+    permission.current = { ...record };
+    let newNode = null;
     switch (type) {
       case 'UpdateSelf'  :
-        setFormProps({
+        newNode = {
           title: t['permission.list.title.update'],
           formItem: permissionProps,
-          onSubmit: async () => {
+          data: permission.current,
+          onSubmit: async (value) => {
+            value['id'] = permission.current.id;
+            await putPermission(value).then(res => {
+              if (res.data.success === true) {
+                Message.success(t['permission.list.operate.success']);
+              }
+            });
+            colseMode(value);
           }
-        });
+        };
         break;
       case 'SameLevel'  :
-        setFormProps({
+        newNode = {
           title: t['permission.list.operate.same.level'],
           formItem: permissionProps,
-          onSubmit: async () => {
+          onSubmit: async value => {
+            value['parentId'] = permission.current.parentId;
+            await postPermission(value).then(res => {
+              if (res.data.success === true) {
+                Message.success(t['permission.list.operate.success']);
+              }
+            });
+            colseMode(value);
           }
-        });
+        };
         break;
       case 'LowerLevel'  :
-        setFormProps({
+        newNode = {
           title: t['permission.list.operate.next.level'],
           formItem: permissionProps,
-          onSubmit: async () => {
+          onSubmit: async (value) => {
+            value['parentId'] = permission.current.id;
+            await postPermission(value).then(res => {
+              if (res.data.success === true) {
+                Message.success(t['permission.list.operate.success']);
+              }
+            });
+            colseMode(value);
           }
-        });
+        };
         break;
-
-
     }
+    setFormProps(newNode);
     setVisible(true);
-  }
+  };
 
-    const dropList = (
-      <Menu>
-        <Menu.Item key='1' onClick={() =>update('SameLevel')}>{t['permission.list.operate.same.level']}</Menu.Item>
-        <Menu.Item key='2' onClick={() =>update('LowerLevel')}>{t['permission.list.operate.next.level']}</Menu.Item>
-      </Menu>
-    );
+  const columns = () => {
+    return [
+      {
+        title: t['permission.list.name'],
+        dataIndex: 'name',
+        render: (value) => <div>{value}</div>,
+        width: 70
+      },
+      {
+        title: t['permission.list.type'],
+        dataIndex: 'typeName',
+        render: (value, record) => <div>
+          {record.type == 1 ?
+            <Badge color='arcoblue' style={{ marginRight: 10 }} text={value} />
+            : <Badge color='lime' style={{ marginRight: 10 }} text={value} />
+          }
+        </div>,
+        width: 70
+      },
+      {
+        title: t['permission.list.mark'],
+        dataIndex: 'permission',
+        render: (value) => <div>{value}</div>,
+        width: 70
+      },
+      {
+        title: t['permission.list.icon'],
+        dataIndex: 'icon',
+        render: (value) => <div>{value}</div>,
+        width: 70
+      },
+      {
+        title: t['permission.list.sort'],
+        dataIndex: 'sort',
+        render: (value) => <div>{value}</div>,
+        width: 70
+      },
+      {
+        title: t['permission.list.operate'],
+        dataIndex: 'id',
+        render: (_, record) => (
+          <div>
+            <Dropdown.Button
+              type='primary'
+              droplist={
+                <Menu>
+                  <Menu.Item key='1'
+                             onClick={() => update('SameLevel', record)}>{t['permission.list.operate.same.level']}</Menu.Item>
+                  <Menu.Item key='2'
+                             onClick={() => update('LowerLevel', record)}>{t['permission.list.operate.next.level']}</Menu.Item>
+                </Menu>
+              }
+              onClick={() => update('UpdateSelf', record)}>
+              {t['permission.list.operate.edit']}
+            </Dropdown.Button>
+            <Popconfirm
+              title={t['permission.list.operate.delete']}
+              onOk={() => {
+                deletePermission(record.id ).then(res => {
+                  if (res.data.success === true) {
+                    Message.info({ content: 'ok' });
+                  }
+                });
+              }}
+            >
+              <Button icon={<IconDelete />} style={{marginLeft: 14}} />
+            </Popconfirm>
+          </div>
+        ),
+        width: 70
+      }
+    ];
+  };
 
-    const columns = () => {
-      return [
-        {
-          title: t['permission.list.name'],
-          dataIndex: 'name',
-          render: (value) => <div>{value}</div>,
-          width: 70
-        },
-        {
-          title: t['permission.list.type'],
-          dataIndex: 'typeName',
-          render: (value, record) => <div>
-            {record.type == 1 ?
-              <Badge color='arcoblue' style={{ marginRight: 10 }} text={value} />
-              : <Badge color='lime' style={{ marginRight: 10 }} text={value} />
-            }
-          </div>,
-          width: 70
-        },
-        {
-          title: t['permission.list.mark'],
-          dataIndex: 'permission',
-          render: (value) => <div>{value}</div>,
-          width: 70
-        },
-        {
-          title: t['permission.list.icon'],
-          dataIndex: 'icon',
-          render: (value) => <div>{value}</div>,
-          width: 70
-        },
-        {
-          title: t['permission.list.sort'],
-          dataIndex: 'sort',
-          render: (value) => <div>{value}</div>,
-          width: 70
-        },
-        {
-          title: t['permission.list.operate'],
-          dataIndex: 'id',
-          render: (_, record) => (
-            <div>
-              <Dropdown.Button
-                type='primary'
-                droplist={dropList}
-                onClick={() =>update('UpdateSelf')}>
-                {t['permission.list.operate.edit']}
-              </Dropdown.Button>
-            </div>
-          ),
-          width: 70
-        }
-      ];
-    };
 
-    return (<div>
-      <SearchList name={t['permission.list.title']}
-                  download={false}
-                  upload={false}
-                  fetchRemoteData={getPermission}
-                  getColumns={columns}
-                  select={false}
-      />
-      {formProps && <DynamicModal
-        title={formProps.title}
+  return (<div>
+    <SearchList name={t['permission.list.title']}
+                download={false}
+                upload={false}
+                fetchRemoteData={getPermission}
+                getColumns={columns}
+                select={false}
+                onChange={updateInfo}
+    />
+    {
+      <DynamicModal
+        title={formProps?.title}
         visible={visible}
         footer={null}
         confirmLoading={confirmLoading}
@@ -171,15 +220,13 @@ function UserPermission() {
           setConfirmLoading(false);
         }}
       >
-         <DynamicForm
-          title={formProps.title}
-          formItem={formProps.formItem}
-          onSubmit={
-            formProps.onSubmit
-          }
-        />
-      </DynamicModal>}
-    </div>);
-  };
+        {formProps && <DynamicForm key={formProps.title}
+                                   {...formProps}
+        />}
+      </DynamicModal>
 
-  export default UserPermission;
+    }
+  </div>);
+}
+
+export default UserPermission;

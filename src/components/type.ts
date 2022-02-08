@@ -71,4 +71,5 @@ export interface ListProps {
   getColumns: (callback: () => void) => any
   select?: boolean
   selectItem?: Array<SearchItem>
+  onChange?: boolean
 }
