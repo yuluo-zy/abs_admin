@@ -45,10 +45,7 @@
         "printWidth": 100
       }
     ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
+    "linebreak-style": 0,
     "no-console": [
       "error",
       {
@@ -69,21 +66,21 @@
         "classes": false
       }
     ],
-//    "no-unused-vars": [
-//      2,
-//      {
-//        "vars": "all",
-//        "args": "none"
-//      }
-//    ],
+    //    "no-unused-vars": [
+    //      2,
+    //      {
+    //        "vars": "all",
+    //        "args": "none"
+    //      }
+    //    ],
     "no-restricted-syntax": 0,
-//    "no-unused-expressions": [
-//      "error",
-//      {
-//        "allowShortCircuit": true,
-//        "allowTernary": true
-//      }
-//    ],
+    //    "no-unused-expressions": [
+    //      "error",
+    //      {
+    //        "allowShortCircuit": true,
+    //        "allowTernary": true
+    //      }
+    //    ],
     "no-plusplus": 0,
     "no-return-assign": 0,
     "no-script-url": 0,

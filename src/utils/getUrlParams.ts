@@ -1,4 +1,3 @@
-// 仅用于线上预览，实际使用中可以将此逻辑删除
 import qs from 'query-string';
 import { isSSR } from './is';
 

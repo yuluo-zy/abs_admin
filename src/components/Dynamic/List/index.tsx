@@ -34,8 +34,6 @@ export default function SearchList(props: ListProps) {
   const [formParams, setFormParams] = useState({});
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log("我要变"+ props.onChange)
     fetchData();
   }, [props.onChange])
 

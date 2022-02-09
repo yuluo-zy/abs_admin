@@ -37,13 +37,13 @@ export default function RolePanel(props) {
           {t['role.panel.title']}
         </Typography.Title>
         <div>
-          <Button type='secondary' icon={<IconPlus />}>添加</Button>
+          <Button type='secondary' icon={<IconPlus />} onClick={() => {
+          }}>{t['role.panel.add']}</Button>
         </div>
       </div>
       <div className={styles['role-panel-content']}>
           <MessageList data={roleList} />
       </div>
-
       </Spin>
     </div>
   );
