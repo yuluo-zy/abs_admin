@@ -4,6 +4,8 @@ import { RoleItem } from '@/pages/user/role/message-list/item';
 export interface InitialRole {
   roleId: string;
   roleInfo?: RoleItem;
+  roleList?: RoleItem[];
+  permission?: any;
 }
 
 export const RoleContext = React.createContext(null);
@@ -26,6 +28,21 @@ export default function RoleStore(state: InitialRole, action) {
       return {
         ...state,
         roleInfo
+      };
+    }
+    case 'RoleList': {
+      const roleList = action.payload;
+      return {
+        ...state,
+        roleList
+      };
+    }
+
+    case 'Permission': {
+      const permission = action.payload;
+      return {
+        ...state,
+        permission
       };
     }
     default:
