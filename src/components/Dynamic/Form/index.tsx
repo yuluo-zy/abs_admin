@@ -108,9 +108,15 @@ function DynamicForm(props: FormProps) {
 
   return (
     <div style={{ paddingRight: '2rem' }}>
-      {
-        DynamicFormNode
-      }
+      <div style={props.formStyles}>
+        {
+          DynamicFormNode
+        }
+        {
+          props.children
+        }
+      </div>
+
       <div className={styles['right-button']}>
         <Button type='primary' icon={<IconCheck />} onClick={useDebounce(() => {
           const values = form.getFieldsValue();

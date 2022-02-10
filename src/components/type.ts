@@ -20,7 +20,8 @@ export interface FormItemProps {
     'multiple' |
     'rate' |
     'password' |
-    'number',
+    'number' |
+    'tree',
   onChange?: () => void,
   field: string,
   options?: any,
@@ -41,6 +42,8 @@ export interface FormProps {
   onSubmit: (value) => void
   onRest?: () => void
   col?: number
+  formStyles?: Recordable
+  children?: any
 }
 
 export interface SearchItem extends FormItemProps {
