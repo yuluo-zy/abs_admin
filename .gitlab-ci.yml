@@ -50,7 +50,7 @@ npm:
     paths:
       - build/*
   only:
-    - tmp-ci
+    - main
     - dev
     - qa
     - master
@@ -64,7 +64,7 @@ docker_build:
     - docker build -t ${REGISTRY}/${REGISTRY_PATH}/${APP_NAME}/${ENV}:${TAG} .
   only:
     - dev
-    - qa
+    - main
     - master
 
 # tag the image and push it to registry
@@ -76,7 +76,7 @@ push-job:
     - docker rmi ${REGISTRY}/${REGISTRY_PATH}/${APP_NAME}/${ENV}:${TAG}
   only:
     - dev
-    - qa
+    - main
     - master
 
 # dev can cd automatically
@@ -101,7 +101,7 @@ deploy-dev:
     - git commit -am "${CI_COMMIT_MESSAGE}"
     - git push origin master
   only:
-    - dev
+    - main
 
 # prod or sit should cd manually
 deploy:
