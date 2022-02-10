@@ -8,6 +8,7 @@ import locale from '@/pages/user/role/locale';
 import DynamicSkeleton from '@/components/Dynamic/Skeleton';
 import { FormItemProps } from '@/components/type';
 import DynamicForm from '@/components/Dynamic/Form';
+import DynamicTree from '@/components/Dynamic/Form/tree';
 
 export default function RoleInfo() {
 
@@ -65,13 +66,12 @@ export default function RoleInfo() {
       <div>
         <DynamicCard title={t['role.content.title']}>
           <DynamicSkeleton key={state.roleId} text={{ rows: 10 }} animation>
-
             <DynamicForm title={state.roleInfo?.name}
                          formItem={roleProps}
-                         col={2}
                          onSubmit={async (value) => {
-                         }} />
-
+                         }}>
+              <DynamicTree />
+            </DynamicForm>
           </DynamicSkeleton>
 
         </DynamicCard>
