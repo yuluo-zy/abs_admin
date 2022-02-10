@@ -8,7 +8,7 @@ import locale from '@/pages/user/role/locale';
 import { RoleContext } from '@/store/context-manager';
 import useDebounce from '@/utils/useSelf';
 
-export interface DataItem {
+export interface RoleItem {
   id?: string;
   role?: string;
   name?: string;
@@ -18,7 +18,7 @@ export interface DataItem {
 }
 
 export interface MessageItemProps {
-  data: DataItem;
+  data: RoleItem;
 }
 
 function MessageItem(props: MessageItemProps) {
@@ -50,6 +50,10 @@ function MessageItem(props: MessageItemProps) {
         payload: data.id
       });
     }
+    dispatch({
+      type: 'RoleInfo',
+      payload: data
+    });
   }, 300);
 
   return useMemo(() => {

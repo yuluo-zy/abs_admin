@@ -40,6 +40,7 @@ export interface FormProps {
   formItem: Array<FormItemProps>
   onSubmit: (value) => void
   onRest?: () => void
+  col?: number
 }
 
 export interface SearchItem extends FormItemProps {
@@ -57,7 +58,7 @@ export interface ModeProps {
 }
 
 export interface DynamicCardProps {
-  title: string;
+  title?: string;
   children: any;
 }
 
