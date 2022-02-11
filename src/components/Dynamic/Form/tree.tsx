@@ -3,7 +3,6 @@ import { Tree } from '@arco-design/web-react';
 
 
 function DynamicTree(props, ref) {
-  // const {ref} = props
 
   const [checked, setChecked] = useState(props.checkedKeys);
 

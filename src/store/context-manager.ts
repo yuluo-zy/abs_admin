@@ -6,12 +6,14 @@ export interface InitialRole {
   roleInfo?: RoleItem;
   roleList?: RoleItem[];
   permission?: any;
+  update: boolean;
 }
 
 export const RoleContext = React.createContext(null);
 
 export const initialRole: InitialRole = {
-  roleId: ''
+  roleId: '',
+  update: false
 };
 
 export default function RoleStore(state: InitialRole, action) {
@@ -43,6 +45,14 @@ export default function RoleStore(state: InitialRole, action) {
       return {
         ...state,
         permission
+      };
+    }
+
+    case 'Update': {
+      const update = action.payload;
+      return {
+        ...state,
+        update
       };
     }
     default:

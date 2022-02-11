@@ -38,7 +38,7 @@ function UserRole() {
   useEffect(() => {
     fetchPermissionList();
     fetchRoleList();
-  }, []);
+  }, [state.update]);
 
   return (
     <RoleContext.Provider value={{ state, dispatch }}>

@@ -1,5 +1,5 @@
 import React, { useContext, useMemo, useRef } from 'react';
-import { Result } from '@arco-design/web-react';
+import { Message, Result } from '@arco-design/web-react';
 import { RoleContext } from '@/store/context-manager';
 import styles from '@/pages/user/role/style/index.module.less';
 import DynamicCard from '@/components/Dynamic/Card';
@@ -10,10 +10,11 @@ import { FormItemProps } from '@/components/type';
 import DynamicForm from '@/components/Dynamic/Form';
 import DynamicTree from '@/components/Dynamic/Form/tree';
 import { cloneDeep } from '@arco-design/web-react/es/Form/utils';
+import { putRole } from '@/api/role';
 
 export default function RoleInfo() {
 
-  const { state } = useContext(RoleContext);
+  const { state, dispatch } = useContext(RoleContext);
   const t = useLocale(locale);
 
   const getTreeDate = (treeList) => {
@@ -26,36 +27,6 @@ export default function RoleInfo() {
       }
     });
   };
-
-  // const reducer = (state, action) => {
-  //   switch (action.type) {
-  //     case 'KEY_UPDATE':
-  //       // eslint-disable-next-line no-console
-  //       console.log('更改');
-  //       const keyList = action.payload;
-  //       // eslint-disable-next-line no-console
-  //       console.log(keyList);
-  //       return {
-  //         ...state,
-  //         keyList
-  //       };
-  //
-  //     default: {
-  //       return state;
-  //     }
-  //   }
-  //
-  // };
-  //
-  // const keyList = {
-  //   keyList: []
-  // };
-  //
-  // const [checked, dispatch] = useReducer(reducer, keyList);
-  //
-  // const getCheckInfo = () => {
-  //   return checked
-  // }
 
 
   const roleProps: Array<FormItemProps> = [
@@ -94,7 +65,6 @@ export default function RoleInfo() {
   ];
   const treeRef = useRef();
   const getTreeChecked = () => {
-    // changeVal就是子组件暴露给父组件的方法
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     return treeRef.current.getTreeChecked();
@@ -117,14 +87,16 @@ export default function RoleInfo() {
                          onSubmit={async (value) => {
                            value['id'] = state.roleId;
                            value['permissionIds'] = getTreeChecked();
-                           // eslint-disable-next-line no-console
-                           console.log(value);
-                           // await putRole(value).then(res => {
-                           //   if (res.data.success === true) {
-                           //     Message.success(t['permission.list.operate.success']);
-                           //   }
-                           // }
-                           // );
+                           await putRole(value).then(res => {
+                               if (res.data.success === true) {
+                                 Message.success(t['role.content.operate.success']);
+                                 dispatch({
+                                   type: 'Update',
+                                   payload: !state.update
+                                 });
+                               }
+                             }
+                           );
                          }} className={styles['role-form']}>
               <DynamicTree ref={treeRef} data={initialValues} checkedKeys={state.roleInfo?.permissionIds} />
             </DynamicForm>
