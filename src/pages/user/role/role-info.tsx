@@ -83,10 +83,6 @@ export default function RoleInfo() {
         }
       }
     );
-    dispatch({
-      type: 'RoleId',
-      payload: ''
-    });
   };
 
   const postRoleInfo = async (value) => {
