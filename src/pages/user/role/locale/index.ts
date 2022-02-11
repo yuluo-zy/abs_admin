@@ -10,7 +10,8 @@ const i18n = {
     'role.content.role.id': '唯一标识',
     'role.content.role.name': '角色名称',
     'role.content.status': '状态',
-    'role.content.remark.info': '备注信息',
+    'role.content.status.normal': '正常',
+    'role.content.status.disabled': '禁用',
     'role.content.remark.describe': '备注说明'
   }
 };

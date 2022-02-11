@@ -7,6 +7,7 @@ import locale from './locale';
 import dayjs from 'dayjs';
 import { IconCheck, IconRefresh } from '@arco-design/web-react/icon';
 import useDebounce from '@/utils/useSelf';
+import cs from 'classnames';
 
 const { Row, Col } = Grid;
 
@@ -57,19 +58,12 @@ function DynamicForm(props: FormProps) {
     }
     return <Input key={index} allowClear />;
   };
+  const { className } = props;
 
   const DynamicFormNode = useMemo(() => {
 
     const round = Math.random();
     if (props.col) {
-      // const row = Math.floor( props.formItem.length / props.col);
-      // const formNode = []
-      // for(let i = 0; i < row ; i++){
-      //   formNode.push(
-      //
-      //
-      //   )
-      // }
       return <Form
         key={round}
         form={form}
@@ -102,21 +96,22 @@ function DynamicForm(props: FormProps) {
       {props.formItem.map(
         (item, index) => DynamicFormItem({ item, index })
       )}
-    </Form>
-  },[props.data]);
+    </Form>;
+  }, [props.data]);
 
 
   return (
-    <div style={{ paddingRight: '2rem' }}>
-      <div style={props.formStyles}>
+    <div style={{ paddingRight: '2rem' }} className={cs(className)}>
+      <div>
         {
           DynamicFormNode
         }
+      </div>
+      <div>
         {
           props.children
         }
       </div>
-
       <div className={styles['right-button']}>
         <Button type='primary' icon={<IconCheck />} onClick={useDebounce(() => {
           const values = form.getFieldsValue();

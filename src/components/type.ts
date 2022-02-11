@@ -42,8 +42,17 @@ export interface FormProps {
   onSubmit: (value) => void
   onRest?: () => void
   col?: number
-  formStyles?: Recordable
+  className?: string | string[]
   children?: any
+}
+
+export interface TreeProps {
+  title?: string,
+  data?: any
+  className?: string | string[]
+  children?: any,
+  checkedKeys: string[],
+  ref?: any
 }
 
 export interface SearchItem extends FormItemProps {

@@ -27,8 +27,10 @@ function UserRole() {
       .then((res) => {
         dispatch({
           type: 'Permission',
-          payload: res.data.result || []
+          payload: res.data.result?.data || []
         });
+        // eslint-disable-next-line no-console
+        console.log(res.data.result?.data);
       });
   }
 
