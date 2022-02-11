@@ -98,7 +98,6 @@ function MessageItem(props: MessageItemProps) {
                     position='rt'
                     onOk={() => {
                       deleteRoleItem(data.id);
-
                     }}
                     onCancel={() => {
                       Message.error({ content: 'cancel' });

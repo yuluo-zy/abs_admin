@@ -13,7 +13,7 @@ function DynamicTree(props, ref) {
   }));
 
   return <div>
-    <div><p>{props.title}</p></div>
+    <div><b>{props.title}</b></div>
     <Tree
       treeData={props.data}
       checkable

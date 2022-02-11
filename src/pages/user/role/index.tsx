@@ -29,8 +29,6 @@ function UserRole() {
           type: 'Permission',
           payload: res.data.result?.data || []
         });
-        // eslint-disable-next-line no-console
-        console.log(res.data.result?.data);
       });
   }
 

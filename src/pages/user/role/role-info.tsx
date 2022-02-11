@@ -10,7 +10,7 @@ import { FormItemProps } from '@/components/type';
 import DynamicForm from '@/components/Dynamic/Form';
 import DynamicTree from '@/components/Dynamic/Form/tree';
 import { cloneDeep } from '@arco-design/web-react/es/Form/utils';
-import { putRole } from '@/api/role';
+import { postRole, putRole } from '@/api/role';
 
 export default function RoleInfo() {
 
@@ -70,6 +70,42 @@ export default function RoleInfo() {
     return treeRef.current.getTreeChecked();
   };
 
+  const putRoleInfo = async (value) => {
+    value['permissionIds'] = getTreeChecked().toString();
+    value['id'] = state.roleId;
+    putRole(value).then(res => {
+        if (res.data.success === true) {
+          Message.success(t['role.content.operate.success']);
+          dispatch({
+            type: 'Update',
+            payload: !state.update
+          });
+        }
+      }
+    );
+    dispatch({
+      type: 'RoleId',
+      payload: ''
+    });
+  };
+
+  const postRoleInfo = async (value) => {
+    value['permissionIds'] = getTreeChecked().toString();
+    postRole(value).then(res => {
+      if (res.data.success === true) {
+        Message.success(t['role.content.operate.success']);
+        dispatch({
+          type: 'Update',
+          payload: !state.update
+        });
+      }
+    });
+    dispatch({
+      type: 'RoleId',
+      payload: ''
+    });
+  };
+
 
   return useMemo(() => {
     if (state.roleId === '') {
@@ -81,28 +117,23 @@ export default function RoleInfo() {
       <div>
         <DynamicCard title={t['role.content.title']}>
           <DynamicSkeleton key={state.roleId} text={{ rows: 10 }} animation>
-            <DynamicForm title={state.roleInfo?.name}
+            <DynamicForm key={state.roleId} title={state.roleInfo?.name}
                          formItem={roleProps}
                          data={state.roleInfo}
                          onSubmit={async (value) => {
-                           value['id'] = state.roleId;
-                           value['permissionIds'] = getTreeChecked().toString();
-                           await putRole(value).then(res => {
-                               if (res.data.success === true) {
-                                 Message.success(t['role.content.operate.success']);
-                                 dispatch({
-                                   type: 'Update',
-                                   payload: !state.update
-                                 });
-                               }
-                             }
-                           );
+                           if (state.roleId === 0) {
+                             postRoleInfo(value);
+                             return;
+                           }
+                           putRoleInfo(value);
                          }} className={styles['role-form']}>
-              <DynamicTree ref={treeRef} data={initialValues} checkedKeys={state.roleInfo?.permissionIds} />
+              <DynamicTree ref={treeRef} title={t['role.content.permission.tree']} data={initialValues}
+                           checkedKeys={state.roleInfo?.permissionIds} />
             </DynamicForm>
           </DynamicSkeleton>
         </DynamicCard>
-      </div>);
+      </div>)
+      ;
   }, [state.roleId, state.roleInfo, state.permission]);
 
-}
+};
