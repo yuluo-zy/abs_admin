@@ -7,6 +7,7 @@ import useLocale from '@/utils/useLocale';
 import locale from '@/pages/user/role/locale';
 import { RoleContext } from '@/store/context-manager';
 import useDebounce from '@/utils/useSelf';
+import { deleteRole } from '@/api/role';
 
 export interface RoleItem {
   id?: string;
@@ -56,6 +57,23 @@ function MessageItem(props: MessageItemProps) {
     });
   }, 300);
 
+  const deleteRoleItem = useDebounce(async (id) => {
+    await deleteRole(id).then(res => {
+        if (res.data.success === true) {
+          Message.success(t['role.content.operate.success']);
+          dispatch({
+            type: 'RoleId',
+            payload: ''
+          });
+          dispatch({
+            type: 'Update',
+            payload: !state.update
+          });
+        }
+      }
+    );
+  }, 200);
+
   return useMemo(() => {
     return (
       <div className={classNames}
@@ -79,13 +97,16 @@ function MessageItem(props: MessageItemProps) {
                     title={t['role.panel.item.delete.title']}
                     position='rt'
                     onOk={() => {
-                      Message.info({ content: 'ok' });
+                      deleteRoleItem(data.id);
+
                     }}
                     onCancel={() => {
                       Message.error({ content: 'cancel' });
                     }}
                   >
-                    <IconDelete />
+                    <IconDelete onClick={(e) => {
+                      e.stopPropagation();
+                    }} />
                   </Popconfirm>
                 </div>
               </div>

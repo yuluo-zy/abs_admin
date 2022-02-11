@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { Button, Typography } from '@arco-design/web-react';
 import styles from './style/index.module.less';
 import MessageList from '@/pages/user/role/message-list';
@@ -9,9 +9,6 @@ import DynamicSkeleton from '@/components/Dynamic/Skeleton';
 export default function RolePanel(props) {
   const { t } = props;
   const { state } = useContext(RoleContext);
-  useEffect(() => {
-
-  }, [state.roleList]);
 
   return useMemo(() => {
       return (

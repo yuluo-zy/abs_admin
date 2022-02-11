@@ -86,7 +86,7 @@ export default function RoleInfo() {
                          data={state.roleInfo}
                          onSubmit={async (value) => {
                            value['id'] = state.roleId;
-                           value['permissionIds'] = getTreeChecked();
+                           value['permissionIds'] = getTreeChecked().toString();
                            await putRole(value).then(res => {
                                if (res.data.success === true) {
                                  Message.success(t['role.content.operate.success']);
@@ -101,7 +101,6 @@ export default function RoleInfo() {
               <DynamicTree ref={treeRef} data={initialValues} checkedKeys={state.roleInfo?.permissionIds} />
             </DynamicForm>
           </DynamicSkeleton>
-
         </DynamicCard>
       </div>);
   }, [state.roleId, state.roleInfo, state.permission]);
