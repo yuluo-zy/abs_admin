@@ -109,7 +109,9 @@ const i18n = {
     'message.seeMore': '查看更多',
     'message.empty': '清空',
     'message.empty.tips': '暂无内容',
-    'message.lang.tips': '语言切换至 '
+    'message.lang.tips': '语言切换至 ',
+    'product.management': '需求管理',
+    'product.management.add': '需求添加'
   }
 };
 

@@ -74,7 +74,6 @@ export const routes: Array<Menu> = [
       }
     ]
   },
-
   {
     name: 'menu.result',
     key: 'result',
@@ -134,6 +133,15 @@ export const routes: Array<Menu> = [
         key: 'user/permission'
       }
     ]
+  },
+  {
+    name: 'product.management',
+    key: 'product',
+    children: [
+      {
+        name: 'product.management.add',
+        key: 'product/demand'
+      }]
   }
 ];
 

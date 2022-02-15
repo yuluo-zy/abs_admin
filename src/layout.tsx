@@ -1,24 +1,25 @@
-import React, { useState, useRef, useMemo, useEffect } from 'react';
-import { Switch, Route, Link, Redirect, useHistory } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb } from '@arco-design/web-react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { Breadcrumb, Layout, Menu } from '@arco-design/web-react';
 import {
-  IconDashboard,
-  IconList,
-  IconSettings,
-  IconFile,
   IconApps,
   IconCheckCircle,
+  IconDashboard,
   IconExclamationCircle,
-  IconUser,
+  IconFile,
+  IconList,
   IconMenuFold,
   IconMenuUnfold,
+  IconNav,
+  IconSettings,
+  IconUser
 } from '@arco-design/web-react/icon';
 import { useSelector } from 'react-redux';
 import qs from 'query-string';
 import NProgress from 'nprogress';
 import Navbar from './components/NavBar';
 import Footer from './components/Footer';
-import { routes, defaultRoute } from './routes';
+import { defaultRoute, routes } from './routes';
 import { isArray } from './utils/is';
 import useLocale from './utils/useLocale';
 import getUrlParams from './utils/getUrlParams';
@@ -50,6 +51,8 @@ function getIconFromKey(key) {
       return <IconExclamationCircle className={styles.icon} />;
     case 'user':
       return <IconUser className={styles.icon} />;
+    case 'product':
+      return <IconNav className={styles.icon} />;
     default:
       return <div className={styles['icon-empty']} />;
   }

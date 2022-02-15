@@ -13,7 +13,7 @@ const addLessLoader = require('customize-cra-less-loader');
 const addProxy = () => (configFunction) => {
   configFunction.proxy = {
     '/api/': {
-      target: 'http://localhost:8886',
+      target: 'http://192.168.8.85:30102',
       changeOrigin: true,
       pathRewrite: { '^/api': '/' }
     }
