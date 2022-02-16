@@ -60,3 +60,39 @@ export default function RoleStore(state: InitialRole, action) {
   }
 }
 
+
+export const ProductDemandContext = React.createContext(null);
+
+export interface InitialProductDemand {
+  stepKey: string,
+  stepList: string[] | []
+}
+
+export const initialProductDemand: InitialProductDemand = {
+  stepKey: '',
+  stepList: []
+};
+
+export function ProductDemandStore(state: InitialProductDemand, action) {
+  switch (action.type) {
+    case 'StepKey': {
+      const stepKey = action.payload;
+      return {
+        ...state,
+        stepKey
+      };
+    }
+    case 'StepList': {
+      const step = action.payload;
+      const stepList: string[] = state.stepList;
+      stepList.push(step);
+      return {
+        ...state,
+        stepList
+      };
+    }
+
+    default:
+      return state;
+  }
+}

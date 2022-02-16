@@ -60,10 +60,9 @@ export default function RolePanel(props) {
           </div>
           <div className={styles['role-panel-content']}>
             <MessageList data={state.roleList} />
-            </div>
-          </DynamicSkeleton>
-        </div>
-      );
-    }, [state.roleList]
-  );
+          </div>
+        </DynamicSkeleton>
+      </div>
+    );
+  }, [state.roleList]);
 }
