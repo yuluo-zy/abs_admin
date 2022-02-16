@@ -86,3 +86,10 @@ export interface ListProps {
   selectItem?: Array<SearchItem>
   onChange?: boolean
 }
+
+export interface MenuItemProps {
+  name: string,
+  key: string,
+  icon?: any,
+  child?: MenuItemProps | MenuItemProps[]
+}
