@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { Link, Redirect, Route, useHistory } from 'react-router-dom';
 import { Breadcrumb, Layout, Menu } from '@arco-design/web-react';
 import {
   IconApps,
@@ -70,7 +70,20 @@ function getFlattenRoutes() {
       }
     });
   }
+
   travel(routes);
+  return res;
+}
+
+function getUrlParamsPrefix(url: string): string[] {
+  const res = [];
+  let temp = '';
+  for (const str of url.split('/')) {
+    if (str.length > 0) {
+      temp = temp + '/' + str;
+      res.push(temp);
+    }
+  }
   return res;
 }
 
@@ -178,7 +191,15 @@ function PageLayout() {
   const paddingStyle = { ...paddingLeft, ...paddingTop };
 
   useEffect(() => {
-    const routeConfig = routeMap.current.get(pathname);
+    const urlParamsPrefix = getUrlParamsPrefix(pathname);
+    let routeConfig = [];
+    while (urlParamsPrefix.length) {
+      const temp = urlParamsPrefix.pop();
+      routeConfig = routeMap.current.get(temp);
+      if (routeConfig && routeConfig.length > 0) {
+        break;
+      }
+    }
     setBreadCrumb(routeConfig || []);
   }, [pathname]);
 
@@ -230,18 +251,18 @@ function PageLayout() {
               </div>
             )}
             <Content>
-              <Switch>
-                {flattenRoutes.map((route, index) => {
-                  return (
-                    <Route
-                      key={index}
-                      path={`/${route.key}`}
-                      component={route.component}
-                    />
-                  );
-                })}
+              {/*<Switch>*/}
+              {flattenRoutes.map((route, index) => {
+                return (
+                  <Route
+                    key={index}
+                    path={`/${route.key}`}
+                    component={route.component}
+                  />
+                );
+              })}
                 <Redirect push to={`/${defaultRoute}`} />
-              </Switch>
+              {/*</Switch>*/}
             </Content>
           </div>
           {showFooter && <Footer />}

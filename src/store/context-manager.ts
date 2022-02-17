@@ -65,12 +65,14 @@ export const ProductDemandContext = React.createContext(null);
 
 export interface InitialProductDemand {
   stepKey: string,
-  stepList: string[] | []
+  stepList: string[] | [],
+  stepRouter: string
 }
 
 export const initialProductDemand: InitialProductDemand = {
   stepKey: '',
-  stepList: []
+  stepList: [],
+  stepRouter: ''
 };
 
 export function ProductDemandStore(state: InitialProductDemand, action) {
@@ -80,6 +82,13 @@ export function ProductDemandStore(state: InitialProductDemand, action) {
       return {
         ...state,
         stepKey
+      };
+    }
+    case 'StepRouter': {
+      const stepRouter = action.payload;
+      return {
+        ...state,
+        stepRouter
       };
     }
     case 'StepList': {

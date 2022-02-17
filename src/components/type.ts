@@ -91,5 +91,6 @@ export interface MenuItemProps {
   name: string,
   key: string,
   icon?: any,
+  path?: string,
   child?: MenuItemProps | MenuItemProps[]
 }
