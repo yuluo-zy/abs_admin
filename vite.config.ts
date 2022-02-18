@@ -5,24 +5,34 @@ import vitePluginForArco from '@arco-plugins/vite-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      // 选项写法
+      '/api': {
+        target: 'http://192.168.8.85:30102',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '/')
+      }
+    }
+  },
   resolve: {
-    alias: [{ find: '@', replacement: '/src' }],
+    alias: [{ find: '@', replacement: '/src' }]
   },
   plugins: [
     react(),
     svgrPlugin({
-      svgrOptions: {},
+      svgrOptions: {}
     }),
     vitePluginForArco({
-      theme: '@arco-themes/react-arco-pro',
-    }),
+      theme: '@arco-themes/react-arco-pro'
+    })
   ],
   css: {
     preprocessorOptions: {
       less: {
         javascriptEnabled: true,
-        modifyVars: {},
-      },
-    },
-  },
+        modifyVars: {}
+      }
+    }
+  }
 });

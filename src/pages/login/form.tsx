@@ -1,11 +1,4 @@
-import {
-  Button,
-  Checkbox,
-  Form,
-  Input,
-  Link,
-  Space,
-} from '@arco-design/web-react';
+import { Button, Checkbox, Form, Input, Link, Space } from '@arco-design/web-react';
 import { FormInstance } from '@arco-design/web-react/es/Form';
 import { IconLock, IconUser } from '@arco-design/web-react/icon';
 import React, { useEffect, useRef, useState } from 'react';
@@ -108,13 +101,6 @@ export default function LoginForm() {
           </div>
           <Button type="primary" long onClick={onSubmitClick} loading={loading}>
             {t['login.form.login']}
-          </Button>
-          <Button
-            type="text"
-            long
-            className={styles['login-form-register-btn']}
-          >
-            {t['login.form.register']}
           </Button>
           <hr />
           <LoginProtocol />
