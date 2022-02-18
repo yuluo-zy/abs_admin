@@ -6,9 +6,12 @@ function DynamicSkeleton(props) {
   const [lazy, setLazy] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
+    const creatInt = setTimeout(() => {
       setLazy(false);
     }, 700);
+    return () => {
+      clearInterval(creatInt);
+    };
   }, []);
 
   return <Skeleton  {...props} loading={lazy} />;

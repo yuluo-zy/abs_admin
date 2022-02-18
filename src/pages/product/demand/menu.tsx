@@ -18,11 +18,6 @@ export default function ProductMenu(props) {
       payload: key
     });
     clickMenuItem(key);
-    // todo
-    dispatch({
-      type: 'StepList',
-      payload: key
-    });
   };
 
   const getItemBadge = (key: string) => {

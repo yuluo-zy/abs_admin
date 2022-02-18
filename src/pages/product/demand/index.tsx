@@ -1,6 +1,5 @@
 import React, { useMemo, useReducer } from 'react';
 import useLocale from '@/pages/product/demand/locale/useLocale';
-import DynamicCard from '@/components/Dynamic/Card';
 import ProductMenu from '@/pages/product/demand/menu';
 import { initialProductDemand, ProductDemandContext, ProductDemandStore } from '@/store/context-manager';
 import styles from './style/index.module.less';
@@ -10,6 +9,7 @@ import { isArray } from '@/utils/is';
 import { MenuItemProps } from '@/components/type';
 import { IconCalendar, IconMindMapping, IconNav, IconSubscribed } from '@arco-design/web-react/icon';
 import NProgress from 'nprogress';
+import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
 
 function getFlattenRoutes(routes) {
   const res = [];
@@ -110,12 +110,12 @@ export default function ProductDemand(props) {
 
 
   return <ProductDemandContext.Provider value={{ state, dispatch }}>
-    <DynamicCard title={t['menu.title']}>
+    <DynamicOuterCard title={t['menu.title']}>
       <div className={styles.layout}>
         <div className={styles.layoutLeftSide}>
           <ProductMenu menu={MenuTree} clickMenuItem={onClickMenuItem} />
         </div>
-        <div className={styles.layoutContent}>
+        <div className={styles['layout-content']}>
           <Switch>
             {flattenRoutes.map((route, index) => {
               return (
@@ -133,6 +133,6 @@ export default function ProductDemand(props) {
         </div>
       </div>
 
-    </DynamicCard>
+    </DynamicOuterCard>
   </ProductDemandContext.Provider>;
 }

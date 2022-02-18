@@ -12,7 +12,9 @@ const i18n = {
     'menu.production.service.selection.requirements.details.pre-fit': '定制预适配模组',
     'menu.production.service.selection.requirements.details.custom.label': '定制标签',
     'menu.production.service.selection.check': '自助校验',
-    'menu.production.service.selection.overview': '需求总览'
+    'menu.production.service.selection.overview': '需求总览',
+
+    'hardware.production.info.title': '产品信息'
   }
 };
 
