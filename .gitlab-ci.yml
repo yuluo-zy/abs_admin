@@ -43,8 +43,8 @@ npm:
     key: $CI_COMMIT_REF_SLUG
     paths:
       - .npm/
-  before_script:
-    - npm ci --cache .npm --prefer-offline
+  #  before_script:
+  #    - npm ci --cache .npm --prefer-offline
   script:
     - npm run build
   artifacts:
