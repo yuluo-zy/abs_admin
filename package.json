@@ -14,7 +14,7 @@
   "dependencies": {
     "@antv/data-set": "^0.11.8",
     "@arco-design/color": "^0.4.0",
-    "@arco-design/web-react": ">=2.0.0",
+    "@arco-design/web-react": "^2.29.0",
     "@loadable/component": "^5.13.2",
     "@turf/transform-scale": "^6.5.0",
     "@turf/triangle-grid": "^6.5.0",
@@ -32,6 +32,7 @@
     "react-color": "^2.18.1",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
+    "react-resizable": "^3.0.4",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "redux": "^4.1.2"
