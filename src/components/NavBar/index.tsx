@@ -9,7 +9,7 @@ import {
   Message,
   Notification,
   Select,
-  Tooltip,
+  Tooltip
 } from '@arco-design/web-react';
 import {
   IconDashboard,
@@ -22,7 +22,7 @@ import {
   IconSettings,
   IconSunFill,
   IconTag,
-  IconUser,
+  IconUser
 } from '@arco-design/web-react/icon';
 import { useDispatch, useSelector } from 'react-redux';
 import { GlobalState } from '@/store';
@@ -160,10 +160,8 @@ function Navbar({ show }: { show: boolean }) {
       <div className={styles.left}>
         <div className={styles.logo}>
           <Logo />
-          <div className={styles['logo-name']}>
-            ESPRESSIF Custom Manufacturing Service
-          </div>
         </div>
+        <div className={styles['logo-name']}>ESPRESSIF Custom Manufacturing Service</div>
       </div>
       <ul className={styles.right}>
         <li>
