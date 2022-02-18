@@ -49,9 +49,8 @@ npm:
     - npm run build
   artifacts:
     paths:
-      - build/*
+      - dist/*
   only:
-    - main
     - dev
     - qa
     - master
@@ -65,7 +64,6 @@ docker_build:
     - docker build -t ${REGISTRY}/${REGISTRY_PATH}/${APP_NAME}/${ENV}:${TAG} .
   only:
     - dev
-    - main
     - master
 
 # tag the image and push it to registry
@@ -77,7 +75,6 @@ push-job:
     - docker rmi ${REGISTRY}/${REGISTRY_PATH}/${APP_NAME}/${ENV}:${TAG}
   only:
     - dev
-    - main
     - master
 
 # dev can cd automatically
@@ -102,7 +99,7 @@ deploy-dev:
     - git commit -am "${CI_COMMIT_MESSAGE}"
     - git push origin master
   only:
-    - main
+    - master
 
 # prod or sit should cd manually
 deploy:

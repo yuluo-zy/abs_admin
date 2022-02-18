@@ -1,22 +1,12 @@
 import React, { useMemo, useReducer } from 'react';
 import useLocale from '@/pages/product/demand/locale/useLocale';
 import ProductMenu from '@/pages/product/demand/menu';
-import {
-  initialProductDemand,
-  ProductDemandContext,
-  ProductDemandStore,
-} from '@/store/context-manager';
+import { initialProductDemand, ProductDemandContext, ProductDemandStore } from '@/store/context-manager';
 import styles from './style/index.module.less';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
-import lazyload from '@/utils/lazyload';
 import { isArray } from '@/utils/is';
 import { MenuItemProps } from '@/components/type';
-import {
-  IconCalendar,
-  IconMindMapping,
-  IconNav,
-  IconSubscribed,
-} from '@arco-design/web-react/icon';
+import { IconCalendar, IconMindMapping, IconNav, IconSubscribed } from '@arco-design/web-react/icon';
 import NProgress from 'nprogress';
 import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
 
@@ -26,9 +16,9 @@ function getFlattenRoutes(routes) {
   function travel(_routes) {
     _routes.forEach((route) => {
       if (route.key && route.path && !route.children) {
-        route.component = lazyload(
-          () => import(`@/pages/product/demand/entry/${route.path}`)
-        );
+        // route.component = lazyload(
+        //   () => import(`@/pages/product/demand/entry/${route.path}`)
+        // );
         res.push(route);
       } else if (isArray(route.children) && route.children.length) {
         travel(route.children);

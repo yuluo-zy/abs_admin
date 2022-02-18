@@ -2,29 +2,11 @@ import React, { useState } from 'react';
 import useLocale from '@/utils/useLocale';
 import locale from './locale';
 import SearchList from '@/components/Dynamic/List';
-import {
-  addUser,
-  getUserList,
-  putUser,
-  putUserLock,
-  putUserPassword,
-  removeUser,
-} from '@/api/user';
-import styles from '@/style/pages.module.less';
-import {
-  Badge,
-  Button,
-  Message,
-  Popconfirm,
-  Typography,
-} from '@arco-design/web-react';
+import { addUser, getUserList, putUser, putUserLock, putUserPassword, removeUser } from '@/api/user';
+import styles from './style/index.module.less';
+import { Badge, Button, Message, Popconfirm, Typography } from '@arco-design/web-react';
 import { CallBackHandle, FormItemProps, SearchItem } from '@/components/type';
-import {
-  IconDelete,
-  IconEdit,
-  IconLock,
-  IconUser,
-} from '@arco-design/web-react/icon';
+import { IconDelete, IconEdit, IconLock, IconUser } from '@arco-design/web-react/icon';
 import DynamicForm from '@/components/Dynamic/Form';
 import DynamicModal from '@/components/Dynamic/Modal';
 
