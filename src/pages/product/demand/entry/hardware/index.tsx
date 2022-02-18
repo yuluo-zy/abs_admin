@@ -14,7 +14,7 @@ const originColumns = [
     title: 'Name',
     dataIndex: 'name',
     fixed: 'left' as const,
-    width: 120,
+    width: 170,
     headerCellStyle: {
       position: 'sticky' as const,
       top: 0,
@@ -24,8 +24,8 @@ const originColumns = [
   {
     title: 'MPN',
     dataIndex: 'mpn',
-    width: 140,
-    bodyCellStyle: bodyCellStyle,
+    width: 200,
+    bodyCellStyle: bodyCellStyle
   },
   {
     title: 'Marketing Status',
@@ -37,7 +37,7 @@ const originColumns = [
     title: 'Type',
     dataIndex: 'type',
     bodyCellStyle: bodyCellStyle,
-    width: 70,
+    width: 80
   },
   {
     title: 'Wi-Fi',
@@ -109,7 +109,8 @@ const originColumns = [
     title: 'MOQ',
     dataIndex: 'moq',
     bodyCellStyle: bodyCellStyle,
-  },
+    width: 70
+  }
 ];
 
 export default function HardwareSelection() {
