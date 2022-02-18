@@ -1,25 +1,25 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, Redirect, Route, useHistory } from 'react-router-dom';
-import { Breadcrumb, Layout, Menu } from '@arco-design/web-react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
+import { Switch, Route, Link, Redirect, useHistory } from 'react-router-dom';
+import { Layout, Menu, Breadcrumb } from '@arco-design/web-react';
+import cs from 'classnames';
 import {
+  IconDashboard,
+  IconList,
+  IconSettings,
+  IconFile,
   IconApps,
   IconCheckCircle,
-  IconDashboard,
   IconExclamationCircle,
-  IconFile,
-  IconList,
+  IconUser,
   IconMenuFold,
   IconMenuUnfold,
-  IconNav,
-  IconSettings,
-  IconUser
 } from '@arco-design/web-react/icon';
 import { useSelector } from 'react-redux';
 import qs from 'query-string';
 import NProgress from 'nprogress';
 import Navbar from './components/NavBar';
 import Footer from './components/Footer';
-import { defaultRoute, routes } from './routes';
+import useRoute from '@/routes';
 import { isArray } from './utils/is';
 import useLocale from './utils/useLocale';
 import getUrlParams from './utils/getUrlParams';
@@ -51,39 +51,25 @@ function getIconFromKey(key) {
       return <IconExclamationCircle className={styles.icon} />;
     case 'user':
       return <IconUser className={styles.icon} />;
-    case 'product':
-      return <IconNav className={styles.icon} />;
     default:
       return <div className={styles['icon-empty']} />;
   }
 }
 
-function getFlattenRoutes() {
+function getFlattenRoutes(routes) {
+  const mod = import.meta.glob('./pages/**/[a-z[]*.tsx');
   const res = [];
   function travel(_routes) {
     _routes.forEach((route) => {
       if (route.key && !route.children) {
-        route.component = lazyload(() => import(`./pages/${route.key}`));
+        route.component = lazyload(mod[`./pages/${route.key}/index.tsx`]);
         res.push(route);
       } else if (isArray(route.children) && route.children.length) {
         travel(route.children);
       }
     });
   }
-
   travel(routes);
-  return res;
-}
-
-function getUrlParamsPrefix(url: string): string[] {
-  const res = [];
-  let temp = '';
-  for (const str of url.split('/')) {
-    if (str.length > 0) {
-      temp = temp + '/' + str;
-      res.push(temp);
-    }
-  }
   return res;
 }
 
@@ -92,20 +78,22 @@ function PageLayout() {
   const history = useHistory();
   const pathname = history.location.pathname;
   const currentComponent = qs.parseUrl(pathname).url.slice(1);
+  const locale = useLocale();
+  const settings = useSelector((state: GlobalState) => state.settings);
+  const userInfo = useSelector((state: GlobalState) => state.userInfo);
+
+  const [routes, defaultRoute] = useRoute(userInfo?.permissions);
   const defaultSelectedKeys = [currentComponent || defaultRoute];
   const paths = (currentComponent || defaultRoute).split('/');
   const defaultOpenKeys = paths.slice(0, paths.length - 1);
-
-  const locale = useLocale();
-  const settings = useSelector((state: GlobalState) => state.settings);
 
   const [breadcrumb, setBreadCrumb] = useState([]);
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [selectedKeys, setSelectedKeys] =
     useState<string[]>(defaultSelectedKeys);
+  const [openKeys, setOpenKeys] = useState<string[]>(defaultOpenKeys);
 
   const routeMap = useRef<Map<string, React.ReactNode[]>>(new Map());
-
   const navbarHeight = 60;
   const menuWidth = collapsed ? 48 : settings.menuWidth;
 
@@ -113,14 +101,34 @@ function PageLayout() {
   const showMenu = settings.menu && urlParams.menu !== false;
   const showFooter = settings.footer && urlParams.footer !== false;
 
-  const flattenRoutes = useMemo(() => getFlattenRoutes() || [], []);
+  const flattenRoutes = useMemo(() => getFlattenRoutes(routes) || [], [routes]);
+
+  function onClickMenuItem(key) {
+    const currentRoute = flattenRoutes.find((r) => r.key === key);
+    const component = currentRoute.component;
+    const preload = component.preload();
+    NProgress.start();
+    preload.then(() => {
+      setSelectedKeys([key]);
+      history.push(currentRoute.path ? currentRoute.path : `/${key}`);
+      NProgress.done();
+    });
+  }
+
+  function toggleCollapse() {
+    setCollapsed((collapsed) => !collapsed);
+  }
+
+  const paddingLeft = showMenu ? { paddingLeft: menuWidth } : {};
+  const paddingTop = showNavbar ? { paddingTop: navbarHeight } : {};
+  const paddingStyle = { ...paddingLeft, ...paddingTop };
 
   function renderRoutes(locale) {
+    routeMap.current.clear();
     const nodes = [];
     function travel(_routes, level, parentNode = []) {
       return _routes.map((route) => {
         const { breadcrumb = true } = route;
-
         const iconDom = getIconFromKey(route.key);
         const titleDom = (
           <>
@@ -136,6 +144,7 @@ function PageLayout() {
             `/${route.key}`,
             breadcrumb ? [...parentNode, route.name] : []
           );
+
           if (level > 1) {
             return <MenuItem key={route.key}>{titleDom}</MenuItem>;
           }
@@ -170,46 +179,20 @@ function PageLayout() {
     return nodes;
   }
 
-  function onClickMenuItem(key) {
-    const currentRoute = flattenRoutes.find((r) => r.key === key);
-    const component = currentRoute.component;
-    const preload = component.preload();
-    NProgress.start();
-    preload.then(() => {
-      setSelectedKeys([key]);
-      history.push(currentRoute.path ? currentRoute.path : `/${key}`);
-      NProgress.done();
-    });
-  }
-
-  function toggleCollapse() {
-    setCollapsed((collapsed) => !collapsed);
-  }
-
-  const paddingLeft = showMenu ? { paddingLeft: menuWidth } : {};
-  const paddingTop = showNavbar ? { paddingTop: navbarHeight } : {};
-  const paddingStyle = { ...paddingLeft, ...paddingTop };
-
   useEffect(() => {
-    const urlParamsPrefix = getUrlParamsPrefix(pathname);
-    let routeConfig = [];
-    while (urlParamsPrefix.length) {
-      const temp = urlParamsPrefix.pop();
-      routeConfig = routeMap.current.get(temp);
-      if (routeConfig && routeConfig.length > 0) {
-        break;
-      }
-    }
+    const routeConfig = routeMap.current.get(pathname);
     setBreadCrumb(routeConfig || []);
   }, [pathname]);
 
   return (
     <Layout className={styles.layout}>
-      {showNavbar && (
-        <div className={styles['layout-navbar']}>
-          <Navbar />
-        </div>
-      )}
+      <div
+        className={cs(styles['layout-navbar'], {
+          [styles['layout-navbar-hidden']]: !showNavbar,
+        })}
+      >
+        <Navbar show={showNavbar} />
+      </div>
       <Layout>
         {showMenu && (
           <Sider
@@ -227,7 +210,10 @@ function PageLayout() {
                 collapse={collapsed}
                 onClickMenuItem={onClickMenuItem}
                 selectedKeys={selectedKeys}
-                defaultOpenKeys={defaultOpenKeys}
+                openKeys={openKeys}
+                onClickSubMenu={(_, openKeys) => {
+                  setOpenKeys(openKeys);
+                }}
               >
                 {renderRoutes(locale)}
               </Menu>
@@ -251,18 +237,24 @@ function PageLayout() {
               </div>
             )}
             <Content>
-              {/*<Switch>*/}
-              {flattenRoutes.map((route, index) => {
-                return (
-                  <Route
-                    key={index}
-                    path={`/${route.key}`}
-                    component={route.component}
-                  />
-                );
-              })}
-                <Redirect push to={`/${defaultRoute}`} />
-              {/*</Switch>*/}
+              <Switch>
+                {flattenRoutes.map((route, index) => {
+                  return (
+                    <Route
+                      key={index}
+                      path={`/${route.key}`}
+                      component={route.component}
+                    />
+                  );
+                })}
+                <Route exact path="/">
+                  <Redirect to={`/${defaultRoute}`} />
+                </Route>
+                <Route
+                  path="*"
+                  component={lazyload(() => import('./pages/exception/403'))}
+                />
+              </Switch>
             </Content>
           </div>
           {showFooter && <Footer />}

@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Card, Grid } from '@arco-design/web-react';
+import { Typography, Card, Grid, Space } from '@arco-design/web-react';
 import axios from 'axios';
 import useLocale from '@/utils/useLocale';
 import HorizontalInterval from '@/components/Chart/horizontal-interval';
 import AreaPolar from '@/components/Chart/area-polar';
-import FactMutiPie from '@/components/Chart/fact-muti-pie';
+import FactMultiPie from '@/components/Chart/fact-multi-pie';
 import locale from './locale';
 import DataOverview from './data-overview';
 import CardList from './card-list';
-import styles from './style/index.module.less';
 
 import './mock';
 
@@ -21,13 +20,13 @@ function DataAnalysis() {
   const [interval, setInterval] = useState([]);
   const [polarLoading, setPolarLoading] = useState(false);
   const [polar, setPolar] = useState({ list: [], fields: [] });
-  const [mutiPieLoading, setMutiPieLoading] = useState(false);
-  const [mutiPie, setMutiPie] = useState([]);
+  const [multiPieLoading, setMultiPieLoading] = useState(false);
+  const [multiPie, setMultiPie] = useState([]);
 
   const getInterval = async () => {
     setLoading(true);
     const { data } = await axios
-      .get('/api/muti-dimension/activity')
+      .get('/api/multi-dimension/activity')
       .finally(() => {
         setLoading(false);
       });
@@ -37,35 +36,35 @@ function DataAnalysis() {
   const getPolar = async () => {
     setPolarLoading(true);
     const { data } = await axios
-      .get('/api/muti-dimension/polar')
+      .get('/api/multi-dimension/polar')
       .finally(() => setPolarLoading(false));
 
     setPolar(data);
   };
 
-  const getMutiPie = async () => {
-    setMutiPieLoading(true);
+  const getMultiPie = async () => {
+    setMultiPieLoading(true);
     const { data } = await axios
-      .get('/api/muti-dimension/content-source')
+      .get('/api/multi-dimension/content-source')
       .finally(() => {
-        setMutiPieLoading(false);
+        setMultiPieLoading(false);
       });
 
-    setMutiPie(data);
+    setMultiPie(data);
   };
 
   useEffect(() => {
     getInterval();
     getPolar();
-    getMutiPie();
+    getMultiPie();
   }, []);
 
   return (
-    <div className={styles.container}>
+    <Space size={16} direction="vertical" style={{ width: '100%' }}>
       <Row gutter={20}>
         <Col span={16}>
           <Card>
-            <Title heading={6} style={{ marginTop: '0px' }}>
+            <Title heading={6}>
               {t['multiDAnalysis.card.title.dataOverview']}
             </Title>
             <DataOverview />
@@ -73,7 +72,7 @@ function DataAnalysis() {
         </Col>
         <Col span={8}>
           <Card>
-            <Title heading={6} style={{ marginTop: '0px' }}>
+            <Title heading={6}>
               {t['multiDAnalysis.card.title.todayActivity']}
             </Title>
             <HorizontalInterval
@@ -83,7 +82,7 @@ function DataAnalysis() {
             />
           </Card>
           <Card>
-            <Title heading={6} style={{ marginTop: '0px' }}>
+            <Title heading={6}>
               {t['multiDAnalysis.card.title.contentTheme']}
             </Title>
             <AreaPolar
@@ -102,15 +101,19 @@ function DataAnalysis() {
       </Row>
       <Row>
         <Col span={24}>
-          <Card style={{ marginBottom: 0 }}>
-            <Title heading={6} style={{ marginTop: '0px' }}>
+          <Card>
+            <Title heading={6}>
               {t['multiDAnalysis.card.title.contentSource']}
             </Title>
-            <FactMutiPie loading={mutiPieLoading} data={mutiPie} height={240} />
+            <FactMultiPie
+              loading={multiPieLoading}
+              data={multiPie}
+              height={240}
+            />
           </Card>
         </Col>
       </Row>
-    </div>
+    </Space>
   );
 }
 export default DataAnalysis;

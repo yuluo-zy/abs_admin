@@ -1,5 +1,11 @@
 import React from 'react';
-import { Link, Card, Divider, Message } from '@arco-design/web-react';
+import {
+  Link,
+  Card,
+  Divider,
+  Message,
+  Typography,
+} from '@arco-design/web-react';
 import {
   IconFile,
   IconStorage,
@@ -7,11 +13,12 @@ import {
   IconMobile,
   IconFire,
 } from '@arco-design/web-react/icon';
-import useLocale from './locale/useLocale';
+import useLocale from '@/utils/useLocale';
+import locale from './locale';
 import styles from './style/shortcuts.module.less';
 
 function Shortcuts() {
-  const t = useLocale();
+  const t = useLocale(locale);
 
   const shortcuts = [
     {
@@ -70,11 +77,13 @@ function Shortcuts() {
   }
 
   return (
-    <Card
-      title={t['workplace.shortcuts']}
-      headerStyle={{ borderBottom: 0 }}
-      extra={<Link>{t['workplace.manage']}</Link>}
-    >
+    <Card>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Typography.Title heading={6}>
+          {t['workplace.shortcuts']}
+        </Typography.Title>
+        <Link>{t['workplace.seeMore']}</Link>
+      </div>
       <div className={styles.shortcuts}>
         {shortcuts.map((shortcut) => (
           <div

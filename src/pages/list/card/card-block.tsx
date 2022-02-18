@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { QualityInspection, BasicCard } from './interface';
+import cs from 'classnames';
 import {
   Button,
   Switch,
@@ -11,8 +11,6 @@ import {
   Menu,
   Skeleton,
 } from '@arco-design/web-react';
-import styles from './style/index.module.less';
-import cs from 'classnames';
 import {
   IconStarFill,
   IconThumbUpFill,
@@ -23,6 +21,11 @@ import {
   IconCloseCircleFill,
   IconMore,
 } from '@arco-design/web-react/icon';
+import PermissionWrapper from '@/components/PermissionWrapper';
+import useLocale from '@/utils/useLocale';
+import locale from './locale';
+import { QualityInspection, BasicCard } from './interface';
+import styles from './style/index.module.less';
 
 interface CardBlockType {
   type: 'quality' | 'service' | 'rules';
@@ -46,6 +49,7 @@ function CardBlock(props: CardBlockType) {
   const [status, setStatus] = useState(card.status);
   const [loading, setLoading] = useState(props.loading);
 
+  const t = useLocale(locale);
   const changeStatus = async () => {
     setLoading(true);
     await new Promise((resolve) =>
@@ -81,14 +85,27 @@ function CardBlock(props: CardBlockType) {
     if (type === 'quality') {
       return (
         <>
-          <Button
-            type="primary"
-            style={{ marginLeft: '12px' }}
-            loading={loading}
+          <PermissionWrapper
+            requiredPermissions={[
+              { resource: /^menu.list.*/, actions: ['read'] },
+            ]}
           >
-            质检
-          </Button>
-          <Button loading={loading}>删除</Button>
+            <Button
+              type="primary"
+              style={{ marginLeft: '12px' }}
+              loading={loading}
+            >
+              {t['cardList.options.qualityInspection']}
+            </Button>
+          </PermissionWrapper>
+
+          <PermissionWrapper
+            requiredPermissions={[
+              { resource: /^menu.list.*/, actions: ['write'] },
+            ]}
+          >
+            <Button loading={loading}>{t['cardList.options.remove']}</Button>
+          </PermissionWrapper>
         </>
       );
     }
@@ -98,11 +115,13 @@ function CardBlock(props: CardBlockType) {
         <>
           {status === 1 ? (
             <Button loading={loading} onClick={changeStatus}>
-              取消开通
+              {t['cardList.options.cancel']}
             </Button>
           ) : (
             <Button type="outline" loading={loading} onClick={changeStatus}>
-              {status === 0 ? '开通服务' : '续约服务'}
+              {status === 0
+                ? t['cardList.options.subscribe']
+                : t['cardList.options.renewal']}
             </Button>
           )}
         </>
@@ -123,7 +142,7 @@ function CardBlock(props: CardBlockType) {
           className={styles.status}
           size="small"
         >
-          已启用
+          {t['cardList.tag.activated']}
         </Tag>
       );
     }
@@ -136,7 +155,7 @@ function CardBlock(props: CardBlockType) {
             className={styles.status}
             size="small"
           >
-            已开通
+            {t['cardList.tag.opened']}
           </Tag>
         );
       case 2:
@@ -147,7 +166,7 @@ function CardBlock(props: CardBlockType) {
             className={styles.status}
             size="small"
           >
-            已过期
+            {t['cardList.tag.expired']}
           </Tag>
         );
       default:
@@ -186,6 +205,7 @@ function CardBlock(props: CardBlockType) {
     <Card
       bordered={true}
       className={className}
+      size="small"
       title={
         loading ? (
           <Skeleton

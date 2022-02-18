@@ -2,7 +2,6 @@ const i18n = {
   'en-US': {
     'menu.user': 'Personal Center',
     'menu.user.setting': 'User Setting',
-    'menu.user.setting.login.out': 'User Setting',
     'userSetting.menu.title.info': 'Personal Information',
     'userSetting.menu.title.account': 'Account Setting',
     'userSetting.menu.title.password': 'Password',
@@ -73,13 +72,12 @@ const i18n = {
     'userSetting.verified.operation.view': 'View',
     'userSetting.verified.operation.revoke': 'Revoke',
     'userSetting.verified.status.success': 'passed',
-    'userSetting.verified.status.waiting': 'under review'
+    'userSetting.verified.status.waiting': 'under review',
   },
 
   'zh-CN': {
     'menu.user': '个人中心',
     'menu.user.setting': '用户设置',
-    'menu.user.setting.login.out': '退出成功',
     'userSetting.menu.title.info': '个人信息',
     'userSetting.menu.title.account': '账号设置',
     'userSetting.menu.title.password': '密码',
@@ -145,8 +143,8 @@ const i18n = {
     'userSetting.verified.operation.view': '查看',
     'userSetting.verified.operation.revoke': '撤回',
     'userSetting.verified.status.success': '已通过',
-    'userSetting.verified.status.waiting': '审核中'
-  }
+    'userSetting.verified.status.waiting': '审核中',
+  },
 };
 
 export default i18n;

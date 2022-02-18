@@ -1,6 +1,13 @@
 import React, { useContext } from 'react';
 import dayjs from 'dayjs';
-import { Button, DatePicker, Form, Grid, Input, Select } from '@arco-design/web-react';
+import {
+  Form,
+  Input,
+  Select,
+  DatePicker,
+  Button,
+  Grid,
+} from '@arco-design/web-react';
 import { GlobalContext } from '@/context';
 import locale from './locale';
 import useLocale from '@/utils/useLocale';
@@ -36,37 +43,36 @@ function SearchForm(props: {
       <Form
         form={form}
         className={styles['search-form']}
-        labelAlign='left'
+        labelAlign="left"
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 19 }}
       >
-        {lang && <Row gutter={24}>
+        <Row gutter={24}>
           <Col span={colSpan}>
-            <Form.Item label={t['searchTable.columns.id']} field='id'>
+            <Form.Item label={t['searchTable.columns.id']} field="id">
               <Input placeholder={t['searchForm.id.placeholder']} allowClear />
             </Form.Item>
           </Col>
-
           <Col span={colSpan}>
-            <Form.Item label={t['searchTable.columns.name']} field='name'>
-              {lang && (<Input
+            <Form.Item label={t['searchTable.columns.name']} field="name">
+              <Input
                 allowClear
                 placeholder={t['searchForm.name.placeholder']}
-              />)}
+              />
             </Form.Item>
           </Col>
           <Col span={colSpan}>
             <Form.Item
               label={t['searchTable.columns.contentType']}
-              field='contentType'
+              field="contentType"
             >
               <Select
                 placeholder={t['searchForm.all.placeholder']}
                 options={ContentType.map((item, index) => ({
                   label: item,
-                  value: index
+                  value: index,
                 }))}
-                mode='multiple'
+                mode="multiple"
                 allowClear
               />
             </Form.Item>
@@ -74,15 +80,15 @@ function SearchForm(props: {
           <Col span={colSpan}>
             <Form.Item
               label={t['searchTable.columns.filterType']}
-              field='filterType'
+              field="filterType"
             >
               <Select
                 placeholder={t['searchForm.all.placeholder']}
                 options={FilterType.map((item, index) => ({
                   label: item,
-                  value: index
+                  value: index,
                 }))}
-                mode='multiple'
+                mode="multiple"
                 allowClear
               />
             </Form.Item>
@@ -90,7 +96,7 @@ function SearchForm(props: {
           <Col span={colSpan}>
             <Form.Item
               label={t['searchTable.columns.createdTime']}
-              field='createdTime'
+              field="createdTime"
             >
               <DatePicker.RangePicker
                 allowClear
@@ -100,22 +106,22 @@ function SearchForm(props: {
             </Form.Item>
           </Col>
           <Col span={colSpan}>
-            <Form.Item label={t['searchTable.columns.status']} field='status'>
+            <Form.Item label={t['searchTable.columns.status']} field="status">
               <Select
                 placeholder={t['searchForm.all.placeholder']}
                 options={Status.map((item, index) => ({
                   label: item,
-                  value: index
+                  value: index,
                 }))}
-                mode='multiple'
+                mode="multiple"
                 allowClear
               />
             </Form.Item>
           </Col>
-        </Row>}
+        </Row>
       </Form>
       <div className={styles['right-button']}>
-        <Button type='primary' icon={<IconSearch />} onClick={handleSubmit}>
+        <Button type="primary" icon={<IconSearch />} onClick={handleSubmit}>
           {t['searchTable.form.search']}
         </Button>
         <Button icon={<IconRefresh />} onClick={handleReset}>

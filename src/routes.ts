@@ -1,26 +1,30 @@
-export const defaultRoute = 'dashboard/workplace';
+import auth, { AuthParams } from '@/utils/authentication';
+import { useEffect, useMemo, useState } from 'react';
 
-export interface Menu {
-  name: string,
-  key: string,
-  children?: Array<Menu>,
-  breadcrumb?: boolean
-}
+export type Route = AuthParams & {
+  name: string;
+  key: string;
+  breadcrumb?: boolean;
+  children?: Route[];
+};
 
-export const routes: Array<Menu> = [
+export const routes: Route[] = [
   {
     name: 'menu.dashboard',
     key: 'dashboard',
     children: [
       {
         name: 'menu.dashboard.workplace',
-        key: 'dashboard/workplace'
+        key: 'dashboard/workplace',
       },
       {
         name: 'menu.dashboard.monitor',
-        key: 'dashboard/monitor'
-      }
-    ]
+        key: 'dashboard/monitor',
+        requiredPermissions: [
+          { resource: 'menu.dashboard.monitor', actions: ['write'] },
+        ],
+      },
+    ],
   },
   {
     name: 'menu.visualization',
@@ -28,13 +32,27 @@ export const routes: Array<Menu> = [
     children: [
       {
         name: 'menu.visualization.dataAnalysis',
-        key: 'visualization/data-analysis'
+        key: 'visualization/data-analysis',
+        requiredPermissions: [
+          { resource: 'menu.visualization.dataAnalysis', actions: ['read'] },
+        ],
       },
       {
         name: 'menu.visualization.multiDimensionDataAnalysis',
-        key: 'visualization/multi-dimension-data-analysis'
-      }
-    ]
+        key: 'visualization/multi-dimension-data-analysis',
+        requiredPermissions: [
+          {
+            resource: 'menu.visualization.dataAnalysis',
+            actions: ['read', 'write'],
+          },
+          {
+            resource: 'menu.visualization.multiDimensionDataAnalysis',
+            actions: ['write'],
+          },
+        ],
+        oneOfPerm: true,
+      },
+    ],
   },
   {
     name: 'menu.list',
@@ -42,13 +60,13 @@ export const routes: Array<Menu> = [
     children: [
       {
         name: 'menu.list.searchTable',
-        key: 'list/search-table'
+        key: 'list/search-table',
       },
       {
         name: 'menu.list.cardList',
-        key: 'list/card'
-      }
-    ]
+        key: 'list/card',
+      },
+    ],
   },
   {
     name: 'menu.form',
@@ -56,13 +74,19 @@ export const routes: Array<Menu> = [
     children: [
       {
         name: 'menu.form.group',
-        key: 'form/group'
+        key: 'form/group',
+        requiredPermissions: [
+          { resource: 'menu.form.group', actions: ['read', 'write'] },
+        ],
       },
       {
         name: 'menu.form.step',
-        key: 'form/step'
-      }
-    ]
+        key: 'form/step',
+        requiredPermissions: [
+          { resource: 'menu.form.step', actions: ['read'] },
+        ],
+      },
+    ],
   },
   {
     name: 'menu.profile',
@@ -70,10 +94,11 @@ export const routes: Array<Menu> = [
     children: [
       {
         name: 'menu.profile.basic',
-        key: 'profile/basic'
-      }
-    ]
+        key: 'profile/basic',
+      },
+    ],
   },
+
   {
     name: 'menu.result',
     key: 'result',
@@ -81,14 +106,14 @@ export const routes: Array<Menu> = [
       {
         name: 'menu.result.success',
         key: 'result/success',
-        breadcrumb: false
+        breadcrumb: false,
       },
       {
         name: 'menu.result.error',
         key: 'result/error',
-        breadcrumb: false
-      }
-    ]
+        breadcrumb: false,
+      },
+    ],
   },
   {
     name: 'menu.exception',
@@ -96,17 +121,17 @@ export const routes: Array<Menu> = [
     children: [
       {
         name: 'menu.exception.403',
-        key: 'exception/403'
+        key: 'exception/403',
       },
       {
         name: 'menu.exception.404',
-        key: 'exception/404'
+        key: 'exception/404',
       },
       {
         name: 'menu.exception.500',
-        key: 'exception/500'
-      }
-    ]
+        key: 'exception/500',
+      },
+    ],
   },
   {
     name: 'menu.user',
@@ -114,35 +139,14 @@ export const routes: Array<Menu> = [
     children: [
       {
         name: 'menu.user.info',
-        key: 'user/info'
+        key: 'user/info',
       },
       {
         name: 'menu.user.setting',
-        key: 'user/setting'
+        key: 'user/setting',
       },
-      {
-        name: 'menu.user.manage',
-        key: 'user/manage'
-      },
-      {
-        name: 'menu.user.role',
-        key: 'user/role'
-      },
-      {
-        name: 'menu.user.permission',
-        key: 'user/permission'
-      }
-    ]
+    ],
   },
-  {
-    name: 'product.management',
-    key: 'product',
-    children: [
-      {
-        name: 'product.management.add',
-        key: 'product/demand'
-      }]
-  }
 ];
 
 export const getName = (path: string, routes) => {
@@ -155,3 +159,66 @@ export const getName = (path: string, routes) => {
     }
   });
 };
+
+export const generatePermission = (role: string) => {
+  const actions = role === 'admin' ? ['*'] : ['read'];
+  const result = {};
+  routes.forEach((item) => {
+    if (item.children) {
+      item.children.forEach((child) => {
+        result[child.name] = actions;
+      });
+    }
+  });
+  return result;
+};
+
+const useRoute = (userPermission): [Route[], string] => {
+  const filterRoute = (routes: Route[], arr = []): Route[] => {
+    if (!routes.length) {
+      return [];
+    }
+    for (const route of routes) {
+      const { requiredPermissions, oneOfPerm } = route;
+      let visible = true;
+      if (requiredPermissions) {
+        visible = auth({ requiredPermissions, oneOfPerm }, userPermission);
+      }
+
+      if (!visible) {
+        continue;
+      }
+      if (route.children && route.children.length) {
+        const newRoute = { ...route, children: [] };
+        filterRoute(route.children, newRoute.children);
+        if (newRoute.children.length) {
+          arr.push(newRoute);
+        }
+      } else {
+        arr.push({ ...route });
+      }
+    }
+
+    return arr;
+  };
+
+  const [permissionRoute, setPermissionRoute] = useState(routes);
+
+  useEffect(() => {
+    const newRoutes = filterRoute(routes);
+    setPermissionRoute(newRoutes);
+  }, [userPermission]);
+
+  const defaultRoute = useMemo(() => {
+    const first = permissionRoute[0];
+    if (first) {
+      const firstRoute = first?.children?.[0]?.key || first.key;
+      return firstRoute;
+    }
+    return '';
+  }, [permissionRoute]);
+
+  return [permissionRoute, defaultRoute];
+};
+
+export default useRoute;
