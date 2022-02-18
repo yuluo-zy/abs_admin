@@ -9,109 +9,106 @@ import ResizableTitle from '@/components/Dynamic/Resizeable';
 
 const bodyCellStyle = {};
 const originColumns = [
-
   {
     title: 'Name',
     dataIndex: 'name',
     bodyCellStyle: bodyCellStyle,
     fixed: 'left' as const,
-    width: 120
+    width: 120,
   },
   {
     title: 'MPN',
     dataIndex: 'mpn',
     width: 140,
-    bodyCellStyle: bodyCellStyle
+    bodyCellStyle: bodyCellStyle,
   },
   {
     title: 'Marketing Status',
     dataIndex: 'status',
     bodyCellStyle: bodyCellStyle,
-    width: 140
+    width: 140,
   },
   {
     title: 'Type',
     dataIndex: 'type',
     bodyCellStyle: bodyCellStyle,
-    width: 70
-  }
-  ,
+    width: 70,
+  },
   {
     title: 'Wi-Fi',
     dataIndex: 'wifi',
     bodyCellStyle: bodyCellStyle,
-    width: 200
+    width: 200,
   },
   {
     title: 'Bluetooth',
     dataIndex: 'bluetooth',
     bodyCellStyle: bodyCellStyle,
-    width: 200
+    width: 200,
   },
   {
     title: 'Temp (°C)',
     dataIndex: 'operatingTemp',
     bodyCellStyle: bodyCellStyle,
-    width: 100
+    width: 100,
   },
   {
     title: 'Gpio',
     dataIndex: 'gpio',
     bodyCellStyle: bodyCellStyle,
-    width: 50
+    width: 50,
   },
   {
     title: 'Flash (MB)',
     dataIndex: 'flash',
     bodyCellStyle: bodyCellStyle,
-    width: 60
+    width: 60,
   },
   {
     title: 'SRAM (KB)',
     dataIndex: 'sram',
     bodyCellStyle: bodyCellStyle,
-    width: 60
+    width: 60,
   },
   {
     title: 'PSRAM (MB)',
     dataIndex: 'psram',
     bodyCellStyle: bodyCellStyle,
-    width: 60
+    width: 60,
   },
   {
     title: 'ROM (KB)',
     dataIndex: 'rom',
     bodyCellStyle: bodyCellStyle,
-    width: 60
+    width: 60,
   },
   {
     title: 'Freq. (MHz)',
     dataIndex: 'freq',
     bodyCellStyle: bodyCellStyle,
-    width: 60
+    width: 60,
   },
   {
     title: 'Size (mm)',
     dataIndex: 'dimensions',
     bodyCellStyle: bodyCellStyle,
-    width: 120
+    width: 120,
   },
   {
     title: 'MPQ/SPQ',
     dataIndex: 'spq',
     bodyCellStyle: bodyCellStyle,
-    width: 70
+    width: 70,
   },
   {
     title: 'MOQ',
     dataIndex: 'moq',
     bodyCellStyle: bodyCellStyle,
-    width: 70
-  }
+    width: 70,
+  },
 ];
 
 export default function HardwareSelection() {
-
   const [productList, setProductList] = useState([]);
   useEffect(() => {
     fetchProductionList();
@@ -121,10 +118,10 @@ export default function HardwareSelection() {
       if (column.width) {
         return {
           ...column,
-          onHeaderCell: col => ({
+          onHeaderCell: (col) => ({
             width: col.width,
-            onResize: handleResize(index)
-          })
+            onResize: handleResize(index),
+          }),
         };
       }
       return column;
@@ -133,11 +130,11 @@ export default function HardwareSelection() {
 
   function handleResize(index) {
     return (e, { size }) => {
-      setColumns(prevColumns => {
+      setColumns((prevColumns) => {
         const nextColumns = [...prevColumns];
         nextColumns[index] = {
           ...nextColumns[index],
-          width: size.width
+          width: size.width,
         };
         return nextColumns;
       });
@@ -146,41 +143,44 @@ export default function HardwareSelection() {
 
   const components = {
     header: {
-      th: ResizableTitle
-    }
+      th: ResizableTitle,
+    },
   };
 
   function fetchProductionList() {
-    getProductionInfo()
-      .then((res) => {
-        setProductList(res.data.result);
-      });
+    getProductionInfo().then((res) => {
+      setProductList(res.data.result);
+    });
   }
 
   const t = useLocale();
 
-  return <DynamicCard>
-    <DynamicOuterCard title={t['hardware.production.info.title']}>
-      <div><p>kjhkjhkjh</p></div>
-    </DynamicOuterCard>
-    <DynamicOuterCard>
-      <DynamicSkeleton text={{ rows: 10, width: '90rem' }}>
+  return (
+    <DynamicCard>
+      <DynamicOuterCard title={t['hardware.production.info.title']}>
         <div>
-          <Table
-            scroll={{ x: true, y: 600 }}
-            border
-            borderCell
-            components={components}
-            size={'mini'}
-            columns={columns}
-            data={productList}
-            pagination={false}
-            rowSelection={{
-              pureKeys: true
-            }}
-          />
+          <p>kjhkjhkjh</p>
         </div>
-      </DynamicSkeleton>
-    </DynamicOuterCard>
-  </DynamicCard>;
+      </DynamicOuterCard>
+      <DynamicOuterCard>
+        <DynamicSkeleton text={{ rows: 10, width: '90rem' }}>
+          <div>
+            <Table
+              scroll={{ x: true, y: 600 }}
+              border
+              borderCell
+              components={components}
+              size={'mini'}
+              columns={columns}
+              data={productList}
+              pagination={false}
+              rowSelection={{
+                pureKeys: true,
+              }}
+            />
+          </div>
+        </DynamicSkeleton>
+      </DynamicOuterCard>
+    </DynamicCard>
+  );
 }

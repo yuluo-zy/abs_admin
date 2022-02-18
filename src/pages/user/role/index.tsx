@@ -13,25 +13,22 @@ function UserRole() {
   const t = useLocale(locale);
 
   function fetchRoleList() {
-    getRole()
-      .then((res) => {
-        dispatch({
-          type: 'RoleList',
-          payload: res.data.result || []
-        });
+    getRole().then((res) => {
+      dispatch({
+        type: 'RoleList',
+        payload: res.data.result || [],
       });
+    });
   }
 
   function fetchPermissionList() {
-    getPermission()
-      .then((res) => {
-        dispatch({
-          type: 'Permission',
-          payload: res.data.result?.data || []
-        });
+    getPermission().then((res) => {
+      dispatch({
+        type: 'Permission',
+        payload: res.data.result?.data || [],
       });
+    });
   }
-
 
   useEffect(() => {
     fetchPermissionList();

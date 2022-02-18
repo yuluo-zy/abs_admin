@@ -13,12 +13,11 @@ import { cloneDeep } from '@arco-design/web-react/es/Form/utils';
 import { postRole, putRole } from '@/api/role';
 
 export default function RoleInfo() {
-
   const { state, dispatch } = useContext(RoleContext);
   const t = useLocale(locale);
 
   const getTreeDate = (treeList) => {
-    treeList.forEach(ele => {
+    treeList.forEach((ele) => {
       ele['title'] = ele['name'];
       ele['key'] = ele['id'];
       ele['icon'] = undefined;
@@ -28,21 +27,32 @@ export default function RoleInfo() {
     });
   };
 
-
   const roleProps: Array<FormItemProps> = [
     {
       label: t['role.content.role.id'],
       type: 'input',
       field: 'role',
       required: true,
-      rules: [{ required: true, message: t['permission.list.operate.error'], minLength: 2 }]
+      rules: [
+        {
+          required: true,
+          message: t['permission.list.operate.error'],
+          minLength: 2,
+        },
+      ],
     },
     {
       label: t['role.content.role.name'],
       type: 'input',
       field: 'name',
       required: true,
-      rules: [{ required: true, message: t['permission.list.operate.error'], minLength: 2 }]
+      rules: [
+        {
+          required: true,
+          message: t['permission.list.operate.error'],
+          minLength: 2,
+        },
+      ],
     },
     {
       label: t['role.content.status'],
@@ -51,17 +61,29 @@ export default function RoleInfo() {
       required: true,
       options: [
         { label: t['role.content.status.normal'], value: 1 },
-        { label: t['role.content.status.disabled'], value: 2 }
+        { label: t['role.content.status.disabled'], value: 2 },
       ],
-      rules: [{ required: true, message: t['permission.list.operate.error'], minLength: 2 }]
+      rules: [
+        {
+          required: true,
+          message: t['permission.list.operate.error'],
+          minLength: 2,
+        },
+      ],
     },
     {
       label: t['role.content.remark.describe'],
       type: 'input',
       field: 'description',
       required: true,
-      rules: [{ required: true, message: t['permission.list.operate.error'], minLength: 2 }]
-    }
+      rules: [
+        {
+          required: true,
+          message: t['permission.list.operate.error'],
+          minLength: 2,
+        },
+      ],
+    },
   ];
   const treeRef = useRef();
   const getTreeChecked = () => {
@@ -73,39 +95,39 @@ export default function RoleInfo() {
   const putRoleInfo = async (value) => {
     value['permissionIds'] = getTreeChecked().toString();
     value['id'] = state.roleId;
-    putRole(value).then(res => {
-        if (res.data.success === true) {
-          Message.success(t['role.content.operate.success']);
-          dispatch({
-            type: 'Update',
-            payload: !state.update
-          });
-        }
-      }
-    );
-  };
-
-  const postRoleInfo = async (value) => {
-    value['permissionIds'] = getTreeChecked().toString();
-    postRole(value).then(res => {
+    putRole(value).then((res) => {
       if (res.data.success === true) {
         Message.success(t['role.content.operate.success']);
         dispatch({
           type: 'Update',
-          payload: !state.update
+          payload: !state.update,
+        });
+      }
+    });
+  };
+
+  const postRoleInfo = async (value) => {
+    value['permissionIds'] = getTreeChecked().toString();
+    postRole(value).then((res) => {
+      if (res.data.success === true) {
+        Message.success(t['role.content.operate.success']);
+        dispatch({
+          type: 'Update',
+          payload: !state.update,
         });
       }
     });
     dispatch({
       type: 'RoleId',
-      payload: ''
+      payload: '',
     });
   };
 
-
   return useMemo(() => {
     if (state.roleId === '') {
-      return <Result status='404' className={styles['layout-content-result']} />;
+      return (
+        <Result status="404" className={styles['layout-content-result']} />
+      );
     }
     const initialValues = cloneDeep(state.permission);
     getTreeDate(initialValues);
@@ -113,23 +135,30 @@ export default function RoleInfo() {
       <div>
         <DynamicCard title={t['role.content.title']}>
           <DynamicSkeleton key={state.roleId} text={{ rows: 10 }} animation>
-            <DynamicForm key={state.roleId} title={state.roleInfo?.name}
-                         formItem={roleProps}
-                         data={state.roleInfo}
-                         onSubmit={async (value) => {
-                           if (state.roleId === 0) {
-                             postRoleInfo(value);
-                             return;
-                           }
-                           putRoleInfo(value);
-                         }} className={styles['role-form']}>
-              <DynamicTree ref={treeRef} title={t['role.content.permission.tree']} data={initialValues}
-                           checkedKeys={state.roleInfo?.permissionIds} />
+            <DynamicForm
+              key={state.roleId}
+              title={state.roleInfo?.name}
+              formItem={roleProps}
+              data={state.roleInfo}
+              onSubmit={async (value) => {
+                if (state.roleId === 0) {
+                  postRoleInfo(value);
+                  return;
+                }
+                putRoleInfo(value);
+              }}
+              className={styles['role-form']}
+            >
+              <DynamicTree
+                ref={treeRef}
+                title={t['role.content.permission.tree']}
+                data={initialValues}
+                checkedKeys={state.roleInfo?.permissionIds}
+              />
             </DynamicForm>
           </DynamicSkeleton>
         </DynamicCard>
-      </div>)
-      ;
+      </div>
+    );
   }, [state.roleId, state.roleInfo, state.permission]);
-
-};
+}

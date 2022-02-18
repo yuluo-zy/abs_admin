@@ -27,8 +27,8 @@ const i18n = {
     'userTable.columns.user.operation.error': '校验失败，请检查字段！',
     'userTable.columns.user.operation.success': '操作成功',
     'userTable.columns.user.operation.lock': '确定要改变本用户锁定嘛?',
-    'userTable.columns.user.operation.delete': '确定要将本用户删除嘛?'
-  }
+    'userTable.columns.user.operation.delete': '确定要将本用户删除嘛?',
+  },
 };
 
 export default i18n;

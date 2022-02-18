@@ -19,7 +19,7 @@ const i18n = {
     'searchTable.operation.download': 'Download',
     'searchForm.id.placeholder': 'Please enter the collection ID',
     'searchForm.name.placeholder': 'Please enter the collection name',
-    'searchForm.all.placeholder': 'all'
+    'searchForm.all.placeholder': 'all',
   },
   'zh-CN': {
     'menu.list': '列表页',
@@ -41,8 +41,8 @@ const i18n = {
     'searchTable.operation.download': '下载',
     'searchForm.id.placeholder': '请输入集合编号',
     'searchForm.name.placeholder': '请输入集合名称',
-    'searchForm.all.placeholder': '全部'
-  }
+    'searchForm.all.placeholder': '全部',
+  },
 };
 
 export default i18n;

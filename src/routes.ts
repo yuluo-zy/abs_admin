@@ -8,6 +8,8 @@ export type Route = AuthParams & {
   children?: Route[];
 };
 
+export const defaultRoute = 'dashboard/workplace';
+
 export const routes: Route[] = [
   {
     name: 'menu.dashboard',

@@ -1,7 +1,7 @@
 import { Resizable } from 'react-resizable';
 import React from 'react';
 
-const ResizableTitle = props => {
+const ResizableTitle = (props) => {
   const { onResize, width, ...restProps } = props;
 
   if (!width) {
@@ -12,10 +12,10 @@ const ResizableTitle = props => {
     <Resizable
       width={width}
       height={0}
-      handle={resizeHandle => (
+      handle={(resizeHandle) => (
         <span
           className={`react-resizable-handle react-resizable-handle-${resizeHandle}`}
-          onClick={e => {
+          onClick={(e) => {
             e.stopPropagation();
           }}
         />

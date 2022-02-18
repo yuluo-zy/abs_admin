@@ -2,14 +2,31 @@ import React, { useState } from 'react';
 import useLocale from '@/utils/useLocale';
 import locale from './locale';
 import SearchList from '@/components/Dynamic/List';
-import { addUser, getUserList, putUser, putUserLock, putUserPassword, removeUser } from '@/api/user';
+import {
+  addUser,
+  getUserList,
+  putUser,
+  putUserLock,
+  putUserPassword,
+  removeUser,
+} from '@/api/user';
 import styles from '@/style/pages.module.less';
-import { Badge, Button, Message, Popconfirm, Typography } from '@arco-design/web-react';
+import {
+  Badge,
+  Button,
+  Message,
+  Popconfirm,
+  Typography,
+} from '@arco-design/web-react';
 import { CallBackHandle, FormItemProps, SearchItem } from '@/components/type';
-import { IconDelete, IconEdit, IconLock, IconUser } from '@arco-design/web-react/icon';
+import {
+  IconDelete,
+  IconEdit,
+  IconLock,
+  IconUser,
+} from '@arco-design/web-react/icon';
 import DynamicForm from '@/components/Dynamic/Form';
 import DynamicModal from '@/components/Dynamic/Modal';
-
 
 function UserManage() {
   const { Text } = Typography;
@@ -27,14 +44,26 @@ function UserManage() {
       type: 'input',
       field: 'username',
       required: true,
-      rules: [{ required: true, message: t['userTable.columns.user.name.error'], minLength: 2 }]
+      rules: [
+        {
+          required: true,
+          message: t['userTable.columns.user.name.error'],
+          minLength: 2,
+        },
+      ],
     },
     {
       label: t['userTable.columns.user.password'],
       field: 'password',
       type: 'password',
       required: true,
-      rules: [{ required: true, message: t['userTable.columns.user.password.error'], minLength: 8 }]
+      rules: [
+        {
+          required: true,
+          message: t['userTable.columns.user.password.error'],
+          minLength: 8,
+        },
+      ],
     },
     {
       label: t['userTable.columns.user.role'],
@@ -44,13 +73,12 @@ function UserManage() {
         {
           type: 'array',
           minLength: 1,
-          message: t['userTable.columns.user.role.error']
-        }
+          message: t['userTable.columns.user.role.error'],
+        },
       ],
       required: true,
-      options: ['1', '2', '3', '4', '5']
-    }
-
+      options: ['1', '2', '3', '4', '5'],
+    },
   ];
 
   const postUserPassword: Array<FormItemProps> = [
@@ -59,15 +87,27 @@ function UserManage() {
       field: 'password1',
       type: 'password',
       required: true,
-      rules: [{ required: true, message: t['userTable.columns.user.password.error'], minLength: 8 }]
+      rules: [
+        {
+          required: true,
+          message: t['userTable.columns.user.password.error'],
+          minLength: 8,
+        },
+      ],
     },
     {
       label: t['userTable.columns.user.password.again'],
       field: 'password2',
       type: 'password',
       required: true,
-      rules: [{ required: true, message: t['userTable.columns.user.password.error'], minLength: 8 }]
-    }
+      rules: [
+        {
+          required: true,
+          message: t['userTable.columns.user.password.error'],
+          minLength: 8,
+        },
+      ],
+    },
   ];
 
   const getColumns = (callback: () => void) => {
@@ -76,13 +116,13 @@ function UserManage() {
         title: t['userTable.columns.id'],
         dataIndex: 'id',
         render: (value) => <Text>{value}</Text>,
-        width: 70
+        width: 70,
       },
       {
         title: t['userTable.columns.name'],
         dataIndex: 'username',
         render: (value) => <Text copyable>{value}</Text>,
-        width: 200
+        width: 200,
       },
       {
         title: t['userTable.columns.roleList'],
@@ -92,7 +132,7 @@ function UserManage() {
           <div className={styles['content-type']}>
             <p>{value}</p>
           </div>
-        )
+        ),
       },
       {
         title: t['userTable.columns.lock'],
@@ -100,10 +140,14 @@ function UserManage() {
         width: 100,
         render: (x) => {
           if (x === 1) {
-            return <Badge status='error' text={t['userTable.columns.locked']} />;
+            return (
+              <Badge status="error" text={t['userTable.columns.locked']} />
+            );
           }
-          return <Badge status='success' text={t['userTable.columns.unlock']} />;
-        }
+          return (
+            <Badge status="success" text={t['userTable.columns.unlock']} />
+          );
+        },
       },
       {
         title: t['searchTable.columns.operations'],
@@ -117,39 +161,42 @@ function UserManage() {
                 icon={<IconEdit />}
                 onClick={() => {
                   setUserInfo({
-                    ...record
+                    ...record,
                   });
                   setPasswordVisible(!passwordVisible);
-                }}>
-              </Button>
+                }}
+              ></Button>
 
               <Button
                 icon={<IconUser />}
                 onClick={() => {
                   setUserInfo({
-                    ...record
+                    ...record,
                   });
                   setVisible(!visible);
-                }}>
-              </Button>
+                }}
+              ></Button>
 
               <Popconfirm
                 title={t['userTable.columns.user.operation.lock']}
                 onOk={() => {
-                  putUserLock(record.id, { locked: record.locked === 0 ? 1 : 0 }).then(res => {
+                  putUserLock(record.id, {
+                    locked: record.locked === 0 ? 1 : 0,
+                  }).then((res) => {
                     if (res.data.success === true) {
                       callback();
                       Message.info({ content: 'ok' });
                     }
                   });
-                }}>
+                }}
+              >
                 <Button icon={<IconLock />} />
               </Popconfirm>
 
               <Popconfirm
                 title={t['userTable.columns.user.operation.delete']}
                 onOk={() => {
-                  removeUser({ ids: [record.id] }).then(res => {
+                  removeUser({ ids: [record.id] }).then((res) => {
                     if (res.data.success === true) {
                       callback();
                       Message.info({ content: 'ok' });
@@ -161,61 +208,59 @@ function UserManage() {
               </Popconfirm>
             </div>
           </>
-        )
-      }
+        ),
+      },
     ];
   };
-
 
   const createUser = (props: CallBackHandle) => {
     return (
       <DynamicForm
         title={t['userTable.columns.operations.add']}
         formItem={createUserItem}
-        onSubmit={
-          (async value => {
-            await addUser(value).then(res => {
-              if (res.data.success === true) {
-                Message.success(t['userTable.columns.user.operation.success']);
-                props.confirmCallback();
-              }
-            });
-          })
-        }
+        onSubmit={async (value) => {
+          await addUser(value).then((res) => {
+            if (res.data.success === true) {
+              Message.success(t['userTable.columns.user.operation.success']);
+              props.confirmCallback();
+            }
+          });
+        }}
       />
     );
   };
 
-  const selectItem: Array<SearchItem> = [{
-    name: t['userTable.columns.id'],
-    field: 'id',
-    type: 'input'
-  },
+  const selectItem: Array<SearchItem> = [
+    {
+      name: t['userTable.columns.id'],
+      field: 'id',
+      type: 'input',
+    },
     {
       name: t['userTable.columns.name'],
       field: 'username',
-      type: 'input'
+      type: 'input',
     },
     {
       name: t['userTable.columns.lock'],
       field: 'locked',
       type: 'select',
-      options: [t['userTable.columns.unlock'], t['userTable.columns.locked']]
-    }
+      options: [t['userTable.columns.unlock'], t['userTable.columns.locked']],
+    },
   ];
-
 
   return (
     <div>
-      <SearchList name={t['manage.list.name']}
-                  add={createUser}
-                  addName={t['userTable.columns.operations.add']}
-                  download={false}
-                  upload={false}
-                  fetchRemoteData={getUserList}
-                  getColumns={getColumns}
-                  select={true}
-                  selectItem={selectItem}
+      <SearchList
+        name={t['manage.list.name']}
+        add={createUser}
+        addName={t['userTable.columns.operations.add']}
+        download={false}
+        upload={false}
+        fetchRemoteData={getUserList}
+        getColumns={getColumns}
+        select={true}
+        selectItem={selectItem}
       />
 
       {/*用户角色*/}
@@ -233,17 +278,15 @@ function UserManage() {
           title={t['userTable.columns.operations.edit']}
           data={userInfo}
           formItem={createUserItem}
-          onSubmit={
-            (async value => {
-              await putUser(value).then(res => {
-                if (res.data.success === true) {
-                  Message.success(t['userTable.columns.user.operation.success']);
-                  setVisible(false);
-                  setConfirmLoading(false);
-                }
-              });
-            })
-          }
+          onSubmit={async (value) => {
+            await putUser(value).then((res) => {
+              if (res.data.success === true) {
+                Message.success(t['userTable.columns.user.operation.success']);
+                setVisible(false);
+                setConfirmLoading(false);
+              }
+            });
+          }}
         />
       </DynamicModal>
 
@@ -261,28 +304,29 @@ function UserManage() {
         <DynamicForm
           title={t['userTable.columns.user.password.edit']}
           formItem={postUserPassword}
-          onSubmit={
-            (async value => {
-              const { password1, password2 } = value;
-              if (password1 !== password2) {
-                Message.error({
-                  content: t['userTable.columns.user.password.again.error'],
-                  duration: 10000
-                });
-                return;
-              }
-              await putUserPassword(userInfo.id, {password: password1 }).then(res => {
+          onSubmit={async (value) => {
+            const { password1, password2 } = value;
+            if (password1 !== password2) {
+              Message.error({
+                content: t['userTable.columns.user.password.again.error'],
+                duration: 10000,
+              });
+              return;
+            }
+            await putUserPassword(userInfo.id, { password: password1 }).then(
+              (res) => {
                 if (res.data.success === true) {
-                  Message.success(t['userTable.columns.user.operation.success']);
+                  Message.success(
+                    t['userTable.columns.user.operation.success']
+                  );
                   setPasswordVisible(false);
                   setConfirmLoading(false);
                 }
-              });
-            })
-          }
+              }
+            );
+          }}
         />
       </DynamicModal>
-
     </div>
   );
 }

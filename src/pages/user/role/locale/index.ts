@@ -15,8 +15,8 @@ const i18n = {
     'role.content.status.disabled': '禁用',
     'role.content.remark.describe': '备注说明',
     'role.content.permission.tree': '角色权限',
-    'role.content.role.add': '新建角色'
-  }
+    'role.content.role.add': '新建角色',
+  },
 };
 
 export default i18n;

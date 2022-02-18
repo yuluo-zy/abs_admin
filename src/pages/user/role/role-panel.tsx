@@ -23,21 +23,21 @@ export default function RolePanel(props) {
       roleList.unshift({
         id: 0,
         role: '',
-        name: t['role.content.role.add']
+        name: t['role.content.role.add'],
       });
     }
 
     dispatch({
       type: 'RoleList',
-      payload: roleList
+      payload: roleList,
     });
     dispatch({
       type: 'RoleId',
-      payload: 0
+      payload: 0,
     });
     dispatch({
       type: 'RoleInfo',
-      payload: roleList[0]
+      payload: roleList[0],
     });
   };
 
@@ -53,9 +53,15 @@ export default function RolePanel(props) {
               {t['role.panel.title']}
             </Typography.Title>
             <div>
-              <Button type='secondary' icon={<IconPlus />} onClick={() => {
-                addRole();
-              }}>{t['role.panel.add']}</Button>
+              <Button
+                type="secondary"
+                icon={<IconPlus />}
+                onClick={() => {
+                  addRole();
+                }}
+              >
+                {t['role.panel.add']}
+              </Button>
             </div>
           </div>
           <div className={styles['role-panel-content']}>
