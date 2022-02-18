@@ -44,7 +44,6 @@ npm:
     paths:
       - .npm/
   before_script:
-    - npm cache clean
     - npm ci --cache .npm --prefer-offline
   script:
     - npm run build
