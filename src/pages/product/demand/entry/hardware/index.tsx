@@ -16,7 +16,7 @@ const originColumns = [
     fixed: 'left' as const,
     width: 120,
     headerCellStyle: {
-      position: 'sticky',
+      position: 'sticky' as const,
       top: 0,
       left: 40
     }
