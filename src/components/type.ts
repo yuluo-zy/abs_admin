@@ -108,3 +108,8 @@ export interface RoleItem {
 export interface MessageItemProps {
   data: RoleItem;
 }
+
+export interface UserToken {
+  token: string;
+  username: string;
+}

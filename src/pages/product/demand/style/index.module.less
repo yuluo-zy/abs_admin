@@ -1,0 +1,105 @@
+.menu-demo-round {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 30% 0.5rem 0.5rem;
+  margin-right: 1.5rem;
+
+
+  :global(.arco-menu-inner) {
+    overflow-y: auto;
+    padding-top: 1rem;
+    padding-bottom: 4rem;
+  }
+
+  :global(.arco-menu-item ) {
+    background-color: var(--color-neutral-1);
+  }
+
+  :global(.arco-menu-inline-header ) {
+    background-color: var(--color-neutral-1);
+  }
+
+  :global( .arco-menu-pop) {
+    background-color: var(--color-neutral-1);
+  }
+
+  :global(.arco-menu) {
+    height: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    opacity: 0.8;
+    border-radius: 3%;
+    background-color: var(--color-neutral-1);
+    transition: 0.5s all ease-in-out;
+  }
+
+  :global(.arco-menu:not(.arco-menu-collapse) .arco-menu-collapse-button ) {
+    right: 0;
+    bottom: 8px;
+    transform: translateX(50%);
+  }
+
+  :global(.arco-menu:not(.arco-menu-collapse)::before) {
+    content: '';
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    background-color: inherit;
+    box-shadow: -4px 0 10px var(--color-bg-4), 0 0 1px rgba(0, 0, 0, 0.3);
+    transform: translateX(50%);
+  }
+
+  :global(.arco-menu-collapse) {
+    height: auto;
+    padding-top: 24px;
+    padding-bottom: 138px;
+    border-radius: 22px;
+  }
+
+  :global(.arco-menu-collapse-button) {
+    right: 8px;
+    bottom: 8px;
+    transition: 0.5s all ease-in-out;
+
+    &:hover {
+      background-color: var(--color-text-4);
+      transform: scale(1.2, 1.2);
+    }
+  }
+
+  :global(.arco-menu-collapse-button) {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+
+}
+
+.menu-item {
+  position: relative;
+  padding: 2px;
+  padding-right: 4px;
+}
+
+
+.layout {
+  display: flex;
+
+
+  &-left-side {
+    flex-basis: 270px;
+  }
+
+  &-content {
+    flex: 1;
+    padding: 0 16px;
+    overflow: auto;
+  }
+}
+
+.card-shadow {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+}
+
