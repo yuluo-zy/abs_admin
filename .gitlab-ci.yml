@@ -46,6 +46,7 @@ npm:
   #  before_script:
   #    - npm ci --cache .npm --prefer-offline
   script:
+    - npm install
     - npm run build
   artifacts:
     paths:
