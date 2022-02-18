@@ -1,4 +1,5 @@
 import defaultSettings from '../settings.json';
+
 export interface GlobalState {
   settings?: typeof defaultSettings;
   userInfo?: {
@@ -10,6 +11,7 @@ export interface GlobalState {
     email?: string;
     permissions: Record<string, string[]>;
   };
+  menu?;
 }
 
 const initialState: GlobalState = {
@@ -34,6 +36,13 @@ export default function store(state = initialState, action) {
         ...state,
         userLoading,
         userInfo,
+      };
+    }
+    case 'update-userMenu': {
+      const { menu } = action.payload;
+      return {
+        ...state,
+        menu,
       };
     }
     default:

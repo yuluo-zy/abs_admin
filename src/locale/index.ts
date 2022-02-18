@@ -115,6 +115,8 @@ const i18n = {
     'message.empty.tips': '暂无内容',
     'message.lang.tips': '语言切换至 ',
     'navbar.search.placeholder': '输入内容查询',
+    'product.management': '需求管理',
+    'product.management.add': '需求添加',
   },
 };
 

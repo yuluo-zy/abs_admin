@@ -1,5 +1,5 @@
 import React from 'react';
-import { RoleItem } from '@/pages/user/role/message-list/item';
+import { RoleItem } from '@/components/type';
 
 export interface InitialRole {
   roleId: string;
@@ -13,7 +13,7 @@ export const RoleContext = React.createContext(null);
 
 export const initialRole: InitialRole = {
   roleId: '',
-  update: false
+  update: false,
 };
 
 export default function RoleStore(state: InitialRole, action) {
@@ -22,21 +22,21 @@ export default function RoleStore(state: InitialRole, action) {
       const roleId = action.payload;
       return {
         ...state,
-        roleId
+        roleId,
       };
     }
     case 'RoleInfo': {
       const roleInfo = action.payload;
       return {
         ...state,
-        roleInfo
+        roleInfo,
       };
     }
     case 'RoleList': {
       const roleList = action.payload;
       return {
         ...state,
-        roleList
+        roleList,
       };
     }
 
@@ -44,7 +44,7 @@ export default function RoleStore(state: InitialRole, action) {
       const permission = action.payload;
       return {
         ...state,
-        permission
+        permission,
       };
     }
 
@@ -52,7 +52,7 @@ export default function RoleStore(state: InitialRole, action) {
       const update = action.payload;
       return {
         ...state,
-        update
+        update,
       };
     }
     default:
@@ -60,19 +60,18 @@ export default function RoleStore(state: InitialRole, action) {
   }
 }
 
-
 export const ProductDemandContext = React.createContext(null);
 
 export interface InitialProductDemand {
-  stepKey: string,
-  stepList: string[] | [],
-  stepRouter: string
+  stepKey: string;
+  stepList: string[] | [];
+  stepRouter: string;
 }
 
 export const initialProductDemand: InitialProductDemand = {
   stepKey: '',
   stepList: [],
-  stepRouter: ''
+  stepRouter: '',
 };
 
 export function ProductDemandStore(state: InitialProductDemand, action) {
@@ -81,14 +80,14 @@ export function ProductDemandStore(state: InitialProductDemand, action) {
       const stepKey = action.payload;
       return {
         ...state,
-        stepKey
+        stepKey,
       };
     }
     case 'StepRouter': {
       const stepRouter = action.payload;
       return {
         ...state,
-        stepRouter
+        stepRouter,
       };
     }
     case 'StepList': {
@@ -97,7 +96,7 @@ export function ProductDemandStore(state: InitialProductDemand, action) {
       stepList.push(step);
       return {
         ...state,
-        stepList
+        stepList,
       };
     }
 

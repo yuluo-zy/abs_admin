@@ -145,6 +145,28 @@ export const routes: Route[] = [
         name: 'menu.user.setting',
         key: 'user/setting',
       },
+      {
+        name: 'menu.user.manage',
+        key: 'user/manage',
+      },
+      {
+        name: 'menu.user.role',
+        key: 'user/role',
+      },
+      {
+        name: 'menu.user.permission',
+        key: 'user/permission',
+      },
+    ],
+  },
+  {
+    name: 'product.management',
+    key: 'product',
+    children: [
+      {
+        name: 'product.management.add',
+        key: 'product/demand',
+      },
     ],
   },
 ];
@@ -212,8 +234,7 @@ const useRoute = (userPermission): [Route[], string] => {
   const defaultRoute = useMemo(() => {
     const first = permissionRoute[0];
     if (first) {
-      const firstRoute = first?.children?.[0]?.key || first.key;
-      return firstRoute;
+      return first?.children?.[0]?.key || first.key;
     }
     return '';
   }, [permissionRoute]);
