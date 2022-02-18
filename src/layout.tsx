@@ -13,6 +13,7 @@ import {
   IconUser,
   IconMenuFold,
   IconMenuUnfold,
+  IconNav,
 } from '@arco-design/web-react/icon';
 import { useSelector } from 'react-redux';
 import qs from 'query-string';
@@ -51,6 +52,8 @@ function getIconFromKey(key) {
       return <IconExclamationCircle className={styles.icon} />;
     case 'user':
       return <IconUser className={styles.icon} />;
+    case 'product':
+      return <IconNav className={styles.icon} />;
     default:
       return <div className={styles['icon-empty']} />;
   }
@@ -70,6 +73,18 @@ function getFlattenRoutes(routes) {
     });
   }
   travel(routes);
+  return res;
+}
+
+function getUrlParamsPrefix(url: string): string[] {
+  const res = [];
+  let temp = '';
+  for (const str of url.split('/')) {
+    if (str.length > 0) {
+      temp = temp + '/' + str;
+      res.push(temp);
+    }
+  }
   return res;
 }
 
@@ -180,7 +195,15 @@ function PageLayout() {
   }
 
   useEffect(() => {
-    const routeConfig = routeMap.current.get(pathname);
+    const urlParamsPrefix = getUrlParamsPrefix(pathname);
+    let routeConfig = [];
+    while (urlParamsPrefix.length) {
+      const temp = urlParamsPrefix.pop();
+      routeConfig = routeMap.current.get(temp);
+      if (routeConfig && routeConfig.length > 0) {
+        break;
+      }
+    }
     setBreadCrumb(routeConfig || []);
   }, [pathname]);
 
