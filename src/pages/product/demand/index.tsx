@@ -9,16 +9,18 @@ import { MenuItemProps } from '@/components/type';
 import { IconCalendar, IconMindMapping, IconNav, IconSubscribed } from '@arco-design/web-react/icon';
 import NProgress from 'nprogress';
 import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
+import lazyload from '@/utils/lazyload';
 
 function getFlattenRoutes(routes) {
   const res = [];
+  const mod = import.meta.glob('./entry/**/[a-z[]*.tsx');
 
   function travel(_routes) {
     _routes.forEach((route) => {
       if (route.key && route.path && !route.children) {
-        // route.component = lazyload(
-        //   () => import(`@/pages/product/demand/entry/${route.path}`)
-        // );
+        route.component = lazyload(
+          mod[`./entry/${route.path}/index.tsx`]
+        );
         res.push(route);
       } else if (isArray(route.children) && route.children.length) {
         travel(route.children);

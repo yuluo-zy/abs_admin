@@ -1,5 +1,6 @@
 import { Resizable } from 'react-resizable';
 import React from 'react';
+import './style/styles.css';
 
 const ResizableTitle = (props) => {
   const { onResize, width, ...restProps } = props;

@@ -6,6 +6,7 @@ import { getProductionInfo } from '@/api/production';
 import { Table } from '@arco-design/web-react';
 import DynamicSkeleton from '@/components/Dynamic/Skeleton';
 import ResizableTitle from '@/components/Dynamic/Resizeable';
+import style from './style/index.module.less';
 
 const bodyCellStyle = {};
 const originColumns = [
@@ -104,7 +105,6 @@ const originColumns = [
     title: 'MOQ',
     dataIndex: 'moq',
     bodyCellStyle: bodyCellStyle,
-    width: 70,
   },
 ];
 
@@ -166,6 +166,7 @@ export default function HardwareSelection() {
         <DynamicSkeleton text={{ rows: 10, width: '90rem' }}>
           <div>
             <Table
+              className={style['table-demo-resizable-column']}
               scroll={{ x: true, y: 600 }}
               border
               borderCell
