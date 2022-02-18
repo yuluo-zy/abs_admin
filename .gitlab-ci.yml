@@ -99,6 +99,7 @@ deploy-dev:
     - git commit -am "${CI_COMMIT_MESSAGE}"
     - git push origin master
   only:
+    - main
     - master
 
 # prod or sit should cd manually
