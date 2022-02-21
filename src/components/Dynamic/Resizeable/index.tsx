@@ -4,7 +4,6 @@ import '/node_modules/react-resizable/css/styles.css';
 
 const ResizableTitle = (props) => {
   const { onResize, width, ...restProps } = props;
-  console.log(props);
   if (!width) {
     return <th {...restProps} />;
   }

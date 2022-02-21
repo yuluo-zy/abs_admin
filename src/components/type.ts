@@ -113,3 +113,8 @@ export interface UserToken {
   token: string;
   username: string;
 }
+
+export interface ProductSelectItem {
+  name: string,
+  select: string[] | []
+}

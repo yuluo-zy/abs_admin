@@ -3,10 +3,13 @@ import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
 import DynamicCard from '@/components/Dynamic/Card';
 import useLocale from '@/pages/product/demand/locale/useLocale';
 import { getProductionInfo } from '@/api/production';
-import { Table } from '@arco-design/web-react';
+import { Button, Radio, Space, Table, Typography } from '@arco-design/web-react';
 import DynamicSkeleton from '@/components/Dynamic/Skeleton';
 import ResizableTitle from '@/components/Dynamic/Resizeable';
 import style from './style/index.module.less';
+import { ProductSelectItem } from '@/components/type';
+import cs from 'classnames';
+import { IconDelete } from '@arco-design/web-react/icon';
 
 const bodyCellStyle = {};
 const originColumns = [
@@ -31,7 +34,7 @@ const originColumns = [
     title: 'Marketing Status',
     dataIndex: 'status',
     bodyCellStyle: bodyCellStyle,
-    width: 140,
+    width: 150
   },
   {
     title: 'Type',
@@ -43,67 +46,67 @@ const originColumns = [
     title: 'Wi-Fi',
     dataIndex: 'wifi',
     bodyCellStyle: bodyCellStyle,
-    width: 200,
+    width: 200
   },
   {
     title: 'Bluetooth',
     dataIndex: 'bluetooth',
     bodyCellStyle: bodyCellStyle,
-    width: 200,
+    width: 200
   },
   {
     title: 'Temp (°C)',
     dataIndex: 'operatingTemp',
     bodyCellStyle: bodyCellStyle,
-    width: 100,
+    width: 100
   },
   {
     title: 'Gpio',
     dataIndex: 'gpio',
     bodyCellStyle: bodyCellStyle,
-    width: 50,
+    width: 50
   },
   {
     title: 'Flash (MB)',
     dataIndex: 'flash',
     bodyCellStyle: bodyCellStyle,
-    width: 60,
+    width: 60
   },
   {
     title: 'SRAM (KB)',
     dataIndex: 'sram',
     bodyCellStyle: bodyCellStyle,
-    width: 60,
+    width: 60
   },
   {
     title: 'PSRAM (MB)',
     dataIndex: 'psram',
     bodyCellStyle: bodyCellStyle,
-    width: 60,
+    width: 60
   },
   {
     title: 'ROM (KB)',
     dataIndex: 'rom',
     bodyCellStyle: bodyCellStyle,
-    width: 60,
+    width: 60
   },
   {
     title: 'Freq. (MHz)',
     dataIndex: 'freq',
     bodyCellStyle: bodyCellStyle,
-    width: 60,
+    width: 60
   },
   {
     title: 'Size (mm)',
     dataIndex: 'dimensions',
     bodyCellStyle: bodyCellStyle,
-    width: 120,
+    width: 120
   },
   {
     title: 'MPQ/SPQ',
     dataIndex: 'spq',
     bodyCellStyle: bodyCellStyle,
-    width: 70,
+    width: 100
   },
   {
     title: 'MOQ',
@@ -113,7 +116,69 @@ const originColumns = [
   }
 ];
 
+
 export default function HardwareSelection() {
+  const t = useLocale();
+  const socSelect: ProductSelectItem[] = [
+    {
+      name: t['hardware.production.info.soc'],
+      select: ['Single Core', 'Dual Core']
+    },
+    {
+      name: t['hardware.production.info.soc.antenna'],
+      select: ['N/A', 'PCB', 'IPEX']
+    },
+    {
+      name: t['hardware.production.info.soc.package'],
+      select: ['QFN56(7*7)', 'QFN48(5*5)', 'QFN48(6*6)',
+        'LGA48(7*7)', 'QFN32(5*5)', 'QFN32(5*5)', 'QFN28(4*4)']
+    },
+    {
+      name: t['hardware.production.info.soc.model'],
+      select: ['ESP8685', 'ESP32-S3', 'ESP32-C3', 'ESP32-S2', 'ESP32', 'ESP8266']
+    },
+    {
+      name: t['hardware.production.info.soc.temperature'],
+      select: ['-40 - 85', '-40 - 105', '-40 - 125']
+    },
+    {
+      name: t['hardware.production.info.soc.flash'],
+      select: ['1', '2', '4', '8', '16']
+    },
+    {
+      name: t['hardware.production.info.soc.psram'],
+      select: ['0', '2', '8']
+    }
+  ];
+  const moduleSelect: ProductSelectItem[] = [
+    {
+      name: t['hardware.production.info.module.model'],
+      select: ['ESP8685', 'ESP32-S3', 'ESP32-C3', 'ESP32-S2', 'ESP32', 'ESP8266']
+    },
+    {
+      name: t['hardware.production.info.module.temperature'],
+      select: ['-40 - 85', '-40 - 105', '-40 - 125']
+    },
+    {
+      name: t['hardware.production.info.module.flash'],
+      select: ['1', '2', '4', '8', '16']
+    },
+    {
+      name: t['hardware.production.info.module.psram'],
+      select: ['0', '2', '8']
+    }
+  ];
+
+  const product = [
+    {
+      name: t['hardware.production.info.chip'],
+      description: t['hardware.production.info.chip.description']
+    },
+    {
+      name: t['hardware.production.info.modules'],
+      description: t['hardware.production.info.modules.description']
+    }
+  ];
   const [productList, setProductList] = useState([]);
   useEffect(() => {
     fetchProductionList();
@@ -125,8 +190,8 @@ export default function HardwareSelection() {
           ...column,
           onHeaderCell: (col) => ({
             width: col.width,
-            onResize: handleResize(index),
-          }),
+            onResize: handleResize(index)
+          })
         };
       }
       return column;
@@ -139,7 +204,7 @@ export default function HardwareSelection() {
         const nextColumns = [...prevColumns];
         nextColumns[index] = {
           ...nextColumns[index],
-          width: size.width,
+          width: size.width
         };
         return nextColumns;
       });
@@ -148,8 +213,8 @@ export default function HardwareSelection() {
 
   const components = {
     header: {
-      th: ResizableTitle,
-    },
+      th: ResizableTitle
+    }
   };
 
   function fetchProductionList() {
@@ -158,33 +223,83 @@ export default function HardwareSelection() {
     });
   }
 
-  const t = useLocale();
+  const [selectItem, setSelectItem] = useState(-1);
+
+  const onEmpty = () => {
+    setSelectItem(-1);
+  };
+
 
   return (
     <DynamicCard>
       <DynamicOuterCard title={t['hardware.production.info.title']}>
-        <div>
-          <p>kjhkjhkjh</p>
+        <div className={style['product']}>
+          <Radio.Group direction='vertical' value={selectItem}>
+            {[socSelect, moduleSelect].map((item, index) => {
+              return (
+                <Radio key={index} value={index} onClick={() => {
+                  setSelectItem(index);
+                }}>
+                  {({ checked }) => {
+                    return (
+                      <Space
+                        align='center'
+                        className={cs(style['custom-radio-card'], {
+                          [style['custom-radio-card-checked']]: checked
+                        })}
+                      >
+                        <div className={style['custom-radio-card-mask']}>
+                          <div className={style['custom-radio-card-mask-dot']} />
+                        </div>
+                        <div>
+                          <div className={style['custom-radio-card-title']}>{product[index].name}</div>
+                          <Typography.Text type='secondary'>{product[index].description}</Typography.Text>
+                        </div>
+                      </Space>
+                    );
+                  }}
+                </Radio>
+              );
+            })}
+          </Radio.Group>
+          <div className={style['select']}>
+            {
+              selectItem !== -1 && [socSelect, moduleSelect][selectItem].map((item, index) => {
+                return <div className={style['select-item']} key={index}>
+                  <div className={style['select-item-title']}>
+                    {item.name}
+                  </div>
+                  <Radio.Group direction='vertical' key={index}>
+                    {item.select.map((select_item, index) => {
+                      return <Radio value={select_item}>{select_item}</Radio>;
+                    })}
+                  </Radio.Group>
+                </div>
+                  ;
+              })
+            }
+          </div>
+        </div>
+        <div className={style['product-operate']}><Button size={'large'} icon={<IconDelete />}
+                                                          onClick={onEmpty}>{t['hardware.production.info.operate']}</Button>
         </div>
       </DynamicOuterCard>
       <DynamicOuterCard>
         <DynamicSkeleton text={{ rows: 10, width: '90rem' }}>
-          <div>
-            <Table
-              className={style['table-resizable-column']}
-              scroll={{ x: true, y: 600 }}
-              border
-              borderCell
-              components={components}
-              size={'mini'}
-              columns={columns}
-              data={productList}
-              pagination={false}
-              rowSelection={{
-                pureKeys: true,
-              }}
-            />
-          </div>
+          <Table
+            className={style['table-resizable-column']}
+            scroll={{ x: true, y: 600 }}
+            border
+            borderCell
+            components={components}
+            size={'mini'}
+            columns={columns}
+            data={productList}
+            pagination={false}
+            rowSelection={{
+              pureKeys: true
+            }}
+          />
         </DynamicSkeleton>
       </DynamicOuterCard>
     </DynamicCard>
