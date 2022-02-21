@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import SearchList from '@/components/Dynamic/List';
 import { addUser, getUserList, putUser, putUserLock, putUserPassword, removeUser } from '@/api/user';

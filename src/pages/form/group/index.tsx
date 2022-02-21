@@ -1,18 +1,8 @@
-import React, { useState, useRef } from 'react';
-import {
-  Typography,
-  Card,
-  Form,
-  Select,
-  Input,
-  Grid,
-  Space,
-  Button,
-  Message,
-} from '@arco-design/web-react';
+import React, { useRef, useState } from 'react';
+import { Button, Card, Form, Grid, Input, Message, Select, Space, Typography } from '@arco-design/web-react';
 import { FormInstance } from '@arco-design/web-react/es/Form';
 import axios from 'axios';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import styles from './style/index.module.less';
 import './mock';

@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from '@/pages/user/role/locale';
 import styles from '@/pages/user/role/style/index.module.less';
 import RolePanel from '@/pages/user/role/role-panel';

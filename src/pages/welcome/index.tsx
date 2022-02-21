@@ -1,8 +1,8 @@
 import React from 'react';
-import { Alert, Card, Link, Typography, Tag } from '@arco-design/web-react';
+import { Alert, Card, Link, Tag, Typography } from '@arco-design/web-react';
 import { IconDoubleRight } from '@arco-design/web-react/icon';
 import { useSelector } from 'react-redux';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import CodeBlock from './code-block';
 import styles from './style/index.module.less';

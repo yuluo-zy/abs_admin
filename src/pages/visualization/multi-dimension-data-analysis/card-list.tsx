@@ -1,19 +1,12 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import {
-  Statistic,
-  Typography,
-  Spin,
-  Grid,
-  Card,
-  Skeleton,
-} from '@arco-design/web-react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Card, Grid, Skeleton, Spin, Statistic, Typography } from '@arco-design/web-react';
 import cs from 'classnames';
-import { Chart, Line, Interval, Tooltip, Interaction } from 'bizcharts';
+import { Chart, Interaction, Interval, Line, Tooltip } from 'bizcharts';
 import axios from 'axios';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 
-import { IconArrowRise, IconArrowFall } from '@arco-design/web-react/icon';
+import { IconArrowFall, IconArrowRise } from '@arco-design/web-react/icon';
 import styles from './style/card-block.module.less';
 
 const { Row, Col } = Grid;

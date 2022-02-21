@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Typography, Card, Grid, Space } from '@arco-design/web-react';
+import React, { useEffect, useState } from 'react';
+import { Card, Grid, Space, Typography } from '@arco-design/web-react';
 import axios from 'axios';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import HorizontalInterval from '@/components/Chart/horizontal-interval';
 import AreaPolar from '@/components/Chart/area-polar';
 import FactMultiPie from '@/components/Chart/fact-multi-pie';

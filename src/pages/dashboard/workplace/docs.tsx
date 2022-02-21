@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link, Card, Typography } from '@arco-design/web-react';
-import useLocale from '@/utils/useLocale';
+import { Card, Link, Typography } from '@arco-design/web-react';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import styles from './style/docs.module.less';
 
@@ -8,8 +8,9 @@ const links = {
   react: 'https://arco.design/react/docs/start',
   vue: 'https://arco.design/vue/docs/start',
   designLab: 'https://arco.design/themes',
-  materialMarket: 'https://arco.design/material/',
+  materialMarket: 'https://arco.design/material/'
 };
+
 function QuickOperation() {
   const t = useLocale(locale);
 

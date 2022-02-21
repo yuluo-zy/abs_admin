@@ -1,6 +1,6 @@
 import { Button, Card, Radio, Tabs } from '@arco-design/web-react';
 import React from 'react';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import DataStatisticList from './data-statistic-list';
 import styles from './style/index.module.less';

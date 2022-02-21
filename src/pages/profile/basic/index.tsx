@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Card,
-  Steps,
-  Typography,
-  Grid,
-  Space,
-  Button,
-  Table,
-  Badge,
-} from '@arco-design/web-react';
+import { Badge, Button, Card, Grid, Space, Steps, Table, Typography } from '@arco-design/web-react';
 import axios from 'axios';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import ProfileItem from './item';
 import styles from './style/index.module.less';

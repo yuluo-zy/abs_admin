@@ -1,4 +1,4 @@
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './index';
 
 export default () => {

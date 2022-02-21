@@ -1,6 +1,6 @@
 import React from 'react';
-import { Typography, Result, Button, Steps } from '@arco-design/web-react';
-import useLocale from '@/utils/useLocale';
+import { Button, Result, Steps, Typography } from '@arco-design/web-react';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import styles from './style/index.module.less';
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Card, Grid, Table, Space, Typography } from '@arco-design/web-react';
-import useLocale from '@/utils/useLocale';
+import { Card, Grid, Space, Table, Typography } from '@arco-design/web-react';
+import useLocale from '@/utils/useHook/useLocale';
 import axios from 'axios';
 import locale from './locale';
 import PublicOpinion from './public-opinion';

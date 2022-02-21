@@ -1,19 +1,19 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { Switch, Route, Link, Redirect, useHistory } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb } from '@arco-design/web-react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { Breadcrumb, Layout, Menu } from '@arco-design/web-react';
 import cs from 'classnames';
 import {
-  IconDashboard,
-  IconList,
-  IconSettings,
-  IconFile,
   IconApps,
   IconCheckCircle,
+  IconDashboard,
   IconExclamationCircle,
-  IconUser,
+  IconFile,
+  IconList,
   IconMenuFold,
   IconMenuUnfold,
   IconNav,
+  IconSettings,
+  IconUser
 } from '@arco-design/web-react/icon';
 import { useSelector } from 'react-redux';
 import qs from 'query-string';
@@ -22,7 +22,7 @@ import Navbar from './components/NavBar';
 import Footer from './components/Footer';
 import useRoute from '@/routes';
 import { isArray } from './utils/is';
-import useLocale from './utils/useLocale';
+import useLocale from './utils/useHook/useLocale';
 import getUrlParams from './utils/getUrlParams';
 import lazyload from './utils/lazyload';
 import { GlobalState } from './store';

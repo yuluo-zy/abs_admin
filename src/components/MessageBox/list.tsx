@@ -1,14 +1,6 @@
 import React from 'react';
-import {
-  List,
-  Avatar,
-  Typography,
-  Button,
-  Space,
-  Result,
-  Tag,
-} from '@arco-design/web-react';
-import useLocale from '../../utils/useLocale';
+import { Avatar, Button, List, Result, Space, Tag, Typography } from '@arco-design/web-react';
+import useLocale from '../../utils/useHook/useLocale';
 import styles from './style/index.module.less';
 
 export interface MessageItemData {

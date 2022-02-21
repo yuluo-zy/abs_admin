@@ -1,18 +1,11 @@
-import React, { useState, useEffect, ReactNode } from 'react';
-import {
-  Grid,
-  Card,
-  Typography,
-  Divider,
-  Skeleton,
-  Link,
-} from '@arco-design/web-react';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { Card, Divider, Grid, Link, Skeleton, Typography } from '@arco-design/web-react';
 import { useSelector } from 'react-redux';
 import { IconCaretUp } from '@arco-design/web-react/icon';
 import OverviewAreaLine from '@/components/Chart/overview-area-line';
 import axios from 'axios';
 import locale from './locale';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import styles from './style/overview.module.less';
 import IconCalendar from './assets/calendar.svg';
 import IconComments from './assets/comments.svg';

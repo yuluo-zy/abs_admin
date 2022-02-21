@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, Card, Skeleton, Tag, Typography } from '@arco-design/web-react';
-import useLocale from '@/utils/useLocale';
+import { Card, Link, Skeleton, Tag, Typography } from '@arco-design/web-react';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import styles from './style/announcement.module.less';
 

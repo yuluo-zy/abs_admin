@@ -2,8 +2,8 @@ import { Button, Checkbox, Form, Input, Link, Space } from '@arco-design/web-rea
 import { FormInstance } from '@arco-design/web-react/es/Form';
 import { IconLock, IconUser } from '@arco-design/web-react/icon';
 import React, { useEffect, useRef, useState } from 'react';
-import useStorage from '@/utils/useStorage';
-import useLocale from '@/utils/useLocale';
+import useStorage from '@/utils/useHook/useStorage';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import styles from './style/index.module.less';
 import { loginWithUserName } from '@/api/login';

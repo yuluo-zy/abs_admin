@@ -10,6 +10,7 @@ import style from './style/index.module.less';
 import { ProductSelectItem } from '@/components/type';
 import cs from 'classnames';
 import { IconDelete } from '@arco-design/web-react/icon';
+import useFilter, { multiFilter } from '@/utils/useHook/useFilter';
 
 const bodyCellStyle = {};
 const originColumns = [
@@ -122,49 +123,60 @@ export default function HardwareSelection() {
   const socSelect: ProductSelectItem[] = [
     {
       name: t['hardware.production.info.soc'],
+      type: '',
       select: ['Single Core', 'Dual Core']
     },
     {
       name: t['hardware.production.info.soc.antenna'],
+      type: '',
       select: ['N/A', 'PCB', 'IPEX']
     },
     {
       name: t['hardware.production.info.soc.package'],
+      type: '',
       select: ['QFN56(7*7)', 'QFN48(5*5)', 'QFN48(6*6)',
-        'LGA48(7*7)', 'QFN32(5*5)', 'QFN32(5*5)', 'QFN28(4*4)']
+        'LGA48(7*7)', 'QFN32(5*5)', 'QFN28(4*4)']
     },
     {
       name: t['hardware.production.info.soc.model'],
+      type: '',
       select: ['ESP8685', 'ESP32-S3', 'ESP32-C3', 'ESP32-S2', 'ESP32', 'ESP8266']
     },
     {
       name: t['hardware.production.info.soc.temperature'],
+      type: '',
       select: ['-40 - 85', '-40 - 105', '-40 - 125']
     },
     {
       name: t['hardware.production.info.soc.flash'],
+      type: '',
       select: ['1', '2', '4', '8', '16']
     },
     {
       name: t['hardware.production.info.soc.psram'],
+      type: '',
       select: ['0', '2', '8']
     }
   ];
   const moduleSelect: ProductSelectItem[] = [
     {
       name: t['hardware.production.info.module.model'],
+      type: '',
       select: ['ESP8685', 'ESP32-S3', 'ESP32-C3', 'ESP32-S2', 'ESP32', 'ESP8266']
     },
     {
       name: t['hardware.production.info.module.temperature'],
+      type: '',
       select: ['-40 - 85', '-40 - 105', '-40 - 125']
     },
     {
       name: t['hardware.production.info.module.flash'],
+      type: '',
       select: ['1', '2', '4', '8', '16']
     },
     {
       name: t['hardware.production.info.module.psram'],
+      type: '',
       select: ['0', '2', '8']
     }
   ];
@@ -179,10 +191,24 @@ export default function HardwareSelection() {
       description: t['hardware.production.info.modules.description']
     }
   ];
-  const [productList, setProductList] = useState([]);
+
+  const [productList, dispatchProduct, setOldState, reduction] = useFilter();
+
+  const dispatchSelect = (oldState, setState, keyList) => {
+    if (keyList) {
+      setState(multiFilter(oldState, keyList));
+    }
+  };
+
+  const [keyList, setKeyList] = useState();
+  useEffect(() => {
+    dispatchProduct(dispatchSelect, keyList);
+  }, [keyList]);
+
   useEffect(() => {
     fetchProductionList();
   }, []);
+
   const [columns, setColumns] = useState(
     originColumns.map((column, index) => {
       if (column.width) {
@@ -219,7 +245,7 @@ export default function HardwareSelection() {
 
   function fetchProductionList() {
     getProductionInfo().then((res) => {
-      setProductList(res.data.result);
+      setOldState(res.data.result);
     });
   }
 
@@ -227,6 +253,13 @@ export default function HardwareSelection() {
 
   const onEmpty = () => {
     setSelectItem(-1);
+    setKeyList(null);
+    reduction();
+  };
+
+  const setSelectKey = (key, item) => {
+    let keyOld = keyList;
+
   };
 
 
@@ -271,7 +304,8 @@ export default function HardwareSelection() {
                   </div>
                   <Radio.Group direction='vertical' key={index}>
                     {item.select.map((select_item, index) => {
-                      return <Radio value={select_item}>{select_item}</Radio>;
+                      return <Radio value={select_item} key={index}
+                                    onClick={() => setSelectKey(item.type, select_item)}>{select_item}</Radio>;
                     })}
                   </Radio.Group>
                 </div>

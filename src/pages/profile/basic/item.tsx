@@ -1,6 +1,6 @@
 import React, { CSSProperties } from 'react';
-import useLocale from '@/utils/useLocale';
-import { Descriptions, Card, Skeleton } from '@arco-design/web-react';
+import useLocale from '@/utils/useHook/useLocale';
+import { Card, Descriptions, Skeleton } from '@arco-design/web-react';
 import locale from './locale';
 
 interface ProfileItemProps {

@@ -116,5 +116,6 @@ export interface UserToken {
 
 export interface ProductSelectItem {
   name: string,
+  type: string,
   select: string[] | []
 }

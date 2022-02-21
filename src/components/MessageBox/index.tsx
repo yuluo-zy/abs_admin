@@ -1,21 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import groupBy from 'lodash/groupBy';
-import {
-  Trigger,
-  Badge,
-  Tabs,
-  Avatar,
-  Spin,
-  Button,
-} from '@arco-design/web-react';
-import {
-  IconMessage,
-  IconCustomerService,
-  IconFile,
-  IconDesktop,
-} from '@arco-design/web-react/icon';
-import useLocale from '../../utils/useLocale';
+import { Avatar, Badge, Button, Spin, Tabs, Trigger } from '@arco-design/web-react';
+import { IconCustomerService, IconDesktop, IconFile, IconMessage } from '@arco-design/web-react/icon';
+import useLocale from '../../utils/useHook/useLocale';
 import MessageList, { MessageListType } from './list';
 import styles from './style/index.module.less';
 

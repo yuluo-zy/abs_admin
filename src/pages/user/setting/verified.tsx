@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Descriptions,
-  Table,
-  Typography,
-  Skeleton,
-  Tag,
-  Space,
-  Button,
-  Badge,
-} from '@arco-design/web-react';
-import useLocale from '@/utils/useLocale';
+import { Badge, Button, Descriptions, Skeleton, Space, Table, Tag, Typography } from '@arco-design/web-react';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import axios from 'axios';
 import styles from './style/index.module.less';

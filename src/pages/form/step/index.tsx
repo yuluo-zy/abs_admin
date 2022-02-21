@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import {
-  Steps,
+  Button,
+  Card,
+  DatePicker,
   Form,
   Input,
-  Select,
-  DatePicker,
   InputTag,
-  Button,
-  Typography,
-  Space,
-  Card,
-  Switch,
   Result,
+  Select,
+  Space,
+  Steps,
+  Switch,
+  Typography
 } from '@arco-design/web-react';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import styles from './style/index.module.less';
 

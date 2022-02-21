@@ -1,20 +1,9 @@
 // 数据总览
-import React, { useEffect, useState, useMemo } from 'react';
-import {
-  Card,
-  Typography,
-  Grid,
-  Statistic,
-  Skeleton,
-} from '@arco-design/web-react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Card, Grid, Skeleton, Statistic, Typography } from '@arco-design/web-react';
 import axios from 'axios';
-import {
-  IconUser,
-  IconEdit,
-  IconHeart,
-  IconThumbUp,
-} from '@arco-design/web-react/icon';
-import useLocale from '@/utils/useLocale';
+import { IconEdit, IconHeart, IconThumbUp, IconUser } from '@arco-design/web-react/icon';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import styles from './style/data-overview.module.less';
 import MultiAreaLine from '@/components/Chart/multi-area-line';

@@ -1,7 +1,7 @@
-import { Card, Typography, Avatar, Space, Grid } from '@arco-design/web-react';
+import { Avatar, Card, Grid, Space, Typography } from '@arco-design/web-react';
 import { IconMore } from '@arco-design/web-react/icon';
 import React from 'react';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import styles from './style/index.module.less';
 

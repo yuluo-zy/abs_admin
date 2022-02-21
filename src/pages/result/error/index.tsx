@@ -1,7 +1,7 @@
 import React from 'react';
-import { Typography, Result, Button, Link } from '@arco-design/web-react';
+import { Button, Link, Result, Typography } from '@arco-design/web-react';
 import { IconLink } from '@arco-design/web-react/icon';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import styles from './style/index.module.less';
 

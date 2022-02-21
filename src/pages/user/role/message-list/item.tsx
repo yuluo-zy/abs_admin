@@ -1,15 +1,9 @@
 import React, { useContext, useMemo } from 'react';
-import {
-  Divider,
-  Message,
-  Popconfirm,
-  Space,
-  Typography,
-} from '@arco-design/web-react';
+import { Divider, Message, Popconfirm, Space, Typography } from '@arco-design/web-react';
 import { IconDelete } from '@arco-design/web-react/icon';
 import cs from 'classnames';
 import styles from './style/index.module.less';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from '@/pages/user/role/locale';
 import { RoleContext } from '@/store/context-manager';
 import useDebounce from '@/utils/useSelf';

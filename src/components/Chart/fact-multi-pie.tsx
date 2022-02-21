@@ -1,12 +1,13 @@
 import React from 'react';
-import { Chart, Legend, Facet } from 'bizcharts';
-import useBizTheme from '@/utils/useChartTheme';
+import { Chart, Facet, Legend } from 'bizcharts';
+import useBizTheme from '@/utils/useHook/useChartTheme';
 
 interface FactMultiPieProps {
   data: any[];
   loading: boolean;
   height: number;
 }
+
 function FactMultiPie(props: FactMultiPieProps) {
   return (
     <Chart

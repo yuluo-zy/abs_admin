@@ -1,12 +1,7 @@
 import React from 'react';
-import { Button, Card, Typography, Space } from '@arco-design/web-react';
-import {
-  IconArrowRight,
-  IconStop,
-  IconSwap,
-  IconTags,
-} from '@arco-design/web-react/icon';
-import useLocale from '@/utils/useLocale';
+import { Button, Card, Space, Typography } from '@arco-design/web-react';
+import { IconArrowRight, IconStop, IconSwap, IconTags } from '@arco-design/web-react/icon';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 
 export default function QuickOperation() {
@@ -16,7 +11,7 @@ export default function QuickOperation() {
       <Typography.Title style={{ marginTop: 0, marginBottom: 16 }} heading={6}>
         {t['monitor.title.quickOperation']}
       </Typography.Title>
-      <Space direction="vertical" style={{ width: '100%' }} size={10}>
+      <Space direction='vertical' style={{ width: '100%' }} size={10}>
         <Button long icon={<IconTags />}>
           {t['monitor.quickOperation.changeClarity']}
         </Button>

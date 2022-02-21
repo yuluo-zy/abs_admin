@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Tabs, Card, Input, Typography, Grid } from '@arco-design/web-react';
-import useLocale from '@/utils/useLocale';
+import { Card, Grid, Input, Tabs, Typography } from '@arco-design/web-react';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import styles from './style/index.module.less';
 import CardBlock from './card-block';
 import AddCard from './card-add';
-import { QualityInspection, BasicCard } from './interface';
+import { BasicCard, QualityInspection } from './interface';
 import './mock';
 
 const { Title } = Typography;

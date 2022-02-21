@@ -1,17 +1,8 @@
 import React, { useContext } from 'react';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import { GlobalContext } from '@/context';
-import {
-  Input,
-  Select,
-  Cascader,
-  Button,
-  Form,
-  Space,
-  Message,
-  Skeleton,
-} from '@arco-design/web-react';
+import { Button, Cascader, Form, Input, Message, Select, Skeleton, Space } from '@arco-design/web-react';
 
 function InfoForm({ loading }: { loading?: boolean }) {
   const t = useLocale(locale);

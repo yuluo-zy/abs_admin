@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  Card,
-  Typography,
-  Tag,
-  Space,
-  Descriptions,
-} from '@arco-design/web-react';
-import useLocale from '@/utils/useLocale';
+import { Card, Descriptions, Space, Tag, Typography } from '@arco-design/web-react';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 
 export default function StudioStatus() {

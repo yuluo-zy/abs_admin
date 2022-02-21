@@ -1,14 +1,6 @@
 import React, { useMemo } from 'react';
-import {
-  Button,
-  DatePicker,
-  Form,
-  Grid,
-  Input,
-  InputNumber,
-  Select,
-} from '@arco-design/web-react';
-import useLocale from '@/utils/useLocale';
+import { Button, DatePicker, Form, Grid, Input, InputNumber, Select } from '@arco-design/web-react';
+import useLocale from '@/utils/useHook/useLocale';
 import styles from './style/index.module.less';
 import { FormItemProps, FormProps } from '@/components/type';
 import locale from './locale';

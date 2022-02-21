@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Avatar,
-  Upload,
-  Descriptions,
-  Tag,
-  Skeleton,
-  Link,
-} from '@arco-design/web-react';
+import { Avatar, Descriptions, Link, Skeleton, Tag, Upload } from '@arco-design/web-react';
 import { IconCamera, IconPlus } from '@arco-design/web-react/icon';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import styles from './style/header.module.less';
 

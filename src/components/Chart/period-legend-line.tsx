@@ -1,8 +1,8 @@
 import React from 'react';
-import { Chart, Line, Axis, Tooltip, Legend, Slider } from 'bizcharts';
+import { Axis, Chart, Legend, Line, Slider, Tooltip } from 'bizcharts';
 import { Spin } from '@arco-design/web-react';
 import CustomTooltip from './customer-tooltip';
-import useBizTheme from '@/utils/useChartTheme';
+import useBizTheme from '@/utils/useHook/useChartTheme';
 
 const lineColor = ['#21CCFF', '#313CA9', '#249EFF'];
 function PeriodLine({ data, loading }: { data: any[]; loading: boolean }) {

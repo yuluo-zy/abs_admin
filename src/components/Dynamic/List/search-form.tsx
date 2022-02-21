@@ -1,15 +1,8 @@
 import React, { useContext } from 'react';
-import {
-  Button,
-  DatePicker,
-  Form,
-  Grid,
-  Input,
-  Select,
-} from '@arco-design/web-react';
+import { Button, DatePicker, Form, Grid, Input, Select } from '@arco-design/web-react';
 import { GlobalContext } from '@/context';
 import locale from './locale';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import { IconRefresh, IconSearch } from '@arco-design/web-react/icon';
 import styles from './style/index.module.less';
 import dayjs from 'dayjs';

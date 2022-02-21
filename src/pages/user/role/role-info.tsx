@@ -3,7 +3,7 @@ import { Message, Result } from '@arco-design/web-react';
 import { RoleContext } from '@/store/context-manager';
 import styles from '@/pages/user/role/style/index.module.less';
 import DynamicCard from '@/components/Dynamic/Card';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from '@/pages/user/role/locale';
 import DynamicSkeleton from '@/components/Dynamic/Skeleton';
 import { FormItemProps } from '@/components/type';

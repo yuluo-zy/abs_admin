@@ -1,30 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import cs from 'classnames';
+import { Button, Card, Descriptions, Dropdown, Menu, Skeleton, Switch, Tag, Typography } from '@arco-design/web-react';
 import {
-  Button,
-  Switch,
-  Tag,
-  Card,
-  Descriptions,
-  Typography,
-  Dropdown,
-  Menu,
-  Skeleton,
-} from '@arco-design/web-react';
-import {
-  IconStarFill,
-  IconThumbUpFill,
-  IconSunFill,
-  IconFaceSmileFill,
-  IconPenFill,
   IconCheckCircleFill,
   IconCloseCircleFill,
+  IconFaceSmileFill,
   IconMore,
+  IconPenFill,
+  IconStarFill,
+  IconSunFill,
+  IconThumbUpFill
 } from '@arco-design/web-react/icon';
 import PermissionWrapper from '@/components/PermissionWrapper';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
-import { QualityInspection, BasicCard } from './interface';
+import { BasicCard, QualityInspection } from './interface';
 import styles from './style/index.module.less';
 
 interface CardBlockType {

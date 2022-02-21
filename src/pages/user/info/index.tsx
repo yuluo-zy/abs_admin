@@ -1,19 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import {
-  Typography,
-  Grid,
-  Link,
-  Result,
-  Skeleton,
-} from '@arco-design/web-react';
-import useLocale from '@/utils/useLocale';
+import { Card, Grid, Link, Result, Skeleton, Typography } from '@arco-design/web-react';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import UserInfoHeader from './header';
 import styles from './style/index.module.less';
 import './mock';
-import { Card } from '@arco-design/web-react';
 import MyProject from './my-projects';
 import MyTeam from './my-team';
 import LatestNews from './latest-news';

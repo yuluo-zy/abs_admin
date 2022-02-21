@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Space,
-  Select,
-  Input,
-  Button,
-  Typography,
-  Spin,
-} from '@arco-design/web-react';
+import { Button, Input, Select, Space, Spin, Typography } from '@arco-design/web-react';
 import { IconDownload, IconFaceSmileFill } from '@arco-design/web-react/icon';
 import axios from 'axios';
-import useLocale from '@/utils/useLocale';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import MessageList from './message-list';
 import styles from './style/index.module.less';
