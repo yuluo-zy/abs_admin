@@ -10,6 +10,7 @@ import { IconCalendar, IconMindMapping, IconNav, IconSubscribed } from '@arco-de
 import NProgress from 'nprogress';
 import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
 import lazyload from '@/utils/lazyload';
+import { Route, Switch } from 'react-router';
 
 function getFlattenRoutes(routes) {
   const res = [];
@@ -140,20 +141,20 @@ export default function ProductDemand(props) {
             <ProductMenu menu={MenuTree} clickMenuItem={onClickMenuItem} />
           </div>
           <div className={styles['layout-content']}>
-            {/*<Switch>*/}
-            {/*  {flattenRoutes.map((route, index) => {*/}
-            {/*    return (*/}
-            {/*      <Route*/}
-            {/*        key={index}*/}
-            {/*        path={`${path}/${route.path}`}*/}
-            {/*        component={route.component}*/}
-            {/*      />*/}
-            {/*    );*/}
-            {/*  })}*/}
-            {/*  <Route exact path={path}>*/}
-            {/*    <div>jjjj</div>*/}
-            {/*  </Route>*/}
-            {/*</Switch>*/}
+            <Switch>
+              {flattenRoutes.map((route, index) => {
+                return (
+                  <Route
+                    key={index}
+                    path={`${path}/${route.path}`}
+                    component={route.component}
+                  />
+                );
+              })}
+              <Route exact path={path}>
+                <div>jjjj</div>
+              </Route>
+            </Switch>
           </div>
         </div>
       </DynamicOuterCard>

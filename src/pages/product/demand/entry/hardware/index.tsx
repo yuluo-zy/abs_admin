@@ -280,7 +280,7 @@ export default function HardwareSelection() {
   };
 
   const setSelectKey = (key, item) => {
-    let keyOld = {
+    const keyOld = {
       ...keyList
     };
     keyOld[key] = item;
