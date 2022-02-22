@@ -34,7 +34,8 @@ const i18n = {
     'hardware.production.info.module.temperature': '工作温度 (°C)',
     'hardware.production.info.module.flash': 'Flash大小 (MB)',
     'hardware.production.info.module.psram': 'PSRAM大小 (MB)',
-    'hardware.production.info.operate': '重置'
+    'hardware.production.info.operate': '重置',
+    'hardware.production.info.next': '下一步'
   },
 };
 

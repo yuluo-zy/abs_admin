@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
-import DynamicCard from '@/components/Dynamic/Card';
 import useLocale from '@/pages/product/demand/locale/useLocale';
 import { getProductionInfo } from '@/api/production';
 import { Button, Radio, Space, Table, Typography } from '@arco-design/web-react';
@@ -9,8 +8,9 @@ import ResizableTitle from '@/components/Dynamic/Resizeable';
 import style from './style/index.module.less';
 import { ProductSelectItem } from '@/components/type';
 import cs from 'classnames';
-import { IconDelete } from '@arco-design/web-react/icon';
+import { IconArrowRight, IconDelete } from '@arco-design/web-react/icon';
 import useFilter, { multiFilter } from '@/utils/useHook/useFilter';
+import { ProductDemandContext } from '@/store/context-manager';
 
 const bodyCellStyle = {};
 const originColumns = [
@@ -161,7 +161,7 @@ export default function HardwareSelection() {
   const moduleSelect: ProductSelectItem[] = [
     {
       name: t['hardware.production.info.module.model'],
-      type: '',
+      type: 'name',
       select: ['ESP8685', 'ESP32-S3', 'ESP32-C3', 'ESP32-S2', 'ESP32', 'ESP8266']
     },
     {
@@ -180,7 +180,6 @@ export default function HardwareSelection() {
       select: ['0', '2', '8']
     }
   ];
-
   const product = [
     {
       name: t['hardware.production.info.chip'],
@@ -251,6 +250,7 @@ export default function HardwareSelection() {
   function fetchProductionList() {
     getProductionInfo().then((res) => {
       setOldState(res.data.result);
+      console.log(res.data.result);
     });
   }
 
@@ -260,6 +260,7 @@ export default function HardwareSelection() {
     reduction();
     setSelectItem(-1);
     setKeyList({});
+    setSelectedRowKeys([]);
   };
 
   const setSelectKey = (key, item) => {
@@ -270,9 +271,11 @@ export default function HardwareSelection() {
     setKeyList(keyOld);
   };
 
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
+  const { dispatch } = useContext(ProductDemandContext);
   return (
-    <DynamicCard>
+    <div className={style['product-table']}>
       <DynamicOuterCard title={t['hardware.production.info.title']}>
         <div className={style['product']}>
           <Radio.Group direction='vertical' value={selectItem}>
@@ -331,20 +334,37 @@ export default function HardwareSelection() {
         <DynamicSkeleton text={{ rows: 10, width: '90rem' }}>
           <Table
             className={style['table-resizable-column']}
-            scroll={{ x: true, y: 600 }}
+            scroll={{ x: true, y: 450 }}
             border
             borderCell
+            rowKey='id'
             components={components}
             size={'mini'}
             columns={columns}
             data={productList}
             pagination={false}
             rowSelection={{
-              pureKeys: true
+              type: 'radio',
+              selectedRowKeys,
+              onChange: (selectedRowKeys, selectedRows) => {
+                dispatch({
+                  type: 'ModuleInfo',
+                  payload: selectedRows
+                });
+                setSelectedRowKeys(selectedRowKeys);
+              }
             }}
           />
         </DynamicSkeleton>
       </DynamicOuterCard>
-    </DynamicCard>
+      <div className={style['product-nuxt']}>
+        <Button type='primary'
+                size={'large'}
+                icon={<IconArrowRight />}
+                onClick={onEmpty}>
+          {t['hardware.production.info.next']}
+        </Button>
+      </div>
+    </div>
   );
 }

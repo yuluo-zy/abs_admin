@@ -1,5 +1,5 @@
 import React from 'react';
-import { RoleItem } from '@/components/type';
+import { ReadonlyRecordable, RoleItem } from '@/components/type';
 
 export interface InitialRole {
   roleId: string;
@@ -66,12 +66,14 @@ export interface InitialProductDemand {
   stepKey: string;
   stepList: string[] | [];
   stepRouter: string;
+  moduleInfo?: ReadonlyRecordable;
 }
 
 export const initialProductDemand: InitialProductDemand = {
   stepKey: '',
   stepList: [],
   stepRouter: '',
+  moduleInfo: {}
 };
 
 export function ProductDemandStore(state: InitialProductDemand, action) {
@@ -96,7 +98,15 @@ export function ProductDemandStore(state: InitialProductDemand, action) {
       stepList.push(step);
       return {
         ...state,
-        stepList,
+        stepList
+      };
+    }
+
+    case 'ModuleInfo': {
+      const moduleInfo = action.payload;
+      return {
+        ...state,
+        moduleInfo
       };
     }
 
