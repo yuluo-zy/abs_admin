@@ -9,7 +9,7 @@ import DynamicModal from '@/components/Dynamic/Modal';
 import DynamicForm from '@/components/Dynamic/Form';
 import { IconDelete } from '@arco-design/web-react/icon';
 
-function UserPermission() {
+export default function UserPermission() {
   const t = useLocale(locale);
 
   const [visible, setVisible] = useState(false);
@@ -272,5 +272,3 @@ function UserPermission() {
     </div>
   );
 }
-
-export default UserPermission;

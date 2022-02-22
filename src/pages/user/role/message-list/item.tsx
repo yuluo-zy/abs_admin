@@ -6,8 +6,8 @@ import styles from './style/index.module.less';
 import useLocale from '@/utils/useHook/useLocale';
 import locale from '@/pages/user/role/locale';
 import { RoleContext } from '@/store/context-manager';
-import useDebounce from '@/utils/useSelf';
 import { deleteRole } from '@/api/role';
+import useDebounce from '@/utils/useHook/useDebounce';
 
 export interface RoleItem {
   id?: string;

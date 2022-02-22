@@ -10,9 +10,6 @@ type ReadOnlyRefObject<T> = {
 type UseStateRefA = {
   <S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>, ReadOnlyRefObject<S>]
 };
-// type UseStateRefB = {
-// <S = undefined>(): [S | undefined, Dispatch<SetStateAction<S | undefined>>, ReadOnlyRefObject<S | undefined>]
-// }
 
 const useStateRef: UseStateRefA  = <S>(initialState?: S | (() => S)) => {
   const [state, setState] = useState(initialState);

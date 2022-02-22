@@ -35,7 +35,12 @@ const i18n = {
     'hardware.production.info.module.flash': 'Flash大小 (MB)',
     'hardware.production.info.module.psram': 'PSRAM大小 (MB)',
     'hardware.production.info.operate': '重置',
-    'hardware.production.info.next': '下一步'
+    'hardware.production.info.next': '下一步',
+    'hardware.production.info.total': '产品总数为: ',
+    'hardware.production.info.select.model': '您已选择的产品名称为 : ',
+    'hardware.production.info.select.model.error': '尚未选择具体产品型号',
+    'hardware.modal.title': '产品硬件型号确认',
+    'hardware.modal.info': '产品信息如下:'
   },
 };
 

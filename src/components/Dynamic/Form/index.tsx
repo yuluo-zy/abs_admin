@@ -6,8 +6,8 @@ import { FormItemProps, FormProps } from '@/components/type';
 import locale from './locale';
 import dayjs from 'dayjs';
 import { IconCheck, IconRefresh } from '@arco-design/web-react/icon';
-import useDebounce from '@/utils/useSelf';
 import cs from 'classnames';
+import useDebounce from '@/utils/useHook/useDebounce';
 
 const { Row, Col } = Grid;
 

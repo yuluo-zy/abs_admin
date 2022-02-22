@@ -13,6 +13,7 @@ import LatestNews from './latest-news';
 
 const { Title } = Typography;
 const { Row, Col } = Grid;
+
 function UserInfo() {
   const t = useLocale(locale);
   const userInfo = useSelector((state: any) => state.userInfo);
@@ -76,7 +77,7 @@ function UserInfo() {
               <Skeleton text={{ rows: 10 }} animation />
             ) : (
               <Result
-                status="404"
+                status='404'
                 subTitle={t['userInfo.notice.empty']}
                 style={{ paddingTop: '60px', paddingBottom: '130px' }}
               />

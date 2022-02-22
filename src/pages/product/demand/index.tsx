@@ -3,7 +3,7 @@ import useLocale from '@/pages/product/demand/locale/useLocale';
 import ProductMenu from '@/pages/product/demand/menu';
 import { initialProductDemand, ProductDemandContext, ProductDemandStore } from '@/store/context-manager';
 import styles from './style/index.module.less';
-import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { isArray } from '@/utils/is';
 import { MenuItemProps } from '@/components/type';
 import { IconCalendar, IconMindMapping, IconNav, IconSubscribed } from '@arco-design/web-react/icon';
@@ -140,20 +140,20 @@ export default function ProductDemand(props) {
             <ProductMenu menu={MenuTree} clickMenuItem={onClickMenuItem} />
           </div>
           <div className={styles['layout-content']}>
-            <Switch>
-              {flattenRoutes.map((route, index) => {
-                return (
-                  <Route
-                    key={index}
-                    path={`${path}/${route.path}`}
-                    component={route.component}
-                  />
-                );
-              })}
-              <Route exact path={path}>
-                <div>jjjj</div>
-              </Route>
-            </Switch>
+            {/*<Switch>*/}
+            {/*  {flattenRoutes.map((route, index) => {*/}
+            {/*    return (*/}
+            {/*      <Route*/}
+            {/*        key={index}*/}
+            {/*        path={`${path}/${route.path}`}*/}
+            {/*        component={route.component}*/}
+            {/*      />*/}
+            {/*    );*/}
+            {/*  })}*/}
+            {/*  <Route exact path={path}>*/}
+            {/*    <div>jjjj</div>*/}
+            {/*  </Route>*/}
+            {/*</Switch>*/}
           </div>
         </div>
       </DynamicOuterCard>

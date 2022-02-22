@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
 import useLocale from '@/pages/product/demand/locale/useLocale';
 import { getProductionInfo } from '@/api/production';
-import { Button, Radio, Space, Table, Typography } from '@arco-design/web-react';
+import { Button, Descriptions, Modal, Notification, Radio, Space, Table, Typography } from '@arco-design/web-react';
 import DynamicSkeleton from '@/components/Dynamic/Skeleton';
 import ResizableTitle from '@/components/Dynamic/Resizeable';
 import style from './style/index.module.less';
@@ -261,6 +261,22 @@ export default function HardwareSelection() {
     setSelectItem(-1);
     setKeyList({});
     setSelectedRowKeys([]);
+    dispatch({
+      type: 'ModuleInfo',
+      payload: {}
+    });
+  };
+
+  const nextStep = () => {
+    if (Object.keys(state.moduleInfo).length === 0) {
+      Notification.error({ title: 'error', content: t['hardware.production.info.select.model.error'] });
+      return;
+    }
+    setVisible(true);
+  };
+
+  const getModelInfo = (item) => {
+
   };
 
   const setSelectKey = (key, item) => {
@@ -273,9 +289,11 @@ export default function HardwareSelection() {
 
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
-  const { dispatch } = useContext(ProductDemandContext);
+  const [visible, setVisible] = useState(false);
+
+  const { state, dispatch } = useContext(ProductDemandContext);
   return (
-    <div className={style['product-table']}>
+    <div>
       <DynamicOuterCard title={t['hardware.production.info.title']}>
         <div className={style['product']}>
           <Radio.Group direction='vertical' value={selectItem}>
@@ -349,7 +367,7 @@ export default function HardwareSelection() {
               onChange: (selectedRowKeys, selectedRows) => {
                 dispatch({
                   type: 'ModuleInfo',
-                  payload: selectedRows
+                  payload: selectedRows[0]
                 });
                 setSelectedRowKeys(selectedRowKeys);
               }
@@ -358,12 +376,41 @@ export default function HardwareSelection() {
         </DynamicSkeleton>
       </DynamicOuterCard>
       <div className={style['product-nuxt']}>
+        {
+          productList &&
+          <div className={style['product-total']}>
+            <p>{t['hardware.production.info.total'] + productList.length}</p>
+          </div>
+        }
+        {
+          state.moduleInfo.mpn &&
+          <div className={style['product-info']}>
+            <p>{t['hardware.production.info.select.model'] + state.moduleInfo.mpn}</p>
+          </div>
+        }
         <Button type='primary'
                 size={'large'}
                 icon={<IconArrowRight />}
-                onClick={onEmpty}>
+                onClick={() => nextStep()}
+        >
           {t['hardware.production.info.next']}
         </Button>
+        <Modal
+          title={t['hardware.modal.title']}
+          visible={visible}
+          // onOk={() => setVisible(false)}
+          onCancel={() => setVisible(false)}
+          autoFocus={false}
+          focusLock={true}
+        >
+          <p>{t['hardware.production.info.select.model']} <b>{state.moduleInfo.mpn}</b></p>
+          <Descriptions
+            column={1}
+            title={t['hardware.modal.info']}
+            labelStyle={{ textAlign: 'right', paddingRight: 36 }}
+            data={state.moduleInfo} />
+          // todo
+        </Modal>
       </div>
     </div>
   );
