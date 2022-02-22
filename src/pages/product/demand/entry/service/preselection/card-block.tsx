@@ -57,9 +57,9 @@ function CardBlock(props: ServiceCardProps) {
 
   return (
     <Card
-      bordered={true}
+      bordered
+      hoverable
       className={className}
-      size='small'
       title={
         loading ? (
           <Skeleton

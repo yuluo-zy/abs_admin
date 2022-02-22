@@ -69,7 +69,7 @@ export default function ServicePreselection() {
           }
         </DynamicSkeleton>
       </DynamicCard>
-
+      <Divider style={{ borderBottomStyle: 'dashed' }} />
     </DynamicOuterCard>
   </div>);
 }
