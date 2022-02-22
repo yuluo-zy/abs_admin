@@ -57,6 +57,7 @@ export default function ProductDemand(props) {
           icon: (
             <IconCalendar key={'menu.production.service.selection.title'} />
           ),
+          path: 'service/preselection'
         },
         {
           name: t['menu.production.service.selection.requirements.details'],

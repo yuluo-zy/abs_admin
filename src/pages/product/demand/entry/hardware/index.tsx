@@ -194,14 +194,17 @@ export default function HardwareSelection() {
   ];
 
   const [productList, setProductList, oldState, setOldState, reduction] = useFilter();
+  const [visible, setVisible] = useState(false);
+  const [keyList, setKeyList] = useState({});
+  const [selectItem, setSelectItem] = useState(-1);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const { state, dispatch } = useContext(ProductDemandContext);
 
   const dispatchSelect = (oldState, setState, keyList) => {
     if (keyList) {
       setState(multiFilter(oldState, keyList));
     }
   };
-
-  const [keyList, setKeyList] = useState({});
 
   useEffect(() => {
     if (keyList && Object.keys(keyList).length > 0) {
@@ -250,11 +253,30 @@ export default function HardwareSelection() {
   function fetchProductionList() {
     getProductionInfo().then((res) => {
       setOldState(res.data.result);
-      console.log(res.data.result);
     });
   }
 
-  const [selectItem, setSelectItem] = useState(-1);
+
+  const nextStep = () => {
+    if (Object.keys(state.moduleInfo).length === 0) {
+      Notification.error({ title: 'error', content: t['hardware.production.info.select.model.error'] });
+      return;
+    }
+    setVisible(true);
+  };
+  //
+  // const getModelInfo = (item) => {
+  //
+  // };
+
+  const setSelectKey = (key, item) => {
+    const keyOld = {
+      ...keyList
+    };
+    keyOld[key] = item;
+    setKeyList(keyOld);
+  };
+
 
   const onEmpty = () => {
     reduction();
@@ -267,31 +289,7 @@ export default function HardwareSelection() {
     });
   };
 
-  const nextStep = () => {
-    if (Object.keys(state.moduleInfo).length === 0) {
-      Notification.error({ title: 'error', content: t['hardware.production.info.select.model.error'] });
-      return;
-    }
-    setVisible(true);
-  };
 
-  const getModelInfo = (item) => {
-
-  };
-
-  const setSelectKey = (key, item) => {
-    const keyOld = {
-      ...keyList
-    };
-    keyOld[key] = item;
-    setKeyList(keyOld);
-  };
-
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
-  const [visible, setVisible] = useState(false);
-
-  const { state, dispatch } = useContext(ProductDemandContext);
   return (
     <div>
       <DynamicOuterCard title={t['hardware.production.info.title']}>
@@ -409,7 +407,6 @@ export default function HardwareSelection() {
             title={t['hardware.modal.info']}
             labelStyle={{ textAlign: 'right', paddingRight: 36 }}
             data={state.moduleInfo} />
-          // todo
         </Modal>
       </div>
     </div>
