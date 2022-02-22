@@ -60,6 +60,7 @@ export default function ProductMenu(props) {
       <Menu
         style={{ width: 200 }}
         hasCollapseButton
+        autoOpen
         levelIndent={12}
         onClickMenuItem={updateMenuKey}
       >

@@ -40,7 +40,9 @@ const i18n = {
     'hardware.production.info.select.model': '您已选择的产品名称为 : ',
     'hardware.production.info.select.model.error': '尚未选择具体产品型号',
     'hardware.modal.title': '产品硬件型号确认',
-    'hardware.modal.info': '产品信息如下:'
+    'hardware.modal.info': '产品信息如下:',
+    'service.preselection.model.info.title': '产品信息:',
+    'service.preselection.model.info.title.description': '针对这款产品, 我们提供以下定制生产服务, 请根据实际需要选择您需要的服务'
   },
 };
 

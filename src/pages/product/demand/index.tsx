@@ -18,13 +18,13 @@ function getFlattenRoutes(routes) {
 
   function travel(_routes) {
     _routes.forEach((route) => {
-      if (route.key && route.path && !route.children) {
+      if (route.key && route.path && !route.child) {
         route.component = lazyload(
           mod[`./entry/${route.path}/index.tsx`]
         );
         res.push(route);
-      } else if (isArray(route.children) && route.children.length) {
-        travel(route.children);
+      } else if (isArray(route.child) && route.child.length) {
+        travel(route.child);
       }
     });
   }
@@ -153,7 +153,7 @@ export default function ProductDemand(props) {
                 );
               })}
               <Route exact path={path}>
-                <div>jjjj</div>
+                <div>todo 添加说明</div>
               </Route>
             </Switch>
           </div>
