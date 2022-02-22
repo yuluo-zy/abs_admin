@@ -10,22 +10,25 @@ export default function useFilter(initialState?) {
     setState(oldState);
   }, [oldState]);
 
-  const dispatch = (setStateAction: any, keyList: any) => {
-    setState(setStateAction(oldState, setState, keyList));
-  };
+  // const dispatch = (setStateAction: any, keyList: any) => {
+  //   setState(setStateAction(oldState, setState, keyList));
+  // };
 
   const reduction = () => {
-    setOldState(oldState);
+    setState(oldState);
   };
-  return [state, dispatch, setOldState, reduction];
+  return [state, setState, oldState, setOldState, reduction];
 }
 
 export function multiFilter(array, filters) {
   const filterKeys = Object.keys(filters);
-  return array.filter((item) => {
-    return filterKeys.every(key => {
-      if (!filters[key].length) return true;
-      return !!~filters[key].indexOf(item[key]);
+  if (array && array.length > 0)
+    return array.filter((item) => {
+      return filterKeys.every(key => {
+        if (typeof (item[key]) == 'string') {
+          return filters[key] === item[key];
+        }
+        return filters[key] === item[key].toString();
+      });
     });
-  });
 }

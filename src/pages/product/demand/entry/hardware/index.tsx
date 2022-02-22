@@ -133,28 +133,28 @@ export default function HardwareSelection() {
     },
     {
       name: t['hardware.production.info.soc.package'],
-      type: '',
+      type: 'dimensions',
       select: ['QFN56(7*7)', 'QFN48(5*5)', 'QFN48(6*6)',
         'LGA48(7*7)', 'QFN32(5*5)', 'QFN28(4*4)']
     },
     {
       name: t['hardware.production.info.soc.model'],
-      type: '',
+      type: 'name',
       select: ['ESP8685', 'ESP32-S3', 'ESP32-C3', 'ESP32-S2', 'ESP32', 'ESP8266']
     },
     {
       name: t['hardware.production.info.soc.temperature'],
-      type: '',
-      select: ['-40 - 85', '-40 - 105', '-40 - 125']
+      type: 'operatingTemp',
+      select: ['-40 ~ 85', '-40 ~ 105', '-40 ~ 125']
     },
     {
       name: t['hardware.production.info.soc.flash'],
-      type: '',
+      type: 'flash',
       select: ['1', '2', '4', '8', '16']
     },
     {
       name: t['hardware.production.info.soc.psram'],
-      type: '',
+      type: 'psram',
       select: ['0', '2', '8']
     }
   ];
@@ -166,17 +166,17 @@ export default function HardwareSelection() {
     },
     {
       name: t['hardware.production.info.module.temperature'],
-      type: '',
-      select: ['-40 - 85', '-40 - 105', '-40 - 125']
+      type: 'operatingTemp',
+      select: ['-40 ~ 85', '-40 ~ 105', '-40 ~ 125']
     },
     {
       name: t['hardware.production.info.module.flash'],
-      type: '',
+      type: 'flash',
       select: ['1', '2', '4', '8', '16']
     },
     {
       name: t['hardware.production.info.module.psram'],
-      type: '',
+      type: 'psram',
       select: ['0', '2', '8']
     }
   ];
@@ -184,15 +184,17 @@ export default function HardwareSelection() {
   const product = [
     {
       name: t['hardware.production.info.chip'],
+      type: 'SoC',
       description: t['hardware.production.info.chip.description']
     },
     {
       name: t['hardware.production.info.modules'],
+      type: 'Module',
       description: t['hardware.production.info.modules.description']
     }
   ];
 
-  const [productList, dispatchProduct, setOldState, reduction] = useFilter();
+  const [productList, setProductList, oldState, setOldState, reduction] = useFilter();
 
   const dispatchSelect = (oldState, setState, keyList) => {
     if (keyList) {
@@ -200,9 +202,12 @@ export default function HardwareSelection() {
     }
   };
 
-  const [keyList, setKeyList] = useState();
+  const [keyList, setKeyList] = useState({});
+
   useEffect(() => {
-    dispatchProduct(dispatchSelect, keyList);
+    if (keyList && Object.keys(keyList).length > 0) {
+      dispatchSelect(oldState, setProductList, keyList);
+    }
   }, [keyList]);
 
   useEffect(() => {
@@ -252,14 +257,17 @@ export default function HardwareSelection() {
   const [selectItem, setSelectItem] = useState(-1);
 
   const onEmpty = () => {
-    setSelectItem(-1);
-    setKeyList(null);
     reduction();
+    setSelectItem(-1);
+    setKeyList({});
   };
 
   const setSelectKey = (key, item) => {
-    let keyOld = keyList;
-
+    let keyOld = {
+      ...keyList
+    };
+    keyOld[key] = item;
+    setKeyList(keyOld);
   };
 
 
@@ -272,6 +280,7 @@ export default function HardwareSelection() {
               return (
                 <Radio key={index} value={index} onClick={() => {
                   setSelectItem(index);
+                  setKeyList({ 'type': product[index].type });
                 }}>
                   {({ checked }) => {
                     return (

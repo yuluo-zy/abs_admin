@@ -31,7 +31,7 @@ const i18n = {
     'hardware.production.info.soc.flash': 'Flash大小 (MB)',
     'hardware.production.info.soc.psram': 'PSRAM大小 (MB)',
     'hardware.production.info.module.model': '搭载芯片型号',
-    'hardware.production.info.module.temperature': '工作温度',
+    'hardware.production.info.module.temperature': '工作温度 (°C)',
     'hardware.production.info.module.flash': 'Flash大小 (MB)',
     'hardware.production.info.module.psram': 'PSRAM大小 (MB)',
     'hardware.production.info.operate': '重置'
