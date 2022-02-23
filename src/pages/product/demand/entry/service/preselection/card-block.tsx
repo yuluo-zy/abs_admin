@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import cs from 'classnames';
 import { Card, Skeleton, Switch, Tag } from '@arco-design/web-react';
-import { IconCheckCircleFill } from '@arco-design/web-react/icon';
+import { IconCheckCircleFill, IconStarFill } from '@arco-design/web-react/icon';
 import styles from './style/index.module.less';
 import { ServiceCardProps } from '@/components/type';
 import useLocale from '@/pages/product/demand/locale/useLocale';
@@ -9,7 +9,6 @@ import useLocale from '@/pages/product/demand/locale/useLocale';
 
 function CardBlock(props: ServiceCardProps) {
   const { data, onChange } = props;
-  const [visible, setVisible] = useState(false);
   const [status, setStatus] = useState(data.status);
   const [loading, setLoading] = useState(false);
   const t = useLocale();
@@ -23,7 +22,7 @@ function CardBlock(props: ServiceCardProps) {
         setStatus(temp);
         onChange(temp);
         resolve(null);
-      }, 1000)
+      }, 500)
     ).finally(() => setLoading(false));
   };
 
@@ -48,7 +47,7 @@ function CardBlock(props: ServiceCardProps) {
           className={styles.status}
           size='small'
         >
-          {t['cardList.tag.activated']}
+          {t['service.preselection.model.info.title.open']}
         </Tag>
       );
     }
@@ -71,10 +70,11 @@ function CardBlock(props: ServiceCardProps) {
         ) : (
           <>
             <div
-              className={cs(styles.title, {
-                [styles['title-more']]: visible
-              })}
+              className={styles.title}
             >
+              <div className={styles.icon}>
+                <IconStarFill />
+              </div>
               {data.name}
               {getStatus()}
             </div>
