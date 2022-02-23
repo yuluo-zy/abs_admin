@@ -17,7 +17,11 @@ const terms: ServiceCard[] = [
   {
     id: 1,
     name: 'nnnn',
-    description: 'kjhdkjhfkjhds'
+    description: '1. 乐鑫支持客户在对具有内置 Flash 的模组和芯片进行烧录时，使用自己的 Flash Image，这便于客户接受\n' +
+      '带有自己应用程序固件和生产测试固件的模组，有助于在其生产过程中显著减少制造时间及制造复杂性；\n' +
+      '2. 此外，对于 ESP32 和 ESP32-S 系列模组，我们还支持在生产过程中对他们启用 Flash 烧录、安全启\n' +
+      '动以及在 eFUSE 存储中进行定制数据烧录。（注意：内置由于制程限制，当前内置 flash 的芯片烧录方案\n' +
+      '，仅支持非加密固件和有安全启动需求的固件，不支持 flash 加密固件。'
   },
   {
     id: 2,
@@ -47,7 +51,7 @@ export default function ServicePreselection() {
     return (
       <Row gutter={24} className={styles['card-content']}>
         {list.map((item, index) => (
-          <Col xs={24} sm={12} md={8} lg={8} xl={6} xxl={6} key={index}>
+          <Col xs={24} sm={12} md={12} lg={12} xl={12} xxl={12} key={index}>
             <CardBlock data={item} onChange={(item) => setService(item)} />
           </Col>
         ))}

@@ -73,6 +73,7 @@ export default function ProductDemand(props) {
                 'menu.production.service.selection.requirements.details.firmware'
               ],
               key: 'menu.production.service.selection.requirements.details.firmware',
+              path: 'service/firmware'
             },
             {
               name: t[
