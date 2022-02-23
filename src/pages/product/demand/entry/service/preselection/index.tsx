@@ -3,12 +3,13 @@ import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
 import useLocale from '@/pages/product/demand/locale/useLocale';
 import { ProductDemandContext } from '@/store/context-manager';
 import style from './style/index.module.less';
-import { Divider, Grid, Tag } from '@arco-design/web-react';
+import { Button, Divider, Grid, Tag } from '@arco-design/web-react';
 import DynamicCard from '@/components/Dynamic/Card';
 import styles from '@/pages/list/card/style/index.module.less';
 import CardBlock from '@/pages/product/demand/entry/service/preselection/card-block';
 import { ServiceCard } from '@/components/type';
 import DynamicSkeleton from '@/components/Dynamic/Skeleton';
+import { IconArrowRight } from '@arco-design/web-react/icon';
 
 const { Row, Col } = Grid;
 
@@ -70,6 +71,21 @@ export default function ServicePreselection() {
         </DynamicSkeleton>
       </DynamicCard>
       <Divider style={{ borderBottomStyle: 'dashed' }} />
+      <div className={style['model-next']}>
+        {
+          <div className={style['product-total']}>
+            <b>{t['service.preselection.model.service.total']}</b>
+          </div>
+        }
+        <Button type='primary'
+                size={'large'}
+                icon={<IconArrowRight />}
+                onClick={() => {
+                }}
+        >
+          {t['hardware.production.info.next']}
+        </Button>
+      </div>
     </DynamicOuterCard>
   </div>);
 }
