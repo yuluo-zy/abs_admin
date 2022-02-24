@@ -27,6 +27,7 @@ function DynamicOuterCard(props: DynamicCardProps) {
       style={style}
       headerStyle={headerStyle}
       bodyStyle={bodyStyle}
+      {...props}
     >
       {children}
     </Card>

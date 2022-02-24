@@ -73,6 +73,9 @@ export interface ModeProps {
 export interface DynamicCardProps {
   title?: string;
   children: any;
+  headerStyle?: any;
+  bodyStyle?: any;
+  style?: any;
 }
 
 export interface ListProps {

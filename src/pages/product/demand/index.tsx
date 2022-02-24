@@ -128,16 +128,20 @@ export default function ProductDemand(props) {
     preload.then(() => {
       dispatch({
         type: 'StepRouter',
-        payload: currentRoute.path,
+        payload: currentRoute.path
       });
       history.push(`${path}/${currentRoute.path}`);
       NProgress.done();
     });
   }
 
+  const bodyStyle = {
+    paddingLeft: '2rem',
+    paddingRight: '0'
+  };
   return (
     <ProductDemandContext.Provider value={{ state, dispatch }}>
-      <DynamicOuterCard title={t['menu.title']}>
+      <DynamicOuterCard title={t['menu.title']} bodyStyle={bodyStyle}>
         <div className={styles.layout}>
           <div className={styles.layoutLeftSide}>
             <ProductMenu menu={MenuTree} clickMenuItem={onClickMenuItem} />
