@@ -42,9 +42,18 @@ const i18n = {
     'hardware.modal.title': '产品硬件型号确认',
     'hardware.modal.info': '产品信息如下:',
     'service.preselection.model.info.title': '产品信息:',
-    'service.preselection.model.info.title.description': '针对这款产品, 我们提供以下定制生产服务, 请根据实际需要 选择您需要的服务:',
+    'service.preselection.model.info.title.description': '针对这款产品, 我们提供以下定制生产服务, 请根据实际需要 选择您需要的服务 :',
     'service.preselection.model.info.title.open': '已启用',
-    'service.preselection.model.service.total': '已选择 服务项数: '
+    'service.preselection.model.service.total': '已选择 服务项数 : ',
+    'firmware.customization.title': '固件定制',
+    'firmware.customization.info.version': '您的固件版本为 : ',
+    'firmware.customization.info.version.hint': '此信息用于显示在卷盘和外箱标签上',
+    'firmware.customization.info.project': '固件所属项目 : ',
+    'firmware.customization.info.project.hint': '请注明固件用于贵司的哪个项目, 如空调',
+    'firmware.customization.info.project.history': '固件导入历史 : ',
+    'firmware.customization.info.project.history.first': '项目首次在 ESPRESSIF 导入的固件',
+    'firmware.customization.info.project.history.next': '项目在 ESPRESSIF 导入过, 本次为固件升级',
+    'firmware.customization.info.encryption': '此次导入是否使用 falsh encryption 或者 secure boot ?'
   },
 };
 
