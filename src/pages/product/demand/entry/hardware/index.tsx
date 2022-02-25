@@ -290,9 +290,15 @@ export default function HardwareSelection() {
   };
 
 
+  const bodyStyle = {
+    paddingTop: '0',
+    transition: ' 0.5s all ease-in-out'
+  };
+
+
   return (
     <div>
-      <DynamicOuterCard title={t['hardware.production.info.title']}>
+      <DynamicOuterCard title={t['hardware.production.info.title']} bodyStyle={bodyStyle}>
         <div className={style['product']}>
           <Radio.Group direction='vertical' value={selectItem}>
             {[socSelect, moduleSelect].map((item, index) => {

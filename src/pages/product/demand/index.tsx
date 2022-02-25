@@ -137,7 +137,8 @@ export default function ProductDemand(props) {
 
   const bodyStyle = {
     paddingLeft: '2rem',
-    paddingRight: '0'
+    paddingRight: '0',
+    transition: ' 0.5s all ease-in-out'
   };
   return (
     <ProductDemandContext.Provider value={{ state, dispatch }}>
