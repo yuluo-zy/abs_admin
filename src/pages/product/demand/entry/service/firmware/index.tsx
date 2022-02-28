@@ -4,6 +4,7 @@ import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
 import { Divider, Form, Input, Message, Radio, Select, Space, Typography } from '@arco-design/web-react';
 import FirmwareInformation from '@/pages/product/demand/entry/service/firmware/firmware-information';
 import SerialCheck from '@/pages/product/demand/entry/service/firmware/serial-check';
+import DynamicRadioGroup from '@/components/Dynamic/Radio';
 
 
 const RadioGroup = Radio.Group;
@@ -79,5 +80,12 @@ export default function FirmwareCustomization() {
     <FirmwareInformation formData={form} />
     <Divider style={{ borderBottomStyle: 'dashed' }} />
     <SerialCheck formData={form} />
+    <DynamicRadioGroup options={[
+      { label: 'A', value: 'a' },
+      { label: 'B', value: 'b' },
+      { label: 'C', value: 'c' }
+    ]} onChange={(value) => {
+      console.log(value);
+    }} />
   </DynamicOuterCard>);
 }
