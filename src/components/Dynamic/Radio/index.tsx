@@ -10,7 +10,7 @@ export default function DynamicRadioGroup(props) {
   useEffect(() => {
     onChange(myValue);
   }, [myValue]);
-  return <RadioGroup value={myValue}>
+  return <RadioGroup value={myValue} direction={props.direction}>
     {options && isArray(options)
       && options.map((option, index) => {
         if (isObject(option)) {
