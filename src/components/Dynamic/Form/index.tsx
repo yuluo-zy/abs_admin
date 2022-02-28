@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Button, DatePicker, Form, Grid, Input, InputNumber, Select } from '@arco-design/web-react';
+import { Button, DatePicker, Form, Grid, Input, InputNumber, Select, Upload } from '@arco-design/web-react';
 import useLocale from '@/utils/useHook/useLocale';
 import styles from './style/index.module.less';
 import { FormItemProps, FormProps } from '@/components/type';
@@ -10,6 +10,8 @@ import cs from 'classnames';
 import useDebounce from '@/utils/useHook/useDebounce';
 
 const { Row, Col } = Grid;
+
+const TextArea = Input.TextArea;
 
 function DynamicForm(props: FormProps) {
   const [form] = Form.useForm();
@@ -22,6 +24,7 @@ function DynamicForm(props: FormProps) {
       return (
         <FormItem
           key={index}
+          labelCol={item.labelCol}
           required={item.required}
           label={item.label}
           field={item.field}
@@ -34,6 +37,7 @@ function DynamicForm(props: FormProps) {
       return (
         <FormItem
           key={index}
+          labelCol={item.labelCol}
           required={item.required}
           label={item.label}
           field={item.field}
@@ -46,6 +50,7 @@ function DynamicForm(props: FormProps) {
       return (
         <FormItem
           key={index}
+          labelCol={item.labelCol}
           required={item.required}
           label={item.label}
           field={item.field}
@@ -58,6 +63,7 @@ function DynamicForm(props: FormProps) {
       return (
         <FormItem
           key={index}
+          labelCol={item.labelCol}
           required={item.required}
           label={item.label}
           field={item.field}
@@ -66,10 +72,24 @@ function DynamicForm(props: FormProps) {
         </FormItem>
       );
     }
+    if (item.type === 'text') {
+      return (
+        <FormItem
+          key={index}
+          labelCol={item.labelCol}
+          required={item.required}
+          label={item.label}
+          field={item.field}
+        >
+          <TextArea autoSize={{ minRows: 3 }} allowClear />
+        </FormItem>
+      );
+    }
     if (item.type === 'multiple') {
       return (
         <FormItem
           key={index}
+          labelCol={item.labelCol}
           required={item.required}
           label={item.label}
           field={item.field}
@@ -82,6 +102,7 @@ function DynamicForm(props: FormProps) {
       return (
         <FormItem
           key={index}
+          labelCol={item.labelCol}
           required={item.required}
           label={item.label}
           field={item.field}
@@ -91,6 +112,23 @@ function DynamicForm(props: FormProps) {
             style={{ width: '100%' }}
             disabledDate={(date) => dayjs(date).isAfter(dayjs())}
           />
+        </FormItem>
+      );
+
+    }
+    if (item.type === 'self') {
+      return item.node;
+    }
+    if (item.type === 'upload') {
+      return (
+        <FormItem
+          key={index}
+          labelCol={item.labelCol}
+          required={item.required}
+          label={item.label}
+          field={item.field}
+        >
+          <Upload action='/' />
         </FormItem>
       );
     }
@@ -104,12 +142,13 @@ function DynamicForm(props: FormProps) {
       return (
         <Form
           key={round}
-          form={form}
+          form={props.formData ? props.formData : form}
           id={props.title}
           {...props.formItemLayout}
           scrollToFirstError
-          labelAlign="left"
+          labelAlign='left'
           initialValues={props.data}
+          layout={props.layout}
         >
           <Row gutter={24}>
             {props.formItem.map((item, index) => {
@@ -130,7 +169,7 @@ function DynamicForm(props: FormProps) {
         id={props.title}
         {...props.formItemLayout}
         scrollToFirstError
-        labelAlign="left"
+        labelAlign='left'
         initialValues={props.data}
       >
         {props.formItem.map((item, index) => DynamicFormItem({ item, index }))}
@@ -138,32 +177,38 @@ function DynamicForm(props: FormProps) {
     );
   }, [props.data]);
 
+  const submitData = useDebounce(() => {
+    const values = form.getFieldsValue();
+    props.onSubmit(values);
+  });
+
+  const resetData = useDebounce(() => {
+    form.resetFields();
+    props.onRest?.();
+  }, 100);
+
   return (
     <div style={{ paddingRight: '2rem' }} className={cs(className)}>
       <div>{DynamicFormNode}</div>
       <div>{props.children}</div>
-      <div className={styles['right-button']}>
-        <Button
-          type="primary"
-          icon={<IconCheck />}
-          onClick={useDebounce(() => {
-            const values = form.getFieldsValue();
-            props.onSubmit(values);
-          })}
-        >
-          {t['form.submit']}
-        </Button>
+      {
+        props.formData == undefined && <div className={styles['right-button']}>
+          <Button
+            type='primary'
+            icon={<IconCheck />}
+            onClick={submitData}
+          >
+            {t['form.submit']}
+          </Button>
 
-        <Button
-          icon={<IconRefresh />}
-          onClick={useDebounce(() => {
-            form.resetFields();
-            props.onRest?.();
-          }, 100)}
-        >
-          {t['form.reset']}
-        </Button>
-      </div>
+          <Button
+            icon={<IconRefresh />}
+            onClick={resetData}
+          >
+            {t['form.reset']}
+          </Button>
+        </div>
+      }
     </div>
   );
 }

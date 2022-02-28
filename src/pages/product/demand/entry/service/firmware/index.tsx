@@ -1,7 +1,9 @@
 import React from 'react';
 import useLocale from '@/pages/product/demand/locale/useLocale';
 import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
-import { Divider, Input, Message, Radio, Select, Space, Typography } from '@arco-design/web-react';
+import { Divider, Form, Input, Message, Radio, Select, Space, Typography } from '@arco-design/web-react';
+import FirmwareInformation from '@/pages/product/demand/entry/service/firmware/firmware-information';
+import SerialCheck from '@/pages/product/demand/entry/service/firmware/serial-check';
 
 
 const RadioGroup = Radio.Group;
@@ -10,6 +12,7 @@ export default function FirmwareCustomization() {
   const t = useLocale();
 
   const Option = Select.Option;
+  const [form] = Form.useForm();
 
   const options = ['Beijing', 'Shanghai', 'Guangzhou', 'Disabled'];
 
@@ -55,9 +58,7 @@ export default function FirmwareCustomization() {
     </Space>
     <Divider style={{ borderBottomStyle: 'dashed' }} />
     <Space size={10} direction='vertical'>
-      {/*<Tag checkable color='arcoblue'  size={'large'} defaultChecked>*/}
       <Typography.Text>{t['firmware.customization.info.encryption']}</Typography.Text>
-      {/*</Tag>*/}
       <RadioGroup
         direction='vertical'
       >
@@ -75,6 +76,8 @@ export default function FirmwareCustomization() {
       </div>
     </Space>
     <Divider style={{ borderBottomStyle: 'dashed' }} />
-
+    <FirmwareInformation formData={form} />
+    <Divider style={{ borderBottomStyle: 'dashed' }} />
+    <SerialCheck formData={form} />
   </DynamicOuterCard>);
 }

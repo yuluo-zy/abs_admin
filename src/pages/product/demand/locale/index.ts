@@ -53,7 +53,21 @@ const i18n = {
     'firmware.customization.info.project.history': '固件导入历史 : ',
     'firmware.customization.info.project.history.first': '项目首次在 ESPRESSIF 导入的固件',
     'firmware.customization.info.project.history.next': '项目在 ESPRESSIF 导入过, 本次为固件升级',
-    'firmware.customization.info.encryption': '此次导入是否使用 falsh encryption 或者 secure boot ?'
+    'firmware.customization.info.encryption': '此次导入是否使用 falsh encryption 或者 secure boot ?',
+    'firmware.information.title': '固件信息提供',
+    'firmware.information.name': '固件名称',
+    'firmware.information.name.error': '固件名称不能为空',
+    'firmware.information.MD5': '固件MD5值',
+    'firmware.information.MD5.error': '固件MD5值不能为空',
+    'firmware.information.startAddress': '起始烧录地址',
+    'firmware.information.startAddress.error': '起始烧录地址不能为空',
+    'firmware.information.upLoad': '上传固件文件',
+    'firmware.information.upLoad.error': '上传固件文件不能为空',
+    'firmware.serial.check.title': '串口校验信息',
+    'firmware.serial.universal.serial.port': '通用串口',
+    'firmware.serial.self.serial.port': '自定义串口',
+    'firmware.serial.self.serial.baud.rate': '串口波特率',
+    'firmware.serial.self.serial.check.character': '串口校验字符'
   },
 };
 

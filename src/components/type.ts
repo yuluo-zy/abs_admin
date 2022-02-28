@@ -22,20 +22,23 @@ export interface FormItemProps {
     | 'rate'
     | 'password'
     | 'number'
-    | 'tree';
+    | 'text'
+    | 'tree'
+    | 'upload' | 'self';
   onChange?: () => void;
   field: string;
   options?: any;
   rules?: RulesProps[];
   placeholder?: string;
   required?: boolean;
-  node?: never;
+  labelCol?: Recordable;
+  node?: any;
 }
 
 export interface FormProps {
   title: string;
   formItemLayout?: Recordable;
-  form?: any;
+  formData?: any;
   // 这里的数据是说明这是预填充数据
   data?: Recordable;
   onValuesChange?: () => void;
@@ -45,6 +48,7 @@ export interface FormProps {
   col?: number;
   className?: string | string[];
   children?: any;
+  layout?: 'horizontal' | 'vertical' | 'inline';
 }
 
 export interface TreeProps {
@@ -72,6 +76,7 @@ export interface ModeProps {
 
 export interface DynamicCardProps {
   title?: string;
+  help?: string;
   children: any;
   headerStyle?: any;
   bodyStyle?: any;

@@ -1,6 +1,7 @@
-import React from 'react';
-import { Card } from '@arco-design/web-react';
+import React, { useState } from 'react';
+import { Alert, Card, Space } from '@arco-design/web-react';
 import { DynamicCardProps } from '@/components/type';
+import { IconBulb } from '@arco-design/web-react/icon';
 
 function DynamicCard(props: DynamicCardProps) {
   const { title, children } = props;
@@ -13,11 +14,22 @@ function DynamicCard(props: DynamicCardProps) {
   };
   const bodyStyle = {
     paddingLeft: '2rem',
-    paddingRight: '2rem',
+    paddingRight: '2rem'
   };
+  const [open, setOpen] = useState(false);
 
   return (
-    <Card title={title} headerStyle={headerStyle} bodyStyle={bodyStyle}>
+    <Card title={
+      <Space size={4}>
+        <b> {title}</b>
+        {props.help && <div onClick={() => {
+          setOpen(!open);
+        }}><IconBulb style={{ fontSize: 20, color: '#FADC19' }} /></div>}
+        {open && <Alert type='warning' content={props.help} />}
+      </Space>
+
+    } headerStyle={headerStyle} bodyStyle={bodyStyle}>
+
       {children}
     </Card>
   );
