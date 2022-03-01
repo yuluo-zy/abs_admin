@@ -8,6 +8,7 @@ import {
   Input,
   Link,
   Message,
+  Modal,
   Select,
   Space,
   Tooltip,
@@ -32,6 +33,10 @@ export default function FirmwareCustomization() {
 
   const [history, setHistory] = useState('');
   const [encryption, setEncryption] = useState();
+  const [encryptionWay, setEncryptionWay] = useState();
+  const [flash, setFlash] = useState();
+  const [secure, setSecure] = useState();
+  const [visible, setVisible] = useState(false);
 
   return (<DynamicOuterCard title={t['firmware.customization.title']}>
     <Space size={30} direction='vertical'>
@@ -105,11 +110,13 @@ export default function FirmwareCustomization() {
       }} />
       {encryption === 'encryption' && <div style={{ paddingLeft: '6rem' }}>
         <Space size={40}>
-          <CheckboxGroup
+          <DynamicRadioGroup
             options={[{ label: t['firmware.customization.info.encryption.firmware.flash'], value: 'flash' },
-              { label: t['firmware.customization.info.encryption.firmware.v1'], value: 'v1' },
-              { label: t['firmware.customization.info.encryption.firmware.v2'], value: 'v2' }]}
+              { label: t['firmware.customization.info.encryption.firmware.secure.boot'], value: 'secure' }]}
             style={{ display: 'block', marginBottom: 16 }}
+            onChange={(value) => {
+              setEncryptionWay(value);
+            }}
           />
           <Tooltip color={'#0E42D2'} position={'rt'}
                    content={t['firmware.customization.info.encryption.firmware.v2.link']}>
@@ -124,6 +131,84 @@ export default function FirmwareCustomization() {
       </div>}
     </Space>
     <Divider style={{ borderBottomStyle: 'dashed' }} />
+    {/*加密详情*/}
+    {encryptionWay === 'flash' &&
+      <Space size={10} direction='vertical'>
+        <Typography.Text>{t['firmware.customization.info.encryption.firmware.info']}</Typography.Text>
+
+        <DynamicRadioGroup direction='vertical'
+                           options={[{
+                             label: t['firmware.customization.info.encryption.firmware.flash.only'],
+                             value: 'only'
+                           }, {
+                             label: t['firmware.customization.info.encryption.firmware.flash.random'],
+                             value: 'random'
+                           }]}
+                           onChange={(value) => {
+                             setFlash(value);
+                             if (value === 'only') {
+                               setVisible(true);
+                             }
+                           }}
+        />
+        <Modal
+          title='Titles'
+          visible={visible}
+          onOk={() => setVisible(false)}
+          onCancel={() => setVisible(false)}
+          autoFocus
+          focusLock
+        >
+          <Space size={10} direction='vertical'>
+            <Typography.Text>{t['firmware.customization.info.encryption.firmware.flash.only.t1']}</Typography.Text>
+            <Typography.Text>{t['firmware.customization.info.encryption.firmware.flash.only.t2']}</Typography.Text>
+            <Typography.Text>{t['firmware.customization.info.encryption.firmware.flash.only.t3']}</Typography.Text>
+            <div style={{ paddingLeft: '2rem' }}>
+              <Space size={10} direction='vertical'>
+                <Typography.Text>{t['firmware.customization.info.encryption.firmware.flash.only.t3.t1']}</Typography.Text>
+                <Typography.Text>{t['firmware.customization.info.encryption.firmware.flash.only.t3.t2']}</Typography.Text>
+              </Space>
+            </div>
+          </Space>
+        </Modal>
+        <Space size={10}>
+          <Typography.Text>{t['firmware.serial.partitions']}</Typography.Text>
+          <Input
+            style={{ width: 350 }}
+            allowClear
+            placeholder='Please Enter something'
+          />,
+        </Space>
+        <Divider style={{ borderBottomStyle: 'dashed' }} />
+      </Space>
+    }
+    {encryptionWay === 'secure' &&
+      <Space size={10} direction='vertical'>
+        <Typography.Text>{t['firmware.customization.info.encryption.firmware.info']}</Typography.Text>
+
+        <DynamicRadioGroup direction='vertical'
+                           options={[{
+                             label: t['firmware.customization.info.encryption.firmware.v1'],
+                             value: 'v1'
+                           }, {
+                             label: t['firmware.customization.info.encryption.firmware.v2'],
+                             value: 'v2'
+                           }]}
+                           onChange={(value) => setSecure(value)}
+        />
+        {secure === 'v2' &&
+          <Space size={16}>
+            <Typography.Text>{t['firmware.customization.info.encryption.firmware.v2.key']}</Typography.Text>
+            <Input
+              style={{ width: 350 }}
+              allowClear
+            />,
+          </Space>
+
+        }
+        <Divider style={{ borderBottomStyle: 'dashed' }} />
+      </Space>
+    }
     {encryption === 'unencryption' && <div>
       <FirmwareInformation formData={form} />
       <Divider style={{ borderBottomStyle: 'dashed' }} />

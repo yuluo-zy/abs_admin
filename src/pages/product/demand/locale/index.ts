@@ -57,8 +57,18 @@ const i18n = {
     'firmware.customization.info.encryption': '此次导入是否使用 falsh encryption 或者 secure boot ?',
     'firmware.customization.info.encryption.firmware': '加密固件',
     'firmware.customization.info.encryption.firmware.flash': 'Falsh 加密',
+    'firmware.customization.info.encryption.firmware.secure.boot': 'Secure Boot',
+    'firmware.customization.info.encryption.firmware.info': '加密需求细节',
+    'firmware.customization.info.encryption.firmware.flash.only': '指定唯一的key',
+    'firmware.customization.info.encryption.firmware.flash.only.t1': '1. 选择这个选项， 意味着您选择使用一个指定的 KEY 加密所有产品',
+    'firmware.customization.info.encryption.firmware.flash.only.t2': '2. 生产中， 我们将加密后的固件烧录到 Flash ，再将 KEY 烧录到 Efuse',
+    'firmware.customization.info.encryption.firmware.flash.only.t3': '3. 您需要提供以下文件：',
+    'firmware.customization.info.encryption.firmware.flash.only.t3.t1': '1) 用于加密的指定的KEY',
+    'firmware.customization.info.encryption.firmware.flash.only.t3.t2': '2) 使用上述KEY加密后的固件。 并且请将加密后的固件 combine 成一个完整固件',
+    'firmware.customization.info.encryption.firmware.flash.random': '指定随机生成的key',
     'firmware.customization.info.encryption.firmware.v1': '安全启动V1',
     'firmware.customization.info.encryption.firmware.v2': '安全启动V2',
+    'firmware.customization.info.encryption.firmware.v2.key': 'pc(s) of keys 数量: ',
     'firmware.customization.info.encryption.firmware.v2.link': '点击获取安全启动功能详情',
     'firmware.customization.info.unencryption.firmware': '非加密固件',
     'firmware.information.title': '固件信息提供',
@@ -74,7 +84,8 @@ const i18n = {
     'firmware.serial.universal.serial.port': '通用串口',
     'firmware.serial.self.serial.port': '自定义串口',
     'firmware.serial.self.serial.baud.rate': '串口波特率',
-    'firmware.serial.self.serial.check.character': '串口校验字符'
+    'firmware.serial.self.serial.check.character': '串口校验字符',
+    'firmware.serial.partitions': '您固件需要加密的 partitions 个数为： '
   },
 };
 
