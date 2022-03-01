@@ -99,6 +99,7 @@ export default function ProductDemand(props) {
                 'menu.production.service.selection.requirements.details.custom.label'
               ],
               key: 'menu.production.service.selection.requirements.details.custom.label',
+              path: 'service/label'
             },
           ],
         },
