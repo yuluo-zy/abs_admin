@@ -96,7 +96,7 @@ const i18n = {
     'firmware.mac.partitions.end': '结束 MAC 地址: ',
     'firmware.mac.partitions.info1': '您一共提供了 ',
     'firmware.mac.partitions.info2': ' 个 MAC 地址， 一共可用于生产 ',
-    'firmware.mac.partitions.info3': ' 的产品 ( 0.2% 用于生产消耗)',
+    'firmware.mac.partitions.info3': ' 的产品 ( 0.2% 用于生产消耗 )',
     'firmware.mac.partitions.warn': '当您选择定制 MAC 服务， 模组屏蔽盖的二维码内将包含定制 MAC 地址',
     'firmware.label.title': '定制标签',
     'firmware.label.remark': '其他备注信息： ',
