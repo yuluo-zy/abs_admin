@@ -80,6 +80,7 @@ export default function ProductDemand(props) {
                 'menu.production.service.selection.requirements.details.mac'
               ],
               key: 'menu.production.service.selection.requirements.details.mac',
+              path: 'service/mac'
             },
             {
               name: t[

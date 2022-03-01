@@ -85,7 +85,19 @@ const i18n = {
     'firmware.serial.self.serial.port': '自定义串口',
     'firmware.serial.self.serial.baud.rate': '串口波特率',
     'firmware.serial.self.serial.check.character': '串口校验字符',
-    'firmware.serial.partitions': '您固件需要加密的 partitions 个数为： '
+    'firmware.serial.partitions': '您固件需要加密的 partitions 个数为： ',
+    'firmware.mac.title': '定制 MAC',
+    'firmware.mac.partitions.write.area': '定制 MAC 写入区域： ',
+    'firmware.mac.partitions.write.area.efuse': 'efuse 写入请使用 IDF 默认接口，默认为 BLK3',
+    'firmware.mac.partitions.flash.write.area': '写入offset地址： ',
+    'firmware.mac.partitions.flash.write.area.mac': '每个产品分配定制 MAC 地址个数： ',
+    'firmware.mac.partitions.flash.write.area.title': '提供连续的 MAC 地址段用于量产',
+    'firmware.mac.partitions.start': '起始 MAC 地址: ',
+    'firmware.mac.partitions.end': '结束 MAC 地址: ',
+    'firmware.mac.partitions.info1': '您一共提供了 ',
+    'firmware.mac.partitions.info2': ' 个 MAC 地址， 一共可用于生产 ',
+    'firmware.mac.partitions.info3': ' 的产品 ( 0.2% 用于生产消耗)',
+    'firmware.mac.partitions.warn': '当您选择定制 MAC 服务， 模组屏蔽盖的二维码内将包含定制 MAC 地址'
   },
 };
 

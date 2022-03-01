@@ -1,26 +1,14 @@
 import React, { useState } from 'react';
 import useLocale from '@/pages/product/demand/locale/useLocale';
 import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
-import {
-  Checkbox,
-  Divider,
-  Form,
-  Input,
-  Link,
-  Message,
-  Modal,
-  Select,
-  Space,
-  Tooltip,
-  Typography
-} from '@arco-design/web-react';
+import { Divider, Form, Input, Link, Message, Modal, Select, Space, Tooltip, Typography } from '@arco-design/web-react';
 import FirmwareInformation from '@/pages/product/demand/entry/service/firmware/firmware-information';
 import SerialCheck from '@/pages/product/demand/entry/service/firmware/serial-check';
 import DynamicRadioGroup from '@/components/Dynamic/Radio';
 import { IconLaunch, IconTags } from '@arco-design/web-react/icon';
-
-
-const CheckboxGroup = Checkbox.Group;
+import FirmwareFile from '@/pages/product/demand/entry/service/firmware/firmware-file';
+import FirmwareFlash from '@/pages/product/demand/entry/service/firmware/firmware-flash';
+import FirmwareEfuse from '@/pages/product/demand/entry/service/firmware/frimware-efuse';
 
 
 export default function FirmwareCustomization() {
@@ -208,6 +196,16 @@ export default function FirmwareCustomization() {
         }
         <Divider style={{ borderBottomStyle: 'dashed' }} />
       </Space>
+    }
+    {
+      flash === 'only' && <div>
+        <FirmwareFile />
+        <Divider style={{ borderBottomStyle: 'dashed' }} />
+        <FirmwareFlash formData={form} />
+        <Divider style={{ borderBottomStyle: 'dashed' }} />
+        <FirmwareEfuse formData={form} />
+        <Divider style={{ borderBottomStyle: 'dashed' }} />
+      </div>
     }
     {encryption === 'unencryption' && <div>
       <FirmwareInformation formData={form} />
