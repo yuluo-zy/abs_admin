@@ -7,6 +7,8 @@ const i18n = {
     'tree.select.all': '选中所有',
     'tree.fold': '展开',
     'tree.unfold': '收起',
+    'list.add': '新增',
+    'list.remove': '删除'
   },
 };
 

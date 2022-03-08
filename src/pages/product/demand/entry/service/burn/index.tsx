@@ -29,26 +29,26 @@ export default function ServicePreselection() {
       field: 'context',
       fieldList: [
         {
-          label: t[''],
           field: 'date',
           type: 'input',
+          placeholder: t['firmware.burn.flash.plan.data'],
           labelCol: 5
         },
         {
-          label: t['userTable.columns.id'],
+          placeholder: t['firmware.burn.flash.plan.address'],
           field: 'address',
           type: 'input',
           labelCol: 5
         },
         {
-          label: t['userTable.columns.id'],
+          placeholder: t['firmware.burn.flash.plan.output'],
           field: 'output',
           type: 'text',
           labelCol: 11
         },
 
         {
-          label: t['userTable.columns.id'],
+          placeholder: t['firmware.burn.flash.plan.bin'],
           field: 'output',
           type: 'upload',
           labelCol: 3
@@ -61,10 +61,11 @@ export default function ServicePreselection() {
 
   const getFormList = (value: number | undefined) => {
     if (value != undefined) {
-      console.log(value);
-      return <DynamicForm data={{ 'context': [{}] }} title={t['firmware.burn.flash.title']} formList={FlashItem[value]}
-                          formData={form} onSubmit={() => {
-      }} />;
+      return <div className={style['card']}><DynamicForm data={{ 'context': [{}] }}
+                                                         title={t['firmware.burn.flash.title']}
+                                                         formList={FlashItem[value]}
+                                                         formData={form} onSubmit={() => {
+      }} /></div>;
     }
   };
 
@@ -111,9 +112,8 @@ export default function ServicePreselection() {
         </div>
       }
 
-      {
-        getFormList(flashSelect)
-      }
+      {getFormList(flashSelect)}
+
       < DynamicDivider />
       {
         efuse && <div>

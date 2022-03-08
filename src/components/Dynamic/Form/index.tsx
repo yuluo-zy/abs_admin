@@ -5,7 +5,7 @@ import styles from './style/index.module.less';
 import { FormItemProps, FormList, FormProps } from '@/components/type';
 import locale from './locale';
 import dayjs from 'dayjs';
-import { IconCheck, IconDelete, IconRefresh } from '@arco-design/web-react/icon';
+import { IconCheck, IconDelete, IconPlus, IconRefresh } from '@arco-design/web-react/icon';
 import cs from 'classnames';
 import useDebounce from '@/utils/useHook/useDebounce';
 
@@ -13,173 +13,173 @@ const { Row, Col } = Grid;
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 
-const DynamicFormItem = (props: { item: FormItemProps; index: number }) => {
-  const { item, index } = props;
-  if (item.type === 'input') {
-    return (
-      <FormItem
-        key={index}
-        labelCol={item.labelCol}
-        required={item.required}
-        label={item.label}
-        field={item.field}
-      >
-        <Input allowClear placeholder={item.placeholder} />
-      </FormItem>
-    );
-  }
-  if (item.type === 'password') {
-    return (
-      <FormItem
-        key={index}
-        labelCol={item.labelCol}
-        required={item.required}
-        label={item.label}
-        field={item.field}
-      >
-        <Input type={'password'} allowClear placeholder={item.placeholder} />
-      </FormItem>
-    );
-  }
-  if (item.type === 'number') {
-    return (
-      <FormItem
-        key={index}
-        labelCol={item.labelCol}
-        required={item.required}
-        label={item.label}
-        field={item.field}
-      >
-        <InputNumber placeholder={item.placeholder} />
-      </FormItem>
-    );
-  }
-  if (item.type === 'select') {
-    return (
-      <FormItem
-        key={index}
-        labelCol={item.labelCol}
-        required={item.required}
-        label={item.label}
-        field={item.field}
-      >
-        <Select options={item.options} allowClear placeholder={item.placeholder} />
-      </FormItem>
-    );
-  }
-  if (item.type === 'text') {
-    return (
-      <FormItem
-        key={index}
-        labelCol={item.labelCol}
-        required={item.required}
-        label={item.label}
-        field={item.field}
-      >
-        <TextArea autoSize={{ minRows: 3 }} allowClear placeholder={item.placeholder} />
-      </FormItem>
-    );
-  }
-  if (item.type === 'multiple') {
-    return (
-      <FormItem
-        key={index}
-        labelCol={item.labelCol}
-        required={item.required}
-        label={item.label}
-        field={item.field}
-      >
-        <Select options={item.options} mode={'multiple'} allowClear placeholder={item.placeholder} />
-      </FormItem>
-    );
-  }
-  if (item.type === 'date') {
-    return (
-      <FormItem
-        key={index}
-        labelCol={item.labelCol}
-        required={item.required}
-        label={item.label}
-        field={item.field}
-      >
-        <DatePicker.RangePicker
-          allowClear
-          style={{ width: '100%' }}
-          disabledDate={(date) => dayjs(date).isAfter(dayjs())}
-        />
-      </FormItem>
-    );
-
-  }
-  if (item.type === 'self') {
-    return item.node;
-  }
-  if (item.type === 'upload') {
-    return (
-      <FormItem
-        key={index}
-        labelCol={item.labelCol}
-        required={item.required}
-        label={item.label}
-        field={item.field}
-      >
-        <Upload action='/' />
-      </FormItem>
-    );
-  }
-  return <Input key={index} allowClear />;
-};
-
-function DynamicFormList(props: FormList) {
-
-  const { field, fieldList } = props;
-  return (
-    <Form.List field={field}>
-
-      {(fields, { add, remove, move }) => {
-        return (
-          <div>
-            <div className={styles['right-button']}>
-              <Button
-                style={{ marginRight: 20 }}
-                status={'default'}
-                onClick={() => {
-                  add();
-                }}
-              >
-                增加一个新的
-              </Button>
-              <Button icon={<IconDelete />} status='danger'
-                      onClick={() => {
-                        remove(fields.length - 1);
-                      }}> 删除</Button>
-            </div>
-
-            {fields.map((item, index) => {
-              return (
-                <div key={item.key} className={props.styles}>
-                  <Form.Item label={'User ' + index} labelCol={{ span: 24 }}>
-                    <Row gutter={20} justify='start' align='center'>
-                      {fieldList.map((item, index) => <Col key={index} span={item.labelCol as any}>{DynamicFormItem({
-                        item,
-                        index
-                      })}</Col>)}
-                    </Row>
-                  </Form.Item>
-                </div>
-              );
-            })}
-          </div>
-        );
-      }}
-    </Form.List>);
-}
-
 
 function DynamicForm(props: FormProps) {
   const [form] = Form.useForm();
   const t = useLocale(locale);
   const { className } = props;
+
+  const DynamicFormItem = (props: { item: FormItemProps; index: number }) => {
+    const { item, index } = props;
+    if (item.type === 'input') {
+      return (
+        <FormItem
+          key={index}
+          labelCol={item.labelCol}
+          required={item.required}
+          label={item.label}
+          field={item.field}
+        >
+          <Input allowClear placeholder={item.placeholder} />
+        </FormItem>
+      );
+    }
+    if (item.type === 'password') {
+      return (
+        <FormItem
+          key={index}
+          labelCol={item.labelCol}
+          required={item.required}
+          label={item.label}
+          field={item.field}
+        >
+          <Input type={'password'} allowClear placeholder={item.placeholder} />
+        </FormItem>
+      );
+    }
+    if (item.type === 'number') {
+      return (
+        <FormItem
+          key={index}
+          labelCol={item.labelCol}
+          required={item.required}
+          label={item.label}
+          field={item.field}
+        >
+          <InputNumber placeholder={item.placeholder} />
+        </FormItem>
+      );
+    }
+    if (item.type === 'select') {
+      return (
+        <FormItem
+          key={index}
+          labelCol={item.labelCol}
+          required={item.required}
+          label={item.label}
+          field={item.field}
+        >
+          <Select options={item.options} allowClear placeholder={item.placeholder} />
+        </FormItem>
+      );
+    }
+    if (item.type === 'text') {
+      return (
+        <FormItem
+          key={index}
+          labelCol={item.labelCol}
+          required={item.required}
+          label={item.label}
+          field={item.field}
+        >
+          <TextArea allowClear autoSize placeholder={item.placeholder} />
+        </FormItem>
+      );
+    }
+    if (item.type === 'multiple') {
+      return (
+        <FormItem
+          key={index}
+          labelCol={item.labelCol}
+          required={item.required}
+          label={item.label}
+          field={item.field}
+        >
+          <Select options={item.options} mode={'multiple'} allowClear placeholder={item.placeholder} />
+        </FormItem>
+      );
+    }
+    if (item.type === 'date') {
+      return (
+        <FormItem
+          key={index}
+          labelCol={item.labelCol}
+          required={item.required}
+          label={item.label}
+          field={item.field}
+        >
+          <DatePicker.RangePicker
+            allowClear
+            style={{ width: '100%' }}
+            disabledDate={(date) => dayjs(date).isAfter(dayjs())}
+          />
+        </FormItem>
+      );
+
+    }
+    if (item.type === 'self') {
+      return item.node;
+    }
+    if (item.type === 'upload') {
+      return (
+        <FormItem
+          key={index}
+          labelCol={item.labelCol}
+          required={item.required}
+          label={item.label}
+          field={item.field}
+        >
+          <Upload action='/' />
+        </FormItem>
+      );
+    }
+    return <Input key={index} allowClear />;
+  };
+
+  function DynamicFormList(props: FormList) {
+
+    const { field, fieldList } = props;
+    return (
+      <Form.List field={field}>
+
+        {(fields, { add, remove }) => {
+          return (
+            <div>
+              <div className={styles['list-button']}>
+                <Button
+                  style={{ marginRight: 20 }}
+                  status={'default'}
+                  type='primary'
+                  icon={<IconPlus />}
+                  onClick={() => {
+                    add();
+                  }}
+                >{t['list.add']}</Button>
+                <Button icon={<IconDelete />} status='danger'
+                        onClick={() => {
+                          remove(fields.length - 1);
+                        }}>{t['list.remove']}</Button>
+              </div>
+
+              {fields.map((item, index) => {
+                return (
+                  <div key={item.key} className={props.styles}>
+                    <Form.Item label={field + ': ' + index} labelCol={{ span: 3 }}>
+                      <Row gutter={20} justify='start' align='start'>
+                        {fieldList.map((item, index) => <Col key={index} span={item.labelCol as any}>{DynamicFormItem({
+                          item,
+                          index
+                        })}</Col>)}
+                      </Row>
+                    </Form.Item>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        }}
+      </Form.List>);
+  }
 
   const DynamicFormNode = useMemo(() => {
     const round = Math.random();

@@ -112,9 +112,10 @@ const i18n = {
     'firmware.burn.flash.planB': '提供待烧录数据清单, 由乐鑫生成Bin文件后烧录',
     'firmware.burn.flash.planC': '提供烧录脚本',
     'firmware.burn.efuse.title': 'eFuse 定制化烧录',
-    'firmware.burn.flash.plan.data': '数据大小',
-    'firmware.burn.flash.plan.address': '起始地址',
-    'firmware.burn.flash.plan.output': '烧录成功的串口打印字符串'
+    'firmware.burn.flash.plan.data': '数据大小: 0x',
+    'firmware.burn.flash.plan.address': '起始地址: 0x',
+    'firmware.burn.flash.plan.output': '烧录成功的串口打印字符串: ',
+    'firmware.burn.flash.plan.bin': '上传 bin 文件'
   },
 };
 
