@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Button, DatePicker, Form, Grid, Input, InputNumber, Select, Upload } from '@arco-design/web-react';
 import useLocale from '@/utils/useHook/useLocale';
 import styles from './style/index.module.less';
-import { FormItemProps, FormList, FormProps } from '@/components/type';
+import { FormItemProps, FormList, FormProps, Recordable } from '@/components/type';
 import locale from './locale';
 import dayjs from 'dayjs';
 import { IconCheck, IconDelete, IconPlus, IconRefresh } from '@arco-design/web-react/icon';
@@ -25,7 +25,7 @@ function DynamicForm(props: FormProps) {
       return (
         <FormItem
           key={index}
-          labelCol={item.labelCol}
+          labelCol={item.labelCol as Recordable}
           required={item.required}
           label={item.label}
           field={item.field}
@@ -38,7 +38,7 @@ function DynamicForm(props: FormProps) {
       return (
         <FormItem
           key={index}
-          labelCol={item.labelCol}
+          labelCol={item.labelCol as Recordable}
           required={item.required}
           label={item.label}
           field={item.field}
@@ -51,7 +51,7 @@ function DynamicForm(props: FormProps) {
       return (
         <FormItem
           key={index}
-          labelCol={item.labelCol}
+          labelCol={item.labelCol as Recordable}
           required={item.required}
           label={item.label}
           field={item.field}
@@ -64,7 +64,7 @@ function DynamicForm(props: FormProps) {
       return (
         <FormItem
           key={index}
-          labelCol={item.labelCol}
+          labelCol={item.labelCol as Recordable}
           required={item.required}
           label={item.label}
           field={item.field}
@@ -77,7 +77,7 @@ function DynamicForm(props: FormProps) {
       return (
         <FormItem
           key={index}
-          labelCol={item.labelCol}
+          labelCol={item.labelCol as Recordable}
           required={item.required}
           label={item.label}
           field={item.field}
@@ -90,7 +90,7 @@ function DynamicForm(props: FormProps) {
       return (
         <FormItem
           key={index}
-          labelCol={item.labelCol}
+          labelCol={item.labelCol as Recordable}
           required={item.required}
           label={item.label}
           field={item.field}
@@ -103,7 +103,7 @@ function DynamicForm(props: FormProps) {
       return (
         <FormItem
           key={index}
-          labelCol={item.labelCol}
+          labelCol={item.labelCol as Recordable}
           required={item.required}
           label={item.label}
           field={item.field}
@@ -124,7 +124,7 @@ function DynamicForm(props: FormProps) {
       return (
         <FormItem
           key={index}
-          labelCol={item.labelCol}
+          labelCol={item.labelCol as Recordable}
           required={item.required}
           label={item.label}
           field={item.field}
@@ -144,7 +144,7 @@ function DynamicForm(props: FormProps) {
 
         {(fields, { add, remove }) => {
           return (
-            <div>
+            <div style={{ width: '100%' }}>
               <div className={styles['list-button']}>
                 <Button
                   style={{ marginRight: 20 }}
@@ -160,18 +160,19 @@ function DynamicForm(props: FormProps) {
                           remove(fields.length - 1);
                         }}>{t['list.remove']}</Button>
               </div>
-
               {fields.map((item, index) => {
                 return (
                   <div key={item.key} className={props.styles}>
-                    <Form.Item label={field + ': ' + index} labelCol={{ span: 3 }}>
-                      <Row gutter={20} justify='start' align='start'>
-                        {fieldList.map((item, index) => <Col key={index} span={item.labelCol as any}>{DynamicFormItem({
-                          item,
-                          index
-                        })}</Col>)}
-                      </Row>
-                    </Form.Item>
+
+                    {/*<Form.Item colon>*/}
+                    <Row gutter={10} justify='start' align='start'>
+                      <Col span={props.fieldLabel}>{field}</Col>
+                      {fieldList.map((item, index) => <Col key={index} span={item.labelCol as any}>{DynamicFormItem({
+                        item,
+                        index
+                      })}</Col>)}
+                    </Row>
+                    {/*</Form.Item>*/}
                   </div>
                 );
               })}

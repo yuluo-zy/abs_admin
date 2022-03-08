@@ -31,14 +31,15 @@ export interface FormItemProps {
   rules?: RulesProps[];
   placeholder?: string;
   required?: boolean;
-  labelCol?: Recordable;
+  labelCol?: Recordable | number;
   node?: any;
 }
 
 export interface FormList {
   field: string,
   fieldList: FormItemProps[],
-  styles?: any
+  styles?: any,
+  fieldLabel?: any
 }
 
 export interface FormProps {

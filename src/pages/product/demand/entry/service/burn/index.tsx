@@ -27,24 +27,25 @@ export default function ServicePreselection() {
   const FlashItem: FormList[] = [
     {
       field: 'context',
+      fieldLabel: 2,
       fieldList: [
         {
           field: 'date',
           type: 'input',
           placeholder: t['firmware.burn.flash.plan.data'],
-          labelCol: 5
+          labelCol: 4
         },
         {
           placeholder: t['firmware.burn.flash.plan.address'],
           field: 'address',
           type: 'input',
-          labelCol: 5
+          labelCol: 4
         },
         {
           placeholder: t['firmware.burn.flash.plan.output'],
           field: 'output',
           type: 'text',
-          labelCol: 11
+          labelCol: 10
         },
 
         {
@@ -52,6 +53,50 @@ export default function ServicePreselection() {
           field: 'output',
           type: 'upload',
           labelCol: 3
+        }
+      ],
+      styles: style['list']
+    },
+    {
+      field: 'context',
+      fieldLabel: 2,
+      fieldList: [
+        {
+          field: 'date',
+          type: 'input',
+          placeholder: t['firmware.burn.flash.plan.data'],
+          labelCol: 3
+        },
+        {
+          placeholder: t['firmware.burn.flash.plan.address'],
+          field: 'address',
+          type: 'input',
+          labelCol: 3
+        },
+        {
+          placeholder: t['firmware.burn.flash.plan.output'],
+          field: 'output',
+          type: 'text',
+          labelCol: 8
+        },
+
+        {
+          placeholder: t['firmware.burn.flash.plan.bin'],
+          field: 'output',
+          type: 'upload',
+          labelCol: 3
+        },
+        {
+          placeholder: t['firmware.burn.flash.plan.bin'],
+          field: 'output',
+          type: 'upload',
+          labelCol: 3
+        },
+        {
+          placeholder: t['firmware.burn.flash.plan.bin'],
+          field: 'output',
+          type: 'upload',
+          labelCol: 2
         }
       ],
       styles: style['list']
