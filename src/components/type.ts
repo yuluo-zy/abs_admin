@@ -35,20 +35,26 @@ export interface FormItemProps {
   node?: any;
 }
 
+export interface FormList {
+  field: string,
+  fieldList: FormItemProps[],
+  styles?: any
+}
+
 export interface FormProps {
   title: string;
   formItemLayout?: Recordable;
   formData?: any;
-  // 这里的数据是说明这是预填充数据
   data?: Recordable;
   onValuesChange?: () => void;
-  formItem: Array<FormItemProps>;
+  formItem?: Array<FormItemProps>;
   onSubmit: (value) => void;
   onRest?: () => void;
   col?: number;
   className?: string | string[];
   children?: any;
   layout?: 'horizontal' | 'vertical' | 'inline';
+  formList?: FormList;
 }
 
 export interface TreeProps {

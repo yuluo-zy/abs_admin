@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useLocale from '@/pages/product/demand/locale/useLocale';
 import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
-import { Checkbox, Divider, Input, Link, Modal, Space, Tooltip, Typography, Upload } from '@arco-design/web-react';
+import { Checkbox, Divider, Input, Link, Modal, Space, Tag, Tooltip, Typography, Upload } from '@arco-design/web-react';
 import DynamicSkeleton from '@/components/Dynamic/Skeleton';
 import style from './style/index.module.less';
 import { IconLaunch } from '@arco-design/web-react/icon';
@@ -22,10 +22,11 @@ export default function CustomLabel() {
         <Space size={20} direction={'vertical'}>
           <Checkbox checked={model} onChange={() => {
             setModel(!model);
-          }}>{t['firmware.label.model']}</Checkbox>
+          }}>
+            <Tag color={'arcoblue'}>{t['firmware.label.model']}</Tag></Checkbox>
           <Checkbox checked={box} onChange={() => {
             setBox(!box);
-          }}>{t['firmware.label.box']}</Checkbox>
+          }}> <Tag color={'purple'}>{t['firmware.label.box']}</Tag></Checkbox>
         </Space>
         <Tooltip color={'#0E42D2'} position={'rt'}
                  content={t['firmware.label.help']}>
@@ -57,7 +58,7 @@ export default function CustomLabel() {
             />
           </div>
           <div className={style['label-item']}>
-            <Typography.Text>{t['firmware.label.model']}</Typography.Text>
+            <Tag color={'arcoblue'}> {t['firmware.label.model']}</Tag>
           </div>
         </div>}
 
@@ -80,7 +81,7 @@ export default function CustomLabel() {
             />
           </div>
           <div className={style['label-item']}>
-            <Typography.Text>{t['firmware.label.box']}</Typography.Text>
+            <Tag color={'purple'}>{t['firmware.label.box']}</Tag>
           </div>
         </div>}
       </div>

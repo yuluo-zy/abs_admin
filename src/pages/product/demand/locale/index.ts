@@ -102,7 +102,19 @@ const i18n = {
     'firmware.label.remark': '其他备注信息： ',
     'firmware.label.model': '定制模组镭射标签',
     'firmware.label.box': '定制外箱标签',
-    'firmware.label.help': '乐鑫模组包装规格详细信息'
+    'firmware.label.help': '乐鑫模组包装规格详细信息',
+    'firmware.burn.title': '烧录内容定制',
+    'firmware.burn.title.context': '每款模组 支持以下位置烧录: ',
+    'firmware.burn.hint': '乐鑫支持多种定制内容烧写方案, 请选择合适您的方案, 并按照提示提供对应文件.',
+    'firmware.burn.hint.notice': '验证阶段仅需提供三组待烧写数据; 量产时需要按照量产订单量 * ( 1 + 0.2% ) 的比例提供, 多余部分用于正常生成消耗.',
+    'firmware.burn.flash.title': 'Flash 烧录方案',
+    'firmware.burn.flash.planA': '提供代烧录Bin文件, 由乐鑫代替烧录',
+    'firmware.burn.flash.planB': '提供待烧录数据清单, 由乐鑫生成Bin文件后烧录',
+    'firmware.burn.flash.planC': '提供烧录脚本',
+    'firmware.burn.efuse.title': 'eFuse 定制化烧录',
+    'firmware.burn.flash.plan.data': '数据大小',
+    'firmware.burn.flash.plan.address': '起始地址',
+    'firmware.burn.flash.plan.output': '烧录成功的串口打印字符串'
   },
 };
 

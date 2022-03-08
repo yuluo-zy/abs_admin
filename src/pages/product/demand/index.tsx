@@ -8,7 +8,6 @@ import { isArray } from '@/utils/is';
 import { MenuItemProps } from '@/components/type';
 import { IconCalendar, IconMindMapping, IconNav, IconSubscribed } from '@arco-design/web-react/icon';
 import NProgress from 'nprogress';
-import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
 import lazyload from '@/utils/lazyload';
 import { Route, Switch } from 'react-router';
 
@@ -87,6 +86,7 @@ export default function ProductDemand(props) {
                 'menu.production.service.selection.requirements.details.burn'
               ],
               key: 'menu.production.service.selection.requirements.details.burn',
+              path: 'service/burn'
             },
             {
               name: t[
@@ -140,11 +140,14 @@ export default function ProductDemand(props) {
   const bodyStyle = {
     paddingLeft: '2rem',
     paddingRight: '0',
+    paddingTop: '0.5rem',
+    paddingBottom: '0.5rem',
     transition: ' 0.5s all ease-in-out'
   };
   return (
     <ProductDemandContext.Provider value={{ state, dispatch }}>
-      <DynamicOuterCard title={t['menu.title']} bodyStyle={bodyStyle}>
+      <div style={bodyStyle}>
+        {/*<div style={bodyStyle}><p>{t['menu.title']}</p></div>*/}
         <div className={styles.layout}>
           <div className={styles.layoutLeftSide}>
             <ProductMenu menu={MenuTree} clickMenuItem={onClickMenuItem} />
@@ -166,7 +169,7 @@ export default function ProductDemand(props) {
             </Switch>
           </div>
         </div>
-      </DynamicOuterCard>
+      </div>
     </ProductDemandContext.Provider>
   );
 }
