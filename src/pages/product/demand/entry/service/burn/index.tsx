@@ -100,6 +100,44 @@ export default function ServicePreselection() {
         }
       ],
       styles: style['list']
+    },
+    {
+      field: 'context',
+      fieldLabel: 2,
+      fieldList: [
+        {
+          field: 'date',
+          type: 'input',
+          placeholder: t['firmware.burn.flash.plan.data'],
+          labelCol: 3
+        },
+        {
+          placeholder: t['firmware.burn.flash.plan.address'],
+          field: 'address',
+          type: 'input',
+          labelCol: 3
+        },
+        {
+          placeholder: t['firmware.burn.flash.plan.output'],
+          field: 'output',
+          type: 'text',
+          labelCol: 8
+        },
+
+        {
+          placeholder: t['firmware.burn.flash.plan.bin'],
+          field: 'output',
+          type: 'upload',
+          labelCol: 3
+        },
+        {
+          placeholder: t['firmware.burn.flash.plan.bin'],
+          field: 'output',
+          type: 'upload',
+          labelCol: 3
+        }
+      ],
+      styles: style['list']
     }
   ];
 
