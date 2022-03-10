@@ -1,3 +1,5 @@
+import { getSessionStorage } from '@/utils/storage';
+
 export default function checkLogin() {
-  return localStorage.getItem('userStatus') === 'login';
+  return getSessionStorage().getItem('userStatus') === 'login';
 }

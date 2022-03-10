@@ -7,8 +7,19 @@ function getStorage() {
 
   return {
     getItem: () => '',
-    setItem: () => '',
+    setItem: () => ''
   };
 }
 
 export default getStorage();
+
+export function getSessionStorage() {
+  if (!isSSR) {
+    return sessionStorage;
+  }
+
+  return {
+    getItem: () => '',
+    setItem: () => ''
+  };
+}

@@ -31,7 +31,7 @@ axios.interceptors.response.use(res => {
   } else if (err.response.status == 401) {
     Notification.error({ content: '登录过期请 重新登录!' });
     localStorage.setItem('userToken', null);
-    localStorage.setItem('userStatus', null);
+    sessionStorage.setItem('userStatus', null);
     window.setTimeout(() => {
       window.location.href = '/login';
     }, 3000);

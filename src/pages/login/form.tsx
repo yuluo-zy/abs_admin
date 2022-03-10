@@ -16,7 +16,7 @@ export default function LoginForm() {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [loginParams, setLoginParams, removeLoginParams] =
-    useStorage('loginParams');
+    useStorage('LoginParams');
 
   const t = useLocale(locale);
 
@@ -30,7 +30,7 @@ export default function LoginForm() {
       removeLoginParams();
     }
     // 记录登录状态
-    localStorage.setItem('userStatus', 'login');
+    sessionStorage.setItem('userStatus', 'login');
     localStorage.setItem('userToken', result.token);
     localStorage.setItem('userName', result.username);
     // 跳转首页

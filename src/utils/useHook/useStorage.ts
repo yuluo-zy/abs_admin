@@ -12,6 +12,14 @@ const getDefaultStorage = (key) => {
   }
 };
 
+const getDefaultSessionStorage = (key) => {
+  if (!isSSR) {
+    return sessionStorage.getItem(key);
+  } else {
+    return undefined;
+  }
+};
+
 function useStorage(
   key: string,
   defaultValue?: string
@@ -46,3 +54,37 @@ function useStorage(
 }
 
 export default useStorage;
+
+
+export function useSessionStorage(
+  key: string,
+  defaultValue?: string
+): [string, (string) => void, () => void] {
+  const [storedValue, setStoredValue] = useState(
+    getDefaultSessionStorage(key) || defaultValue
+  );
+
+  const setStorageValue = (value: string) => {
+    if (!isSSR) {
+      sessionStorage.setItem(key, value);
+      if (value !== storedValue) {
+        setStoredValue(value);
+      }
+    }
+  };
+
+  const removeStorage = () => {
+    if (!isSSR) {
+      sessionStorage.removeItem('key');
+    }
+  };
+
+  useEffect(() => {
+    const storageValue = sessionStorage.getItem(key);
+    if (storageValue) {
+      setStoredValue(storageValue);
+    }
+  }, []);
+
+  return [storedValue, setStorageValue, removeStorage];
+}
