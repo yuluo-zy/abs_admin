@@ -47,7 +47,7 @@ function Index() {
     return userMenu().then((res) => {
       store.dispatch({
         type: 'update-userMenu',
-        payload: { userInfo: res.data.result },
+        payload: { menu: res.data.result }
       });
     });
   }
@@ -55,10 +55,7 @@ function Index() {
   useEffect(() => {
     if (checkLogin()) {
       Promise.all([fetchUserInfo(), fetchUserMenu()])
-        .then
-        // todo 完成异步加载
-        // this.setState({ loading: false })
-        ();
+        .then();
     } else if (window.location.pathname.replace(/\//g, '') !== 'login') {
       window.location.pathname = '/login';
     }

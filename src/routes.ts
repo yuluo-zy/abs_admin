@@ -5,6 +5,7 @@ export type Route = AuthParams & {
   name: string;
   key: string;
   breadcrumb?: boolean;
+  permission?: string;
   children?: Route[];
 };
 
@@ -100,7 +101,6 @@ export const routes: Route[] = [
       },
     ],
   },
-
   {
     name: 'menu.result',
     key: 'result',
@@ -150,27 +150,32 @@ export const routes: Route[] = [
       {
         name: 'menu.user.manage',
         key: 'user/manage',
+        permission: 'user:mgr'
       },
       {
         name: 'menu.user.role',
         key: 'user/role',
+        permission: 'role:view'
       },
       {
         name: 'menu.user.permission',
         key: 'user/permission',
+        permission: 'permission:view'
       },
     ],
   },
   {
     name: 'product.management',
     key: 'product',
+    permission: 'demand:mgr',
     children: [
       {
         name: 'product.management.add',
         key: 'product/demand',
-      },
-    ],
-  },
+        permission: 'demand:import'
+      }
+    ]
+  }
 ];
 
 export const getName = (path: string, routes) => {
@@ -225,7 +230,6 @@ const useRoute = (userPermission): [Route[], string] => {
 
     return arr;
   };
-
   const [permissionRoute, setPermissionRoute] = useState(routes);
 
   useEffect(() => {
@@ -242,6 +246,63 @@ const useRoute = (userPermission): [Route[], string] => {
   }, [permissionRoute]);
 
   return [permissionRoute, defaultRoute];
+};
+
+
+export const useMenu = (userMenu: []): [Route[], string] => {
+  const filterUserMenu = (routes: Route[], arr = []): Route[] => {
+    if (!routes.length) {
+      return [];
+    }
+    const menu = [];
+    // const menu: Array<string> = userMenu &&  userMenu.filter(item => item.permission] !== undefined).map( item => item['item[\'permission\']']) || []
+    if (userMenu != null && userMenu.length > 0) {
+      userMenu.forEach(item => {
+        if (item['permission']) {
+          menu.push(item['permission']);
+        }
+      });
+    }
+    for (const route of routes) {
+      const { permission } = route;
+      let visible = true;
+      if (permission) {
+        visible = menu.includes(permission);
+      }
+
+      if (!visible) {
+        continue;
+      }
+      if (route.children && route.children.length) {
+        const newRoute = { ...route, children: [] };
+        filterUserMenu(route.children, newRoute.children);
+        if (newRoute.children.length) {
+          arr.push(newRoute);
+        }
+      } else {
+        arr.push({ ...route });
+      }
+    }
+
+    return arr;
+  };
+
+  const [permissionMenu, setPermissionMenu] = useState(routes);
+
+  useEffect(() => {
+    const newRoutes = filterUserMenu(routes);
+    setPermissionMenu(newRoutes);
+  }, [userMenu]);
+
+  const defaultMenu = useMemo(() => {
+    const first = permissionMenu[0];
+    if (first) {
+      return first?.children?.[0]?.key || first.key;
+    }
+    return '';
+  }, [permissionMenu]);
+
+  return [permissionMenu, defaultMenu];
 };
 
 export default useRoute;

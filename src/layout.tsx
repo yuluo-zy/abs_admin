@@ -20,13 +20,13 @@ import qs from 'query-string';
 import NProgress from 'nprogress';
 import Navbar from './components/NavBar';
 import Footer from './components/Footer';
-import useRoute from '@/routes';
 import { isArray } from './utils/is';
 import useLocale from './utils/useHook/useLocale';
 import getUrlParams from './utils/getUrlParams';
 import lazyload from './utils/lazyload';
 import { GlobalState } from './store';
 import styles from './style/layout.module.less';
+import { useMenu } from '@/routes';
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
@@ -95,17 +95,17 @@ function PageLayout() {
   const currentComponent = qs.parseUrl(pathname).url.slice(1);
   const locale = useLocale();
   const settings = useSelector((state: GlobalState) => state.settings);
-  const userInfo = useSelector((state: GlobalState) => state.userInfo);
+  // const userInfo = useSelector((state: GlobalState) => state.userInfo);
+  const userMenu = useSelector((state: GlobalState) => state.menu);
 
-  const [routes, defaultRoute] = useRoute(userInfo?.permissions);
+  const [routes, defaultRoute] = useMenu(userMenu);
   const defaultSelectedKeys = [currentComponent || defaultRoute];
   const paths = (currentComponent || defaultRoute).split('/');
   const defaultOpenKeys = paths.slice(0, paths.length - 1);
 
   const [breadcrumb, setBreadCrumb] = useState([]);
   const [collapsed, setCollapsed] = useState<boolean>(false);
-  const [selectedKeys, setSelectedKeys] =
-    useState<string[]>(defaultSelectedKeys);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>(defaultSelectedKeys);
   const [openKeys, setOpenKeys] = useState<string[]>(defaultOpenKeys);
 
   const routeMap = useRef<Map<string, React.ReactNode[]>>(new Map());
