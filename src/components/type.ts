@@ -2,6 +2,7 @@ import { RulesProps } from '@arco-design/web-react';
 import { AxiosResponse } from 'axios';
 import { Data } from '@/utils/httpRequest';
 import React from 'react';
+import DemandManageMenu from "@/pages/product/menu";
 
 export type Recordable<T = any> = Record<string, T>;
 
@@ -91,7 +92,7 @@ export interface DynamicCardProps {
 }
 
 export interface ListProps {
-  name: string;
+  name?: string;
   fetchRemoteData: (props) => Promise<AxiosResponse<Data>>;
   add?: (props) => React.ReactNode;
   addName?: string;
@@ -101,6 +102,8 @@ export interface ListProps {
   select?: boolean;
   selectItem?: Array<SearchItem>;
   onChange?: boolean;
+  size?: "mini" | "small" | "default" | "middle";
+  rowSelection?: any;
 }
 
 export interface MenuItemProps {
@@ -145,5 +148,10 @@ export interface ServiceCard {
 
 export interface ServiceCardProps {
   data: ServiceCard;
+  onChange?: (item) => void;
+}
+
+export interface ManageMenuProps {
+  name: string;
   onChange?: (item) => void;
 }

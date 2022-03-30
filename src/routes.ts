@@ -6,6 +6,7 @@ export type Route = AuthParams & {
   key: string;
   breadcrumb?: boolean;
   permission?: string;
+  hide?: boolean;
   children?: Route[];
 };
 
@@ -168,13 +169,15 @@ export const routes: Route[] = [
     name: 'product.management',
     key: 'product',
     permission: 'demand:mgr',
-    children: [
-      {
-        name: 'product.management.add',
-        key: 'product/demand',
-        permission: 'demand:import'
-      }
-    ]
+    // children: [
+    //   {
+    //     name: 'product.management.add',
+    //     key: 'product/demand',
+    //     permission: 'demand:import',
+    //     breadcrumb: false,
+    //     hide: true,
+    //   }
+    // ]
   }
 ];
 

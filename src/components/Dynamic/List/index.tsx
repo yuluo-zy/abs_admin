@@ -18,6 +18,7 @@ export default function SearchList(props: ListProps) {
   };
   const {
     name,
+    size,
     fetchRemoteData,
     add,
     download,
@@ -26,6 +27,7 @@ export default function SearchList(props: ListProps) {
     addName,
     select,
     selectItem,
+    rowSelection
   } = props;
 
   const [data, setData] = useState([]);
@@ -152,6 +154,8 @@ export default function SearchList(props: ListProps) {
           pagination={pagination}
           columns={columns}
           data={data}
+          size={size}
+          rowSelection ={rowSelection}
         />
       </DynamicCard>
     </div>
