@@ -147,7 +147,6 @@ export default function ProductDemand(props) {
   return (
     <ProductDemandContext.Provider value={{ state, dispatch }}>
       <div style={bodyStyle}>
-        {/*<div style={bodyStyle}><p>{t['menu.title']}</p></div>*/}
         <div className={styles.layout}>
           <div className={styles.layoutLeftSide}>
             <ProductMenu menu={MenuTree} clickMenuItem={onClickMenuItem} />

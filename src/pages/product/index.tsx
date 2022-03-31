@@ -1,14 +1,15 @@
 import useLocale from "@/pages/product/locale/useLocale";
 import SearchList from "@/components/Dynamic/List";
 import React, { useState } from "react";
-import styles from "@/pages/user/manage/style/index.module.less";
-import { Badge, Button, Message, Popconfirm, Space, Typography } from "@arco-design/web-react";
-import { IconDelete, IconEdit, IconLock, IconUser } from "@arco-design/web-react/icon";
-import { putUserLock, removeUser } from "@/api/user";
+import { Typography } from "@arco-design/web-react";
 import { getProductionDemand } from "@/api/demand";
 import DynamicTag from "@/components/Dynamic/tag";
 import { ManageMenuProps, SearchItem } from "@/components/type";
 import DemandManageMenu from "@/pages/product/menu";
+import Login from "@/pages/login";
+import PageLayout from "@/layout";
+import { Route, Switch, useHistory, useRouteMatch } from "react-router";
+import lazyload from "@/utils/lazyload";
 
 const { Text } = Typography;
 
@@ -115,7 +116,9 @@ export default function DemandManage() {
   const menu: Array<ManageMenuProps> = [
     { name: t['product.manage.operate.select'] , onChange: item => {}},
     { name: t['product.manage.operate.not.select'] , onChange: item => {}},
-    {name: t['product.manage.tools.add'], onChange: item => {}}
+    {name: t['product.manage.tools.add'], onChange: item => {
+        history.push(`${path}/demand`)
+      }}
   ]
   const selectItem: Array<SearchItem> = [
     {
@@ -135,29 +138,42 @@ export default function DemandManage() {
     },
   ];
 
+  const mod = import.meta.glob('./demand/index.tsx');
+  const productDemand = lazyload(
+    mod[`./demand/index.tsx`]
+  )
+
+  const history = useHistory();
+  const { path } = useRouteMatch();
+
   return (<div>
-    <SearchList
-      name={t["product.manage.title"]}
-      download={false}
-      upload={false}
-      tools={<DemandManageMenu  menu={menu}/>}
-      fetchRemoteData={getProductionDemand}
-      getColumns={getColumns}
-      select={true}
-      size={'mini'}
-      selectItem={selectItem}
-      rowSelection={{
-        type: 'checkbox',
-        checkAll: true,
-        selectedRowKeys,
-        onChange: (selectedRowKeys, selectedRows) => {
-          console.log('onChange:', selectedRowKeys, selectedRows);
-          setSelectedRowKeys(selectedRowKeys);
-        },
-        onSelect: (selected, record, selectedRows) => {
-          console.log('onSelect:', selected, record, selectedRows)
-        }
-      }}
-    />
+    <Switch>
+      <Route path={`${path}/demand`} component={productDemand} />
+      <Route exact path={path}>
+        <SearchList
+          name={t["product.manage.title"]}
+          download={false}
+          upload={false}
+          tools={<DemandManageMenu  menu={menu}/>}
+          fetchRemoteData={getProductionDemand}
+          getColumns={getColumns}
+          select={true}
+          size={'mini'}
+          selectItem={selectItem}
+          rowSelection={{
+            type: 'checkbox',
+            checkAll: true,
+            selectedRowKeys,
+            onChange: (selectedRowKeys, selectedRows) => {
+              console.log('onChange:', selectedRowKeys, selectedRows);
+              setSelectedRowKeys(selectedRowKeys);
+            },
+            onSelect: (selected, record, selectedRows) => {
+              console.log('onSelect:', selected, record, selectedRows)
+            }
+          }}
+        />
+      </Route>
+    </Switch>
   </div>);
 }

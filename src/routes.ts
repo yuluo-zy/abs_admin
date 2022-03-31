@@ -168,16 +168,7 @@ export const routes: Route[] = [
   {
     name: 'product.management',
     key: 'product',
-    permission: 'demand:mgr',
-    // children: [
-    //   {
-    //     name: 'product.management.add',
-    //     key: 'product/demand',
-    //     permission: 'demand:import',
-    //     breadcrumb: false,
-    //     hide: true,
-    //   }
-    // ]
+    permission: 'demand:mgr'
   }
 ];
 
