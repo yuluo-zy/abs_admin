@@ -27,7 +27,8 @@ export default function SearchList(props: ListProps) {
     addName,
     select,
     selectItem,
-    rowSelection
+    rowSelection,
+    tools
   } = props;
 
   const [data, setData] = useState([]);
@@ -136,6 +137,7 @@ export default function SearchList(props: ListProps) {
                 <Button>{t['searchTable.operations.upload']}</Button>{' '}
               </>
             )}
+            {tools}
           </Space>
           <Space>
             {download === true && (

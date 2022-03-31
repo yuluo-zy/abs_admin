@@ -24,6 +24,18 @@ const i18n = {
     'product.manage.table.client.status.history' : '流程日志',
     'product.manage.operate.select' : '全选',
     'product.manage.operate.not.select' : '全不选',
+    'product.manage.tools.add' : '创建新需求',
+    'product.manage.tools.withdraw' : '取消需求',
+    'product.manage.tools.update' : '变更需求',
+    'product.manage.tools.copy' : '复制',
+    'product.manage.tools.delete' : '取消需求',
+    'product.manage.tools.firmware' : '固件升级',
+    'product.manage.tools.apply' : '正式发起',
+    'product.manage.tools.distribute' : '派发',
+    'product.manage.tools.turndown' : '驳回',
+    'product.manage.tools.distribute.demand' : '派发验证需求',
+    'product.manage.tools.mass.production.optionA' : '生成 测试 TestFlow',
+    'product.manage.tools.mass.production.optionB' : '生成 确认 TestFlow',
   },
 };
 

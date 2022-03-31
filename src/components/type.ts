@@ -104,6 +104,7 @@ export interface ListProps {
   onChange?: boolean;
   size?: "mini" | "small" | "default" | "middle";
   rowSelection?: any;
+  tools?: any;
 }
 
 export interface MenuItemProps {

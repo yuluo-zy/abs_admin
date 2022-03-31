@@ -7,7 +7,7 @@ import { IconDelete, IconEdit, IconLock, IconUser } from "@arco-design/web-react
 import { putUserLock, removeUser } from "@/api/user";
 import { getProductionDemand } from "@/api/demand";
 import DynamicTag from "@/components/Dynamic/tag";
-import { ManageMenuProps } from "@/components/type";
+import { ManageMenuProps, SearchItem } from "@/components/type";
 import DemandManageMenu from "@/pages/product/menu";
 
 const { Text } = Typography;
@@ -114,19 +114,38 @@ export default function DemandManage() {
 
   const menu: Array<ManageMenuProps> = [
     { name: t['product.manage.operate.select'] , onChange: item => {}},
-    { name: t['product.manage.operate.not.select'] , onChange: item => {}}
+    { name: t['product.manage.operate.not.select'] , onChange: item => {}},
+    {name: t['product.manage.tools.add'], onChange: item => {}}
   ]
+  const selectItem: Array<SearchItem> = [
+    {
+      name:  t["product.manage.table.fwpn"],
+      field: 'fwPn',
+      type: 'input',
+    },
+    {
+      name: t["product.manage.table.client.name"],
+      field: 'customerName',
+      type: 'input',
+    },
+    {
+      name: t["product.manage.table.client.code"],
+      field: 'customerCode',
+      type: 'input',
+    },
+  ];
 
   return (<div>
-    <Space><DemandManageMenu  menu={menu}/></Space>
     <SearchList
       name={t["product.manage.title"]}
       download={false}
       upload={false}
+      tools={<DemandManageMenu  menu={menu}/>}
       fetchRemoteData={getProductionDemand}
       getColumns={getColumns}
-      select={false}
+      select={true}
       size={'mini'}
+      selectItem={selectItem}
       rowSelection={{
         type: 'checkbox',
         checkAll: true,
