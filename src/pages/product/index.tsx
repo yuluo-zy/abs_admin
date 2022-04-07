@@ -1,21 +1,54 @@
 import useLocale from "@/pages/product/locale/useLocale";
 import SearchList from "@/components/Dynamic/List";
-import React, { useState } from "react";
-import { Typography } from "@arco-design/web-react";
-import { getProductionDemand } from "@/api/demand";
+import React, { useReducer, useState } from "react";
+import { Message, Modal, Typography } from "@arco-design/web-react";
+import { getProductionDemand, PostProductionDemand } from "@/api/demand";
 import DynamicTag from "@/components/Dynamic/tag";
 import { ManageMenuProps, SearchItem } from "@/components/type";
 import DemandManageMenu from "@/pages/product/menu";
-import Login from "@/pages/login";
-import PageLayout from "@/layout";
-import { Route, Switch, useHistory, useRouteMatch } from "react-router";
+import { Route, Switch, useHistory } from "react-router";
 import lazyload from "@/utils/lazyload";
-
+import { initialProductDemand, ProductDemandContext, ProductDemandStore } from '@/store/context-manager';
 const { Text } = Typography;
 
 export default function DemandManage() {
   const t = useLocale();
-  const getColumns = (callback: () => void) => {
+  const mod = import.meta.glob('./demand/index.tsx');
+  const productDemand = lazyload(
+    mod[`./demand/index.tsx`]
+  )
+  const history = useHistory();
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [state, dispatch] = useReducer(
+    ProductDemandStore,
+    initialProductDemand
+  );
+
+  const menu: Array<ManageMenuProps> = [
+    { name: t['product.manage.operate.select'] , onChange: item => {}},
+    { name: t['product.manage.operate.not.select'] , onChange: item => {}},
+    {name: t['product.manage.tools.add'], onChange: () => {
+        addDemandConfirm()
+      }}
+  ]
+  const selectItem: Array<SearchItem> = [
+    {
+      name:  t["product.manage.table.fwpn"],
+      field: 'fwPn',
+      type: 'input',
+    },
+    {
+      name: t["product.manage.table.client.name"],
+      field: 'customerName',
+      type: 'input',
+    },
+    {
+      name: t["product.manage.table.client.code"],
+      field: 'customerCode',
+      type: 'input',
+    },
+  ];
+  const getColumns = () => {
     return [
       {
         title: t["product.manage.table.fwpn"],
@@ -111,45 +144,31 @@ export default function DemandManage() {
     ];
   };
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  function addDemandConfirm() {
+    Modal.confirm({
+      title: 'Tips',
+      content: t['product.manage.tools.add.message'],
+      okButtonProps: { status: 'danger' },
+      onOk: () => {
+        PostProductionDemand().then(res=> {
+            Message.success(t["product.manage.tools.add.message.ok"])
+            dispatch({
+              type: 'DemandId',
+              payload: res.data.result,
+            });
+            history.push(`/product/demand`)
+        }
+        ).catch(err=>
+          Message.error( err)
+        )
+      },
+    });
+  }
 
-  const menu: Array<ManageMenuProps> = [
-    { name: t['product.manage.operate.select'] , onChange: item => {}},
-    { name: t['product.manage.operate.not.select'] , onChange: item => {}},
-    {name: t['product.manage.tools.add'], onChange: item => {
-        history.push(`${path}/demand`)
-      }}
-  ]
-  const selectItem: Array<SearchItem> = [
-    {
-      name:  t["product.manage.table.fwpn"],
-      field: 'fwPn',
-      type: 'input',
-    },
-    {
-      name: t["product.manage.table.client.name"],
-      field: 'customerName',
-      type: 'input',
-    },
-    {
-      name: t["product.manage.table.client.code"],
-      field: 'customerCode',
-      type: 'input',
-    },
-  ];
-
-  const mod = import.meta.glob('./demand/index.tsx');
-  const productDemand = lazyload(
-    mod[`./demand/index.tsx`]
-  )
-
-  const history = useHistory();
-  const { path } = useRouteMatch();
-
-  return (<div>
+  return (<ProductDemandContext.Provider value={{ state, dispatch }}>
     <Switch>
-      <Route path={`${path}/demand`} component={productDemand} />
-      <Route exact path={path}>
+      <Route path={`/product/demand`} component={productDemand} />
+      <Route exact path={'/product'}>
         <SearchList
           name={t["product.manage.title"]}
           download={false}
@@ -175,5 +194,5 @@ export default function DemandManage() {
         />
       </Route>
     </Switch>
-  </div>);
+  </ProductDemandContext.Provider>);
 }

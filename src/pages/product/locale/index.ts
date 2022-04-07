@@ -36,6 +36,8 @@ const i18n = {
     'product.manage.tools.distribute.demand' : '派发验证需求',
     'product.manage.tools.mass.production.optionA' : '生成 测试 TestFlow',
     'product.manage.tools.mass.production.optionB' : '生成 确认 TestFlow',
+    'product.manage.tools.add.message' : '是否创建新的需求, 并分配专员负责',
+    'product.manage.tools.add.message.ok' : '新需求创建成功, 请开始填写详细信息',
   },
 };
 

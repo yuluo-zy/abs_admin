@@ -67,13 +67,19 @@ export interface InitialProductDemand {
   stepList: string[] | [];
   stepRouter: string;
   moduleInfo?: ReadonlyRecordable;
+  collapse: boolean;
+  demandId: number;
 }
 
 export const initialProductDemand: InitialProductDemand = {
+  // 设置当前的菜单 key
   stepKey: '',
   stepList: [],
   stepRouter: '',
-  moduleInfo: {}
+  moduleInfo: {},
+  // 设置是否收起当前的菜单
+  collapse: true,
+  demandId: null
 };
 
 export function ProductDemandStore(state: InitialProductDemand, action) {
@@ -109,6 +115,22 @@ export function ProductDemandStore(state: InitialProductDemand, action) {
         moduleInfo
       };
     }
+
+    case 'Collapse':
+      // 设置是否收起菜单
+      const collapse = action.payload;
+      return {
+        ...state,
+        collapse
+      };
+
+    case 'DemandId':
+      // 设置需求条目 Id
+      const demandId = action.payload;
+      return {
+        ...state,
+        demandId
+      };
 
     default:
       return state;

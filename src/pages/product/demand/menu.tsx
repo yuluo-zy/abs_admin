@@ -62,6 +62,7 @@ export default function ProductMenu(props) {
         hasCollapseButton
         autoOpen
         levelIndent={12}
+        collapse={state.collapse}
         onClickMenuItem={updateMenuKey}
       >
         {getMenu(menu)}
