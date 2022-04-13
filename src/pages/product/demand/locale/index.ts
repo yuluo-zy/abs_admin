@@ -44,8 +44,13 @@ const i18n = {
     'hardware.modal.info': '产品信息如下:',
     'service.preselection.model.info.title': '产品信息:',
     'service.preselection.model.info.title.description': '针对这款产品, 我们提供以下定制生产服务, 请根据实际需要 选择您需要的服务 :',
+    'service.preselection.model.info.title.list': '生产服务列表 :',
+    'service.preselection.model.info.title.switch.open': '已选择',
+    'service.preselection.model.info.title.switch.close': '未启用',
     'service.preselection.model.info.title.open': '已启用',
     'service.preselection.model.service.total': '已选择 服务项数 : ',
+    'service.modal.title': '生产服务确认',
+    'service.preselection.model.service.info':'您选择的生产定制服务为: ',
     'firmware.customization.title': '固件定制',
     'firmware.customization.info.version': '您的固件版本为 : ',
     'firmware.customization.info.version.hint': '此信息用于显示在卷盘和外箱标签上',
@@ -118,7 +123,9 @@ const i18n = {
     'firmware.burn.flash.plan.output': '烧录成功的串口打印字符串: ',
     'firmware.burn.flash.plan.bin': '上传 bin 文件',
     'submit.hardware.success': '创建成功, 开始进行下一步填写',
-    'submit.hardware.error': '创建失败, 请稍后重试'
+    'submit.hardware.error': '创建失败, 请稍后重试',
+    'message.hardware.notfound':'尚未进行硬件选型成功, 请跳转到硬件选型界面',
+    'message.service.notfound':'定制生产服务请求失败, 请稍后再试'
   },
 };
 

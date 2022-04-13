@@ -139,19 +139,6 @@ export interface ProductSelectItem {
   select: string[] | []
 }
 
-export interface ServiceCard {
-  id: number;
-  icon?: any;
-  status?: 0 | 1 | 2;
-  name: string;
-  description?: string;
-}
-
-export interface ServiceCardProps {
-  data: ServiceCard;
-  onChange?: (item) => void;
-}
-
 export interface ManageMenuProps {
   name: string;
   onChange?: (item) => void;

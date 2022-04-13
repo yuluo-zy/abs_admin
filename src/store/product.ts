@@ -2,7 +2,7 @@ import create, { GetState, SetState } from "zustand";
 import { ReadonlyRecordable } from "@/components/type";
 import React from "react";
 import { devtools } from "zustand/middleware";
-
+import { persist } from "zustand/middleware"
 export type StoreSlice<T extends object, E extends object = T> = (
   set: SetState<E extends T ? E : E & T>,
   get: GetState<E extends T ? E : E & T>
@@ -25,9 +25,10 @@ export interface StepSetting {
 export interface ProductDemand {
   moduleInfo?: ReadonlyRecordable;
   demandId: number;
-
+  serviceType: number[],
   setDemandId: (value) => void,
-  setModuleInfo: (value) => void
+  setModuleInfo: (value) => void,
+  setServiceType: (value) => void
 }
 
 const createBearSlice: StoreSlice<StepSetting> = (set, get) => ({
@@ -49,13 +50,15 @@ const createBearSlice: StoreSlice<StepSetting> = (set, get) => ({
 const createProductDemand: StoreSlice<ProductDemand> = (set, get) => ({
   demandId: -1,
   moduleInfo: {},
+  serviceType: [],
   setDemandId: value => set(() => ({ demandId: value })),
   setModuleInfo: value => set((state) => ({
     moduleInfo: {
       ...state.moduleInfo,
       ...value
     }
-  }))
+  })),
+  setServiceType: value => set(() => ({serviceType: value}))
 });
 
 const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
@@ -63,5 +66,9 @@ const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
   ...createProductDemand(set, get)
 });
 
-const ProductStore = create(devtools(createRootSlice));
+const ProductStore = create(devtools(persist(createRootSlice,
+  {
+    name: "product-storage",
+    getStorage: () => sessionStorage
+  })));
 export default ProductStore;

@@ -127,12 +127,6 @@ export default function ProductDemand(props) {
     const component = currentRoute.component;
     const preload = component.preload();
     NProgress.start();
-    // 设置硬件选型的 时候, 关闭对应菜单
-    if(currentRoute.path === 'hardware'){
-      setCollapse(true)
-    } else {
-      setCollapse(false)
-    }
     preload.then(() => {
       setStepRouter(currentRoute.path)
       history.push(`/product/demand/${currentRoute.path}`)

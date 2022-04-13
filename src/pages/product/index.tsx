@@ -2,7 +2,7 @@ import useLocale from "@/pages/product/locale/useLocale";
 import SearchList from "@/components/Dynamic/List";
 import React, { useReducer, useState } from "react";
 import { Message, Modal, Typography } from "@arco-design/web-react";
-import { getProductionDemand, PostProductionDemand } from "@/api/demand";
+import { getProductionDemand, postProductionDemand } from "@/api/demand";
 import DynamicTag from "@/components/Dynamic/tag";
 import { ManageMenuProps, SearchItem } from "@/components/type";
 import DemandManageMenu from "@/pages/product/menu";
@@ -147,7 +147,7 @@ export default function DemandManage() {
       content: t['product.manage.tools.add.message'],
       okButtonProps: { status: 'danger' },
       onOk: () => {
-        PostProductionDemand().then(res=> {
+        postProductionDemand().then(res=> {
             Message.success(t["product.manage.tools.add.message.ok"])
             setDemandId( res.data.result);
             history.push(`/product/demand`)

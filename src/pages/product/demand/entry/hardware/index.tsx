@@ -23,7 +23,8 @@ import useFilter, { multiFilter } from "@/utils/useHook/useFilter";
 import DynamicRadioGroup from "@/components/Dynamic/Radio";
 import ProductStore from "@/store/product";
 import shallow from "zustand/shallow";
-import { PostProduction } from "@/api/demand";
+import { postProduction } from "@/api/demand";
+import { useHistory } from "react-router";
 
 const bodyCellStyle = {};
 const originColumns = [
@@ -229,13 +230,14 @@ export default function HardwareSelection() {
   const [keyList, setKeyList] = useState({});
   const [selectItem, setSelectItem] = useState(-1);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [moduleInfo, setModuleInfo] = ProductStore(state => [state.moduleInfo, state.setModuleInfo], shallow);
+  const [moduleInfo, setModuleInfo, setCollapse] = ProductStore(state => [state.moduleInfo, state.setModuleInfo, state.setCollapse], shallow);
   const demandId = ProductStore(state => state.demandId);
   const dispatchSelect = (oldState, setState, keyList) => {
     if (keyList) {
       setState(multiFilter(oldState, keyList));
     }
   };
+  const history = useHistory();
 
   useEffect(() => {
     if (keyList && Object.keys(keyList).length > 0) {
@@ -245,6 +247,7 @@ export default function HardwareSelection() {
 
   useEffect(() => {
     fetchProductionList();
+    setCollapse(true)
   }, []);
 
   const [columns, setColumns] = useState(
@@ -364,12 +367,15 @@ export default function HardwareSelection() {
       Notification.error({ title: "error", content: t["hardware.production.info.select.model.demand.error"] })
       return
     }
-    PostProduction({
+    postProduction({
       demandId: demandId,
       productionId: moduleInfo.id
     }).then(res => {
-      Message.success(t["submit.hardware.success"]);
-      setVisible(false)
+      if(res.data.success){
+        Message.success(t["submit.hardware.success"]);
+        setVisible(false)
+        history.push(`/product/demand/service/preselection`)
+      }
     }).catch(error => {
       Message.error(t["submit.hardware.error"]);
     });
