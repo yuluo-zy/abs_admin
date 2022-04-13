@@ -39,8 +39,6 @@ export default function store(state = initialState, action) {
       };
     }
     case 'update-userMenu': {
-      console.log('你猜你在哪');
-      console.log(action.payload);
       const { menu } = action.payload;
       return {
         ...state,

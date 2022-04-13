@@ -14,7 +14,7 @@
   "dependencies": {
     "@antv/data-set": "^0.11.8",
     "@arco-design/color": "^0.4.0",
-    "@arco-design/web-react": "^2.29.0",
+    "@arco-design/web-react": "2.31.2",
     "@arco-plugins/vite-react": "^1.0.5",
     "@arco-themes/react-arco-pro": "^0.0.7",
     "@loadable/component": "^5.13.2",
@@ -35,7 +35,9 @@
     "react-resizable": "^3.0.4",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "redux": "^4.1.2"
+    "react-use": "^17.3.2",
+    "redux": "^4.1.2",
+    "zustand": "^3.7.2"
   },
   "devDependencies": {
     "@arco-design/web-react": "^2.29.0",

@@ -2,25 +2,23 @@ import React, { useContext } from 'react';
 import { MenuItemProps } from '@/components/type';
 import { Badge, Menu } from '@arco-design/web-react';
 import styles from './style/index.module.less';
-import { ProductDemandContext } from '@/store/context-manager';
+import  ProductStore  from "@/store/product";
+import shallow from "zustand/shallow";
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
 
 export default function ProductMenu(props) {
   const { menu, clickMenuItem } = props;
-  const { state, dispatch } = useContext(ProductDemandContext);
+  const [setStepKey, stepList, collapse] = ProductStore(state => [state.setStepKey, state.stepList, state.collapse], shallow)
 
   const updateMenuKey = (key: string) => {
-    dispatch({
-      type: 'StepKey',
-      payload: key,
-    });
+    setStepKey(key)
     clickMenuItem(key);
   };
 
   const getItemBadge = (key: string) => {
-    if (state.stepList.length > 0 && state.stepList.includes(key)) {
+    if (stepList.length > 0 && stepList.includes(key)) {
       return <Badge className={styles['menu-item']} status="success" />;
     }
     return <></>;
@@ -62,7 +60,7 @@ export default function ProductMenu(props) {
         hasCollapseButton
         autoOpen
         levelIndent={12}
-        collapse={state.collapse}
+        collapse={collapse}
         onClickMenuItem={updateMenuKey}
       >
         {getMenu(menu)}

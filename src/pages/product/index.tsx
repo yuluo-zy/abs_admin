@@ -8,7 +8,7 @@ import { ManageMenuProps, SearchItem } from "@/components/type";
 import DemandManageMenu from "@/pages/product/menu";
 import { Route, Switch, useHistory } from "react-router";
 import lazyload from "@/utils/lazyload";
-import { initialProductDemand, ProductDemandContext, ProductDemandStore } from '@/store/context-manager';
+import  ProductStore  from "@/store/product";
 const { Text } = Typography;
 
 export default function DemandManage() {
@@ -19,10 +19,7 @@ export default function DemandManage() {
   )
   const history = useHistory();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [state, dispatch] = useReducer(
-    ProductDemandStore,
-    initialProductDemand
-  );
+    const setDemandId = ProductStore(state => state.setDemandId)
 
   const menu: Array<ManageMenuProps> = [
     { name: t['product.manage.operate.select'] , onChange: item => {}},
@@ -152,10 +149,7 @@ export default function DemandManage() {
       onOk: () => {
         PostProductionDemand().then(res=> {
             Message.success(t["product.manage.tools.add.message.ok"])
-            dispatch({
-              type: 'DemandId',
-              payload: res.data.result,
-            });
+            setDemandId( res.data.result);
             history.push(`/product/demand`)
         }
         ).catch(err=>
@@ -165,7 +159,7 @@ export default function DemandManage() {
     });
   }
 
-  return (<ProductDemandContext.Provider value={{ state, dispatch }}>
+  return (
     <Switch>
       <Route path={`/product/demand`} component={productDemand} />
       <Route exact path={'/product'}>
@@ -193,6 +187,5 @@ export default function DemandManage() {
           }}
         />
       </Route>
-    </Switch>
-  </ProductDemandContext.Provider>);
+    </Switch>);
 }

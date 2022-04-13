@@ -10,7 +10,8 @@ import { IconCalendar, IconMindMapping, IconNav, IconSubscribed } from "@arco-de
 import NProgress from "nprogress";
 import lazyload from "@/utils/lazyload";
 import { Route, Switch, useParams } from "react-router";
-import { ProductDemandContext, RoleContext } from "@/store/context-manager";
+import  ProductStore  from "@/store/product";
+import shallow from "zustand/shallow";
 
 function getFlattenRoutes(routes) {
   const res = [];
@@ -35,7 +36,6 @@ function getFlattenRoutes(routes) {
 
 export default function ProductDemand(props) {
   const t = useLocale();
-  const { state, dispatch } = useContext(ProductDemandContext);
 
   const MenuTree: MenuItemProps[] = [
     {
@@ -119,6 +119,8 @@ export default function ProductDemand(props) {
   ];
   const flattenRoutes = useMemo(() => getFlattenRoutes(MenuTree) || [], []);
   const history = useHistory();
+  const [setStepRouter, setCollapse] = ProductStore(state => [state.setStepRouter, state.setCollapse], shallow)
+
 
   function onClickMenuItem(key) {
     const currentRoute = flattenRoutes.find((r) => r.key === key);
@@ -127,22 +129,13 @@ export default function ProductDemand(props) {
     NProgress.start();
     // 设置硬件选型的 时候, 关闭对应菜单
     if(currentRoute.path === 'hardware'){
-      dispatch({
-        type: 'Collapse',
-        payload: true,
-      });
+      setCollapse(true)
     } else {
-      dispatch({
-        type: 'Collapse',
-        payload: false,
-      });
+      setCollapse(false)
     }
     preload.then(() => {
-      dispatch({
-        type: "StepRouter",
-        payload: currentRoute.path
-      });
-      history.push(`/product/demand/${currentRoute.path}`);
+      setStepRouter(currentRoute.path)
+      history.push(`/product/demand/${currentRoute.path}`)
       NProgress.done();
     });
   }

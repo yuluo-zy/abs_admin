@@ -39,6 +39,7 @@ const i18n = {
     'hardware.production.info.total': '产品总数为: ',
     'hardware.production.info.select.model': '您已选择的产品名称为 : ',
     'hardware.production.info.select.model.error': '尚未选择具体产品型号',
+    'hardware.production.info.select.model.demand.error': '尚未分配有效需求编号',
     'hardware.modal.title': '产品硬件型号确认',
     'hardware.modal.info': '产品信息如下:',
     'service.preselection.model.info.title': '产品信息:',
@@ -115,7 +116,9 @@ const i18n = {
     'firmware.burn.flash.plan.data': '数据大小: 0x',
     'firmware.burn.flash.plan.address': '起始地址: 0x',
     'firmware.burn.flash.plan.output': '烧录成功的串口打印字符串: ',
-    'firmware.burn.flash.plan.bin': '上传 bin 文件'
+    'firmware.burn.flash.plan.bin': '上传 bin 文件',
+    'submit.hardware.success': '创建成功, 开始进行下一步填写',
+    'submit.hardware.error': '创建失败, 请稍后重试'
   },
 };
 

@@ -4,20 +4,16 @@ import { useEffect, useState } from 'react';
 export default function useFilter(initialState?) {
   const [oldState, setOldState] = useState(initialState);
 
-  const [state, setState] = useState(oldState);
+  const [newState, setNewState] = useState(oldState);
 
   useEffect(() => {
-    setState(oldState);
+    setNewState(oldState);
   }, [oldState]);
 
-  // const dispatch = (setStateAction: any, keyList: any) => {
-  //   setState(setStateAction(oldState, setState, keyList));
-  // };
-
   const reduction = () => {
-    setState(oldState);
+    setNewState(oldState);
   };
-  return [state, setState, oldState, setOldState, reduction];
+  return [newState, setNewState, oldState, setOldState, reduction];
 }
 
 export function multiFilter(array, filters) {
