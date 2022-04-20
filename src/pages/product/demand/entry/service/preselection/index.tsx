@@ -9,11 +9,11 @@ import { IconArrowRight, IconDelete, IconDown, IconEdit } from "@arco-design/web
 import ProductStore from "@/store/product";
 import shallow from "zustand/shallow";
 import { useHistory } from "react-router";
-import { getProductionCustomDemand } from "@/api/demand";
+import { getProductionCustomDemand, postProductionCustomDemand } from "@/api/demand";
 
 export default function ServicePreselection() {
   const t = useLocale();
-  const [moduleInfo, setCollapse] = ProductStore(state => [state.moduleInfo, state.setCollapse], shallow);
+  const [demandId,moduleInfo, setCollapse] = ProductStore(state => [state.demandId,state.moduleInfo, state.setCollapse], shallow);
   const [serviceType, setServiceType] = ProductStore(state => [state.serviceType, state.setServiceType], shallow);
   const history = useHistory();
   const [service, setService] = useState([]);
@@ -89,6 +89,26 @@ export default function ServicePreselection() {
     return data
   }
 
+  const postService = () => {
+    if(demandId === -1){
+      Message.error(t['hardware.production.info.select.model.demand.error'])
+      return
+    }
+    postProductionCustomDemand({
+      'demandId': demandId,
+      'serveIds': serviceType,
+    }).then(res => {
+      if(res.data.success){
+        Message.success(t["submit.hardware.success"]);
+        setVisible(false)
+        // 根据选择的服务项目进行下一步导航
+        history.push(`/product/demand/service/preselection`)
+      }
+    }).catch(error => {
+      Message.error(t["submit.hardware.error"]);
+    });
+  }
+
   return (<div className={style["model"]}>
     <DynamicOuterCard title={t["service.preselection.model.info.title"]}>
       <Tag   closable={false} color="arcoblue" size="large" >
@@ -127,7 +147,7 @@ export default function ServicePreselection() {
       title={t["service.modal.title"]}
       visible={visible}
       style={{ width: "50%" }}
-      onOk={() => {}}
+      onOk={postService}
       onCancel={() => setVisible(false)}
       autoFocus={false}
       focusLock={true}

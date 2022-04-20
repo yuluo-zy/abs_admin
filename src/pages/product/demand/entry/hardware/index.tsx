@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
 import useLocale from "@/pages/product/demand/locale/useLocale";
 import { getProductionInfo } from "@/api/production";

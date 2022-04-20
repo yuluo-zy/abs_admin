@@ -17,3 +17,7 @@ export const postProduction = (data) => {
 export const getProductionCustomDemand = () => {
   return httpGet('/demand/custom/serve');
 };
+
+export const postProductionCustomDemand = (data) => {
+  return httpPost('/demand/custom/serve/save', data);
+};
