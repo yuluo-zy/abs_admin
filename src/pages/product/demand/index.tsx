@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import useLocale from "@/pages/product/demand/locale/useLocale";
 import ProductMenu from "@/pages/product/demand/menu";
 
@@ -9,8 +9,8 @@ import { MenuItemProps } from "@/components/type";
 import { IconCalendar, IconMindMapping, IconNav, IconSubscribed } from "@arco-design/web-react/icon";
 import NProgress from "nprogress";
 import lazyload from "@/utils/lazyload";
-import { Route, Switch, useParams } from "react-router";
-import  ProductStore  from "@/store/product";
+import { Route, Switch } from "react-router";
+import ProductStore from "@/store/product";
 import shallow from "zustand/shallow";
 
 function getFlattenRoutes(routes) {
@@ -19,23 +19,26 @@ function getFlattenRoutes(routes) {
 
   function travel(_routes) {
     _routes.forEach((route) => {
-      if (route.key && route.path && !route.child) {
+      if (route.key && route.path) {
         route.component = lazyload(
           mod[`./entry/${route.path}/index.tsx`]
         );
         res.push(route);
-      } else if (isArray(route.child) && route.child.length) {
+      }
+      if (isArray(route.child) && route.child.length) {
         travel(route.child);
       }
     });
   }
 
   travel(routes);
+  console.log(res)
   return res;
 }
 
 export default function ProductDemand(props) {
   const t = useLocale();
+
 
   const MenuTree: MenuItemProps[] = [
     {
@@ -48,59 +51,41 @@ export default function ProductDemand(props) {
       name: t["menu.production.service.selection"],
       key: "menu.production.service.selection",
       icon: <IconSubscribed key={"menu.production.service.selection"} />,
+      path: "service/preselection",
       child: [
         {
-          name: t["menu.production.service.selection.title"],
-          key: "menu.production.service.selection.title",
-          icon: (
-            <IconCalendar key={"menu.production.service.selection.title"} />
-          ),
-          path: "service/preselection"
+          name: t[
+            "menu.production.service.selection.requirements.details.firmware"
+            ],
+          key: "menu.production.service.selection.requirements.details.firmware",
+          path: "service/firmware"
         },
         {
-          name: t["menu.production.service.selection.requirements.details"],
-          key: "menu.production.service.selection.requirements.details",
-          icon: (
-            <IconCalendar
-              key={"menu.production.service.selection.requirements.details"}
-            />
-          ),
-          child: [
-            {
-              name: t[
-                "menu.production.service.selection.requirements.details.firmware"
-                ],
-              key: "menu.production.service.selection.requirements.details.firmware",
-              path: "service/firmware"
-            },
-            {
-              name: t[
-                "menu.production.service.selection.requirements.details.mac"
-                ],
-              key: "menu.production.service.selection.requirements.details.mac",
-              path: "service/mac"
-            },
-            {
-              name: t[
-                "menu.production.service.selection.requirements.details.burn"
-                ],
-              key: "menu.production.service.selection.requirements.details.burn",
-              path: "service/burn"
-            },
-            {
-              name: t[
-                "menu.production.service.selection.requirements.details.pre-fit"
-                ],
-              key: "menu.production.service.selection.requirements.details.pre-fit"
-            },
-            {
-              name: t[
-                "menu.production.service.selection.requirements.details.custom.label"
-                ],
-              key: "menu.production.service.selection.requirements.details.custom.label",
-              path: "service/label"
-            }
-          ]
+          name: t[
+            "menu.production.service.selection.requirements.details.mac"
+            ],
+          key: "menu.production.service.selection.requirements.details.mac",
+          path: "service/mac"
+        },
+        {
+          name: t[
+            "menu.production.service.selection.requirements.details.burn"
+            ],
+          key: "menu.production.service.selection.requirements.details.burn",
+          path: "service/burn"
+        },
+        {
+          name: t[
+            "menu.production.service.selection.requirements.details.pre-fit"
+            ],
+          key: "menu.production.service.selection.requirements.details.pre-fit"
+        },
+        {
+          name: t[
+            "menu.production.service.selection.requirements.details.custom.label"
+            ],
+          key: "menu.production.service.selection.requirements.details.custom.label",
+          path: "service/label"
         },
         {
           name: t["menu.production.service.selection.check"],
@@ -111,6 +96,7 @@ export default function ProductDemand(props) {
         }
       ]
     },
+
     {
       name: t["menu.production.service.selection.overview"],
       key: "menu.production.service.selection.overview",
@@ -119,8 +105,10 @@ export default function ProductDemand(props) {
   ];
   const flattenRoutes = useMemo(() => getFlattenRoutes(MenuTree) || [], []);
   const history = useHistory();
-  const [setStepRouter, setCollapse] = ProductStore(state => [state.setStepRouter, state.setCollapse], shallow)
-
+  const [setStepRouter, setCollapse] = ProductStore(state => [state.setStepRouter, state.setCollapse], shallow);
+  useEffect(() => {
+    setCollapse(false);
+  }, []);
 
   function onClickMenuItem(key) {
     const currentRoute = flattenRoutes.find((r) => r.key === key);
@@ -128,8 +116,8 @@ export default function ProductDemand(props) {
     const preload = component.preload();
     NProgress.start();
     preload.then(() => {
-      setStepRouter(currentRoute.path)
-      history.push(`/product/demand/${currentRoute.path}`)
+      setStepRouter(currentRoute.path);
+      history.push(`/product/demand/${currentRoute.path}`);
       NProgress.done();
     });
   }
@@ -160,7 +148,7 @@ export default function ProductDemand(props) {
               );
             })}
             <Route exact path={"/product/demand"}>
-              <div>todo 添加说明</div>
+              <div>todo 添加导入过程声明和足以事项</div>
             </Route>
           </Switch>
         </div>

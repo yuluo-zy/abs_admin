@@ -40,7 +40,7 @@ export default function ProductMenu(props) {
       item.forEach((i) => {
         if (i.child != null) {
           menu.push(
-            <SubMenu key={i.key} title={getMenuItem(i)}>
+            <SubMenu key={i.key} title={getMenuItem(i)} selectable={true}>
               {getMenu(i.child)}
             </SubMenu>
           );
@@ -61,6 +61,7 @@ export default function ProductMenu(props) {
         autoOpen
         levelIndent={12}
         collapse={collapse}
+        selectable={true}
         onClickMenuItem={updateMenuKey}
       >
         {getMenu(menu)}

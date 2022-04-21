@@ -2,7 +2,8 @@ import create, { GetState, SetState } from "zustand";
 import { ReadonlyRecordable } from "@/components/type";
 import React from "react";
 import { devtools } from "zustand/middleware";
-import { persist } from "zustand/middleware"
+import { persist } from "zustand/middleware";
+
 export type StoreSlice<T extends object, E extends object = T> = (
   set: SetState<E extends T ? E : E & T>,
   get: GetState<E extends T ? E : E & T>
@@ -29,6 +30,11 @@ export interface ProductDemand {
   setDemandId: (value) => void,
   setModuleInfo: (value) => void,
   setServiceType: (value) => void
+}
+
+export interface FirmwareDemand {
+  history: string;
+  setHistory: (value) => void;
 }
 
 const createBearSlice: StoreSlice<StepSetting> = (set, get) => ({
@@ -58,12 +64,20 @@ const createProductDemand: StoreSlice<ProductDemand> = (set, get) => ({
       ...value
     }
   })),
-  setServiceType: value => set(() => ({serviceType: value}))
+  setServiceType: value => set(() => ({ serviceType: value }))
 });
+
+// 定制固件
+const createFirmwareDemand: StoreSlice<FirmwareDemand> = (set, get) => ({
+  history: "",
+  setHistory: value => set(() => ({ history: value }))
+});
+
 
 const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
   ...createBearSlice(set, get),
-  ...createProductDemand(set, get)
+  ...createProductDemand(set, get),
+  ...createFirmwareDemand(set, get)
 });
 
 const ProductStore = create(devtools(persist(createRootSlice,
