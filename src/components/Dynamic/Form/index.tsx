@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import { IconCheck, IconDelete, IconPlus, IconRefresh } from '@arco-design/web-react/icon';
 import cs from 'classnames';
 import useDebounce from '@/utils/useHook/useDebounce';
+import DynamicUpload from "@/components/Dynamic/Upload";
 
 const { Row, Col } = Grid;
 const FormItem = Form.Item;
@@ -129,7 +130,7 @@ function DynamicForm(props: FormProps) {
           label={item.label}
           field={item.field}
         >
-          <Upload action='/' />
+          <DynamicUpload limit={item.limit}/>
         </FormItem>
       );
     }

@@ -1,22 +1,18 @@
 import React, { useState } from "react";
-import { Button, Message, Upload } from "@arco-design/web-react";
+import { Message, Upload } from "@arco-design/web-react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from './locale';
 import { postFile } from "@/api/file";
 import axios from "axios";
-import styles from './style/index.module.less';
 
-function DynamicUpload(props) {
-  const [fileList, setFileList] = useState([])
+function DynamicUpload(props: {limit}) {
   const t = useLocale(locale)
   const {limit} = props
 
   return (
-    <div className={styles['custom-upload-progress']}>
     <Upload
       autoUpload
-      fileList={fileList}
-      onChange={setFileList}
+      multiple
       customRequest={(option) => {
         const { onProgress, file,onSuccess, onError } = option
         let formData = new FormData();
@@ -27,10 +23,10 @@ function DynamicUpload(props) {
           onProgress(parseInt(String(complete), 10), progressEvent);
         }
         postFile(formData,onprogress,source.token).then(r =>{
-          const {success} = r.data
+          const {success, result} = r.data
           if(success){
             Message.success(t["message.ok"])
-            onSuccess(t["message.ok"])
+            onSuccess(result)
           }
         } ).catch(error => {
           Message.error(t["message.error"])
@@ -44,7 +40,6 @@ function DynamicUpload(props) {
       }}
       limit={limit}
     />
-    </div>
   );
 }
 

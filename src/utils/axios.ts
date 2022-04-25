@@ -4,7 +4,7 @@ import qs from  'qs'
 
 axios.defaults.baseURL = process.env.NODE_ENV === "production" ? "/api" : "/api";
 axios.defaults.headers["Content-Type"] = "application/json";
-axios.defaults.timeout = 1000;
+axios.defaults.timeout = 100000;
 
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("userToken");

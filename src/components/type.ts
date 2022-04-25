@@ -34,6 +34,7 @@ export interface FormItemProps {
   required?: boolean;
   labelCol?: Recordable | number;
   node?: any;
+  limit?: number
 }
 
 export interface FormList {
