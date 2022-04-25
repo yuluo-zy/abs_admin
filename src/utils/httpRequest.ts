@@ -1,5 +1,5 @@
 import Axios from '@/utils/axios';
-import { AxiosResponse } from 'axios';
+import { AxiosResponse, AxiosStatic } from "axios";
 
 export interface Data {
   code: number;
@@ -18,6 +18,17 @@ export const httpGet = (url: string, data?): Promise<AxiosResponse<Data>> => {
 export const httpPost = (url, data?): Promise<AxiosResponse<Data>> => {
   return Axios({
     url: url,
+    method: 'post',
+    data
+  });
+};
+
+export const httpFilePost = (url, data?): Promise<AxiosResponse<Data>> => {
+  return Axios({
+    url: url,
+    headers: {
+      'Content-Type': 'multipart/form-data;charset=UTF-8'
+    },
     method: 'post',
     data
   });

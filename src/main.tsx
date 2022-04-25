@@ -14,7 +14,6 @@ import Login from './pages/login';
 import checkLogin from './utils/checkLogin';
 import changeTheme from './utils/changeTheme';
 import useStorage from './utils/useHook/useStorage';
-import './mock';
 import { userInfo, userMenu } from '@/api/user';
 
 const store = createStore(rootReducer);

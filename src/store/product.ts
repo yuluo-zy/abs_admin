@@ -1,5 +1,5 @@
 import create, { GetState, SetState } from "zustand";
-import { ReadonlyRecordable } from "@/components/type";
+import { Recordable } from "@/components/type";
 import React from "react";
 import { devtools } from "zustand/middleware";
 import { persist } from "zustand/middleware";
@@ -24,7 +24,7 @@ export interface StepSetting {
 
 // 需求单号内容设定
 export interface ProductDemand {
-  moduleInfo?: ReadonlyRecordable;
+  moduleInfo?: Recordable;
   demandId: number;
   serviceType: number[],
   setDemandId: (value) => void,
@@ -33,8 +33,11 @@ export interface ProductDemand {
 }
 
 export interface FirmwareDemand {
-  history: string;
-  setHistory: (value) => void;
+  info: Recordable;
+  encryption: Recordable;
+  encryptionWay: string;
+  flash: string;
+  secure: string;
 }
 
 const createBearSlice: StoreSlice<StepSetting> = (set, get) => ({
@@ -69,8 +72,26 @@ const createProductDemand: StoreSlice<ProductDemand> = (set, get) => ({
 
 // 定制固件
 const createFirmwareDemand: StoreSlice<FirmwareDemand> = (set, get) => ({
-  history: "",
-  setHistory: value => set(() => ({ history: value }))
+  info: null,
+  encryption: null,
+  encryptionWay: "",
+  flash: "",
+  secure: "",
+  setInfo: value => set((state) => ({
+    info: {
+      ...state.info,
+      ...value
+    }
+  })),
+  setEncryption: value => set((state) => ({
+    encryption: {
+      ...state.encryption,
+      ...value
+    }
+  })),
+  setEncryptionWay: value => set(() => ({ encryptionWay: value })),
+  setFlash: value => set(() => ({ flash: value })),
+  setSecure: value => set(() => ({ secure: value }))
 });
 
 

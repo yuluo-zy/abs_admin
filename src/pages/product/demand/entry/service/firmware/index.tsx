@@ -1,7 +1,19 @@
 import React, { useState } from 'react';
 import useLocale from '@/pages/product/demand/locale/useLocale';
 import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
-import { Divider, Form, Input, Link, Message, Modal, Select, Space, Tooltip, Typography } from '@arco-design/web-react';
+import {
+  Checkbox,
+  Divider,
+  Form,
+  Input,
+  Link,
+  Message,
+  Modal,
+  Select,
+  Space,
+  Tooltip,
+  Typography
+} from "@arco-design/web-react";
 import FirmwareInformation from '@/pages/product/demand/entry/service/firmware/firmware-information';
 import SerialCheck from '@/pages/product/demand/entry/service/firmware/serial-check';
 import DynamicRadioGroup from '@/components/Dynamic/Radio';
@@ -10,7 +22,10 @@ import FirmwareFile from '@/pages/product/demand/entry/service/firmware/firmware
 import FirmwareFlash from '@/pages/product/demand/entry/service/firmware/firmware-flash';
 import FirmwareEfuse from '@/pages/product/demand/entry/service/firmware/frimware-efuse';
 import DynamicSkeleton from '@/components/Dynamic/Skeleton';
-
+import ProductStore from "@/store/product";
+import shallow from "zustand/shallow";
+import DynamicUpload from "@/components/Dynamic/Upload";
+const CheckboxGroup = Checkbox.Group;
 
 export default function FirmwareCustomization() {
   const t = useLocale();
@@ -19,13 +34,16 @@ export default function FirmwareCustomization() {
   const [form] = Form.useForm();
 
   const options = ['Beijing', 'Shanghai', 'Guangzhou', 'Disabled'];
-
-  const [history, setHistory] = useState('');
-  const [encryption, setEncryption] = useState();
-  const [encryptionWay, setEncryptionWay] = useState();
-  const [flash, setFlash] = useState();
-  const [secure, setSecure] = useState();
+  const [demandId,moduleInfo, setCollapse] = ProductStore(state => [state.demandId,state.moduleInfo, state.setCollapse], shallow);
+  const [info, setInfo] =  ProductStore(state => [state.info,state.setInfo], shallow);
   const [visible, setVisible] = useState(false);
+  // 是否加密
+  const [encryption, setEncryption] = useState(false)
+  // 加密种类
+  const [encryptionType, setEncryptionType] = useState([])
+  // 安全启动种类
+  const [secure, setSecure] = useState('')
+  const [flash, setFlash] = useState('')
 
   return (<DynamicOuterCard title={t['firmware.customization.title']}>
     <DynamicSkeleton animation text={{ rows: 10, width: ['100%', 600, 400] }}>
@@ -37,6 +55,10 @@ export default function FirmwareCustomization() {
               style={{ width: 350 }}
               allowClear
               size={'large'}
+              onChange={value => setInfo({
+                firmwareVersion: value
+              })}
+              defaultValue = {info?.firmwareVersion}
               placeholder={t['firmware.customization.info.version.hint']}
             />
           </Space>
@@ -46,7 +68,10 @@ export default function FirmwareCustomization() {
               size={'large'}
               placeholder={t['firmware.customization.info.project.hint']}
               style={{ width: 300 }}
-              onChange={(value) => Message.info({ content: `You select ${value}.`, showIcon: true })}
+              defaultValue={info?.firmwareProject}
+              onChange={(value) => setInfo({
+                firmwareProject: value
+              })}
             >
               {options.map((option, index) => (
                 <Option key={option} disabled={index === 3} value={option}>
@@ -59,14 +84,17 @@ export default function FirmwareCustomization() {
 
         <Space size={10} direction={'vertical'}>
           <Typography.Text>{t['firmware.customization.info.project.history']}</Typography.Text>
-          <DynamicRadioGroup direction='vertical' options={[
-            { label: t['firmware.customization.info.project.history.first'], value: 'first' },
-            { label: t['firmware.customization.info.project.history.next'], value: 'next' }
+          <DynamicRadioGroup
+            direction='vertical'
+            defaultValue={info?.firstImport}
+            options={[
+            { label: t['firmware.customization.info.project.history.first'], value: 1 },
+            { label: t['firmware.customization.info.project.history.next'], value: 0 }
           ]} onChange={(value) => {
-            setHistory(value);
+              setInfo({ firstImport: value })
           }} />
           {
-            history === 'next' && <Space size={12}>
+           info?.firstImport === 0 &&  <Space size={12}>
               <IconTags style={
                 { color: '#00B42A', fontSize: 20 }
               } />
@@ -75,7 +103,8 @@ export default function FirmwareCustomization() {
                 size={'large'}
                 style={{ width: 300 }}
                 placeholder={t['firmware.customization.info.project.hint']}
-                onChange={(value) => Message.info({ content: `You select ${value}.`, showIcon: true })}
+                defaultValue={info?.lastMpn}
+                onChange={(value) =>setInfo({ lastMpn: value })}
               >
                 {options.map((option, index) => (
                   <Option key={option} disabled={index === 3} value={option}>
@@ -93,22 +122,38 @@ export default function FirmwareCustomization() {
       <Space size={10} direction='vertical'>
         <Typography.Text>{t['firmware.customization.info.encryption']}</Typography.Text>
         <DynamicRadioGroup direction='vertical' options={[
-          { label: t['firmware.customization.info.unencryption.firmware'], value: 'unencryption' },
-          { label: t['firmware.customization.info.encryption.firmware'], value: 'encryption' }
+          { label: t['firmware.customization.info.unencryption.firmware'], value: false },
+          { label: t['firmware.customization.info.encryption.firmware'], value: true }
         ]} onChange={(value) => {
           setEncryption(value);
+          setEncryptionType([]);
+          setSecure('');
+          setFlash('');
         }} />
-        {encryption === 'encryption' && <div style={{ paddingLeft: '6rem' }}>
+        {/*选择 flash 和 boot*/}
+        {encryption && <div style={{ paddingLeft: '6rem' }}>
           <Space size={40}>
-            <DynamicRadioGroup
+            <CheckboxGroup
               options={[{ label: t['firmware.customization.info.encryption.firmware.flash'], value: 'flash' },
-                { label: t['firmware.customization.info.encryption.firmware.secure.boot'], value: 'secure' }]}
+                { label: t['firmware.customization.info.encryption.firmware.secure.boot'], value: 'secure' },
+              ]}
               style={{ display: 'block', marginBottom: 16 }}
               onChange={(value) => {
-                setEncryptionWay(value);
+                setEncryptionType(value)
               }}
             />
+          </Space>
+        </div>}
+      </Space>
+      <Divider style={{ borderBottomStyle: 'dashed' }} />
+      {/*配置安全启动种类*/}
+      {encryptionType.includes('secure') &&
+        <div>
+        <Space size={10} direction='vertical'>
+          <Typography.Text>
+            {t['firmware.customization.info.encryption.firmware.secure.info']}
             <Tooltip color={'#0E42D2'} position={'rt'}
+                     defaultPopupVisible
                      content={t['firmware.customization.info.encryption.firmware.v2.link']}>
               <Link target={'_blank'}
                     href='https://docs.espressif.com/projects/esp-idf/en/stable/esp32/security/secure-boot-v1.html'>
@@ -117,14 +162,36 @@ export default function FirmwareCustomization() {
                 } />
               </Link>
             </Tooltip>
-          </Space>
-        </div>}
-      </Space>
-      <Divider style={{ borderBottomStyle: 'dashed' }} />
-      {/*加密详情*/}
-      {encryptionWay === 'flash' &&
+          </Typography.Text>
+
+          <DynamicRadioGroup direction='vertical'
+                             options={[{
+                               label: t['firmware.customization.info.encryption.firmware.v1'],
+                               value: 'v1'
+                             }, {
+                               label: t['firmware.customization.info.encryption.firmware.v2'],
+                               value: 'v2'
+                             }]}
+                             onChange={(value) => setSecure(value)}
+          />
+
+          { secure === 'v2' && <div>
+            <Typography.Text>{t["firmware.customization.info.encryption.firmware.v2.key"]}</Typography.Text>
+            <Input
+            style={{width: 350}}
+            allowClear
+            />
+          </div>
+            }
+        </Space>
+
+          <Divider style={{ borderBottomStyle: 'dashed' }} />
+        </div>
+      }
+      {/*配置 flash 加密种类*/}
+      {encryptionType.includes('flash') &&
         <Space size={10} direction='vertical'>
-          <Typography.Text>{t['firmware.customization.info.encryption.firmware.info']}</Typography.Text>
+          <Typography.Text>{t['firmware.customization.info.encryption.firmware.flash.info']}</Typography.Text>
 
           <DynamicRadioGroup direction='vertical'
                              options={[{
@@ -172,33 +239,14 @@ export default function FirmwareCustomization() {
           <Divider style={{ borderBottomStyle: 'dashed' }} />
         </Space>
       }
-      {encryptionWay === 'secure' &&
-        <Space size={10} direction='vertical'>
-          <Typography.Text>{t['firmware.customization.info.encryption.firmware.info']}</Typography.Text>
-
-          <DynamicRadioGroup direction='vertical'
-                             options={[{
-                               label: t['firmware.customization.info.encryption.firmware.v1'],
-                               value: 'v1'
-                             }, {
-                               label: t['firmware.customization.info.encryption.firmware.v2'],
-                               value: 'v2'
-                             }]}
-                             onChange={(value) => setSecure(value)}
-          />
-          {secure === 'v2' &&
-            <Space size={16}>
-              <Typography.Text>{t['firmware.customization.info.encryption.firmware.v2.key']}</Typography.Text>
-              <Input
-                style={{ width: 350 }}
-                allowClear
-              />,
-            </Space>
-
-          }
-          <Divider style={{ borderBottomStyle: 'dashed' }} />
-        </Space>
+      {/*fei加密固件*/}
+      {encryption === false  && <div>
+        <FirmwareInformation formData={form} />
+        <Divider style={{ borderBottomStyle: 'dashed' }} />
+      </div>
       }
+      <DynamicUpload/>
+
       {
         flash === 'only' && <div>
           <FirmwareFile />
@@ -209,12 +257,8 @@ export default function FirmwareCustomization() {
           <Divider style={{ borderBottomStyle: 'dashed' }} />
         </div>
       }
-      {encryption === 'unencryption' && <div>
-        <FirmwareInformation formData={form} />
-        <Divider style={{ borderBottomStyle: 'dashed' }} />
-      </div>
-      }
-      {encryption && <div>
+
+      {info?.firmwareType && <div>
         <SerialCheck formData={form} />
         <Divider style={{ borderBottomStyle: 'dashed' }} />
       </div>
