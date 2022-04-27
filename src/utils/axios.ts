@@ -16,7 +16,6 @@ axios.interceptors.request.use((config) => {
   Promise.reject(error);
 });
 axios.defaults.transformRequest = [ function(data, config){
-  if(!config['Content-Type']) return qs.stringify(data)
   switch (config['Content-Type'].toLowerCase()){
     case 'application/json;charset=utf-8': {
       return JSON.stringify(data)
@@ -25,7 +24,7 @@ axios.defaults.transformRequest = [ function(data, config){
       return data
     }
     default: {
-      qs.stringify(data)
+      return JSON.stringify(data)
     }
   }
 }]

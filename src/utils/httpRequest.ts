@@ -22,18 +22,6 @@ export const httpPost = (url, data?): Promise<AxiosResponse<Data>> => {
     data
   });
 };
-
-export const httpFilePost = (url, data?): Promise<AxiosResponse<Data>> => {
-  return Axios({
-    url: url,
-    headers: {
-      'Content-Type': 'multipart/form-data;charset=UTF-8'
-    },
-    method: 'post',
-    data
-  });
-};
-
 export const httpDelete = (url, data?): Promise<AxiosResponse<Data>> => {
   return Axios({
     url: url,
