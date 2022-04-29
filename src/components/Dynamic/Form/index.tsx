@@ -36,6 +36,7 @@ function DynamicForm(props: FormProps) {
           required={item.required}
           label={item.label}
           field={item.field}
+          rules={item.rules}
         >
           <Input allowClear placeholder={item.placeholder} />
         </FormItem>
@@ -49,6 +50,7 @@ function DynamicForm(props: FormProps) {
           required={item.required}
           label={item.label}
           field={item.field}
+          rules={item.rules}
         >
           <Input type={'password'} allowClear placeholder={item.placeholder} />
         </FormItem>
@@ -62,6 +64,7 @@ function DynamicForm(props: FormProps) {
           required={item.required}
           label={item.label}
           field={item.field}
+          rules={item.rules}
         >
           <InputNumber placeholder={item.placeholder} />
         </FormItem>
@@ -75,6 +78,7 @@ function DynamicForm(props: FormProps) {
           required={item.required}
           label={item.label}
           field={item.field}
+          rules={item.rules}
         >
           <Select options={item.options} allowClear placeholder={item.placeholder} />
         </FormItem>
@@ -88,6 +92,7 @@ function DynamicForm(props: FormProps) {
           required={item.required}
           label={item.label}
           field={item.field}
+          rules={item.rules}
         >
           <TextArea allowClear autoSize placeholder={item.placeholder} />
         </FormItem>
@@ -101,6 +106,7 @@ function DynamicForm(props: FormProps) {
           required={item.required}
           label={item.label}
           field={item.field}
+          rules={item.rules}
         >
           <Select options={item.options} mode={'multiple'} allowClear placeholder={item.placeholder} />
         </FormItem>
@@ -114,6 +120,7 @@ function DynamicForm(props: FormProps) {
           required={item.required}
           label={item.label}
           field={item.field}
+          rules={item.rules}
         >
           <DatePicker.RangePicker
             allowClear
@@ -135,6 +142,7 @@ function DynamicForm(props: FormProps) {
           required={item.required}
           label={item.label}
           field={item.field}
+          rules={item.rules}
           triggerPropName='fileList'
         >
           <DynamicUpload limit={item.limit} onChange={(fileList: UploadItem[], file: UploadItem) => {

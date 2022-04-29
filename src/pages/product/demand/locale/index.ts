@@ -91,6 +91,7 @@ const i18n = {
     'firmware.information.upLoad.error': '上传固件文件不能为空',
     'firmware.serial.check.title': '串口校验信息',
     'firmware.serial.universal.serial.port': '通用串口',
+    'firmware.serial.universal.serial.port.error': '通用串口不能为空',
     'firmware.serial.self.serial.port': '自定义串口',
     'firmware.serial.self.serial.baud.rate': '串口波特率',
     'firmware.serial.self.serial.check.character': '串口校验字符',

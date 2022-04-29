@@ -65,7 +65,6 @@ export default function FirmwareInformation() {
         {
           required: true,
           message: t['firmware.information.upLoad.error'],
-          minLength: 2
         }
       ]
     }

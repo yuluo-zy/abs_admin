@@ -242,11 +242,14 @@ export default function FirmwareCustomization() {
 
       {/*开始配置表单*/}
       <Form.Provider
-        onFormValuesChange={(name, changedValues, info) => {
-          console.log('onFormValuesChange: ', name, changedValues, info)
-        }}
-        onFormSubmit={(name, values, info) => {
-          console.log('onFormSubmit: ',name, values, info)
+        onFormSubmit={async (name, values, info) => {
+            try {
+              await info.forms['firmware.information.title'].validate()
+          await  info.forms['firmware.serial.check.title'].validate()
+        } catch (e) {
+              Message.error('校验失败')
+              return            }
+
           Message.info({
             icon: <span></span>,
             content: <div style={{textAlign: 'left'}}>

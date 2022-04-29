@@ -17,7 +17,11 @@ export default function SerialCheck() {
       required: true,
       options: [
         { label: 'UART0', value: 0 },
-        { label: 'UART1', value: 1 }]
+        { label: 'UART1', value: 1 }],
+      rules: [
+        {
+          required: true,
+          message: t['firmware.serial.universal.serial.port.error'],}]
     },
     {
       label: t['firmware.serial.self.serial.port'],
