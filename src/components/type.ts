@@ -51,7 +51,7 @@ export interface FormProps {
   data?: Recordable;
   onValuesChange?: () => void;
   formItem?: Array<FormItemProps>;
-  onSubmit: (value) => void;
+  onSubmit?: (value) => void;
   onRest?: () => void;
   col?: number;
   className?: string | string[];

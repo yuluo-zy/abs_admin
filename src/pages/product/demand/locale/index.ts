@@ -128,7 +128,8 @@ const i18n = {
     'submit.hardware.success': '创建成功, 开始进行下一步填写',
     'submit.hardware.error': '创建失败, 请稍后重试',
     'message.hardware.notfound':'尚未进行硬件选型成功, 请跳转到硬件选型界面',
-    'message.service.notfound':'定制生产服务请求失败, 请稍后再试'
+    'message.service.notfound':'定制生产服务请求失败, 请稍后再试',
+    'firmware.information.startAddress.message': '默认(必须)为0X0'
   },
 };
 

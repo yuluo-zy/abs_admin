@@ -5,7 +5,7 @@ import DynamicForm from '@/components/Dynamic/Form';
 import DynamicCard from '@/components/Dynamic/Card';
 
 
-export default function FirmwareInformation(props: { formData: any }) {
+export default function FirmwareInformation() {
   const t = useLocale();
   const labelCol = {
     span: 12
@@ -14,7 +14,7 @@ export default function FirmwareInformation(props: { formData: any }) {
     {
       label: t['firmware.information.name'],
       type: 'input',
-      field: 'name',
+      field: 'firmwareName',
       required: true,
       labelCol: labelCol,
       rules: [
@@ -28,7 +28,7 @@ export default function FirmwareInformation(props: { formData: any }) {
     {
       label: t['firmware.information.MD5'],
       type: 'input',
-      field: 'name',
+      field: 'fileMd5',
       required: true,
       labelCol: labelCol,
       rules: [
@@ -43,8 +43,9 @@ export default function FirmwareInformation(props: { formData: any }) {
       label: t['firmware.information.startAddress'],
       type: 'input',
       labelCol: labelCol,
-      field: 'name',
+      field: 'beginAddr',
       required: true,
+      placeholder: t['firmware.information.startAddress.message'],
       rules: [
         {
           required: true,
@@ -56,9 +57,10 @@ export default function FirmwareInformation(props: { formData: any }) {
     {
       label: t['firmware.information.upLoad'],
       type: 'upload',
-      field: 'name',
+      field: 'files',
       labelCol: labelCol,
       required: true,
+      limit: 1,
       rules: [
         {
           required: true,
@@ -71,12 +73,9 @@ export default function FirmwareInformation(props: { formData: any }) {
 
   return (
     <DynamicCard title={t['firmware.information.title']}>
-      <DynamicForm title={t['firmware.information.title']}
-                   formData={props.formData}
+      <DynamicForm title={'firmware.information.title'}
                    col={4}
-                   formItem={informationProps}
-                   onSubmit={() => {
-                   }} />
+                   formItem={informationProps} />
     </DynamicCard>
   );
 }

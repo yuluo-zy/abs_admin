@@ -7,32 +7,32 @@ import { Form, Grid, InputNumber } from '@arco-design/web-react';
 
 const Row = Grid.Row;
 const Col = Grid.Col;
-export default function SerialCheck(props: { formData: any }) {
+export default function SerialCheck() {
   const t = useLocale();
   const informationProps: Array<FormItemProps> = [
     {
       label: t['firmware.serial.universal.serial.port'],
       type: 'select',
-      field: 'name',
+      field: 'generalSerial',
       required: true,
       options: [
-        { label: 'UART0', value: 1 },
-        { label: 'UART1', value: 2 }]
+        { label: 'UART0', value: 0 },
+        { label: 'UART1', value: 1 }]
     },
     {
       label: t['firmware.serial.self.serial.port'],
       type: 'self',
-      field: 'name',
+      field: '',
       node:
         <Form.Item key={1} label={t['firmware.serial.self.serial.port']} required style={{ marginBottom: 0 }}>
           <Grid.Row gutter={8}>
             <Grid.Col span={12}>
-              <Form.Item field='tx' rules={[{ required: true, message: 'TX: GPIO() is required' }]}>
+              <Form.Item field='customSerialTx' rules={[{ required: true, message: 'TX: GPIO() is required' }]}>
                 <InputNumber min={0} placeholder='TX: GPIO()' />
               </Form.Item>
             </Grid.Col>
             <Grid.Col span={12}>
-              <Form.Item field='rx' rules={[{ required: true, message: 'RX: GPIO() is required' }]}>
+              <Form.Item field='customSerialRx' rules={[{ required: true, message: 'RX: GPIO() is required' }]}>
                 <InputNumber min={0} placeholder='RX: GPIO()' />
               </Form.Item>
             </Grid.Col>
@@ -42,7 +42,7 @@ export default function SerialCheck(props: { formData: any }) {
     {
       label: t['firmware.serial.self.serial.baud.rate'],
       type: 'input',
-      field: 'name',
+      field: 'serialBaud',
       required: true,
       rules: [
         {
@@ -55,7 +55,7 @@ export default function SerialCheck(props: { formData: any }) {
     {
       label: t['firmware.serial.self.serial.check.character'],
       type: 'text',
-      field: 'name',
+      field: 'serial_check_str',
       required: true,
       rules: [
         {
@@ -71,11 +71,8 @@ export default function SerialCheck(props: { formData: any }) {
     <DynamicCard title={t['firmware.serial.check.title']} help={'kjhkjhkjhkjh'}>
       <Row>
         <Col xs={24} sm={20} lg={18} xxl={18}>
-          <DynamicForm title={t['firmware.serial.check.title']}
-                       formData={props.formData}
-                       formItem={informationProps}
-                       onSubmit={() => {
-                       }} />
+          <DynamicForm title={'firmware.serial.check.title'}
+                       formItem={informationProps} />
         </Col>
         <Col />
       </Row>

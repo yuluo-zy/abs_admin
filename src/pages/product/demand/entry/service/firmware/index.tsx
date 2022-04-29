@@ -2,43 +2,43 @@ import React, { useState } from 'react';
 import useLocale from '@/pages/product/demand/locale/useLocale';
 import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
 import {
+  Button,
   Checkbox,
   Divider,
   Form,
   Input,
   Link,
-  Message,
   Modal,
   Select,
   Space,
   Tooltip,
-  Typography
+  Typography,
+  Message
 } from "@arco-design/web-react";
 import FirmwareInformation from '@/pages/product/demand/entry/service/firmware/firmware-information';
 import SerialCheck from '@/pages/product/demand/entry/service/firmware/serial-check';
 import DynamicRadioGroup from '@/components/Dynamic/Radio';
-import { IconLaunch, IconTags } from '@arco-design/web-react/icon';
+import { IconArrowRight, IconLaunch, IconTags } from "@arco-design/web-react/icon";
 import FirmwareFile from '@/pages/product/demand/entry/service/firmware/firmware-file';
 import FirmwareFlash from '@/pages/product/demand/entry/service/firmware/firmware-flash';
 import FirmwareEfuse from '@/pages/product/demand/entry/service/firmware/frimware-efuse';
 import DynamicSkeleton from '@/components/Dynamic/Skeleton';
 import ProductStore from "@/store/product";
 import shallow from "zustand/shallow";
-import DynamicUpload from "@/components/Dynamic/Upload";
+import style from "./style/index.module.less";
 const CheckboxGroup = Checkbox.Group;
 
 export default function FirmwareCustomization() {
   const t = useLocale();
 
   const Option = Select.Option;
-  const [form] = Form.useForm();
 
   const options = ['Beijing', 'Shanghai', 'Guangzhou', 'Disabled'];
   const [demandId,moduleInfo, setCollapse] = ProductStore(state => [state.demandId,state.moduleInfo, state.setCollapse], shallow);
   const [info, setInfo] =  ProductStore(state => [state.info,state.setInfo], shallow);
   const [visible, setVisible] = useState(false);
   // 是否加密
-  const [encryption, setEncryption] = useState(false)
+  const [encryption, setEncryption] = useState(null)
   // 加密种类
   const [encryptionType, setEncryptionType] = useState([])
   // 安全启动种类
@@ -239,30 +239,65 @@ export default function FirmwareCustomization() {
           <Divider style={{ borderBottomStyle: 'dashed' }} />
         </Space>
       }
-      {/*fei加密固件*/}
+
+      {/*开始配置表单*/}
+      <Form.Provider
+        onFormValuesChange={(name, changedValues, info) => {
+          console.log('onFormValuesChange: ', name, changedValues, info)
+        }}
+        onFormSubmit={(name, values, info) => {
+          console.log('onFormSubmit: ',name, values, info)
+          Message.info({
+            icon: <span></span>,
+            content: <div style={{textAlign: 'left'}}>
+              <span>form values:</span>
+              <pre>
+                {
+                  JSON.stringify({
+                    ...info.forms['firmware.information.title'].getFieldsValue(),
+                    ...info.forms['firmware.serial.check.title'].getFieldsValue(),
+                  }, null, 2)
+                }
+              </pre>
+            </div>
+          })
+        }}
+      >
+      {/*非加密固件*/}
       {encryption === false  && <div>
-        <FirmwareInformation formData={form} />
+        <FirmwareInformation />
+        <Divider style={{ borderBottomStyle: 'dashed' }} />
+        <SerialCheck />
         <Divider style={{ borderBottomStyle: 'dashed' }} />
       </div>
       }
-      <DynamicUpload/>
 
-      {
-        flash === 'only' && <div>
-          <FirmwareFile />
-          <Divider style={{ borderBottomStyle: 'dashed' }} />
-          <FirmwareFlash formData={form} />
-          <Divider style={{ borderBottomStyle: 'dashed' }} />
-          <FirmwareEfuse formData={form} />
-          <Divider style={{ borderBottomStyle: 'dashed' }} />
+      {/*{*/}
+      {/*  flash === 'only' && <div>*/}
+      {/*    <FirmwareFile />*/}
+      {/*    <Divider style={{ borderBottomStyle: 'dashed' }} />*/}
+      {/*    <FirmwareFlash formData={form} />*/}
+      {/*    <Divider style={{ borderBottomStyle: 'dashed' }} />*/}
+      {/*    <FirmwareEfuse formData={form} />*/}
+      {/*    <Divider style={{ borderBottomStyle: 'dashed' }} />*/}
+      {/*  </div>*/}
+      {/*}*/}
+
+
+        {/*下一步*/}
+
+        <div className={style["model-next"]}>
+          <Form id='searchForm' layout='vertical' style={{maxWidth: '9rem'}}>
+          <Button type="primary"
+                  size={"large"}
+                  htmlType='submit'
+                  icon={<IconArrowRight />}
+          >
+            {t["hardware.production.info.next"]}
+          </Button>
+          </Form>
         </div>
-      }
-
-      {info?.firmwareType && <div>
-        <SerialCheck formData={form} />
-        <Divider style={{ borderBottomStyle: 'dashed' }} />
-      </div>
-      }
+      </Form.Provider>
     </DynamicSkeleton>
   </DynamicOuterCard>);
 }

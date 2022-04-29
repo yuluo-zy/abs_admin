@@ -9,6 +9,7 @@ import { IconCheck, IconDelete, IconPlus, IconRefresh } from '@arco-design/web-r
 import cs from 'classnames';
 import useDebounce from '@/utils/useHook/useDebounce';
 import DynamicUpload from "@/components/Dynamic/Upload";
+import { UploadItem } from "@arco-design/web-react/es/Upload";
 
 const { Row, Col } = Grid;
 const FormItem = Form.Item;
@@ -16,7 +17,12 @@ const TextArea = Input.TextArea;
 
 
 function DynamicForm(props: FormProps) {
-  const [form] = Form.useForm();
+  let form = null
+  if(props.formData){
+    form = props.formData
+  }else {
+    [form] = Form.useForm();
+  }
   const t = useLocale(locale);
   const { className } = props;
 
@@ -129,8 +135,18 @@ function DynamicForm(props: FormProps) {
           required={item.required}
           label={item.label}
           field={item.field}
+          triggerPropName='fileList'
         >
-          <DynamicUpload limit={item.limit}/>
+          <DynamicUpload limit={item.limit} onChange={(fileList: UploadItem[], file: UploadItem) => {
+            const res = []
+            fileList.forEach( r => {
+              res.push({
+                name: r.name,
+                id: r.response
+              })
+            })
+           form.setFieldValue(item.field, res)
+          }}  />
         </FormItem>
       );
     }
@@ -205,7 +221,7 @@ function DynamicForm(props: FormProps) {
       return (
         <Form
           key={round}
-          form={props.formData ? props.formData : form}
+          form={form}
           id={props.title}
           {...props.formItemLayout}
           scrollToFirstError
@@ -255,7 +271,7 @@ function DynamicForm(props: FormProps) {
       <div>{DynamicFormNode}</div>
       <div>{props.children}</div>
       {
-        props.formData == undefined && <div className={styles['right-button']}>
+        (props.formData == undefined && props.onSubmit != undefined) && <div className={styles['right-button']}>
           <Button
             type='primary'
             icon={<IconCheck />}

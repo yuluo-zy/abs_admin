@@ -5,14 +5,16 @@ import locale from './locale';
 import { postFile } from "@/api/file";
 import axios from "axios";
 
-function DynamicUpload(props: {limit}) {
+function DynamicUpload(props: {limit, onChange}) {
   const t = useLocale(locale)
-  const {limit} = props
+  const {limit,onChange } = props
 
   return (
     <Upload
       autoUpload
       multiple
+      name='files'
+      onChange={onChange}
       customRequest={(option) => {
         const { onProgress, file,onSuccess, onError } = option
         let formData = new FormData();
