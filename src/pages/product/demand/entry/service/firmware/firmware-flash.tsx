@@ -5,7 +5,7 @@ import DynamicForm from '@/components/Dynamic/Form';
 import DynamicCard from '@/components/Dynamic/Card';
 
 
-export default function FirmwareFlash(props: { formData: any }) {
+export default function FirmwareFlash() {
   const t = useLocale();
   const labelCol = {
     span: 12
@@ -13,7 +13,7 @@ export default function FirmwareFlash(props: { formData: any }) {
   const informationProps: Array<FormItemProps> = [{
     label: 'Flash Frequency',
     type: 'select',
-    field: 'name',
+    field: 'flashFrequency',
     labelCol: labelCol,
     required: true,
     options: [
@@ -26,20 +26,20 @@ export default function FirmwareFlash(props: { formData: any }) {
     {
       label: 'Flash Mode',
       type: 'select',
-      field: 'name',
+      field: 'flashMode',
       labelCol: labelCol,
       required: true,
       options: [
-        { label: 'QIO', value: 1 },
-        { label: 'QOUT', value: 2 },
-        { label: 'DIO', value: 3 },
-        { label: 'DOUT', value: 4 }
+        { label: 'QIO', value: 'QIO' },
+        { label: 'QOUT', value: 'QOUT' },
+        { label: 'DIO', value: 'DIO' },
+        { label: 'DOUT', value: 'DOUT' }
       ]
     },
     {
       label: 'Flash Size',
       type: 'select',
-      field: 'name',
+      field: 'flashSize',
       labelCol: labelCol,
       required: true,
       options: [
@@ -53,9 +53,8 @@ export default function FirmwareFlash(props: { formData: any }) {
   ];
 
   return (
-    <DynamicCard title={t['firmware.information.title']}>
-      <DynamicForm title={t['firmware.information.title']}
-                   formData={props.formData}
+    <DynamicCard title={t['firmware.information.flash.title']}>
+      <DynamicForm title={t['firmware.information.flash.title']}
                    col={3}
                    formItem={informationProps}
                    onSubmit={() => {

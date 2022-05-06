@@ -51,7 +51,7 @@ export default function SerialCheck() {
       rules: [
         {
           required: true,
-          message: t['firmware.information.startAddress.error'],
+          message: t['firmware.serial.self.serial.baud.rate.error'],
           minLength: 2
         }
       ]
@@ -64,7 +64,7 @@ export default function SerialCheck() {
       rules: [
         {
           required: true,
-          message: t['firmware.information.upLoad.error'],
+          message: t['firmware.serial.self.serial.check.character'],
           minLength: 2
         }
       ]
@@ -75,8 +75,7 @@ export default function SerialCheck() {
     <DynamicCard title={t['firmware.serial.check.title']} help={'kjhkjhkjhkjh'}>
       <Row>
         <Col xs={24} sm={20} lg={18} xxl={18}>
-          <DynamicForm title={'firmware.serial.check.title'}
-                       formItem={informationProps} />
+          <DynamicForm title={'firmware.serial.check.title'} formItem={informationProps} />
         </Col>
         <Col />
       </Row>
