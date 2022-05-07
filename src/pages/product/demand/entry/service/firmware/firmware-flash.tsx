@@ -21,7 +21,13 @@ export default function FirmwareFlash() {
       { label: '26m', value: 2 },
       { label: '20m', value: 3 },
       { label: '28m', value: 4 }
-    ]
+    ],
+  rules: [
+    {
+      required: true,
+      message: t['firmware.information.flash.config.error'],
+    }
+  ]
   },
     {
       label: 'Flash Mode',
@@ -34,8 +40,15 @@ export default function FirmwareFlash() {
         { label: 'QOUT', value: 'QOUT' },
         { label: 'DIO', value: 'DIO' },
         { label: 'DOUT', value: 'DOUT' }
+      ],
+      rules: [
+        {
+          required: true,
+          message: t['firmware.information.flash.config.error'],
+        }
       ]
     },
+
     {
       label: 'Flash Size',
       type: 'select',
@@ -48,17 +61,21 @@ export default function FirmwareFlash() {
         { label: '4MB', value: 3 },
         { label: '8MB', value: 4 },
         { label: '16MB', value: 5 }
+      ],
+      rules: [
+        {
+          required: true,
+          message: t['firmware.information.flash.config.error'],
+        }
       ]
     }
   ];
 
   return (
     <DynamicCard title={t['firmware.information.flash.title']}>
-      <DynamicForm title={t['firmware.information.flash.title']}
+      <DynamicForm title={'firmware.information.flash.title'}
                    col={3}
-                   formItem={informationProps}
-                   onSubmit={() => {
-                   }} />
+                   formItem={informationProps} />
     </DynamicCard>
   );
 }

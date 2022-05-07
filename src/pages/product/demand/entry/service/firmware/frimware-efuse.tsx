@@ -1,10 +1,94 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import useLocale from "@/pages/product/demand/locale/useLocale";
 import DynamicCard from "@/components/Dynamic/Card";
 import { Checkbox, Form, Input } from "@arco-design/web-react";
 import style from "./style/index.module.less";
-import { useThrottleFn } from "react-use";
 
+function CustomEfuseConfig(props) {
+  const t = useLocale();
+  const {entity} = props
+  const [stateValue, setValue] = useState(props.value);
+  const [efuseList, setEfuseList] = useState(new Set());
+  const [efuse, setEfuse] = useState({});
+
+  const setEfuseInfo = (data: string, key: string) => {
+
+    if (efuseList.has(key)) {
+      const temp = {
+        ...efuse
+      };
+      temp[key] = {
+        data: data,
+        validity: true
+      };
+      setEfuse(temp);
+    }
+
+  };
+
+  const setCheckboxEffect = (checked, key) => {
+    if (checked) {
+      let temp = new Set(efuseList);
+      temp.add(key);
+      // 检查是否已经有这个属性
+      if (key in efuse) {
+        let efuseTemp = { ...efuse };
+        efuseTemp[key] = {
+          ...efuseTemp[key],
+          validity: true
+        };
+        setEfuse(efuseTemp);
+      }
+      setEfuseList(temp);
+    } else {
+      let temp = new Set(efuseList);
+      temp.delete(key);
+      let efuseTemp = { ...efuse };
+      efuseTemp[key] = {
+        ...efuseTemp[key],
+        validity: false
+      };
+      setEfuse(efuseTemp);
+      setEfuseList(temp);
+    }
+  }
+
+  useEffect(() => {
+    if (props.value !== stateValue && props.value === undefined) {
+      setValue(props.value);
+    }
+  }, [props.value])
+
+  useEffect(() => {
+  handleChange(efuse)
+  }, [efuse])
+
+  const handleChange = (newValue) => {
+    if (!('value' in props)) {
+      setValue(newValue);
+    }
+    // onChange is passed in by Form.Item and will update the fields bound to the form when triggered.
+    props.onChange && props.onChange(newValue);
+  }
+
+  return (
+    entity.map(item => {
+      return <div className={style["efuse"]}>
+        <Checkbox onChange={(checked) => setCheckboxEffect(checked, item.key)}>{item.title}</Checkbox>
+        <Input
+          style={{ width: 200 }}
+          type={"number"}
+          disabled={!efuseList.has(item.key)}
+          placeholder={t["firmware.information.efuse.other.port.default"]}
+          onChange={(value: string) => {
+            setEfuseInfo(value, item.key);
+          }
+          }
+        />
+      </div>;
+    })
+  );
+}
 export default function FirmwareEfuse() {
   const t = useLocale();
   const EfuseConfig = [
@@ -64,86 +148,18 @@ export default function FirmwareEfuse() {
     }
   ];
 
-  const [efuseList, setEfuseList] = useState(new Set())
-
-  const [efuse, setEfuse] = useState({})
-
-  const setEfuseInfo = (data: string, key: string) => {
-
-    if(efuseList.has(key)){
-      const temp = {
-        ...efuse
-      }
-      temp[key] = {
-        data: data,
-        validity: true
-      }
-      setEfuse(temp)
-      console.log(temp)
-    }
-
-  }
-
-
-  const getEfuseConfig = (entity) => {
-    return (
-        entity.map(item => {
-          return <div className={style['efuse']}>
-            <Checkbox onChange={(checked: boolean)=>{
-              if(checked){
-                let temp = new Set(efuseList)
-                  temp.add(item.key)
-                // 检查是否已经有这个属性
-                if(item.key in efuse){
-                  let efuseTemp = {...efuse}
-                  efuseTemp[item.key] = {
-                    ...efuseTemp[item.key],
-                    validity: true
-                  }
-                  setEfuse(efuseTemp)
-                  console.log(efuseTemp)
-                }
-                setEfuseList(temp)
-              }else {
-                let temp = new Set(efuseList)
-                  temp.delete(item.key)
-                let efuseTemp = {...efuse}
-                efuseTemp[item.key] = {
-                  ...efuseTemp[item.key],
-                  validity: false
-                }
-                setEfuse(efuseTemp)
-                setEfuseList(temp)
-                console.log(efuseTemp)
-              }
-            }
-            }>{item.title}</Checkbox>
-            <Input
-              style={{ width: 200 }}
-              type={"number"}
-              disabled={!efuseList.has(item.key)}
-              placeholder={t['firmware.information.efuse.other.port.default']}
-              onChange={(value: string) =>{
-                setEfuseInfo(value, item.key)
-              }
-              }
-            />
-          </div>
-        })
-
-
-    )
-  }
 
   return (
     <DynamicCard title={t["firmware.information.efuse.title"]}>
-      <Form style={{ maxWidth: 650 }}>
+      <Form
+        id={"firmware.information.efuse.title"}
+        style={{ maxWidth: 650 }}>
         {EfuseConfig.map(item => {
             return <Form.Item
               label={item.title}
               field={item.key}
             >
-              {getEfuseConfig(item.child)}
+              <CustomEfuseConfig entity={item.child}/>
             </Form.Item>;
           }
         )}

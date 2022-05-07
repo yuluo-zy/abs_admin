@@ -247,10 +247,13 @@ export default function FirmwareCustomization() {
       <Form.Provider
         onFormSubmit={async (name, values, info) => {
           try {
-            await info.forms["firmware.information.title"].validate();
-            await info.forms["firmware.serial.check.title"].validate();
+            await info.forms["firmware.information.title"]?.validate();
+            await info.forms["firmware.serial.check.title"]?.validate();
+            await info.forms['firmware.information.efuse.title']?.validate();
+            await info.forms['firmware.information.flash.title']?.validate();
           } catch (e) {
             Message.error("校验失败");
+            console.log(e)
             return;
           }
 
@@ -261,8 +264,10 @@ export default function FirmwareCustomization() {
               <pre>
                 {
                   JSON.stringify({
-                    ...info.forms["firmware.information.title"].getFieldsValue(),
-                    ...info.forms["firmware.serial.check.title"].getFieldsValue()
+                    ...info.forms["firmware.information.title"]?.getFieldsValue(),
+                    ...info.forms["firmware.serial.check.title"]?.getFieldsValue(),
+                    ...info.forms["firmware.information.efuse.title"]?.getFieldsValue(),
+                    ...info.forms['firmware.information.flash.title']?.getFieldsValue()
                   }, null, 2)
                 }
               </pre>
@@ -289,8 +294,8 @@ export default function FirmwareCustomization() {
 
         {
           flash === "random" && <div>
-            <FirmwareFile />
-            <Divider style={{ borderBottomStyle: "dashed" }} />
+            {/*<FirmwareFile />*/}
+            {/*<Divider style={{ borderBottomStyle: "dashed" }} />*/}
             <FirmwareFlash />
             <Divider style={{ borderBottomStyle: "dashed" }} />
             <FirmwareEfuse />

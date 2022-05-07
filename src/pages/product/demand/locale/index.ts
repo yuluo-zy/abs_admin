@@ -82,6 +82,7 @@ const i18n = {
     'firmware.customization.info.unencryption.firmware': '非加密固件',
     'firmware.information.title': '固件信息提供',
     'firmware.information.flash.title': '固件适用的 Flash SPI 设置',
+    'firmware.information.flash.config.error': '固件 Flash 设置不能为空',
     'firmware.information.efuse.title': 'Efuse 烧录要求',
     'firmware.information.efuse.other.port.help': '请标注其余需要的 Efuse 位和目标烧录值',
     'firmware.information.efuse.other.port.default': '默认值为: 0',

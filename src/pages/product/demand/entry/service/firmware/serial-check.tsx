@@ -52,7 +52,7 @@ export default function SerialCheck() {
         {
           required: true,
           message: t['firmware.serial.self.serial.baud.rate.error'],
-          minLength: 2
+          minLength: 1
         }
       ]
     },
@@ -65,7 +65,7 @@ export default function SerialCheck() {
         {
           required: true,
           message: t['firmware.serial.self.serial.check.character'],
-          minLength: 2
+          minLength: 1
         }
       ]
     }
