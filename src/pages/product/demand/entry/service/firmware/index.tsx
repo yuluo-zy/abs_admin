@@ -19,7 +19,6 @@ import FirmwareInformation from "@/pages/product/demand/entry/service/firmware/f
 import SerialCheck from "@/pages/product/demand/entry/service/firmware/serial-check";
 import DynamicRadioGroup from "@/components/Dynamic/Radio";
 import { IconArrowRight, IconLaunch, IconTags } from "@arco-design/web-react/icon";
-import FirmwareFile from "@/pages/product/demand/entry/service/firmware/firmware-file";
 import FirmwareFlash from "@/pages/product/demand/entry/service/firmware/firmware-flash";
 import FirmwareEfuse from "@/pages/product/demand/entry/service/firmware/frimware-efuse";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
@@ -294,8 +293,8 @@ export default function FirmwareCustomization() {
 
         {
           flash === "random" && <div>
-            {/*<FirmwareFile />*/}
-            {/*<Divider style={{ borderBottomStyle: "dashed" }} />*/}
+            <FirmwareInformation number={4} />
+            <Divider style={{ borderBottomStyle: "dashed" }} />
             <FirmwareFlash />
             <Divider style={{ borderBottomStyle: "dashed" }} />
             <FirmwareEfuse />

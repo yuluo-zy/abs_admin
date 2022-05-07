@@ -1,12 +1,13 @@
 import React from 'react';
-import { FormItemProps } from '@/components/type';
+import { FormItemProps, FormList } from "@/components/type";
 import useLocale from '@/pages/product/demand/locale/useLocale';
 import DynamicForm from '@/components/Dynamic/Form';
 import DynamicCard from '@/components/Dynamic/Card';
 
 
-export default function FirmwareInformation() {
+export default function FirmwareInformation(props) {
   const t = useLocale();
+  const {number} = props
   const labelCol = {
     span: 12
   };
@@ -69,6 +70,21 @@ export default function FirmwareInformation() {
       ]
     }
   ];
+
+  if(number !== undefined){
+    const formList = [...new Array(number).keys()]
+    return (
+      <DynamicCard title={t['firmware.information.title']}>
+        {
+          formList.map(item=> {
+            return <DynamicForm title={`firmware.information.title-${item}`}
+                                col={4}
+                                formItem={informationProps} />
+          })
+        }
+      </DynamicCard>
+    );
+  }
 
   return (
     <DynamicCard title={t['firmware.information.title']}>
