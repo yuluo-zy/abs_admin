@@ -79,6 +79,7 @@ const i18n = {
     'firmware.customization.info.encryption.firmware.v2': '安全启动V2',
     'firmware.customization.info.encryption.firmware.v2.key': 'pc(s) of keys 数量: ',
     'firmware.customization.info.encryption.firmware.v2.link': '点击获取安全启动功能详情',
+    'firmware.customization.info.encryption.firmware.flash.link': '为每个设备使用唯一的随机key加密, 请指定文件数量',
     'firmware.customization.info.unencryption.firmware': '非加密固件',
     'firmware.information.title': '固件信息提供',
     'firmware.information.flash.title': '固件适用的 Flash SPI 设置',

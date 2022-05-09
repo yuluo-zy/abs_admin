@@ -34,10 +34,6 @@ export interface ProductDemand {
 
 export interface FirmwareDemand {
   info: Recordable;
-  encryption: Recordable;
-  encryptionWay: string;
-  flash: string;
-  secure: string;
 }
 
 const createBearSlice: StoreSlice<StepSetting> = (set, get) => ({
@@ -73,25 +69,13 @@ const createProductDemand: StoreSlice<ProductDemand> = (set, get) => ({
 // 定制固件
 const createFirmwareDemand: StoreSlice<FirmwareDemand> = (set, get) => ({
   info: null,
-  encryption: null,
-  encryptionWay: "",
-  flash: "",
-  secure: "",
   setInfo: value => set((state) => ({
     info: {
       ...state.info,
       ...value
     }
   })),
-  setEncryption: value => set((state) => ({
-    encryption: {
-      ...state.encryption,
-      ...value
-    }
-  })),
-  setEncryptionWay: value => set(() => ({ encryptionWay: value })),
-  setFlash: value => set(() => ({ flash: value })),
-  setSecure: value => set(() => ({ secure: value }))
+
 });
 
 

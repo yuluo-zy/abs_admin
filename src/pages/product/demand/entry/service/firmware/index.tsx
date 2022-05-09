@@ -13,7 +13,7 @@ import {
   Space,
   Tooltip,
   Typography,
-  Message
+  Message, InputNumber
 } from "@arco-design/web-react";
 import FirmwareInformation from "@/pages/product/demand/entry/service/firmware/firmware-information";
 import SerialCheck from "@/pages/product/demand/entry/service/firmware/serial-check";
@@ -25,6 +25,7 @@ import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import ProductStore from "@/store/product";
 import shallow from "zustand/shallow";
 import style from "./style/index.module.less";
+import { sum } from "@/utils/listTools";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -37,13 +38,34 @@ export default function FirmwareCustomization() {
   const [demandId, moduleInfo, setCollapse] = ProductStore(state => [state.demandId, state.moduleInfo, state.setCollapse], shallow);
   const [info, setInfo] = ProductStore(state => [state.info, state.setInfo], shallow);
   const [visible, setVisible] = useState(false);
-  // 是否加密
-  const [encryption, setEncryption] = useState(null);
-  // 加密种类
-  const [encryptionType, setEncryptionType] = useState([]);
-  // 安全启动种类
-  const [secure, setSecure] = useState("");
-  const [flash, setFlash] = useState("");
+
+  const postForm = async (name, values, info) => {
+    try {
+      for(const item in info.forms){
+        await info.forms[item].validate();
+      }
+    } catch (e) {
+      Message.error("校验失败");
+      return;
+    }
+
+    Message.info({
+      icon: <span></span>,
+      content: <div style={{ textAlign: "left" }}>
+        <span>form values:</span>
+        <pre>
+                {
+                  JSON.stringify({
+                    ...info.forms["firmware.information.title"]?.getFieldsValue(),
+                    ...info.forms["firmware.serial.check.title"]?.getFieldsValue(),
+                    ...info.forms["firmware.information.efuse.title"]?.getFieldsValue(),
+                    ...info.forms['firmware.information.flash.title']?.getFieldsValue()
+                  }, null, 2)
+                }
+              </pre>
+      </div>
+    });
+  }
 
   return (<DynamicOuterCard title={t["firmware.customization.title"]}>
     <DynamicSkeleton animation text={{ rows: 10, width: ["100%", 600, 400] }}>
@@ -125,21 +147,25 @@ export default function FirmwareCustomization() {
           { label: t["firmware.customization.info.unencryption.firmware"], value: false },
           { label: t["firmware.customization.info.encryption.firmware"], value: true }
         ]} onChange={(value) => {
-          setEncryption(value);
-          setEncryptionType([]);
-          setSecure("");
-          setFlash("");
+          setInfo({
+            encryption: value,
+            firmwareType: 0,
+            keyType: -1,
+            secureBoot: -1
+          })
         }} />
         {/*选择 flash 和 boot*/}
-        {encryption && <div style={{ paddingLeft: "6rem" }}>
+        {info?.encryption && <div style={{ paddingLeft: "6rem" }}>
           <Space size={40}>
             <CheckboxGroup
-              options={[{ label: t["firmware.customization.info.encryption.firmware.flash"], value: "flash" },
-                { label: t["firmware.customization.info.encryption.firmware.secure.boot"], value: "secure" }
+              options={[{ label: t["firmware.customization.info.encryption.firmware.flash"], value: 1 },
+                { label: t["firmware.customization.info.encryption.firmware.secure.boot"], value: 2 }
               ]}
               style={{ display: "block", marginBottom: 16 }}
               onChange={(value) => {
-                setEncryptionType(value);
+                setInfo({
+                  firmwareType: sum(value)
+                })
               }}
             />
           </Space>
@@ -147,7 +173,7 @@ export default function FirmwareCustomization() {
       </Space>
       <Divider style={{ borderBottomStyle: "dashed" }} />
       {/*配置安全启动种类*/}
-      {encryptionType.includes("secure") &&
+      {(info?.firmwareType === 2 || info?.firmwareType === 3) &&
         <div>
           <Space size={10} direction="vertical">
             <Typography.Text>
@@ -167,20 +193,30 @@ export default function FirmwareCustomization() {
             <DynamicRadioGroup direction="vertical"
                                options={[{
                                  label: t["firmware.customization.info.encryption.firmware.v1"],
-                                 value: "v1"
+                                 value: 0
                                }, {
                                  label: t["firmware.customization.info.encryption.firmware.v2"],
-                                 value: "v2"
+                                 value: 1
                                }]}
-                               onChange={(value) => setSecure(value)}
+                               onChange={(value) => setInfo({
+                                 secureBoot: value
+                               })}
             />
 
-            {secure === "v2" && <div>
+            {info?.secureBoot === 1 && <div>
               <Typography.Text>{t["firmware.customization.info.encryption.firmware.v2.key"]}</Typography.Text>
-              <Input
-                style={{ width: 350 }}
-                type={"number"}
-                allowClear
+              <InputNumber
+                style={{ width: 300 }}
+                mode='button'
+                min={1}
+                max={3}
+                defaultValue={info?.secureKeyNum}
+                onChange={value => {
+                  setInfo({
+                    secureKeyNum: value
+                  });
+                }}
+                placeholder="Please Enter Partitions Numbers"
               />
             </div>
             }
@@ -190,20 +226,22 @@ export default function FirmwareCustomization() {
         </div>
       }
       {/*配置 flash 加密种类*/}
-      {encryptionType.includes("flash") &&
+      {(info?.firmwareType === 1 || info?.firmwareType === 3) &&
         <Space size={10} direction="vertical">
           <Typography.Text>{t["firmware.customization.info.encryption.firmware.flash.info"]}</Typography.Text>
 
           <DynamicRadioGroup direction="vertical"
                              options={[{
                                label: t["firmware.customization.info.encryption.firmware.flash.only"],
-                               value: "only"
+                               value: 0
                              }, {
                                label: t["firmware.customization.info.encryption.firmware.flash.random"],
-                               value: "random"
+                               value: 1
                              }]}
                              onChange={(value) => {
-                               setFlash(value);
+                               setInfo({
+                                 keyType: value
+                               })
                                if (value === "only") {
                                  setVisible(true);
                                }
@@ -229,53 +267,44 @@ export default function FirmwareCustomization() {
               </div>
             </Space>
           </Modal>
-          <Space size={10}>
-            <Typography.Text>{t["firmware.serial.partitions"]}</Typography.Text>
-            <Input
-              style={{ width: 350 }}
-              type={"number"}
-              allowClear
+          {info?.keyType===1 && <Space size={10}>
+            <Typography.Text>
+              {t["firmware.serial.partitions"]}
+              <Tooltip color={"#0E42D2"} position={"top"}
+                       defaultPopupVisible
+                       content={t["firmware.customization.info.encryption.firmware.flash.link"]}>
+                <Link target={"_blank"}
+                      href="https://docs.espressif.com/projects/esp-idf/en/stable/esp32/security/secure-boot-v1.html">
+                  <IconLaunch style={
+                    { color: "#0E42D2", fontSize: 15 }
+                  } />
+                </Link>
+              </Tooltip>
+            </Typography.Text>
+            <InputNumber
+              style={{ width: 300 }}
+              mode="button"
+              min={1}
+              max={8}
+              defaultValue={info?.partitionNum}
+              onChange={value => {
+                setInfo({
+                  partitionNum: value
+                });
+              }}
               placeholder="Please Enter Partitions Numbers"
             />,
-          </Space>
+          </Space>}
           <Divider style={{ borderBottomStyle: "dashed" }} />
         </Space>
       }
 
       {/*开始配置表单*/}
       <Form.Provider
-        onFormSubmit={async (name, values, info) => {
-          try {
-            await info.forms["firmware.information.title"]?.validate();
-            await info.forms["firmware.serial.check.title"]?.validate();
-            await info.forms['firmware.information.efuse.title']?.validate();
-            await info.forms['firmware.information.flash.title']?.validate();
-          } catch (e) {
-            Message.error("校验失败");
-            console.log(e)
-            return;
-          }
-
-          Message.info({
-            icon: <span></span>,
-            content: <div style={{ textAlign: "left" }}>
-              <span>form values:</span>
-              <pre>
-                {
-                  JSON.stringify({
-                    ...info.forms["firmware.information.title"]?.getFieldsValue(),
-                    ...info.forms["firmware.serial.check.title"]?.getFieldsValue(),
-                    ...info.forms["firmware.information.efuse.title"]?.getFieldsValue(),
-                    ...info.forms['firmware.information.flash.title']?.getFieldsValue()
-                  }, null, 2)
-                }
-              </pre>
-            </div>
-          });
-        }}
+        onFormSubmit={postForm}
       >
         {/*非加密固件*/}
-        {encryption === false && <div>
+        {info?.encryption === false && <div>
           <FirmwareInformation />
           <Divider style={{ borderBottomStyle: "dashed" }} />
           <SerialCheck />
@@ -283,7 +312,7 @@ export default function FirmwareCustomization() {
         </div>
         }
         {/*flash 唯一*/}
-        {flash === "only" && <div>
+        {info?.keyType === 0 && <div>
           <FirmwareInformation />
           <Divider style={{ borderBottomStyle: "dashed" }} />
           <SerialCheck />
@@ -292,8 +321,8 @@ export default function FirmwareCustomization() {
         }
 
         {
-          flash === "random" && <div>
-            <FirmwareInformation number={4} />
+          info?.keyType === 1 && <div>
+            <FirmwareInformation number={info?.partitionNum} />
             <Divider style={{ borderBottomStyle: "dashed" }} />
             <FirmwareFlash />
             <Divider style={{ borderBottomStyle: "dashed" }} />

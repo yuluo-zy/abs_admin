@@ -1,96 +1,96 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from "react";
 import { FormItemProps, FormList } from "@/components/type";
-import useLocale from '@/pages/product/demand/locale/useLocale';
-import DynamicForm from '@/components/Dynamic/Form';
-import DynamicCard from '@/components/Dynamic/Card';
+import useLocale from "@/pages/product/demand/locale/useLocale";
+import DynamicForm from "@/components/Dynamic/Form";
+import DynamicCard from "@/components/Dynamic/Card";
+import { useUpdateEffect } from "react-use";
+import { getList } from "@/utils/listTools";
 
 
 export default function FirmwareInformation(props) {
   const t = useLocale();
-  const {number} = props
+  const [number, setNumber] = useState(getList(props.number));
   const labelCol = {
     span: 12
   };
   const informationProps: Array<FormItemProps> = [
     {
-      label: t['firmware.information.name'],
-      type: 'input',
-      field: 'firmwareName',
+      label: t["firmware.information.name"],
+      type: "input",
+      field: "firmwareName",
       required: true,
       labelCol: labelCol,
       rules: [
         {
           required: true,
-          message: t['firmware.information.name.error'],
+          message: t["firmware.information.name.error"],
           minLength: 2
         }
       ]
     },
     {
-      label: t['firmware.information.MD5'],
-      type: 'input',
-      field: 'fileMd5',
+      label: t["firmware.information.MD5"],
+      type: "input",
+      field: "fileMd5",
       required: true,
       labelCol: labelCol,
       rules: [
         {
           required: true,
-          message: t['firmware.information.MD5.error'],
+          message: t["firmware.information.MD5.error"],
           minLength: 2
         }
       ]
     },
     {
-      label: t['firmware.information.startAddress'],
-      type: 'input',
+      label: t["firmware.information.startAddress"],
+      type: "input",
       labelCol: labelCol,
-      field: 'beginAddr',
+      field: "beginAddr",
       required: true,
-      placeholder: t['firmware.information.startAddress.message'],
+      placeholder: t["firmware.information.startAddress.message"],
       rules: [
         {
           required: true,
-          message: t['firmware.information.startAddress.error'],
+          message: t["firmware.information.startAddress.error"],
           minLength: 2
         }
       ]
     },
     {
-      label: t['firmware.information.upLoad'],
-      type: 'upload',
-      field: 'files',
+      label: t["firmware.information.upLoad"],
+      type: "upload",
+      field: "files",
       labelCol: labelCol,
       required: true,
       limit: 1,
       rules: [
         {
           required: true,
-          message: t['firmware.information.upLoad.error'],
+          message: t["firmware.information.upLoad.error"]
         }
       ]
     }
   ];
 
-  if(number !== undefined){
-    const formList = [...new Array(number).keys()]
+  useUpdateEffect(() => {
+    setNumber(getList(props.number));
+  }, [props.number]);
+
+
+  return useMemo(() => {
     return (
-      <DynamicCard title={t['firmware.information.title']}>
-        {
-          formList.map(item=> {
+      <DynamicCard title={t["firmware.information.title"]}>
+        <DynamicCard title={t["firmware.information.title"]}>
+          {number.map(item => {
             return <DynamicForm title={`firmware.information.title-${item}`}
                                 col={4}
-                                formItem={informationProps} />
+                                key={item}
+                                formItem={informationProps} />;
           })
-        }
+          }
+        </DynamicCard>
       </DynamicCard>
     );
-  }
-
-  return (
-    <DynamicCard title={t['firmware.information.title']}>
-      <DynamicForm title={'firmware.information.title'}
-                   col={4}
-                   formItem={informationProps} />
-    </DynamicCard>
-  );
+  }, [number]);
 }
