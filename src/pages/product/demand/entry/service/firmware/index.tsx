@@ -39,6 +39,7 @@ export default function FirmwareCustomization() {
   const [info, setInfo] = ProductStore(state => [state.info, state.setInfo], shallow);
   const [visible, setVisible] = useState(false);
 
+  // 提交数据
   const postForm = async (name, values, info) => {
     try {
       for(const item in info.forms){
@@ -65,6 +66,20 @@ export default function FirmwareCustomization() {
               </pre>
       </div>
     });
+  }
+  // 生成flsh等加密方式
+  const getFirmwareType =(number) => {
+    switch(number)
+    {
+      case 1:
+        return [1]
+      case 2:
+        return [2]
+      case 3:
+        return [1,2]
+      default:
+       return []
+    }
   }
 
   return (<DynamicOuterCard title={t["firmware.customization.title"]}>
@@ -143,7 +158,9 @@ export default function FirmwareCustomization() {
       <Divider style={{ borderBottomStyle: "dashed" }} />
       <Space size={10} direction="vertical">
         <Typography.Text>{t["firmware.customization.info.encryption"]}</Typography.Text>
-        <DynamicRadioGroup direction="vertical" options={[
+        <DynamicRadioGroup direction="vertical"
+                           defaultValue={info?.encryption}
+                           options={[
           { label: t["firmware.customization.info.unencryption.firmware"], value: false },
           { label: t["firmware.customization.info.encryption.firmware"], value: true }
         ]} onChange={(value) => {
@@ -161,6 +178,7 @@ export default function FirmwareCustomization() {
               options={[{ label: t["firmware.customization.info.encryption.firmware.flash"], value: 1 },
                 { label: t["firmware.customization.info.encryption.firmware.secure.boot"], value: 2 }
               ]}
+              defaultValue={getFirmwareType(info?.firmwareType)}
               style={{ display: "block", marginBottom: 16 }}
               onChange={(value) => {
                 setInfo({
@@ -191,6 +209,7 @@ export default function FirmwareCustomization() {
             </Typography.Text>
 
             <DynamicRadioGroup direction="vertical"
+                               defaultValue={info?.secureBoot}
                                options={[{
                                  label: t["firmware.customization.info.encryption.firmware.v1"],
                                  value: 0
@@ -231,6 +250,7 @@ export default function FirmwareCustomization() {
           <Typography.Text>{t["firmware.customization.info.encryption.firmware.flash.info"]}</Typography.Text>
 
           <DynamicRadioGroup direction="vertical"
+                             defaultValue={info?.keyType}
                              options={[{
                                label: t["firmware.customization.info.encryption.firmware.flash.only"],
                                value: 0
