@@ -5,39 +5,75 @@ import useLocale from '@/pages/product/demand/locale/useLocale';
 import DynamicRadioGroup from '@/components/Dynamic/Radio';
 import style from './style/index.module.less';
 import DynamicSkeleton from '@/components/Dynamic/Skeleton';
+import ProductStore from "@/store/product";
+import shallow from "zustand/shallow";
 
 const bodyStyle = {
   padding: '3rem'
 };
+export function MacInput(props) {
+  return(
+    <Input {...props}/>
+  )
+}
+
+export const getMac = (data) => {
+  return data
+    .toUpperCase()
+    .split("")
+    .filter(value => value.length === 1 && value.match(/[0-9A-F]/))
+}
 export default function CustomMac() {
   const t = useLocale();
-  const [location, setLocation] = useState();
+  const [macData, setMacData] = ProductStore(state => [state.macData, state.setMacData], shallow);
+
+  const getMacStartInfo = (value) => {
+    setMacData({
+      macStart: getMac(value)
+    })
+  }
+  const getMacEndInfo = (value) => {
+    setMacData({
+      macEnd: getMac(value)
+    })
+  }
   return (<DynamicOuterCard title={t['firmware.mac.title']} bodyStyle={bodyStyle}>
     <DynamicSkeleton animation text={{ rows: 10, width: ['100%', 600, 400] }}>
       <div className={style['context']}>
         <Alert type='warning' className={style['context-text']} closable
                content={t['firmware.mac.partitions.write.area.efuse']}
                style={{ maxWidth: '30rem', marginBottom: 20 }} closeElement='Close' />
-        <Space size={16} direction={'vertical'}>
+        <Space size={15} align={'start'}>
           <Typography.Text>{t['firmware.mac.partitions.write.area']}</Typography.Text>
-
           <Space size={40}>
             <DynamicRadioGroup direction='vertical'
+                               defaultValue={macData?.type}
                                options={[{
                                  label: 'Flash',
-                                 value: 'flash'
+                                 value: 'FLASH'
                                }, {
                                  label: 'efuse',
-                                 value: 'efuse'
+                                 value: 'EFUSE'
                                }]}
-                               onChange={(value) => setLocation(value)}
+                               onChange={(value) => setMacData({
+                                 type: value
+                               })}
             />
           </Space>
 
           {
-            location === 'flash' && <Space>
+            macData?.type === 'FLASH' && <Space style={{marginLeft: '4rem'}}>
               <Typography.Text>{t['firmware.mac.partitions.flash.write.area']}</Typography.Text>
-              <Input />
+              <Input
+                style={{ width: 300 }}
+                defaultValue={macData?.offsetAddr}
+                onChange={value => {
+                  setMacData({
+                    offsetAddr: value
+                  });
+                }}
+                placeholder="Please Enter Offset Address"
+              />
             </Space>
           }
         </Space>
@@ -45,7 +81,19 @@ export default function CustomMac() {
       <Divider style={{ borderBottomStyle: 'dashed' }} />
       <Space size={20}>
         <Typography.Text>{t['firmware.mac.partitions.flash.write.area.mac']}</Typography.Text>
-        <InputNumber />
+        <InputNumber
+          style={{ width: 300 }}
+          mode='button'
+          min={1}
+          max={4}
+          defaultValue={macData?.macNumPerProduction}
+          onChange={value => {
+            setMacData({
+              macNumPerProduction: value
+            });
+          }}
+          placeholder="Please Enter Mac Numbers"
+        />
       </Space>
       <Divider style={{ borderBottomStyle: 'dashed' }} />
       <Space size={20} direction={'vertical'}>
@@ -55,11 +103,11 @@ export default function CustomMac() {
 
         <Space size={40}>
           <Typography.Text>{t['firmware.mac.partitions.start']}</Typography.Text>
-          <Input />
+          <MacInput value={macData?.macStart} onChange={getMacStartInfo}/>
         </Space>
         <Space size={40}>
           <Typography.Text>{t['firmware.mac.partitions.end']}</Typography.Text>
-          <Input />
+          <MacInput value={macData?.macEnd} onChange={getMacEndInfo} />
         </Space>
         <br />
         <Space size={10}>

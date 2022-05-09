@@ -36,6 +36,9 @@ export interface FirmwareDemand {
   info: Recordable;
 }
 
+export interface MacDemand {
+  macData: Recordable;
+}
 const createBearSlice: StoreSlice<StepSetting> = (set, get) => ({
   stepKey: "",
   stepList: [],
@@ -78,11 +81,23 @@ const createFirmwareDemand: StoreSlice<FirmwareDemand> = (set, get) => ({
 
 });
 
+// 定制Mac
+const createMacDemand: StoreSlice<MacDemand> = (set, get) => ({
+  macData: null,
+  setMacData: value => set((state) => ({
+    macData: {
+      ...state.macData,
+      ...value
+    }
+  })),
+
+});
 
 const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
   ...createBearSlice(set, get),
   ...createProductDemand(set, get),
-  ...createFirmwareDemand(set, get)
+  ...createFirmwareDemand(set, get),
+  ...createMacDemand(set, get)
 });
 
 const ProductStore = create(devtools(persist(createRootSlice,
