@@ -9,6 +9,7 @@ import ProductStore from "@/store/product";
 import shallow from "zustand/shallow";
 import { convertToNumber, setColon } from "@/utils/stringTools";
 import { IconArrowRight } from "@arco-design/web-react/icon";
+import DynamicMark from "@/components/Dynamic/tag/mark";
 
 const bodyStyle = {
   padding: '3rem'
@@ -54,7 +55,7 @@ export default function CustomMac() {
                content={t['firmware.mac.partitions.write.area.efuse']}
                style={{ maxWidth: '30rem', marginBottom: 20 }} closeElement='Close' />
         <Space size={15} align={'start'}>
-          <Typography.Text>{t['firmware.mac.partitions.write.area']}</Typography.Text>
+          <Typography.Text><DynamicMark/>{t['firmware.mac.partitions.write.area']}</Typography.Text>
           <Space size={40}>
             <DynamicRadioGroup direction='vertical'
                                defaultValue={macData?.type}
@@ -73,7 +74,7 @@ export default function CustomMac() {
 
           {
             macData?.type === 'FLASH' && <Space style={{marginLeft: '4rem'}}>
-              <Typography.Text>{t['firmware.mac.partitions.flash.write.area']}</Typography.Text>
+              <Typography.Text><DynamicMark/>{t['firmware.mac.partitions.flash.write.area']}</Typography.Text>
               <Input
                 style={{ width: 300 }}
                 defaultValue={macData?.offsetAddr}
@@ -90,7 +91,7 @@ export default function CustomMac() {
       </div>
       <Divider style={{ borderBottomStyle: 'dashed' }} />
       <Space size={20}>
-        <Typography.Text>{t['firmware.mac.partitions.flash.write.area.mac']}</Typography.Text>
+        <Typography.Text><DynamicMark/>{t['firmware.mac.partitions.flash.write.area.mac']}</Typography.Text>
         <InputNumber
           style={{ width: 300 }}
           mode='button'
@@ -112,11 +113,13 @@ export default function CustomMac() {
         </Typography.Title>
 
         <Space size={40}>
-          <Typography.Text>{t['firmware.mac.partitions.start']}</Typography.Text>
+          <Typography.Text>
+            <DynamicMark/>
+            {t['firmware.mac.partitions.start']}</Typography.Text>
           <MacInput value={macData?.macStart} onChange={getMacStartInfo}/>
         </Space>
         <Space size={40}>
-          <Typography.Text>{t['firmware.mac.partitions.end']}</Typography.Text>
+          <Typography.Text><DynamicMark/>{t['firmware.mac.partitions.end']}</Typography.Text>
           <MacInput value={macData?.macEnd} onChange={getMacEndInfo} />
         </Space>
         <br />
