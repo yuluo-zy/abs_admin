@@ -21,3 +21,8 @@ export const getProductionCustomDemand = () => {
 export const postProductionCustomDemand = (data) => {
   return httpPost('/demand/custom/serve/save', data);
 };
+
+export const postMacCustomDemand = (data) => {
+  return httpPost('/demand/custom/mac/save', data);
+};
+

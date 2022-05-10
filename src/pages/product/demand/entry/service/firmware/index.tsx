@@ -166,7 +166,7 @@ export default function FirmwareCustomization() {
         ]} onChange={(value) => {
           setInfo({
             encryption: value,
-            firmwareType: 0,
+            firmwareType: -1,
             keyType: -1,
             secureBoot: -1
           })

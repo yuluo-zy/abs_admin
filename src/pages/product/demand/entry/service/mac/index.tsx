@@ -1,6 +1,17 @@
 import React from "react";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
-import { Alert, Button, Divider, Form, Input, InputNumber, Space, Tag, Typography } from "@arco-design/web-react";
+import {
+  Alert,
+  Button,
+  Divider,
+  Form,
+  Input,
+  InputNumber,
+  Message,
+  Space,
+  Tag,
+  Typography
+} from "@arco-design/web-react";
 import useLocale from "@/pages/product/demand/locale/useLocale";
 import DynamicRadioGroup from "@/components/Dynamic/Radio";
 import style from "./style/index.module.less";
@@ -10,6 +21,8 @@ import shallow from "zustand/shallow";
 import { convertToNumber, setColon } from "@/utils/stringTools";
 import { IconArrowRight } from "@arco-design/web-react/icon";
 import DynamicMark from "@/components/Dynamic/tag/mark";
+import DynamicRules from "@/components/Dynamic/rules";
+import { postMacCustomDemand } from "@/api/demand";
 
 const bodyStyle = {
   padding: '3rem'
@@ -29,7 +42,7 @@ export const getMac = (data, oldData) => {
 export default function CustomMac() {
   const t = useLocale();
   const [macData, setMacData] = ProductStore(state => [state.macData, state.setMacData], shallow);
-
+  const demandId = ProductStore(state => state.demandId);
   const getMacStartInfo = (value) => {
     setMacData({
       macStart: getMac(value, macData?.macStart || '')
@@ -42,10 +55,21 @@ export default function CustomMac() {
   }
 
   const getMacNumber = (start, end)=> {
-    return (convertToNumber(start) - convertToNumber(end)).toLocaleString('en-US')
+    return (convertToNumber(end) - convertToNumber(start)).toLocaleString('en-US')
   }
   const getProjectNumber = (start, end, project)=> {
-    return Math.floor((convertToNumber(start) - convertToNumber(end) )/ project * 0.998).toLocaleString('en-US')
+    return Math.floor((convertToNumber(end) - convertToNumber(start) )/ project * 0.998).toLocaleString('en-US')
+  }
+
+  const postMacCustom = () => {
+    postMacCustomDemand({
+      ...macData,
+      demandId: demandId
+    }).then( res => {
+      if(res.data.success){
+        Message.success(t["submit.hardware.success"]);
+      }
+    })
   }
 
   return (<DynamicOuterCard title={t['firmware.mac.title']} bodyStyle={bodyStyle}>
@@ -120,7 +144,9 @@ export default function CustomMac() {
         </Space>
         <Space size={40}>
           <Typography.Text><DynamicMark/>{t['firmware.mac.partitions.end']}</Typography.Text>
+          <DynamicRules>
           <MacInput value={macData?.macEnd} onChange={getMacEndInfo} />
+          </DynamicRules>
         </Space>
         <br />
         <Space size={10}>
@@ -138,6 +164,7 @@ export default function CustomMac() {
           <Button type="primary"
                   size={"large"}
                   icon={<IconArrowRight />}
+                  onClick={postMacCustom}
           >
             {t["hardware.production.info.next"]}
           </Button>
