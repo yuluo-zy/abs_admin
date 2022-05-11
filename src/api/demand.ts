@@ -26,3 +26,7 @@ export const postMacCustomDemand = (data) => {
   return httpPost('/demand/custom/mac/save', data);
 };
 
+export const postLabelCustomDemand = (data) => {
+  return httpPost('/demand/custom/label/save', data);
+};
+

@@ -157,7 +157,6 @@ export default function CustomMac() {
             style={{ width: "10rem" }}
             min={1}
             max={4}
-            placeholder="Please Enter Mac Numbers"
             onChange={(value) => {
               form.setFieldValue("macNumPerProduction", value);
               setMacData({

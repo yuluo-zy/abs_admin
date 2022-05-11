@@ -2,21 +2,58 @@
   width: 65%;
 }
 
+.context {
+  &-next {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
 .label {
-  padding: 2rem;
   display: flex;
+  width: 100%;
 
-  &-context {
-    width: 20%;
-    padding: 1rem;
+  :global {
+    .arco-checkbox {
+      align-items: center;
+      display: flex;
+    }
   }
 
-  &-item {
-    padding: 1rem;
+  &-img {
+    display: flex;
+    align-items: center;
+
+    &-context {
+      min-width: 15rem;
+      margin: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      :global {
+        .arco-upload-list-item-picture {
+          width: 20rem;
+          height: 20rem;
+        }
+
+        .arco-upload-trigger-picture {
+          min-width: 20rem;
+          width: 20rem;
+          height: 20rem;
+        }
+      }
+    }
+
+    &-item {
+      padding: 1rem;
+    }
+
+    &-image {
+      width: 100%;
+      height: 100%;
+    }
   }
 
-  &-image {
-    width: 100%;
-    height: 100%;
-  }
 }
