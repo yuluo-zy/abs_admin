@@ -34,7 +34,8 @@ export interface FormItemProps {
   required?: boolean;
   labelCol?: Recordable | number;
   node?: any;
-  limit?: number
+  limit?: number;
+  header?: string
 }
 
 export interface FormList {
@@ -42,6 +43,7 @@ export interface FormList {
   fieldList: FormItemProps[],
   styles?: any,
   fieldLabel?: any
+  limit?: number
 }
 
 export interface FormProps {
@@ -53,7 +55,7 @@ export interface FormProps {
   formItem?: Array<FormItemProps>;
   onSubmit?: (value) => void;
   onRest?: () => void;
-  col?: number;
+  col?: number | number[];
   className?: string | string[];
   children?: any;
   layout?: 'horizontal' | 'vertical' | 'inline';

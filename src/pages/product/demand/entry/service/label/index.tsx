@@ -77,11 +77,10 @@ export default function CustomLabel() {
                 } else {
                   setValue("cusLaserLabel", 0);
                 }
-
               }}>
                 <Tag color={"arcoblue"}>{t["firmware.label.model"]}</Tag></Checkbox>
             </FormItem>
-            <FormItem field="cusLaserLabel">
+            <FormItem field="cusOutboxLabel">
               <Checkbox checked={labelData?.cusOutboxLabel} onChange={(checked) => {
                 if (checked) {
                   setValue("cusOutboxLabel", 1);

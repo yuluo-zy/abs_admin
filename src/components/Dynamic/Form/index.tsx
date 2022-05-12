@@ -144,14 +144,12 @@ function DynamicForm(props: FormProps) {
           field={item.field}
           rules={item.rules}
           triggerPropName='fileList'
+          help={item.placeholder}
         >
           <DynamicUpload limit={item.limit} onChange={(fileList: UploadItem[], file: UploadItem) => {
             const res = []
             fileList.forEach( r => {
-              res.push({
-                name: r.name,
-                id: r.response
-              })
+              res.push(r.response)
             })
            form.setFieldValue(item.field, res)
           }}  />
@@ -236,14 +234,23 @@ function DynamicForm(props: FormProps) {
           labelAlign='left'
           initialValues={props.data}
           layout={props.layout}
+          style={props.layout === 'inline' ? { width: '100%' } : { maxWidth: 600 }}
         >
-          <Row gutter={24}>
+          <Row gutter={24} style={props.layout === 'inline' ? { width: '100%', alignItems: 'center' } : { maxWidth: 600 }}>
             {props.formItem.map((item, index) => {
+              if( typeof props.col  === "number"){
+                return (
+                  <Col key={index} span={Math.floor(24 / props.col)}>
+                    {DynamicFormItem({ item, index })}
+                  </Col>
+                );
+              }
               return (
-                <Col key={index} span={Math.floor(24 / props.col)}>
+                <Col key={index} span={ props.col[index]}>
                   {DynamicFormItem({ item, index })}
                 </Col>
               );
+
             })}
           </Row>
         </Form>
@@ -258,6 +265,8 @@ function DynamicForm(props: FormProps) {
         scrollToFirstError
         labelAlign='left'
         initialValues={props.data}
+        style={props.layout === 'inline' ? { width: '100%' } : { maxWidth: 600 }}
+
       >
         {props.formItem.map((item, index) => DynamicFormItem({ item, index }))}
       </Form>

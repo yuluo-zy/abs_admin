@@ -43,6 +43,11 @@ export interface MacDemand {
 export interface LabelDemand {
   labelData: Recordable;
 }
+
+export interface BurnDemand {
+  burnData: Recordable;
+}
+
 const createBearSlice: StoreSlice<StepSetting> = (set, get) => ({
   stepKey: "",
   stepList: [],
@@ -106,7 +111,17 @@ const createLabelDemand: StoreSlice<LabelDemand> = (set, get) => ({
       ...value
     }
   })),
+});
 
+// 定制烧录内容
+const createBurnDemand: StoreSlice<BurnDemand> = (set, get) => ({
+  burnData: null,
+  setBurnData: value => set((state) => ({
+    burnData: {
+      ...state.burnData,
+      ...value
+    }
+  })),
 });
 
 const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
@@ -114,7 +129,8 @@ const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
   ...createProductDemand(set, get),
   ...createFirmwareDemand(set, get),
   ...createMacDemand(set, get),
-  ...createLabelDemand(set, get)
+  ...createLabelDemand(set, get),
+  ...createBurnDemand(set, get)
 });
 
 const ProductStore = create(devtools(persist(createRootSlice,
