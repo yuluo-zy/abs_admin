@@ -30,3 +30,7 @@ export const postLabelCustomDemand = (data) => {
   return httpPost('/demand/custom/label/save', data);
 };
 
+
+export const postBurnCustomDemand = (data) => {
+  return httpPost('/demand/custom/content/save', data);
+};

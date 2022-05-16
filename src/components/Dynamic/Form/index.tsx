@@ -234,9 +234,9 @@ function DynamicForm(props: FormProps) {
           labelAlign='left'
           initialValues={props.data}
           layout={props.layout}
-          style={props.layout === 'inline' ? { width: '100%' } : { maxWidth: 600 }}
+          style={props.layout === 'inline' ? { width: '100%' } : { }}
         >
-          <Row gutter={24} style={props.layout === 'inline' ? { width: '100%', alignItems: 'center' } : { maxWidth: 600 }}>
+          <Row gutter={24} style={props.layout === 'inline' ? { width: '100%', alignItems: 'center' } : { }}>
             {props.formItem.map((item, index) => {
               if( typeof props.col  === "number"){
                 return (

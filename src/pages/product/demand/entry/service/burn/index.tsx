@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import useLocale from "@/pages/product/demand/locale/useLocale";
 import style from "./style/index.module.less";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
-import { Checkbox, Form, Select, Space } from "@arco-design/web-react";
+import { Button, Checkbox, Form, Message, Select, Space } from "@arco-design/web-react";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import DynamicDivider from "@/components/Dynamic/Divider";
-import { FormItemProps, FormList } from "@/components/type";
+import { FormItemProps } from "@/components/type";
 import DynamicForm from "@/components/Dynamic/Form";
 import ProductStore from "@/store/product";
 import shallow from "zustand/shallow";
+import { IconArrowRight } from "@arco-design/web-react/icon";
+import { postBurnCustomDemand } from "@/api/demand";
 
 const Option = Select.Option;
-const FormItem = Form.Item;
 
 export default function ServicePreselection() {
   const t = useLocale();
@@ -29,9 +30,9 @@ export default function ServicePreselection() {
   const FlashItem: Array<Array<FormItemProps>> = [
     [
       {
-        placeholder: t['firmware.burn.flash.plan.data'],
+        placeholder: t["firmware.burn.flash.plan.data"],
         type: "input",
-        field: "firmwareName",
+        field: "flashDataSize",
         required: true,
         rules: [
           {
@@ -44,7 +45,7 @@ export default function ServicePreselection() {
       {
         placeholder: t["firmware.burn.flash.plan.address"],
         type: "input",
-        field: "fileMd5",
+        field: "burnOffset",
         required: true,
         rules: [
           {
@@ -57,7 +58,7 @@ export default function ServicePreselection() {
       {
         placeholder: t["firmware.burn.flash.plan.output"],
         type: "text",
-        field: "beginAddr",
+        field: "flashOkSerialLabel",
         required: true,
         labelCol: 1,
         rules: [
@@ -71,7 +72,7 @@ export default function ServicePreselection() {
       {
         placeholder: t["firmware.burn.flash.plan.bin"],
         type: "upload",
-        field: "files",
+        field: "burnBin",
         required: true,
         limit: 1,
         rules: [
@@ -84,9 +85,9 @@ export default function ServicePreselection() {
     ],
     [
       {
-        placeholder: t['firmware.burn.flash.plan.data'],
+        placeholder: t["firmware.burn.flash.plan.data"],
         type: "input",
-        field: "firmwareName",
+        field: "flashDataSize",
         required: true,
         rules: [
           {
@@ -99,7 +100,7 @@ export default function ServicePreselection() {
       {
         placeholder: t["firmware.burn.flash.plan.address"],
         type: "input",
-        field: "fileMd5",
+        field: "burnOffset",
         required: true,
         rules: [
           {
@@ -112,7 +113,7 @@ export default function ServicePreselection() {
       {
         placeholder: t["firmware.burn.flash.plan.output"],
         type: "text",
-        field: "beginAddr",
+        field: "flashOkSerialLabel",
         required: true,
         labelCol: 1,
         rules: [
@@ -126,7 +127,7 @@ export default function ServicePreselection() {
       {
         placeholder: t["firmware.burn.flash.file.bin.data.config"],
         type: "upload",
-        field: "files",
+        field: "configFile",
         required: true,
         limit: 1,
         rules: [
@@ -139,7 +140,7 @@ export default function ServicePreselection() {
       {
         placeholder: t["firmware.burn.flash.file.bin.data.values"],
         type: "upload",
-        field: "files",
+        field: "valuesFile",
         required: true,
         limit: 1,
         rules: [
@@ -152,7 +153,7 @@ export default function ServicePreselection() {
       {
         placeholder: t["firmware.burn.flash.plan.bin"],
         type: "upload",
-        field: "files",
+        field: "sampleBinFile",
         required: true,
         limit: 1,
         rules: [
@@ -165,9 +166,9 @@ export default function ServicePreselection() {
     ],
     [
       {
-        placeholder: t['firmware.burn.flash.plan.data'],
+        placeholder: t["firmware.burn.flash.plan.data"],
         type: "input",
-        field: "firmwareName",
+        field: "flashDataSize",
         required: true,
         rules: [
           {
@@ -180,7 +181,7 @@ export default function ServicePreselection() {
       {
         placeholder: t["firmware.burn.flash.plan.address"],
         type: "input",
-        field: "fileMd5",
+        field: "burnOffset",
         required: true,
         rules: [
           {
@@ -193,7 +194,7 @@ export default function ServicePreselection() {
       {
         placeholder: t["firmware.burn.flash.plan.output"],
         type: "text",
-        field: "beginAddr",
+        field: "flashOkSerialLabel",
         required: true,
         labelCol: 1,
         rules: [
@@ -207,7 +208,7 @@ export default function ServicePreselection() {
       {
         placeholder: t["firmware.burn.flash.file.bin.data.list"],
         type: "upload",
-        field: "files",
+        field: "flashListCsvFile",
         required: true,
         limit: 1,
         rules: [
@@ -220,7 +221,7 @@ export default function ServicePreselection() {
       {
         placeholder: t["firmware.burn.flash.plan.bin"],
         type: "upload",
-        field: "files",
+        field: "burnBin",
         required: true,
         limit: 1,
         rules: [
@@ -233,9 +234,9 @@ export default function ServicePreselection() {
     ],
     [
       {
-        placeholder: t['firmware.burn.flash.plan.data'],
+        placeholder: t["firmware.burn.flash.plan.data"],
         type: "input",
-        field: "firmwareName",
+        field: "flashDataSize",
         required: true,
         rules: [
           {
@@ -248,7 +249,7 @@ export default function ServicePreselection() {
       {
         placeholder: t["firmware.burn.flash.plan.address"],
         type: "input",
-        field: "fileMd5",
+        field: "burnOffset",
         required: true,
         rules: [
           {
@@ -261,7 +262,7 @@ export default function ServicePreselection() {
       {
         placeholder: t["firmware.burn.flash.plan.output"],
         type: "text",
-        field: "beginAddr",
+        field: "flashOkSerialLabel",
         required: true,
         labelCol: 1,
         rules: [
@@ -275,7 +276,7 @@ export default function ServicePreselection() {
       {
         placeholder: t["firmware.burn.flash.file.bin.data.script.cmd"],
         type: "input",
-        field: "files",
+        field: "burnScriptCommand",
         required: true,
         limit: 1,
         rules: [
@@ -288,7 +289,7 @@ export default function ServicePreselection() {
       {
         placeholder: t["firmware.burn.flash.file.bin.data.script"],
         type: "upload",
-        field: "files",
+        field: "burnScriptFile",
         required: true,
         limit: 1,
         rules: [
@@ -303,9 +304,9 @@ export default function ServicePreselection() {
 
   const EfuseItem: Array<FormItemProps> = [
     {
-      placeholder: t['firmware.burn.flash.plan.data'],
+      placeholder: t["firmware.burn.flash.plan.data"],
       type: "input",
-      field: "firmwareName",
+      field: "efuseDataSize",
       required: true,
       rules: [
         {
@@ -316,27 +317,30 @@ export default function ServicePreselection() {
       ]
     },
     {
-      placeholder: 'Flash Frequency',
-      type: 'select',
-      field: 'flashFrequency',
+      placeholder: "BLK",
+      type: "select",
+      field: "efuseBlk",
       required: true,
       options: [
-        { label: '40m', value: 1 },
-        { label: '26m', value: 2 },
-        { label: '20m', value: 3 },
-        { label: '28m', value: 4 }
+        { label: "EFUSE_BLK 3", value: 3 },
+        { label: "EFUSE_BLK 4", value: 4 },
+        { label: "EFUSE_BLK 5", value: 5 },
+        { label: "EFUSE_BLK 6", value: 6 },
+        { label: "EFUSE_BLK 7", value: 7 },
+        { label: "EFUSE_BLK 8", value: 8 },
+        { label: "EFUSE_BLK 9", value: 9 }
       ],
       rules: [
         {
           required: true,
-          message: t['firmware.information.flash.config.error'],
+          message: t["firmware.burn.flash.plan.address.error"]
         }
       ]
     },
     {
       placeholder: t["firmware.burn.flash.plan.address"],
       type: "input",
-      field: "fileMd5",
+      field: "efuseBurnAddr",
       required: true,
       rules: [
         {
@@ -349,7 +353,7 @@ export default function ServicePreselection() {
     {
       placeholder: t["firmware.burn.flash.plan.output"],
       type: "text",
-      field: "beginAddr",
+      field: "efuseOkSerialLabel",
       required: true,
       labelCol: 1,
       rules: [
@@ -360,40 +364,39 @@ export default function ServicePreselection() {
         }
       ]
     },
-
     {
-      placeholder: t["firmware.burn.flash.file.bin.data.script"],
+      placeholder: t["firmware.burn.flash.file.bin.data.list"],
       type: "upload",
-      field: "files",
+      field: "efuseListCsvFile",
       required: true,
       limit: 1,
       rules: [
         {
           required: true,
-          message: t["firmware.burn.flash.file.bin.data.script.error"]
+          message: t["firmware.burn.flash.file.bin.data.list.error"]
         }
       ]
     },
     {
-      placeholder: t["firmware.burn.flash.file.bin.data.script"],
+      placeholder: t["firmware.burn.flash.file.bin.data.result"],
       type: "upload",
-      field: "files",
+      field: "efuseResultCsvFile",
       required: true,
       limit: 1,
       rules: [
         {
           required: true,
-          message: t["firmware.burn.flash.file.bin.data.script.error"]
+          message: t["firmware.burn.flash.file.bin.data.result.error"]
         }
       ]
     }
-  ]
+  ];
   const colList = [
-    [4,4,14,2],
-    [4,4, 7,3, 3, 3],
-    [4,4,10,3, 3],
-    [4,4,7,6, 3],
-  ]
+    [4, 4, 14, 2],
+    [4, 4, 7, 3, 3, 3],
+    [4, 4, 10, 3, 3],
+    [4, 4, 7, 6, 3]
+  ];
 
   const setValue = (key, value) => {
     form.setFieldValue(key, value);
@@ -405,88 +408,134 @@ export default function ServicePreselection() {
   };
 
 
-
   const getFormList = (value: number | undefined) => {
-    if (value != undefined) {
+    if (value != undefined && value > -1) {
       return <div className={style["card"]}>
-        <div className={style['title']}><b>{options[burnData?.flashType]}</b></div>
-        <DynamicForm data={{...burnData}}
-                     layout={'inline'}
+        <div className={style["title"]}><b>{options[burnData?.flashType]}</b></div>
+        <DynamicForm data={{ ...burnData }}
+                     layout={"inline"}
                      col={colList[burnData?.flashType]}
-                     title={t["firmware.burn.flash.title"]}
+                     title={"firmware.burn.flash.title"}
                      formItem={FlashItem[value]}
                      formData={form} onSubmit={() => {
         }} /></div>;
     }
   };
 
+  // 提交数据
+  const postForm = async (name, values, info) => {
+    try {
+      for (const item in info.forms) {
+        await info.forms[item].validate();
+      }
+    } catch (e) {
+      Message.error("校验失败");
+      return;
+    }
+    setBurnData({
+      ...info.forms["firmware.burn.flash.title"]?.getFieldsValue(),
+      ...info.forms["firmware.burn.efuse.title"]?.getFieldsValue()
+    });
+    postBurnCustomDemand({
+      ...burnData,
+      demandId: demandId
+    }).then(res => {
+      if (res.data.success) {
+        Message.success(t["submit.hardware.success"]);
+      }
+    });
+  };
+
   return (<DynamicOuterCard title={t["firmware.burn.title"]}>
     <DynamicSkeleton animation text={{ rows: 10, width: ["100%", 600, 400] }}>
       <Form.Provider
-        // onFormSubmit={postForm}
+        onFormSubmit={postForm}
       >
-      <Space size={10} direction={"vertical"}>
-        <Space size={15} direction={"vertical"}>
-          {t["firmware.burn.title.context"]}
-          <Checkbox checked={burnData?.flash} onChange={(value) => {
-            setBurnData({ "flash":  value});
-          }}>Flash</Checkbox>
-          <Checkbox checked={burnData?.efuse} onChange={(value) => {
-            setBurnData({
-            efuse: value
-          });
-          }}>eFuse</Checkbox>
-        </Space>
-        <br />
-        <Space>
-          {t["firmware.burn.hint"]}
-        </Space>
-        <Space>
-          {t["firmware.burn.hint.notice"]}
-        </Space>
-      </Space>
+        <Space size={10} direction={"vertical"}>
+          <Space size={15} direction={"vertical"}>
+            {t["firmware.burn.title.context"]}
+            <Checkbox checked={burnData?.flashType !== -1} onChange={(value) => {
+              if (value) {
+                setBurnData({ flashType: 0 });
+              } else {
+                setBurnData({ flashType: -1 });
+              }
 
-      <DynamicDivider />
-      {
-        burnData?.flash && <div>
-          <Space size={15}>
-            {t["firmware.burn.flash.title"]}
-            <Select
-              placeholder="Please select"
-              style={{ width: 500 }}
-              defaultValue={burnData?.flashType}
-              onChange={(value) => {
-                setBurnData({ flashType: value });
-              }}
-            >
-              {options.map((option, index) => (
-                <Option key={option} value={index}>
-                  {option}
-                </Option>
-              ))}
-            </Select>
+            }}>Flash</Checkbox>
+            <Checkbox checked={burnData?.efuseType === 0} onChange={(value) => {
+              if (value) {
+                setBurnData({
+                  efuseType: 0
+                });
+              } else {
+                setBurnData({
+                  efuseType: -1
+                });
+              }
+
+            }}>eFuse</Checkbox>
           </Space>
-        </div>
-      }
-
-      {getFormList(burnData?.flashType)}
-
-      < DynamicDivider />
-      {
-        burnData?.efuse && <div>
+          <br />
           <Space>
-            {t["firmware.burn.efuse.title"]}
+            {t["firmware.burn.hint"]}
           </Space>
-          <div className={style["card"]}>
-          <DynamicForm data={{...burnData}}
-                       layout={'inline'}
-                       col={[4,3,3,8,3, 3]}
-                       title={t["firmware.burn.efuse.title"]}
-                       formItem={EfuseItem} />
+          <Space>
+            {t["firmware.burn.hint.notice"]}
+          </Space>
+        </Space>
+
+        {
+          burnData?.flashType !== -1 && <div>
+            <DynamicDivider />
+            <Space size={15}>
+              {t["firmware.burn.flash.title"]}
+              <Select
+                placeholder="Please select"
+                style={{ width: 500 }}
+                defaultValue={burnData?.flashType}
+                onChange={(value) => {
+                  setBurnData({ flashType: value });
+                }}
+              >
+                {options.map((option, index) => (
+                  <Option key={option} value={index}>
+                    {option}
+                  </Option>
+                ))}
+              </Select>
+            </Space>
           </div>
-          <DynamicDivider />
+        }
+
+        {getFormList(burnData?.flashType)}
+
+        < DynamicDivider />
+        {
+          burnData?.efuseType === 0 && <div>
+            <Space>
+              {t["firmware.burn.efuse.title"]}
+            </Space>
+            <div className={style["card"]}>
+              <DynamicForm data={{ ...burnData }}
+                           layout={"inline"}
+                           col={[4, 4, 3, 7, 3, 3]}
+                           title={"firmware.burn.efuse.title"}
+                           formItem={EfuseItem} />
+            </div>
+            <DynamicDivider />
+          </div>
+        }
+        <div className={style["context-next"]}>
+          <Form id="searchForm" layout="vertical" style={{ maxWidth: "9rem" }}>
+            <Button type="primary"
+                    size={"large"}
+                    htmlType="submit"
+                    icon={<IconArrowRight />}
+            >
+              {t["hardware.production.info.next"]}
+            </Button>
+          </Form>
         </div>
-      }
       </Form.Provider>
     </DynamicSkeleton>
   </DynamicOuterCard>);

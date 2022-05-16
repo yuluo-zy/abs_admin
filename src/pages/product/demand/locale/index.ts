@@ -157,6 +157,8 @@ const i18n = {
     'firmware.burn.flash.file.bin.data.script.error': '烧录脚本不能为空',
     'firmware.burn.flash.file.bin.data.script.cmd': '烧录命令:',
     'firmware.burn.flash.file.bin.data.script.cmd.error': '烧录命令不能为空',
+    'firmware.burn.flash.file.bin.data.result': '烧录结果样例.cvs',
+    'firmware.burn.flash.file.bin.data.result.error': '烧录结果样例.cvs不能为空',
     'submit.hardware.success': '创建成功, 开始进行下一步填写',
     'submit.hardware.error': '创建失败, 请稍后重试',
     'message.hardware.notfound':'尚未进行硬件选型成功, 请跳转到硬件选型界面',
