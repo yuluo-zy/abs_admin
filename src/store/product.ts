@@ -131,7 +131,7 @@ const createBurnDemand: StoreSlice<BurnDemand> = (set, get) => ({
 // 定制烧录内容
 const createPreFitDemand: StoreSlice<PreFitDemand> = (set, get) => ({
   fitData: null,
-  setBurnData: value => set((state) => ({
+  setFitData: value => set((state) => ({
     fitData: {
       ...state.fitData,
       ...value

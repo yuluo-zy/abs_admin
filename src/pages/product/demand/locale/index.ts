@@ -163,7 +163,19 @@ const i18n = {
     'submit.hardware.error': '创建失败, 请稍后重试',
     'message.hardware.notfound':'尚未进行硬件选型成功, 请跳转到硬件选型界面',
     'message.service.notfound':'定制生产服务请求失败, 请稍后再试',
-    'firmware.information.startAddress.message': '默认(必须)为0X0'
+    'firmware.information.startAddress.message': '默认(必须)为0X0',
+    'firmware.pre.title': '定制 预配置模组需求',
+    'firmware.pre.email': '客户PGP邮箱账号',
+    'firmware.pre.email.error': '客户PGP邮箱账号不能为空',
+    'firmware.pre.ca.setting.config.title': 'CA (Certificate Authority） 证书颁发机构',
+    'firmware.pre.ca.setting.config.type': '预配置方式',
+    'firmware.pre.ca.setting.config.type.error': '预配置方式不能为空',
+    'firmware.pre.ca.setting.config.type.custom': '基于客户的可信任 CA 预配置',
+    'firmware.pre.ca.setting.config.type.no.custom': '不基于客户的可信任 CA 预配置',
+    'firmware.pre.ca.setting.config.type.no.custom.info': '您无需提供CA, 乐鑫会基于我们的默认CA生成设备证书。在出货时，提供模组设备证书清单',
+    'firmware.pre.ca.setting.config.type.transmission.method.error': '信息传递方式不能为空',
+    'firmware.pre.ca.setting.config.type.transmission.method': '信息传递方式',
+
   },
 };
 

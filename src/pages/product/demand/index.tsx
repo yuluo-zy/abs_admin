@@ -78,7 +78,8 @@ export default function ProductDemand(props) {
           name: t[
             "menu.production.service.selection.requirements.details.pre-fit"
             ],
-          key: "menu.production.service.selection.requirements.details.pre-fit"
+          key: "menu.production.service.selection.requirements.details.pre-fit",
+          path: "service/pre-fit"
         },
         {
           name: t[
