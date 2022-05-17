@@ -48,6 +48,10 @@ export interface BurnDemand {
   burnData: Recordable;
 }
 
+export interface PreFitDemand {
+  fitData: Recordable;
+}
+
 const createBearSlice: StoreSlice<StepSetting> = (set, get) => ({
   stepKey: "",
   stepList: [],
@@ -124,13 +128,25 @@ const createBurnDemand: StoreSlice<BurnDemand> = (set, get) => ({
   })),
 });
 
+// 定制烧录内容
+const createPreFitDemand: StoreSlice<PreFitDemand> = (set, get) => ({
+  fitData: null,
+  setBurnData: value => set((state) => ({
+    fitData: {
+      ...state.fitData,
+      ...value
+    }
+  })),
+});
+
 const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
   ...createBearSlice(set, get),
   ...createProductDemand(set, get),
   ...createFirmwareDemand(set, get),
   ...createMacDemand(set, get),
   ...createLabelDemand(set, get),
-  ...createBurnDemand(set, get)
+  ...createBurnDemand(set, get),
+  ...createPreFitDemand(set, get)
 });
 
 const ProductStore = create(devtools(persist(createRootSlice,
