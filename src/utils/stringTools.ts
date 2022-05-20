@@ -86,3 +86,10 @@ export function convertToNumber (macStr) {
 
   return result
 }
+
+export const getMac = (data, oldData) => {
+  return setColon(data
+    .toUpperCase()
+    .split("")
+    .filter(value => value.length === 1 && value.match(/[0-9A-F]/)), data.length < oldData.length);
+};

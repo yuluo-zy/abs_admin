@@ -18,7 +18,7 @@ import style from "./style/index.module.less";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import ProductStore from "@/store/product";
 import shallow from "zustand/shallow";
-import { convertToNumber, setColon } from "@/utils/stringTools";
+import { convertToNumber, getMac } from "@/utils/stringTools";
 import { IconArrowRight } from "@arco-design/web-react/icon";
 import { postMacCustomDemand } from "@/api/demand";
 
@@ -28,12 +28,7 @@ const bodyStyle = {
 };
 
 
-export const getMac = (data, oldData) => {
-  return setColon(data
-    .toUpperCase()
-    .split("")
-    .filter(value => value.length === 1 && value.match(/[0-9A-F]/)), data.length < oldData.length);
-};
+
 export default function CustomMac() {
   const [form] = Form.useForm();
   const t = useLocale();

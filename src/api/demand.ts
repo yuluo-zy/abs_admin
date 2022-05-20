@@ -34,3 +34,6 @@ export const postLabelCustomDemand = (data) => {
 export const postBurnCustomDemand = (data) => {
   return httpPost('/demand/custom/content/save', data);
 };
+export const postAdaptCustomDemand = (data) => {
+  return httpPost('/demand/custom/adapt/save', data);
+};

@@ -173,9 +173,22 @@ const i18n = {
     'firmware.pre.ca.setting.config.type.custom': '基于客户的可信任 CA 预配置',
     'firmware.pre.ca.setting.config.type.no.custom': '不基于客户的可信任 CA 预配置',
     'firmware.pre.ca.setting.config.type.no.custom.info': '您无需提供CA, 乐鑫会基于我们的默认CA生成设备证书。在出货时，提供模组设备证书清单',
+    'firmware.pre.ca.setting.config.type.no.custom.info.PGP': '请传递 已签名CA 和签名使用的private key',
+    'firmware.pre.ca.setting.config.type.no.custom.info.YUBIKEY': '请将您的CA置于Yubikey后寄给乐鑫',
     'firmware.pre.ca.setting.config.type.transmission.method.error': '信息传递方式不能为空',
     'firmware.pre.ca.setting.config.type.transmission.method': '信息传递方式',
-
+    'firmware.pre.ca.setting.config.type.transmission.EFUSE_KEY_BLOCKx': '是否需要为应用固件保留某个EFUSE_KEY_BLOCK ?',
+    'firmware.pre.ca.setting.config.type.transmission.EFUSE_KEY_BLOCKx.error': '不能为空',
+    'firmware.pre.ca.setting.config.type.device': '对于ESP32-C3 和 ESP32-S3将设备证书保存在自定义的flash或NVS区域 ?',
+    'firmware.pre.ca.setting.config.type.Leave': 'Leave EFUSE_KEY_BLOCK for custom application',
+    'firmware.pre.ca.setting.config.device.certificates': '设备证书',
+    'firmware.pre.ca.setting.config.flashing.scheme.options': '烧录方案选择',
+    'firmware.pre.ca.setting.config.flashing.scheme.options.espressif': '由乐鑫烧录应用固件',
+    'firmware.pre.ca.setting.config.flashing.provided': '需提供的资料',
+    'firmware.pre.ca.setting.config.flashing.provided.recommend': '推荐',
+    'firmware.pre.ca.setting.config.flashing.provided.required': '必要',
+    'firmware.pre.ca.setting.config.flashing.provided.optional': '可选',
+    'firmware.pre.ca.setting.config.flashing.provided.no.need': '不需要',
   },
 };
 
