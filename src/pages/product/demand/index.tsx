@@ -101,6 +101,7 @@ export default function ProductDemand(props) {
     {
       name: t["menu.production.service.selection.overview"],
       key: "menu.production.service.selection.overview",
+      path: "summarize",
       icon: <IconNav key={"menu.production.service.selection.overview"} />
     }
   ];
