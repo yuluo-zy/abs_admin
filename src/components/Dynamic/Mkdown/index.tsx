@@ -1,28 +1,58 @@
-import React, { useState } from "react";
-import { Editor, Viewer } from '@bytemd/react';
-import gfm from '@bytemd/plugin-gfm';
-// todo i18 支持
-import zhHans from 'bytemd/locales/zh_Hans.json'
-// 引入基础css
-import 'bytemd/dist/index.min.css';
+import '@wangeditor/editor/dist/css/style.css' // 引入 css
 
-
-const plugins = [gfm()];
+import React, { useState, useEffect } from 'react'
+import { Editor, Toolbar } from '@wangeditor/editor-for-react'
+import { IDomEditor, IEditorConfig } from '@wangeditor/editor'
+import { Boot } from '@wangeditor/editor'
+import attachmentModule from '@wangeditor/plugin-upload-attachment'
+Boot.registerModule(attachmentModule)
 
 export function MakeDown() {
-  const [value, setValue] = useState('');
+  const [editor, setEditor] = useState<IDomEditor | null>(null) // 存储 editor 实例
+  const [html, setHtml] = useState('<p>hello</p>') // 编辑器内容
+
+  // 模拟 ajax 请求，异步设置 html
+  useEffect(() => {
+    setTimeout(() => {
+      setHtml('<p>hello&nbsp;world</p>')
+    }, 1500)
+  }, [])
+
+  const toolbarConfig = { }
+  const editorConfig: Partial<IEditorConfig> = {
+    placeholder: '请输入内容...',
+  }
+
+  // 及时销毁 editor ，重要！
+  useEffect(() => {
+    return () => {
+      if (editor == null) return
+      editor.destroy()
+      setEditor(null)
+    }
+  }, [editor])
+
   return (
-    <div className="page-wrap">
-      <Editor
-        // 语言
-        locale={zhHans}
-        // 内部的值
-        value={value}
-        // 插件
-        plugins={plugins}
-        // 动态修改值
-        onChange={v => setValue(v)}
-      />
-    </div>
+    <>
+      <div style={{ border: '1px solid #ccc', zIndex: 100}}>
+        <Toolbar
+          editor={editor}
+          defaultConfig={toolbarConfig}
+          mode="default"
+          style={{ borderBottom: '1px solid #ccc' }}
+        />
+        <Editor
+          defaultConfig={editorConfig}
+          value={html}
+          onCreated={setEditor}
+          onChange={editor => setHtml(editor.getHtml())}
+          mode="default"
+          style={{ height: '500px', overflowY: 'hidden' }}
+        />
+      </div>
+      <div style={{ marginTop: '15px' }}>
+        {html}
+      </div>
+    </>
   )
 }
