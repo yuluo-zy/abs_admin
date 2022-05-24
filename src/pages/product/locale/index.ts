@@ -25,6 +25,7 @@ const i18n = {
     'product.manage.operate.select' : '全选',
     'product.manage.operate.not.select' : '全不选',
     'product.manage.tools.add' : '创建新需求',
+    'product.manage.tools.overview' : '需求总览',
     'product.manage.tools.withdraw' : '取消需求',
     'product.manage.tools.update' : '变更需求',
     'product.manage.tools.copy' : '复制',

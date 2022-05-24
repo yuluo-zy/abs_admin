@@ -13,10 +13,11 @@ const { Text } = Typography;
 
 export default function DemandManage() {
   const t = useLocale();
-  const mod = import.meta.glob('./demand/index.tsx');
+  const mod = import.meta.glob('./**/index.tsx');
   const productDemand = lazyload(
     mod[`./demand/index.tsx`]
   )
+  const productSummarize =lazyload(mod['./summarize/index.tsx'])
   const history = useHistory();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const setDemandId = ProductStore(state => state.setDemandId)
@@ -26,6 +27,9 @@ export default function DemandManage() {
     { name: t['product.manage.operate.not.select'] , onChange: item => {}},
     {name: t['product.manage.tools.add'], onChange: () => {
         addDemandConfirm()
+      }},
+    {name: t['product.manage.tools.overview'], onChange: () => {
+        history.push(`/product/summarize`)
       }}
   ]
   const selectItem: Array<SearchItem> = [
@@ -162,6 +166,7 @@ export default function DemandManage() {
   return (
     <Switch>
       <Route path={`/product/demand`} component={productDemand} />
+      <Route path={`/product/summarize`} component={productSummarize} />
       <Route exact path={'/product'}>
         <SearchList
           name={t["product.manage.title"]}
@@ -178,11 +183,7 @@ export default function DemandManage() {
             checkAll: true,
             selectedRowKeys,
             onChange: (selectedRowKeys, selectedRows) => {
-              console.log('onChange:', selectedRowKeys, selectedRows);
               setSelectedRowKeys(selectedRowKeys);
-            },
-            onSelect: (selected, record, selectedRows) => {
-              console.log('onSelect:', selected, record, selectedRows)
             }
           }}
         />

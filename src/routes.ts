@@ -169,7 +169,7 @@ export const routes: Route[] = [
     name: 'product.management',
     key: 'product',
     permission: 'demand:mgr'
-  }
+  },
 ];
 
 export const getName = (path: string, routes) => {
