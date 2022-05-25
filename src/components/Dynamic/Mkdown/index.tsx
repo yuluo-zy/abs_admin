@@ -7,8 +7,10 @@ import attachmentModule from "@wangeditor/plugin-upload-attachment";
 Boot.registerModule(attachmentModule);
 
 export function MakeDown() {
-  const [editor, setEditor] = useState<IDomEditor | null>(null); // 存储 editor 实例
-  const [html, setHtml] = useState(""); // 编辑器内容
+  const [editor, setEditor] = useState<IDomEditor | null>(null);
+  // 存储 editor 实例
+  const [html, setHtml] = useState("");
+  // 编辑器内容
 
   const toolbarConfig = {
     insertKeys: {
@@ -16,6 +18,7 @@ export function MakeDown() {
       keys: ["uploadAttachment"] // “上传附件”菜单
     }
   };
+
   const editorConfig: Partial<IEditorConfig> = {
     placeholder: "...",
     hoverbarKeys: {
