@@ -1,19 +1,18 @@
-import React, { useReducer, useState } from "react";
-import styles from "./style/index.module.less";
-import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
-import useLocale from "@/pages/product/summarize/locale/useLocale";
-import DynamicMiniInput from "@/components/Dynamic/Input/mini";
-
+import React from 'react';
+import styles from './style/index.module.less';
+import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
+import useLocale from '@/pages/product/summarize/locale/useLocale';
+import DynamicMiniInput from '@/components/Dynamic/Input/mini';
 
 const bodyStyle = {
-  paddingTop: "0",
-  marginRight: "1rem",
-  transition: " 0.5s all ease-in-out"
+  paddingTop: '0',
+  marginRight: '1rem',
+  transition: ' 0.5s all ease-in-out'
 };
 export default function Sheet() {
   const t = useLocale();
-  return <DynamicOuterCard title={t["summarize.sheet.title"]} bodyStyle={bodyStyle}>
-    <table cellPadding="1" cellSpacing="1" className={styles["table-style"]}>
+  return <DynamicOuterCard title={t['summarize.sheet.title']} bodyStyle={bodyStyle}>
+    <table cellPadding='1' cellSpacing='1' className={styles['table-style']}>
       <tr>
         <th className={styles["mini"]}>勾选</th>
         <th className={styles["mini"]}>IDs</th>

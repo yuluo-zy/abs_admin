@@ -1,14 +1,13 @@
-import axios from "axios";
-import { Notification } from "@arco-design/web-react";
-import qs from  'qs'
+import axios from 'axios';
+import { Notification } from '@arco-design/web-react';
 
-axios.defaults.baseURL = process.env.NODE_ENV === "production" ? "/api" : "/api";
-axios.defaults.headers["Content-Type"] = "application/json";
+axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '/api' : '/api';
+axios.defaults.headers['Content-Type'] = 'application/json';
 axios.defaults.timeout = 100000;
 
 axios.interceptors.request.use((config) => {
-  const token = localStorage.getItem("userToken");
-  token && (config.headers["Access-Token"] = `${token}`);
+  const token = localStorage.getItem('userToken');
+  token && (config.headers['Access-Token'] = `${token}`);
   // config.data = JSON.stringify(config.data);
   return config;
 }, (error) => {
@@ -44,27 +43,27 @@ axios.interceptors.response.use(res => {
   } else if (err.response?.status == 401) {
     Notification.error({ content: "登录过期请 重新登录!" });
     localStorage.setItem("userToken", null);
-    sessionStorage.setItem("userStatus", null);
+    sessionStorage.setItem('userStatus', null);
     window.setTimeout(() => {
-      window.location.href = "/login";
+      window.location.href = '/login';
     }, 3000);
 
   } else {
-    Notification.error({ content: "system error!" });
+    Notification.error({ content: 'system error!' });
   }
   return Promise.reject(err);
 });
- const Axios = ({
-                        method,
-                        url,
-                        data,
-                      }) => {
+const Axios = ({
+                 method,
+                 url,
+                 data
+               }) => {
   method = method.toLowerCase();
-  if (method === "post") {
+  if (method === 'post') {
     return axios.post(url, data);
   }
 
-  if (method === "get") {
+  if (method === 'get') {
     return axios.get(url, {
       params: data
     });
