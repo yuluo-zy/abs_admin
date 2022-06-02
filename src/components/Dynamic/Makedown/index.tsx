@@ -1,8 +1,8 @@
-import "@wangeditor/editor/dist/css/style.css"; // 引入 css
-import React, { useEffect, useState } from "react";
-import { Editor, Toolbar } from "@wangeditor/editor-for-react";
-import { Boot, IDomEditor, IEditorConfig } from "@wangeditor/editor";
-import attachmentModule from "@wangeditor/plugin-upload-attachment";
+import React, { useEffect, useState } from 'react';
+import { Editor, Toolbar } from '@wangeditor/editor-for-react';
+import { Boot, IDomEditor, IEditorConfig } from '@wangeditor/editor';
+import attachmentModule from '@wangeditor/plugin-upload-attachment';
+import styles from './style/index.module.less';
 
 Boot.registerModule(attachmentModule);
 
@@ -108,7 +108,7 @@ export function MakeDown() {
   }, [editor]);
 
   return (
-    <div style={{ border: "1px solid #ccc", zIndex: 100 }}>
+    <div className={styles['makedown']} style={{ border: "1px solid #ccc", zIndex: 100 }}>
       <Toolbar
         editor={editor}
         defaultConfig={toolbarConfig}

@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { MakeDown } from "@/components/Dynamic/Mkdown";
-import useLocale from "./locale/useLocale";
+import { MakeDown } from '@/components/Dynamic/Makedown';
+import useLocale from './locale/useLocale';
 import styles from './style/index.module.less';
-import Sheet from "@/pages/product/summarize/sheet";
-import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
+import Sheet from '@/pages/product/summarize/sheet';
+import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
+
 const bodyStyle = {
   padding: "1rem",
   transition: " 0.5s all ease-in-out"
