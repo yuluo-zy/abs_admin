@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Button, DatePicker, Form, Grid, Input, InputNumber, Select, Upload } from '@arco-design/web-react';
+import { Button, DatePicker, Form, Grid, Input, InputNumber, Select } from '@arco-design/web-react';
 import useLocale from '@/utils/useHook/useLocale';
 import styles from './style/index.module.less';
 import { FormItemProps, FormList, FormProps, Recordable } from '@/components/type';
@@ -14,7 +14,7 @@ import { UploadItem } from "@arco-design/web-react/es/Upload";
 const { Row, Col } = Grid;
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
-
+const { RangePicker } = DatePicker;
 
 function DynamicForm(props: FormProps) {
   let form = null
@@ -122,7 +122,7 @@ function DynamicForm(props: FormProps) {
           field={item.field}
           rules={item.rules}
         >
-          <DatePicker.RangePicker
+          <RangePicker
             allowClear
             style={{ width: '100%' }}
             disabledDate={(date) => dayjs(date).isAfter(dayjs())}

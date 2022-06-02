@@ -23,7 +23,7 @@ export default function Summarize() {
       <Sheet/>
     </div>
 
-    <DynamicOuterCard title={t["summarize.sheet.title"]} bodyStyle={bodyStyle}>
+    <DynamicOuterCard title={t["summarize.history.title"]} bodyStyle={bodyStyle}>
       <div className={styles['context-right']}><MakeDown theme={getTheme(theme)}/></div>
     </DynamicOuterCard>
 
