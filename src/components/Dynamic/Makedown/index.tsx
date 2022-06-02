@@ -3,13 +3,19 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-react';
 import { Boot, IDomEditor, IEditorConfig } from '@wangeditor/editor';
 import attachmentModule from '@wangeditor/plugin-upload-attachment';
 import styles from './style/index.module.less';
+import cs from "classnames";
 
 Boot.registerModule(attachmentModule);
 
-export function MakeDown() {
+export function MakeDown(props: {theme: boolean}) {
   const [editor, setEditor] = useState<IDomEditor | null>(null);
   // 存储 editor 实例
   const [html, setHtml] = useState("");
+  // 如果是 true 则设置为 深夜模式
+  const [theme, setTheme] = useState(false)
+  useEffect(() => {
+    setTheme(props.theme)
+  }, [props.theme])
   // 编辑器内容
 
   const toolbarConfig = {
@@ -108,7 +114,7 @@ export function MakeDown() {
   }, [editor]);
 
   return (
-    <div className={styles['makedown']} style={{ border: "1px solid #ccc", zIndex: 100 }}>
+    <div className={cs([theme?styles['makedown']: 'none' , styles['context']])}>
       <Toolbar
         editor={editor}
         defaultConfig={toolbarConfig}
