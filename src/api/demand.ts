@@ -1,4 +1,4 @@
-import { httpGet, httpPost } from "@/utils/httpRequest";
+import { httpGet, httpPost } from '@/utils/httpRequest';
 
 export const getProductionDemand = () => {
   return httpGet('/demand');
@@ -13,13 +13,16 @@ export const postProduction = (data) => {
 };
 
 
-
 export const getProductionCustomDemand = () => {
   return httpGet('/demand/custom/serve');
 };
 
 export const postProductionCustomDemand = (data) => {
   return httpPost('/demand/custom/serve/save', data);
+};
+
+export const postFirmwareCustomDemand = (data) => {
+  return httpPost('/demand/custom/firmware/save', data);
 };
 
 export const postMacCustomDemand = (data) => {

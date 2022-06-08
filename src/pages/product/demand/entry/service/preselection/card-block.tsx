@@ -3,11 +3,10 @@ import cs from 'classnames';
 import { Card, Skeleton, Switch, Tag } from '@arco-design/web-react';
 import { IconCheckCircleFill, IconStarFill } from '@arco-design/web-react/icon';
 import styles from './style/index.module.less';
-import { ServiceCardProps } from '@/components/type';
 import useLocale from '@/pages/product/demand/locale/useLocale';
 
 
-function CardBlock(props: ServiceCardProps) {
+function CardBlock(props) {
   const { data, onChange } = props;
   const [status, setStatus] = useState(data.status);
   const [loading, setLoading] = useState(false);

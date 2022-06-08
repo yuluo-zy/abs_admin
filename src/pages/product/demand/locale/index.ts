@@ -189,6 +189,7 @@ const i18n = {
     'firmware.pre.ca.setting.config.flashing.provided.required': '必要',
     'firmware.pre.ca.setting.config.flashing.provided.optional': '可选',
     'firmware.pre.ca.setting.config.flashing.provided.no.need': '不需要',
+    'index.start': '开始填写'
   },
 };
 

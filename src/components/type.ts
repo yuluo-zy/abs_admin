@@ -2,7 +2,6 @@ import { RulesProps } from '@arco-design/web-react';
 import { AxiosResponse } from 'axios';
 import { Data } from '@/utils/httpRequest';
 import React from 'react';
-import DemandManageMenu from "@/pages/product/menu";
 
 export type Recordable<T = any> = Record<string, T>;
 
@@ -115,6 +114,8 @@ export interface MenuItemProps {
   key: string;
   icon?: any;
   path?: string;
+  show?: boolean;
+  value?: number;
   child?: MenuItemProps | MenuItemProps[];
 }
 

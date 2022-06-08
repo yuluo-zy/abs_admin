@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
-import useLocale from "@/pages/product/demand/locale/useLocale";
-import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
-import { Button, Checkbox, Divider, Form, Input, Link, Message, Space, Tag, Tooltip } from "@arco-design/web-react";
-import DynamicSkeleton from "@/components/Dynamic/Skeleton";
-import style from "./style/index.module.less";
-import { IconArrowRight, IconLaunch } from "@arco-design/web-react/icon";
-import ProductStore from "@/store/product";
-import shallow from "zustand/shallow";
-import { DynamicImgUpload } from "@/components/Dynamic/Upload/img-upload";
-import { UploadItem } from "@arco-design/web-react/es/Upload";
-import { postLabelCustomDemand, postMacCustomDemand } from "@/api/demand";
+import React, { useEffect } from 'react';
+import useLocale from '@/pages/product/demand/locale/useLocale';
+import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
+import { Button, Checkbox, Divider, Form, Input, Link, Message, Space, Tag, Tooltip } from '@arco-design/web-react';
+import DynamicSkeleton from '@/components/Dynamic/Skeleton';
+import style from './style/index.module.less';
+import { IconArrowRight, IconLaunch } from '@arco-design/web-react/icon';
+import { ProductStore } from '@/store/product';
+import shallow from 'zustand/shallow';
+import { DynamicImgUpload } from '@/components/Dynamic/Upload/img-upload';
+import { UploadItem } from '@arco-design/web-react/es/Upload';
+import { postLabelCustomDemand } from '@/api/demand';
+import { useHistory } from 'react-router';
+import { getNextRouter } from '@/utils/getNext';
 
 const FormItem = Form.Item;
 const bodyStyle = {
@@ -17,9 +19,10 @@ const bodyStyle = {
 }
 export default function CustomLabel() {
   const t = useLocale();
+  const history = useHistory();
   const [form] = Form.useForm();
   const [labelData, setLabelData] = ProductStore(state => [state.labelData, state.setLabelData], shallow);
-  const demandId = ProductStore(state => state.demandId);
+  const [demandId, serviceType] = ProductStore(state => [state.demandId, state.serviceType], shallow);
 
   const postLabelCustom = () => {
     try {
@@ -30,11 +33,16 @@ export default function CustomLabel() {
     setLabelData({
       ...form.getFieldsValue()
     });
+    console.log( form.getFieldsValue())
     postLabelCustomDemand({
       ...labelData,
       demandId: demandId
     }).then(res => {
       if (res.data.success) {
+        setLabelData({
+          id: res.data.result
+        })
+        history.push(getNextRouter(4, serviceType))
         Message.success(t["submit.hardware.success"]);
       }
     });

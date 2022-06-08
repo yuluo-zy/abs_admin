@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from "react";
-import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
-import useLocale from "@/pages/product/demand/locale/useLocale";
-import style from "./style/index.module.less";
-import { Button, Descriptions, Divider, Grid, List, Message, Modal, Switch, Tag } from "@arco-design/web-react";
-import DynamicCard from "@/components/Dynamic/Card";
-import DynamicSkeleton from "@/components/Dynamic/Skeleton";
-import { IconArrowRight, IconDelete, IconDown, IconEdit } from "@arco-design/web-react/icon";
-import ProductStore from "@/store/product";
-import shallow from "zustand/shallow";
-import { useHistory } from "react-router";
-import { getProductionCustomDemand, postProductionCustomDemand } from "@/api/demand";
+import React, { useEffect, useState } from 'react';
+import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
+import useLocale from '@/pages/product/demand/locale/useLocale';
+import style from './style/index.module.less';
+import { Button, Divider, List, Message, Modal, Switch, Tag } from '@arco-design/web-react';
+import DynamicCard from '@/components/Dynamic/Card';
+import DynamicSkeleton from '@/components/Dynamic/Skeleton';
+import { IconArrowRight } from '@arco-design/web-react/icon';
+import { ProductStore } from '@/store/product';
+import shallow from 'zustand/shallow';
+import { useHistory } from 'react-router';
+import { getProductionCustomDemand, postProductionCustomDemand } from '@/api/demand';
+import { getNextRouter } from '@/utils/getNext';
 
 export default function ServicePreselection() {
   const t = useLocale();
   const [demandId,moduleInfo, setCollapse] = ProductStore(state => [state.demandId,state.moduleInfo, state.setCollapse], shallow);
   const [serviceType, setServiceType] = ProductStore(state => [state.serviceType, state.setServiceType], shallow);
+  const [serviceId, setServiceId] = ProductStore(state => [state.serviceId, state.setServiceId], shallow);
   const history = useHistory();
   const [service, setService] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -59,7 +61,7 @@ export default function ServicePreselection() {
                 checkedText={t['service.preselection.model.info.title.switch.open']}
                 uncheckedText={t['service.preselection.model.info.title.switch.close']}
                 checked={isCheck(item.type)}
-              onChange={(value: boolean, event)=> {
+              onChange={(value: boolean)=> {
                 let copy = new Set([...serviceType]);
                 if(value) {
                   copy.add(item.type)
@@ -96,13 +98,15 @@ export default function ServicePreselection() {
     }
     postProductionCustomDemand({
       'demandId': demandId,
+      'id': serviceId,
       'serveIds': serviceType,
     }).then(res => {
       if(res.data.success){
         Message.success(t["submit.hardware.success"]);
         setVisible(false)
+        setServiceId(res.data.result)
         // 根据选择的服务项目进行下一步导航
-        history.push(`/product/demand/service/preselection`)
+        history.push(getNextRouter(-1, serviceType))
       }
     }).catch(error => {
       Message.error(t["submit.hardware.error"]);

@@ -1,14 +1,16 @@
-import useLocale from "@/pages/product/locale/useLocale";
-import SearchList from "@/components/Dynamic/List";
-import React, { useReducer, useState } from "react";
-import { Message, Modal, Typography } from "@arco-design/web-react";
-import { getProductionDemand, postProductionDemand } from "@/api/demand";
-import DynamicTag from "@/components/Dynamic/tag";
-import { ManageMenuProps, SearchItem } from "@/components/type";
-import DemandManageMenu from "@/pages/product/menu";
-import { Route, Switch, useHistory } from "react-router";
-import lazyload from "@/utils/lazyload";
-import  ProductStore  from "@/store/product";
+import useLocale from '@/pages/product/locale/useLocale';
+import SearchList from '@/components/Dynamic/List';
+import React, { useState } from 'react';
+import { Message, Modal, Typography } from '@arco-design/web-react';
+import { getProductionDemand, postProductionDemand } from '@/api/demand';
+import DynamicTag from '@/components/Dynamic/tag';
+import { ManageMenuProps, SearchItem } from '@/components/type';
+import DemandManageMenu from '@/pages/product/menu';
+import { Route, Switch, useHistory } from 'react-router';
+import lazyload from '@/utils/lazyload';
+import { ProductStore } from '@/store/product';
+import shallow from 'zustand/shallow';
+
 const { Text } = Typography;
 
 export default function DemandManage() {
@@ -20,7 +22,7 @@ export default function DemandManage() {
   const productSummarize =lazyload(mod['./summarize/index.tsx'])
   const history = useHistory();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-    const setDemandId = ProductStore(state => state.setDemandId)
+  const [setDemandId, reset] = ProductStore(state => [state.setDemandId, state.reset], shallow)
 
   const menu: Array<ManageMenuProps> = [
     { name: t['product.manage.operate.select'] , onChange: item => {}},
@@ -151,6 +153,9 @@ export default function DemandManage() {
       content: t['product.manage.tools.add.message'],
       okButtonProps: { status: 'danger' },
       onOk: () => {
+        // 清空
+        reset()
+        ProductStore.persist.clearStorage()
         postProductionDemand().then(res=> {
             Message.success(t["product.manage.tools.add.message.ok"])
             setDemandId( res.data.result);

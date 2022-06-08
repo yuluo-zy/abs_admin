@@ -1,26 +1,29 @@
-import React from "react";
-import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
+import React from 'react';
+import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
 import {
   Alert,
   Button,
   Divider,
   Form,
   Input,
-  InputNumber, Message,
+  InputNumber,
+  Message,
   Select,
   Space,
   Table,
   Typography
-} from "@arco-design/web-react";
-import useLocale from "@/pages/product/demand/locale/useLocale";
-import DynamicRadioGroup from "@/components/Dynamic/Radio";
-import style from "./style/index.module.less";
-import DynamicSkeleton from "@/components/Dynamic/Skeleton";
-import ProductStore from "@/store/product";
-import shallow from "zustand/shallow";
-import { getMac } from "@/utils/stringTools";
-import { IconArrowRight } from "@arco-design/web-react/icon";
-import { postAdaptCustomDemand, postMacCustomDemand } from "@/api/demand";
+} from '@arco-design/web-react';
+import useLocale from '@/pages/product/demand/locale/useLocale';
+import DynamicRadioGroup from '@/components/Dynamic/Radio';
+import style from './style/index.module.less';
+import DynamicSkeleton from '@/components/Dynamic/Skeleton';
+import { ProductStore } from '@/store/product';
+import shallow from 'zustand/shallow';
+import { getMac } from '@/utils/stringTools';
+import { IconArrowRight } from '@arco-design/web-react/icon';
+import { postAdaptCustomDemand } from '@/api/demand';
+import { getNextRouter } from '@/utils/getNext';
+import { useHistory } from 'react-router';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -46,8 +49,9 @@ const certificaties = [
 export default function PreFit() {
   const [form] = Form.useForm();
   const t = useLocale();
+  const history = useHistory();
   const [fitData, setFitData] = ProductStore(state => [state.fitData, state.setFitData], shallow);
-  const demandId = ProductStore(state => state.demandId);
+  const [demandId, serviceType] = ProductStore(state => [state.demandId, state.serviceType], shallow);
 
   const postFitCustom = () => {
     try {
@@ -63,6 +67,8 @@ export default function PreFit() {
       demandId: demandId
     }).then(res => {
       if (res.data.success) {
+        setFitData({id: res.data.result})
+        history.push(getNextRouter(3, serviceType))
         Message.success(t["submit.hardware.success"]);
       }
     });
@@ -163,11 +169,14 @@ export default function PreFit() {
                              }]}
                              onChange={(value) => {
                                setValue("isAdapt", value);
+                               if(value === 0) {
+                                 setValue("transmissionMethod", null)
+                               }
                              }}
           />
           {fitData?.isAdapt === 0 && <Alert className={style["context-text"]} closable
                                             content={t["firmware.pre.ca.setting.config.type.no.custom.info"]}
-                                            style={{ maxWidth: "30rem", marginBottom: 20 }} closeElement="Close" />}
+                                            style={{ maxWidth: "30rem", marginBottom: 20, marginTop:"2rem" }} closeElement="Close" />}
           {fitData?.transmissionMethod === "PGP" && <Alert className={style["context-text"]} closable
                                                            content={t["firmware.pre.ca.setting.config.type.no.custom.info.PGP"]}
                                                            style={{ maxWidth: "30rem", marginBottom: 20 }}
@@ -179,11 +188,12 @@ export default function PreFit() {
 
         </FormItem>
         <br /><br />
-        {fitData?.isAdapt === 1 && <FormItem label={t["firmware.pre.ca.setting.config.type.transmission.method"]}
+        {fitData?.isAdapt === 1 &&
+          <FormItem label={t["firmware.pre.ca.setting.config.type.transmission.method"]}
                                              labelAlign={"left"}
                                              field={"transmissionMethod"}
                                              rules={[{
-                                               required: true,
+                                               required: false,
                                                message: t["firmware.pre.ca.setting.config.type.transmission.method.error"]
                                              }]}>
 

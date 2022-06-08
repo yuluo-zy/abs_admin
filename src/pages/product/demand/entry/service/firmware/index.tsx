@@ -1,70 +1,78 @@
-import React, { useState } from "react";
-import useLocale from "@/pages/product/demand/locale/useLocale";
-import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
+import React, { useState } from 'react';
+import useLocale from '@/pages/product/demand/locale/useLocale';
+import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
 import {
   Button,
   Checkbox,
   Divider,
   Form,
   Input,
+  InputNumber,
   Link,
+  Message,
   Modal,
   Select,
   Space,
   Tooltip,
-  Typography,
-  Message, InputNumber
-} from "@arco-design/web-react";
-import FirmwareInformation from "@/pages/product/demand/entry/service/firmware/firmware-information";
-import SerialCheck from "@/pages/product/demand/entry/service/firmware/serial-check";
-import DynamicRadioGroup from "@/components/Dynamic/Radio";
-import { IconArrowRight, IconLaunch, IconTags } from "@arco-design/web-react/icon";
-import FirmwareFlash from "@/pages/product/demand/entry/service/firmware/firmware-flash";
-import FirmwareEfuse from "@/pages/product/demand/entry/service/firmware/frimware-efuse";
-import DynamicSkeleton from "@/components/Dynamic/Skeleton";
-import ProductStore from "@/store/product";
-import shallow from "zustand/shallow";
-import style from "./style/index.module.less";
-import { sum } from "@/utils/listTools";
+  Typography
+} from '@arco-design/web-react';
+import FirmwareInformation from '@/pages/product/demand/entry/service/firmware/firmware-information';
+import SerialCheck from '@/pages/product/demand/entry/service/firmware/serial-check';
+import DynamicRadioGroup from '@/components/Dynamic/Radio';
+import { IconArrowRight, IconLaunch, IconTags } from '@arco-design/web-react/icon';
+import FirmwareFlash from '@/pages/product/demand/entry/service/firmware/firmware-flash';
+import FirmwareEfuse from '@/pages/product/demand/entry/service/firmware/frimware-efuse';
+import DynamicSkeleton from '@/components/Dynamic/Skeleton';
+import { ProductStore } from '@/store/product';
+import shallow from 'zustand/shallow';
+import style from './style/index.module.less';
+import { sum } from '@/utils/listTools';
+import { getNextRouter } from '@/utils/getNext';
+import { useHistory } from 'react-router';
+import { postFirmwareCustomDemand } from '@/api/demand';
 
 const CheckboxGroup = Checkbox.Group;
 
 export default function FirmwareCustomization() {
   const t = useLocale();
-
+  const history = useHistory();
   const Option = Select.Option;
 
   const options = ["Beijing", "Shanghai", "Guangzhou", "Disabled"];
-  const [demandId, moduleInfo, setCollapse] = ProductStore(state => [state.demandId, state.moduleInfo, state.setCollapse], shallow);
+  const [demandId, serviceType] = ProductStore(state => [state.demandId, state.serviceType], shallow);
   const [info, setInfo] = ProductStore(state => [state.info, state.setInfo], shallow);
   const [visible, setVisible] = useState(false);
 
   // 提交数据
-  const postForm = async (name, values, info) => {
+  const postForm = async (name, values, infos) => {
     try {
-      for(const item in info.forms){
-        await info.forms[item].validate();
+      for(const item in infos.forms){
+        await infos.forms[item].validate();
       }
     } catch (e) {
       Message.error("校验失败");
       return;
     }
-
-    Message.info({
-      icon: <span></span>,
-      content: <div style={{ textAlign: "left" }}>
-        <span>form values:</span>
-        <pre>
-                {
-                  JSON.stringify({
-                    ...info.forms["firmware.information.title"]?.getFieldsValue(),
-                    ...info.forms["firmware.serial.check.title"]?.getFieldsValue(),
-                    ...info.forms["firmware.information.efuse.title"]?.getFieldsValue(),
-                    ...info.forms['firmware.information.flash.title']?.getFieldsValue()
-                  }, null, 2)
-                }
-              </pre>
-      </div>
+    let temp = {}
+    for(const item in infos.forms){
+      temp = {
+        ...temp,
+        ...infos.forms[item]?.getFieldsValue()
+      }
+    }
+    setInfo({
+      ...temp
+    })
+    postFirmwareCustomDemand({
+      ...info,
+      demandId: demandId
+    }).then(res => {
+      if (res.data.success) {
+        const {id} = res.data.result.id
+        setInfo({ id: id});
+        Message.success(t["submit.hardware.success"]);
+        history.push(getNextRouter(0, serviceType))
+      }
     });
   }
   // 生成flsh等加密方式

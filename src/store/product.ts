@@ -1,8 +1,6 @@
-import create, { GetState, SetState } from "zustand";
-import { Recordable } from "@/components/type";
-import React from "react";
-import { devtools } from "zustand/middleware";
-import { persist } from "zustand/middleware";
+import create, { GetState, SetState } from 'zustand';
+import { Recordable } from '@/components/type';
+import { devtools, persist } from 'zustand/middleware';
 
 export type StoreSlice<T extends object, E extends object = T> = (
   set: SetState<E extends T ? E : E & T>,
@@ -18,6 +16,7 @@ export interface StepSetting {
 
   setStepKey: (value) => void,
   addStepList: (value) => void,
+  setStepList: (value) => void,
   setStepRouter: (value) => void,
   setCollapse: (value) => void
 }
@@ -27,9 +26,11 @@ export interface ProductDemand {
   moduleInfo?: Recordable;
   demandId: number;
   serviceType: number[],
+  serviceId: number
   setDemandId: (value) => void,
   setModuleInfo: (value) => void,
-  setServiceType: (value) => void
+  setServiceType: (value) => void,
+  setServiceId: (value) => void
 }
 
 export interface FirmwareDemand {
@@ -53,9 +54,9 @@ export interface PreFitDemand {
 }
 
 const createBearSlice: StoreSlice<StepSetting> = (set, get) => ({
-  stepKey: "",
+  stepKey: '',
   stepList: [],
-  stepRouter: "",
+  stepRouter: '',
   collapse: true,
 
   setStepKey: (value) => set(() => ({
@@ -63,6 +64,9 @@ const createBearSlice: StoreSlice<StepSetting> = (set, get) => ({
   })),
   addStepList: (value) => set((state) => ({
     stepList: [...state.stepList, value]
+  })),
+  setStepList: (value) => set((state) => ({
+    stepList: [...value]
   })),
   setStepRouter: value => set(() => ({ stepRouter: value })),
   setCollapse: value => set(() => ({ collapse: value }))
@@ -72,6 +76,7 @@ const createProductDemand: StoreSlice<ProductDemand> = (set, get) => ({
   demandId: -1,
   moduleInfo: {},
   serviceType: [],
+  serviceId: null,
   setDemandId: value => set(() => ({ demandId: value })),
   setModuleInfo: value => set((state) => ({
     moduleInfo: {
@@ -79,7 +84,8 @@ const createProductDemand: StoreSlice<ProductDemand> = (set, get) => ({
       ...value
     }
   })),
-  setServiceType: value => set(() => ({ serviceType: value }))
+  setServiceType: value => set(() => ({ serviceType: value })),
+  setServiceId: value => set(() => ({ serviceId: value }))
 });
 
 // 定制固件
@@ -90,7 +96,7 @@ const createFirmwareDemand: StoreSlice<FirmwareDemand> = (set, get) => ({
       ...state.info,
       ...value
     }
-  })),
+  }))
 
 });
 
@@ -102,7 +108,7 @@ const createMacDemand: StoreSlice<MacDemand> = (set, get) => ({
       ...state.macData,
       ...value
     }
-  })),
+  }))
 
 });
 
@@ -114,7 +120,7 @@ const createLabelDemand: StoreSlice<LabelDemand> = (set, get) => ({
       ...state.labelData,
       ...value
     }
-  })),
+  }))
 });
 
 // 定制烧录内容
@@ -125,7 +131,7 @@ const createBurnDemand: StoreSlice<BurnDemand> = (set, get) => ({
       ...state.burnData,
       ...value
     }
-  })),
+  }))
 });
 
 // 定制烧录内容
@@ -136,7 +142,7 @@ const createPreFitDemand: StoreSlice<PreFitDemand> = (set, get) => ({
       ...state.fitData,
       ...value
     }
-  })),
+  }))
 });
 
 const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
@@ -146,12 +152,36 @@ const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
   ...createMacDemand(set, get),
   ...createLabelDemand(set, get),
   ...createBurnDemand(set, get),
-  ...createPreFitDemand(set, get)
+  ...createPreFitDemand(set, get),
+  reset: () => {
+    set({
+      fitData: null,
+      burnData: null,
+      labelData: null,
+      macData: null,
+      info: null,
+      serviceId: null,
+      demandId: -1,
+      moduleInfo: {},
+      serviceType: [],
+      stepKey: '',
+      stepList: [],
+      stepRouter: '',
+      collapse: true,
+    })
+  },
 });
 
-const ProductStore = create(devtools(persist(createRootSlice,
+export const ProductStore = create(devtools(persist(createRootSlice,
   {
-    name: "product-storage",
+    name: 'product-storage',
     getStorage: () => sessionStorage
   })));
-export default ProductStore;
+
+
+
+export const ProductMenuInfo = create(() => ({
+  menu: []
+}));
+
+export const setMenu = (menu) => ProductMenuInfo.setState({ menu });

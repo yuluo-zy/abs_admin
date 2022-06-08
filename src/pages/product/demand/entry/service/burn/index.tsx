@@ -1,23 +1,26 @@
-import React from "react";
-import useLocale from "@/pages/product/demand/locale/useLocale";
-import style from "./style/index.module.less";
-import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
-import { Button, Checkbox, Form, Message, Select, Space } from "@arco-design/web-react";
-import DynamicSkeleton from "@/components/Dynamic/Skeleton";
-import DynamicDivider from "@/components/Dynamic/Divider";
-import { FormItemProps } from "@/components/type";
-import DynamicForm from "@/components/Dynamic/Form";
-import ProductStore from "@/store/product";
-import shallow from "zustand/shallow";
-import { IconArrowRight } from "@arco-design/web-react/icon";
-import { postBurnCustomDemand } from "@/api/demand";
+import React from 'react';
+import useLocale from '@/pages/product/demand/locale/useLocale';
+import style from './style/index.module.less';
+import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
+import { Button, Checkbox, Form, Message, Select, Space } from '@arco-design/web-react';
+import DynamicSkeleton from '@/components/Dynamic/Skeleton';
+import DynamicDivider from '@/components/Dynamic/Divider';
+import { FormItemProps } from '@/components/type';
+import DynamicForm from '@/components/Dynamic/Form';
+import { ProductStore } from '@/store/product';
+import shallow from 'zustand/shallow';
+import { IconArrowRight } from '@arco-design/web-react/icon';
+import { postBurnCustomDemand } from '@/api/demand';
+import { getNextRouter } from '@/utils/getNext';
+import { useHistory } from 'react-router';
 
 const Option = Select.Option;
 
 export default function ServicePreselection() {
   const t = useLocale();
+  const history = useHistory();
   const [burnData, setBurnData] = ProductStore(state => [state.burnData, state.setBurnData], shallow);
-  const demandId = ProductStore(state => state.demandId);
+  const [demandId, serviceType] = ProductStore(state => [state.demandId, state.serviceType], shallow);
   const options = [
     t["firmware.burn.flash.planA"],
     t["firmware.burn.flash.planB.NVS"],
@@ -398,16 +401,6 @@ export default function ServicePreselection() {
     [4, 4, 7, 6, 3]
   ];
 
-  const setValue = (key, value) => {
-    form.setFieldValue(key, value);
-    const temp = {};
-    temp[key] = value;
-    setBurnData({
-      ...temp
-    });
-  };
-
-
   const getFormList = (value: number | undefined) => {
     if (value != undefined && value > -1) {
       return <div className={style["card"]}>
@@ -441,6 +434,10 @@ export default function ServicePreselection() {
       demandId: demandId
     }).then(res => {
       if (res.data.success) {
+        setBurnData({
+          id: res.data.result
+        })
+        history.push(getNextRouter(2, serviceType))
         Message.success(t["submit.hardware.success"]);
       }
     });

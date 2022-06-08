@@ -1,5 +1,5 @@
-import React from "react";
-import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
+import React from 'react';
+import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
 import {
   Alert,
   Button,
@@ -11,16 +11,18 @@ import {
   Space,
   Tag,
   Typography
-} from "@arco-design/web-react";
-import useLocale from "@/pages/product/demand/locale/useLocale";
-import DynamicRadioGroup from "@/components/Dynamic/Radio";
-import style from "./style/index.module.less";
-import DynamicSkeleton from "@/components/Dynamic/Skeleton";
-import ProductStore from "@/store/product";
-import shallow from "zustand/shallow";
-import { convertToNumber, getMac } from "@/utils/stringTools";
-import { IconArrowRight } from "@arco-design/web-react/icon";
-import { postMacCustomDemand } from "@/api/demand";
+} from '@arco-design/web-react';
+import useLocale from '@/pages/product/demand/locale/useLocale';
+import DynamicRadioGroup from '@/components/Dynamic/Radio';
+import style from './style/index.module.less';
+import DynamicSkeleton from '@/components/Dynamic/Skeleton';
+import { ProductStore } from '@/store/product';
+import shallow from 'zustand/shallow';
+import { convertToNumber, getMac } from '@/utils/stringTools';
+import { IconArrowRight } from '@arco-design/web-react/icon';
+import { postMacCustomDemand } from '@/api/demand';
+import { getNextRouter } from '@/utils/getNext';
+import { useHistory } from 'react-router';
 
 const FormItem = Form.Item;
 const bodyStyle = {
@@ -32,8 +34,9 @@ const bodyStyle = {
 export default function CustomMac() {
   const [form] = Form.useForm();
   const t = useLocale();
+  const history = useHistory();
   const [macData, setMacData] = ProductStore(state => [state.macData, state.setMacData], shallow);
-  const demandId = ProductStore(state => state.demandId);
+  const [demandId, serviceType] = ProductStore(state => [state.demandId, state.serviceType], shallow);
   const getMacStartInfo = (value) => {
     const temp = getMac(value, macData?.macStart || "");
     setMacData({
@@ -70,6 +73,10 @@ export default function CustomMac() {
       demandId: demandId
     }).then(res => {
       if (res.data.success) {
+        setMacData({
+          id: res.data.result
+        })
+        history.push(getNextRouter(1, serviceType))
         Message.success(t["submit.hardware.success"]);
       }
     });

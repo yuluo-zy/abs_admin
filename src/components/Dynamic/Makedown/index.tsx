@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Editor, Toolbar } from '@wangeditor/editor-for-react';
-import { Boot, IDomEditor, IEditorConfig } from '@wangeditor/editor';
+import { Boot, IDomEditor, IEditorConfig, IToolbarConfig } from '@wangeditor/editor';
 import attachmentModule from '@wangeditor/plugin-upload-attachment';
 import styles from './style/index.module.less';
 import cs from 'classnames';
@@ -21,7 +21,10 @@ export function MakeDown(props: { theme: boolean }) {
   }, [props.theme]);
   // 编辑器内容
 
-  const toolbarConfig = {
+  const toolbarConfig:  Partial<IToolbarConfig> = {
+    excludeKeys: [
+      'fullScreen'
+    ],
     insertKeys: {
       index: 0, // 自定义插入的位置
       keys: ['uploadAttachment'] // “上传附件”菜单
@@ -87,7 +90,7 @@ export function MakeDown(props: { theme: boolean }) {
             const { success, result } = r.data;
             if (success) {
               Message.success('Upload Success');
-              insertFn(`${file.name}`, result.url);
+              insertFn(`${file.name}`, result);
             }
           }).catch(error => {
           // todo
@@ -105,6 +108,59 @@ export function MakeDown(props: { theme: boolean }) {
         // onInsertedAttachment(elem) {
         //   console.log("inserted attachment", elem);
         // }
+      },
+      uploadImage: {
+        maxFileSize: 10 * 1024 * 1024, // 10M
+        onBeforeUpload(file: File) {
+          // todo 针对文件大小和类型进行验证
+          return file;
+          // return false // 会阻止上传
+        },
+        onProgress(progress: number) {
+          Message.info('OnProgress: ' + progress);
+        },
+        onSuccess(file: File, res: any) {
+          Message.success('Upload Success');
+        },
+        onFailed(file: File, res: any) {
+          Message.error('Upload Error');
+        },
+        onError(file: File, err: Error, res: any) {
+          Message.error(err.message);
+        },
+        // // 上传成功后，用户自定义插入文件
+        customInsert(res: any, file: File, insertFn: Function) {
+          const { url, alt, href } = res.data || {};
+          if (!url) throw new Error(`url is empty`);
+
+          // 插入附件到编辑器
+          insertFn(url, alt, href)
+        },
+        async customUpload(file: File, insertFn: Function) {
+          let formData = new FormData();
+          formData.append('file', file);
+          const source = axios.CancelToken.source();
+          const onprogress = progressEvent => {
+            const complete = progressEvent.loaded / progressEvent.total * 100 | 0;
+            // onProgress(parseInt(String(complete), 10), progressEvent);
+            Message.info({
+              content: 'OnProgress: ' + parseInt(String(complete), 10),
+              duration: 500,
+              position: 'bottom'
+            });
+          };
+
+          postFile(formData, onprogress, source.token).then(r => {
+            const { success, result } = r.data;
+            if (success) {
+              const {url, alt, href} = result
+              Message.success('Upload Success');
+              insertFn(url, alt, href)
+            }
+          }).catch(error => {
+          });
+
+        }
       }
     }
   };

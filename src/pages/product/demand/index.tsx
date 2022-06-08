@@ -1,17 +1,18 @@
-import React, { useContext, useEffect, useMemo } from "react";
-import useLocale from "@/pages/product/demand/locale/useLocale";
-import ProductMenu from "@/pages/product/demand/menu";
+import React, { useEffect, useMemo } from 'react';
+import useLocale from '@/pages/product/demand/locale/useLocale';
+import ProductMenu from '@/pages/product/demand/menu';
 
-import styles from "./style/index.module.less";
-import { useHistory } from "react-router-dom";
-import { isArray } from "@/utils/is";
-import { MenuItemProps } from "@/components/type";
-import { IconCalendar, IconMindMapping, IconNav, IconSubscribed } from "@arco-design/web-react/icon";
-import NProgress from "nprogress";
-import lazyload from "@/utils/lazyload";
-import { Route, Switch } from "react-router";
-import ProductStore from "@/store/product";
-import shallow from "zustand/shallow";
+import styles from './style/index.module.less';
+import { useHistory } from 'react-router-dom';
+import { isArray } from '@/utils/is';
+import { MenuItemProps } from '@/components/type';
+import { IconCalendar, IconMindMapping, IconSubscribed } from '@arco-design/web-react/icon';
+import NProgress from 'nprogress';
+import lazyload from '@/utils/lazyload';
+import { Route, Switch } from 'react-router';
+import { ProductStore, setMenu } from '@/store/product';
+import shallow from 'zustand/shallow';
+import { Button } from '@arco-design/web-react';
 
 function getFlattenRoutes(routes) {
   const res = [];
@@ -32,7 +33,6 @@ function getFlattenRoutes(routes) {
   }
 
   travel(routes);
-  console.log(res)
   return res;
 }
 
@@ -58,58 +58,61 @@ export default function ProductDemand(props) {
             "menu.production.service.selection.requirements.details.firmware"
             ],
           key: "menu.production.service.selection.requirements.details.firmware",
-          path: "service/firmware"
+          path: "service/firmware",
+          show: false,
+          value: 0
         },
         {
           name: t[
             "menu.production.service.selection.requirements.details.mac"
             ],
           key: "menu.production.service.selection.requirements.details.mac",
-          path: "service/mac"
+          path: "service/mac",
+          show: false,
+          value: 1
         },
         {
           name: t[
             "menu.production.service.selection.requirements.details.burn"
             ],
           key: "menu.production.service.selection.requirements.details.burn",
-          path: "service/burn"
+          path: "service/burn",
+          show: false,
+          value: 2
         },
         {
           name: t[
             "menu.production.service.selection.requirements.details.pre-fit"
             ],
           key: "menu.production.service.selection.requirements.details.pre-fit",
-          path: "service/pre-fit"
+          path: "service/pre-fit",
+          show: false,
+          value: 3
         },
         {
           name: t[
             "menu.production.service.selection.requirements.details.custom.label"
             ],
           key: "menu.production.service.selection.requirements.details.custom.label",
-          path: "service/label"
-        },
-        {
-          name: t["menu.production.service.selection.check"],
-          key: "menu.production.service.selection.check",
-          icon: (
-            <IconCalendar key={"menu.production.service.selection.check"} />
-          )
+          path: "service/label",
+          show: false,
+          value: 4
         }
       ]
     },
-
     {
-      name: t["menu.production.service.selection.overview"],
-      key: "menu.production.service.selection.overview",
-      path: "summarize",
-      icon: <IconNav key={"menu.production.service.selection.overview"} />
+      name: t["menu.production.service.selection.check"],
+      key: "menu.production.service.selection.check",
+      icon: <IconCalendar key={"menu.production.service.selection.check"} />
+
     }
   ];
   const flattenRoutes = useMemo(() => getFlattenRoutes(MenuTree) || [], []);
   const history = useHistory();
-  const [setStepRouter, setCollapse] = ProductStore(state => [state.setStepRouter, state.setCollapse], shallow);
+  const [setStepRouter, setCollapse] = ProductStore(state => [state.setStepRouter, state.setCollapse, state.setStepList], shallow);
+
   useEffect(() => {
-    setCollapse(false);
+    setMenu(MenuTree)
   }, []);
 
   function onClickMenuItem(key) {
@@ -124,6 +127,10 @@ export default function ProductDemand(props) {
     });
   }
 
+  const nextStep = () => {
+    history.push(`/product/demand/hardware`)
+  }
+
   const bodyStyle = {
     paddingLeft: "2rem",
     paddingRight: "0",
@@ -136,7 +143,7 @@ export default function ProductDemand(props) {
     <div style={bodyStyle}>
       <div className={styles.layout}>
         <div className={styles.layoutLeftSide}>
-          <ProductMenu menu={MenuTree} clickMenuItem={onClickMenuItem} />
+          <ProductMenu clickMenuItem={onClickMenuItem} />
         </div>
         <div className={styles["layout-content"]}>
           <Switch>
@@ -151,6 +158,11 @@ export default function ProductDemand(props) {
             })}
             <Route exact path={"/product/demand"}>
               <div>todo 添加导入过程声明和足以事项</div>
+              <div>
+                <Button type='primary' onClick={nextStep}>
+                  {t['index.start']}
+                </Button>
+              </div>
             </Route>
           </Switch>
         </div>
