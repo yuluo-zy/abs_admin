@@ -189,7 +189,11 @@ const i18n = {
     'firmware.pre.ca.setting.config.flashing.provided.required': '必要',
     'firmware.pre.ca.setting.config.flashing.provided.optional': '可选',
     'firmware.pre.ca.setting.config.flashing.provided.no.need': '不需要',
-    'index.start': '开始填写'
+    'index.start': '开始填写',
+    'self.check.boot.log': '完整开机串口日志LOG',
+    'self.check.boot.file.context': '请确认文件内容包含上文提供的字符串',
+    'self.check.boot.efuse.context': '请确保文件内容符合您填写的efuse烧写要求',
+    'self.check.button': '自助校验'
   },
 };
 

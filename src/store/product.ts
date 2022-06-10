@@ -52,6 +52,9 @@ export interface BurnDemand {
 export interface PreFitDemand {
   fitData: Recordable;
 }
+export interface CheckDemand {
+  checkData: Recordable;
+}
 
 const createBearSlice: StoreSlice<StepSetting> = (set, get) => ({
   stepKey: '',
@@ -97,7 +100,6 @@ const createFirmwareDemand: StoreSlice<FirmwareDemand> = (set, get) => ({
       ...value
     }
   }))
-
 });
 
 // 定制Mac
@@ -109,7 +111,6 @@ const createMacDemand: StoreSlice<MacDemand> = (set, get) => ({
       ...value
     }
   }))
-
 });
 
 // 定制 Label
@@ -144,6 +145,16 @@ const createPreFitDemand: StoreSlice<PreFitDemand> = (set, get) => ({
     }
   }))
 });
+// 定制自助校验
+const createCheckDemand: StoreSlice<CheckDemand> = (set, get) => ({
+  checkData: null,
+  setCheckData: value => set((state) => ({
+    checkData: {
+      ...state.checkData,
+      ...value
+    }
+  }))
+});
 
 const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
   ...createBearSlice(set, get),
@@ -153,6 +164,7 @@ const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
   ...createLabelDemand(set, get),
   ...createBurnDemand(set, get),
   ...createPreFitDemand(set, get),
+  ...createCheckDemand(set,get),
   reset: () => {
     set({
       fitData: null,
@@ -161,6 +173,7 @@ const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
       macData: null,
       info: null,
       serviceId: null,
+      checkData: null,
       demandId: -1,
       moduleInfo: {},
       serviceType: [],

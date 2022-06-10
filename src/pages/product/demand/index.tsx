@@ -103,8 +103,8 @@ export default function ProductDemand(props) {
     {
       name: t["menu.production.service.selection.check"],
       key: "menu.production.service.selection.check",
-      icon: <IconCalendar key={"menu.production.service.selection.check"} />
-
+      icon: <IconCalendar key={"menu.production.service.selection.check"} />,
+      path: "check"
     }
   ];
   const flattenRoutes = useMemo(() => getFlattenRoutes(MenuTree) || [], []);
