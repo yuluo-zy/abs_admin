@@ -40,3 +40,7 @@ export const postBurnCustomDemand = (data) => {
 export const postAdaptCustomDemand = (data) => {
   return httpPost('/demand/custom/adapt/save', data);
 };
+
+export const postCheckCustomDemand = (data) => {
+  return httpPost('/demand/custom/check', data);
+};

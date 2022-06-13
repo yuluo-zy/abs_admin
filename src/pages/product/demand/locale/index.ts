@@ -193,7 +193,8 @@ const i18n = {
     'self.check.boot.log': '完整开机串口日志LOG',
     'self.check.boot.file.context': '请确认文件内容包含上文提供的字符串',
     'self.check.boot.efuse.context': '请确保文件内容符合您填写的efuse烧写要求',
-    'self.check.button': '自助校验'
+    'self.check.button': '自助校验',
+    'self.check.result': '校验结果',
   },
 };
 
