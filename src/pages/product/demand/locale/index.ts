@@ -195,6 +195,13 @@ const i18n = {
     'self.check.boot.efuse.context': '请确保文件内容符合您填写的efuse烧写要求',
     'self.check.button': '自助校验',
     'self.check.result': '校验结果',
+    'self.check.return.result': '校验结果',
+    'self.check.table.project': '校验项目',
+    'self.check.table.file': '校验文件',
+    'self.check.table.expected.value': '校验期望值',
+    'self.check.table.Md5': 'MD5 (检查预期值是否和实际值一致)',
+    'self.check.table.serial.port': '串口打印 (检查校验文件是否包含预期字符串)',
+    'self.check.table.efuse': 'eFuse (检查预期值是否与实际值一致)'
   },
 };
 

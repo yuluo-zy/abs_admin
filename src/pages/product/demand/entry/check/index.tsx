@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
 import useLocale from '@/pages/product/demand/locale/useLocale';
-import { Button, Form, Modal } from '@arco-design/web-react';
+import { Button, Message, Modal } from '@arco-design/web-react';
 import DynamicUpload from '@/components/Dynamic/Upload';
 import { UploadItem } from '@arco-design/web-react/es/Upload';
 import styles from './style/index.module.less';
@@ -9,8 +9,8 @@ import { ProductStore } from '@/store/product';
 import shallow from 'zustand/shallow';
 import { IconArrowRight } from '@arco-design/web-react/icon';
 import { useHistory } from 'react-router';
-
-const FormItem = Form.Item;
+import { postCheckCustomDemand } from '@/api/demand';
+import CheckTable from '@/pages/product/demand/entry/check/check-table';
 
 const bodyStyle = {
   paddingTop: '0',
@@ -38,13 +38,20 @@ export default function CheckSelection() {
     }}, [])
 
   const postCheck = () => {
-    setVisible(!visible)
-    // postCheckCustomDemand({
-    //   'demandId': demandId,
-    //   ...checkData
-    // }).then(res => {
-    //
-    // })
+    postCheckCustomDemand({
+      'demandId': demandId,
+      'serialFileId': checkData?.serialFileId[0]?.response,
+      'efuseFileId': checkData?.efuseFileId[0]?.response,
+      'id': checkData?.id
+    }).then(res => {
+      if(res.data.success) {
+        Message.success(t["submit.hardware.success"]);
+        setCheckData({
+          id: res.data.result?.selAutoCheckId,
+          result: res.data.result
+        })
+      }
+    })
   }
 
   const nextStep = () => {
@@ -56,6 +63,7 @@ export default function CheckSelection() {
 
   return <DynamicOuterCard title={t['hardware.production.info.title']} bodyStyle={bodyStyle}>
       <table cellPadding='1' cellSpacing='1' className={styles['table-style']}>
+        <tbody>
         <tr>
           <th className={styles['medium']}>Items</th>
           <th className={styles['max']}>提供示例文件</th>
@@ -65,6 +73,7 @@ export default function CheckSelection() {
           <td>{t['self.check.boot.log']}</td>
           <td align='center'>
               <DynamicUpload limit={1}
+                             defaultFileList={checkData?.serialFileId}
                              onChange={(fileList: UploadItem, file: UploadItem) => {
                                setCheckData({ 'serialFileId': fileList });
                              }} /></td>
@@ -75,13 +84,14 @@ export default function CheckSelection() {
         <tr>
           <td>eFuse summary</td>
           <td>
-              <DynamicUpload limit={1} onChange={(fileList: UploadItem, file: UploadItem) => {
+              <DynamicUpload limit={1} defaultFileList={checkData?.efuseFileId} onChange={(fileList: UploadItem, file: UploadItem) => {
                 setCheckData({ 'efuseFileId': fileList });
               }} />
           </td>
           <td><p>{t['self.check.boot.efuse.context']}</p></td>
           <td><p>{}</p></td>
         </tr>
+        </tbody>
       </table>
     <div className={styles['context-next']}>
       <Button
@@ -104,10 +114,7 @@ export default function CheckSelection() {
         <Button onClick={nextStep}>OK</Button>
       }
     >
-      <p>
-        You can customize modal body text by the current situation. This modal will be closed
-        immediately once you press the OK button.
-      </p>
+      <CheckTable data={checkData?.result}/>
     </Modal>
   </DynamicOuterCard>;
 }

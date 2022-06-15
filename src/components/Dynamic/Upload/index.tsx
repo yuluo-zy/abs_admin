@@ -1,13 +1,27 @@
-import React, { useState } from "react";
-import { Message, Upload } from "@arco-design/web-react";
-import useLocale from "@/utils/useHook/useLocale";
+import React from 'react';
+import { Message, Upload } from '@arco-design/web-react';
+import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
-import { postFile } from "@/api/file";
-import axios from "axios";
+import { postFile } from '@/api/file';
+import axios from 'axios';
 
-function DynamicUpload(props: {limit, onChange, listType?, onPreview?}) {
+function DynamicUpload(props: {limit, onChange, listType?, onPreview?, defaultFileList?}) {
   const t = useLocale(locale)
-  const {limit,onChange, listType, onPreview } = props
+  const {limit,onChange, listType, onPreview, defaultFileList } = props
+  const filePath = "/file/download/"
+
+  const getDefaultFileList = (fileList) => {
+    let temp = []
+
+    if(fileList){
+      temp = [...fileList]
+      for (let item of temp){
+        item.url = filePath + item.response
+      }
+    }
+
+    return temp
+  }
 
   return (
     <Upload
@@ -17,6 +31,7 @@ function DynamicUpload(props: {limit, onChange, listType?, onPreview?}) {
       listType={listType}
       onChange={onChange}
       onPreview={onPreview}
+      defaultFileList={getDefaultFileList(defaultFileList)}
       customRequest={(option) => {
         const { onProgress, file,onSuccess, onError } = option
         let formData = new FormData();
