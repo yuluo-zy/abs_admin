@@ -20,12 +20,11 @@ const router = [
     key: 4
   },
   {
-    path: "",
+    path: "/product/demand/check",
     key: 5
   }
 ]
 export const getNextRouter = (currentIndex, routerList) => {
-  console.log(routerList)
   // 获得下一个路由
   const temp = [...routerList.sort(function(a, b){return a - b})]
   if(temp.length === 0){

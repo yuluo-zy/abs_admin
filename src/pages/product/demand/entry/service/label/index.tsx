@@ -33,7 +33,6 @@ export default function CustomLabel() {
     setLabelData({
       ...form.getFieldsValue()
     });
-    console.log( form.getFieldsValue())
     postLabelCustomDemand({
       ...labelData,
       demandId: demandId
