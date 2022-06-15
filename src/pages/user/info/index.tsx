@@ -6,7 +6,6 @@ import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import UserInfoHeader from './header';
 import styles from './style/index.module.less';
-import './mock';
 import MyProject from './my-projects';
 import MyTeam from './my-team';
 import LatestNews from './latest-news';

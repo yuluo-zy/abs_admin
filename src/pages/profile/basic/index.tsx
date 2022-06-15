@@ -5,7 +5,6 @@ import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import ProfileItem from './item';
 import styles from './style/index.module.less';
-import './mock';
 
 function BasicProfile() {
   const t = useLocale(locale);

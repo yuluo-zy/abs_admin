@@ -6,7 +6,6 @@ import locale from './locale';
 import InfoHeader from './header';
 import InfoForm from './info';
 import Security from './security';
-import './mock';
 import Verified from './verified';
 
 function UserInfo() {
