@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './style/index.module.less';
 import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
 import useLocale from '@/pages/product/summarize/locale/useLocale';
 import DynamicMiniInput from '@/components/Dynamic/Input/mini';
+import { ProductStore } from '@/store/product';
+import shallow from 'zustand/shallow';
+import { getDemandDetails } from '@/api/demand';
 
 const bodyStyle = {
   paddingTop: '0',
@@ -11,13 +14,32 @@ const bodyStyle = {
 };
 export default function Sheet() {
   const t = useLocale();
+  // 获取用来存储数据的所有对象
+  const [checkData, moduleInfo, demandId, info, macData, labelData, burnData, fitData] =
+    ProductStore(state =>
+      [state.checkData,
+        state.moduleInfo,
+        state.demandId,
+        state.info,
+        state.macData,
+        state.labelData,
+        state.burnData,
+        state.fitData
+      ], shallow);
+
+  useEffect(()=> {
+    getDemandDetails(demandId).then(res => {
+      if(res.data.success) {
+
+    }})
+  }, [])
   return <DynamicOuterCard title={t['summarize.sheet.title']} bodyStyle={bodyStyle}>
     <table cellPadding='1' cellSpacing='1' className={styles['table-style']}>
       <tr>
-        <th className={styles["mini"]}>勾选</th>
-        <th className={styles["mini"]}>IDs</th>
-        <th className={styles["medium"]}>Project Name:</th>
-        <th colSpan={6}><DynamicMiniInput /></th>
+        <th className={styles['mini']}>勾选</th>
+        <th className={styles['mini']}>IDs</th>
+        <th className={styles['medium']}>Project Name:</th>
+        <th colSpan={6}></th>
       </tr>
       <tr>
         <td></td>

@@ -1,7 +1,7 @@
 import useLocale from '@/pages/product/locale/useLocale';
 import SearchList from '@/components/Dynamic/List';
 import React, { useState } from 'react';
-import { Message, Modal, Typography } from '@arco-design/web-react';
+import { Link, Message, Modal, Typography } from '@arco-design/web-react';
 import { getProductionDemand, postProductionDemand } from '@/api/demand';
 import DynamicTag from '@/components/Dynamic/tag';
 import { ManageMenuProps, SearchItem } from '@/components/type';
@@ -10,6 +10,7 @@ import { Route, Switch, useHistory } from 'react-router';
 import lazyload from '@/utils/lazyload';
 import { ProductStore } from '@/store/product';
 import shallow from 'zustand/shallow';
+import styles from './style/index.module.less';
 
 const { Text } = Typography;
 
@@ -29,11 +30,14 @@ export default function DemandManage() {
     { name: t['product.manage.operate.not.select'] , onChange: item => {}},
     {name: t['product.manage.tools.add'], onChange: () => {
         addDemandConfirm()
-      }},
-    {name: t['product.manage.tools.overview'], onChange: () => {
-        history.push(`/product/summarize`)
       }}
   ]
+  const toRequirementsOverview = (demandId) => {
+    reset()
+    ProductStore.persist.clearStorage()
+    setDemandId(demandId)
+    history.push(`/product/summarize`)
+  }
   const selectItem: Array<SearchItem> = [
     {
       name:  t["product.manage.table.fwpn"],
@@ -57,7 +61,7 @@ export default function DemandManage() {
         title: t["product.manage.table.fwpn"],
         dataIndex: "fwPn",
         width: 150,
-        render: (value) => <Text>{value}</Text>
+        render:  (col, record, index) =>  <div onClick={() => {toRequirementsOverview(record?.id)}}><Link className={styles['link']}> {record?.fwPn} </Link></div>
       },
       {
         title: t["product.manage.table.client.name"],

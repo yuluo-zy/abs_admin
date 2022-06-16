@@ -44,3 +44,7 @@ export const postAdaptCustomDemand = (data) => {
 export const postCheckCustomDemand = (data) => {
   return httpPost('/demand/custom/check', data);
 };
+
+export const getDemandDetails = (demandId) => {
+  return httpGet('/demand/custom/'+demandId)
+}
