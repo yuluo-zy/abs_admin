@@ -1,7 +1,7 @@
 import { httpGet, httpPost } from '@/utils/httpRequest';
 
-export const getProductionDemand = () => {
-  return httpGet('/demand');
+export const getProductionDemand = (data) => {
+  return httpGet('/demand', data);
 };
 
 export const postProductionDemand = () => {
