@@ -8,8 +8,8 @@ import dayjs from 'dayjs';
 import { IconCheck, IconDelete, IconPlus, IconRefresh } from '@arco-design/web-react/icon';
 import cs from 'classnames';
 import useDebounce from '@/utils/useHook/useDebounce';
-import DynamicUpload from "@/components/Dynamic/Upload";
-import { UploadItem } from "@arco-design/web-react/es/Upload";
+import DynamicUpload from '@/components/Dynamic/Upload';
+import { UploadItem } from '@arco-design/web-react/es/Upload';
 
 const { Row, Col } = Grid;
 const FormItem = Form.Item;
@@ -147,11 +147,16 @@ function DynamicForm(props: FormProps) {
           help={item.placeholder}
         >
           <DynamicUpload limit={item.limit} onChange={(fileList: UploadItem[], file: UploadItem) => {
-            const res = []
-            fileList.forEach( r => {
-              res.push(r.response)
-            })
-           form.setFieldValue(item.field, res)
+            if(item.limit > 1){
+              const res = []
+              fileList.forEach( r => {
+                res.push(r.response)
+              })
+              form.setFieldValue(item.field, res)
+            }else {
+              form.setFieldValue(item.field, file.response)
+            }
+
           }}  />
         </FormItem>
       );

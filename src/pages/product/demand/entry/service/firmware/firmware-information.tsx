@@ -1,14 +1,15 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { FormItemProps, FormList } from "@/components/type";
-import useLocale from "@/pages/product/demand/locale/useLocale";
-import DynamicForm from "@/components/Dynamic/Form";
-import DynamicCard from "@/components/Dynamic/Card";
-import { useUpdateEffect } from "react-use";
-import { getList } from "@/utils/listTools";
+import React, { useMemo, useState } from 'react';
+import { FormItemProps } from '@/components/type';
+import useLocale from '@/pages/product/demand/locale/useLocale';
+import DynamicForm from '@/components/Dynamic/Form';
+import DynamicCard from '@/components/Dynamic/Card';
+import { useUpdateEffect } from 'react-use';
+import { getList } from '@/utils/listTools';
 
 
-export default function FirmwareInformation(props) {
+export default function FirmwareInformation(props: {initialValues, number?}) {
   const t = useLocale();
+  const {initialValues} = props;
   const [number, setNumber] = useState(getList(props.number));
   const labelCol = {
     span: 12
@@ -60,7 +61,7 @@ export default function FirmwareInformation(props) {
     {
       label: t["firmware.information.upLoad"],
       type: "upload",
-      field: "files",
+      field: "filesId",
       labelCol: labelCol,
       required: true,
       limit: 1,
@@ -86,6 +87,7 @@ export default function FirmwareInformation(props) {
             return <DynamicForm title={`firmware.information.title-${item}`}
                                 col={4}
                                 key={item}
+                                // data={initialValues[item]}
                                 formItem={informationProps} />;
           })
           }
