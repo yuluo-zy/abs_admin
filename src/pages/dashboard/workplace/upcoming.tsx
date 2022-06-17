@@ -4,7 +4,7 @@ import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
 import styles from './style/announcement.module.less';
 
-function Announcement() {
+function Upcoming() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -44,7 +44,7 @@ function Announcement() {
     <Card>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography.Title heading={6}>
-          {t['workplace.announcement']}
+          {t['workplace.upcoming.title']}
         </Typography.Title>
         <Link>{t['workplace.seeMore']}</Link>
       </div>
@@ -64,4 +64,4 @@ function Announcement() {
   );
 }
 
-export default Announcement;
+export default Upcoming;

@@ -5,9 +5,9 @@ import PopularContents from './popular-contents';
 import ContentPercentage from './content-percentage';
 import Shortcuts from './shortcuts';
 import Announcement from './announcement';
-import Carousel from './carousel';
 import Docs from './docs';
 import styles from './style/index.module.less';
+import Upcoming from '@/pages/dashboard/workplace/upcoming';
 
 const { Row, Col } = Grid;
 
@@ -28,9 +28,12 @@ function Workplace() {
         </Row>
       </Space>
       <Space className={styles.right} size={16} direction="vertical">
+        {/*待办中心*/}
+        <Upcoming/>
         <Shortcuts />
-        <Carousel />
+        {/*// 公告*/}
         <Announcement />
+        {/*// 文档中心*/}
         <Docs />
       </Space>
     </Space>

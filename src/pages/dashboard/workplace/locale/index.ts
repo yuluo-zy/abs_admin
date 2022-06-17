@@ -57,7 +57,6 @@ const i18n = {
     'workplace.shortcuts': '快捷入口',
     'workplace.manage': '管理',
     'workplace.contentMgmt': '内容管理',
-    'workplace.contentStatistic': '内容数据',
     'workplace.advancedMgmt': '高级管理',
     'workplace.onlinePromotion': '线上推广',
     'workplace.marketing': '内容投放',
@@ -72,6 +71,9 @@ const i18n = {
     'workplace.materialMarket': '物料市场',
     'workplace.react': 'React 组件库',
     'workplace.vue': 'Vue 组件库',
+
+    'workplace.contentStatistic': '需求管理',
+    'workplace.upcoming.title': '待办事项',
   },
 };
 

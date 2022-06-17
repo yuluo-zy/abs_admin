@@ -107,7 +107,7 @@ export default function Sheet() {
         <td rowSpan={12}>2</td>
         <td rowSpan={12}>Coustome Firmware</td>
         <td rowSpan={2}>Firmware Version Number</td>
-        <td rowSpan={2} colSpan={2}><DynamicMiniInput /></td>
+        <td rowSpan={2} colSpan={2}>{info?.firmwareVersion}</td>
         <td>Flash Encryption</td>
         <td colSpan={2}><DynamicMiniInput /></td>
       </tr>
