@@ -7,7 +7,8 @@ import { Form, Grid, InputNumber } from '@arco-design/web-react';
 
 const Row = Grid.Row;
 const Col = Grid.Col;
-export default function SerialCheck() {
+export default function SerialCheck(props: {initialValues?}) {
+  const {initialValues} = props
   const t = useLocale();
   const informationProps: Array<FormItemProps> = [
     {
@@ -75,7 +76,7 @@ export default function SerialCheck() {
     <DynamicCard title={t['firmware.serial.check.title']} help={'kjhkjhkjhkjh'}>
       <Row>
         <Col xs={24} sm={20} lg={18} xxl={18}>
-          <DynamicForm title={'firmware.serial.check.title'} formItem={informationProps} />
+          <DynamicForm title={'firmware.serial.check.title'} formItem={informationProps} data={initialValues} />
         </Col>
         <Col />
       </Row>

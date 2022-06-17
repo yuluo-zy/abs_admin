@@ -50,7 +50,7 @@ export default function FirmwareCustomization() {
         await infos.forms[item].validate();
       }
     } catch (e) {
-      Message.error("校验失败");
+      Message.error("Verification Failed");
       return;
     }
     let temp = {}
@@ -270,7 +270,7 @@ export default function FirmwareCustomization() {
                                setInfo({
                                  keyType: value
                                })
-                               if (value === "only") {
+                               if (value === 0) {
                                  setVisible(true);
                                }
                              }}
@@ -335,7 +335,7 @@ export default function FirmwareCustomization() {
         {info?.encryption === false && <div>
           <FirmwareInformation />
           <Divider style={{ borderBottomStyle: "dashed" }} />
-          <SerialCheck />
+          <SerialCheck initialValues={{ ...info }}/>
           <Divider style={{ borderBottomStyle: "dashed" }} />
         </div>
         }
@@ -343,7 +343,7 @@ export default function FirmwareCustomization() {
         {info?.keyType === 0 && <div>
           <FirmwareInformation />
           <Divider style={{ borderBottomStyle: "dashed" }} />
-          <SerialCheck />
+          <SerialCheck initialValues={{ ...info }}/>
           <Divider style={{ borderBottomStyle: "dashed" }} />
         </div>
         }
@@ -354,9 +354,9 @@ export default function FirmwareCustomization() {
             <Divider style={{ borderBottomStyle: "dashed" }} />
             <FirmwareFlash />
             <Divider style={{ borderBottomStyle: "dashed" }} />
-            <FirmwareEfuse />
+            <FirmwareEfuse initialValues={{...info}} />
             <Divider style={{ borderBottomStyle: "dashed" }} />
-            <SerialCheck />
+            <SerialCheck initialValues={{ ...info }}/>
             <Divider style={{ borderBottomStyle: "dashed" }} />
           </div>
         }
