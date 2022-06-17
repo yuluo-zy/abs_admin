@@ -352,7 +352,7 @@ export default function FirmwareCustomization() {
           info?.keyType === 1 && <div>
             <FirmwareInformation number={info?.partitionNum} />
             <Divider style={{ borderBottomStyle: "dashed" }} />
-            <FirmwareFlash />
+            <FirmwareFlash initialValues={{ ...info }}/>
             <Divider style={{ borderBottomStyle: "dashed" }} />
             <FirmwareEfuse initialValues={{...info}} />
             <Divider style={{ borderBottomStyle: "dashed" }} />

@@ -5,11 +5,12 @@ import DynamicForm from '@/components/Dynamic/Form';
 import DynamicCard from '@/components/Dynamic/Card';
 
 
-export default function FirmwareFlash() {
+export default function FirmwareFlash(props: {initialValues}) {
   const t = useLocale();
   const labelCol = {
     span: 12
   };
+  const {initialValues} = props
   const informationProps: Array<FormItemProps> = [{
     label: 'Flash Frequency',
     type: 'select',
@@ -75,6 +76,7 @@ export default function FirmwareFlash() {
     <DynamicCard title={t['firmware.information.flash.title']}>
       <DynamicForm title={'firmware.information.flash.title'}
                    col={3}
+                   data={initialValues}
                    formItem={informationProps} />
     </DynamicCard>
   );
