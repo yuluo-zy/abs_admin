@@ -64,7 +64,6 @@ function CustomEfuseConfig(props) {
       setEfuse(efuseTemp);
       setEfuseList(temp);
     }
-    console.log(efuse)
   }
 
   useEffect(() => {
