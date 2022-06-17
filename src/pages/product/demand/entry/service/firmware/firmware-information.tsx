@@ -61,7 +61,7 @@ export default function FirmwareInformation(props: {initialValues, number?}) {
     {
       label: t["firmware.information.upLoad"],
       type: "upload",
-      field: "filesId",
+      field: "fileId",
       labelCol: labelCol,
       required: true,
       limit: 1,
@@ -87,7 +87,7 @@ export default function FirmwareInformation(props: {initialValues, number?}) {
             return <DynamicForm title={`firmware.information.title-${item}`}
                                 col={4}
                                 key={item}
-                                // data={initialValues[item]}
+                                data={initialValues[item]}
                                 formItem={informationProps} />;
           })
           }
