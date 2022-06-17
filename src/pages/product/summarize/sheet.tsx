@@ -9,6 +9,7 @@ import { getDemandDetails } from '@/api/demand';
 import { getProductionInfo } from '@/api/production';
 import { Button } from '@arco-design/web-react';
 import { useHistory } from 'react-router';
+import DynamicSkeleton from '@/components/Dynamic/Skeleton';
 
 const bodyStyle = {
   paddingTop: '0',
@@ -30,8 +31,9 @@ export default function Sheet() {
         state.burnData,
         state.fitData
       ], shallow);
-  const [setModuleInfo,] = ProductStore( state => [
+  const [setModuleInfo,setInfo] = ProductStore( state => [
     state.setModuleInfo,
+    state.setInfo
   ], shallow)
 
   const [serviceType, setServiceType] = ProductStore(state => [state.serviceType, state.setServiceType], shallow);
@@ -47,6 +49,10 @@ export default function Sheet() {
         if(res.data.result?.selServeVO){
           setSelServeVO(res.data.result?.selServeVO)
         }
+        // 设置固件自定义
+        if(res.data.result?.selFirmwareVO){
+          setSelFirmwareVO(res.data.result?.selFirmwareVO)
+        }
     }})
   }, [])
 
@@ -57,9 +63,9 @@ export default function Sheet() {
       id: data.productionId
     })
     getProductionInfo().then(res => {
-      for(const info of res.data?.result){
-        if(info?.id === moduleInfo?.id){
-          setModuleInfo(info)
+      for(const temp of res.data?.result){
+        if(temp?.id === data.productionId){
+          setModuleInfo(temp)
         }
       }
     })
@@ -71,12 +77,17 @@ export default function Sheet() {
     setServiceType(data?.serveIds)
   }
 
+  const setSelFirmwareVO = (data) => {
+    setInfo(data)
+  }
+
   const toEdit = () => {
     history.push(`/product/demand/hardware`)
   }
 
   return <DynamicOuterCard title={t['summarize.sheet.title']} bodyStyle={bodyStyle}>
     <Button className={styles['edit']} onClick={toEdit}>{t['summarize.sheet.edit']}</Button>
+    <DynamicSkeleton text={{ rows: 10, width: "90rem" }}>
     <table cellPadding='1' cellSpacing='1' className={styles['table-style']}>
     <tbody>
       <tr>
@@ -89,7 +100,7 @@ export default function Sheet() {
         <td></td>
         <td>1</td>
         <td>Module Name:</td>
-        <td colSpan={6}><div>{moduleInfo.mpn}</div></td>
+        <td colSpan={6}><div>{moduleInfo?.mpn}</div></td>
       </tr>
       <tr>
         <td rowSpan={12}></td>
@@ -232,5 +243,6 @@ export default function Sheet() {
       </tr>
     </tbody>
     </table>
+    </DynamicSkeleton>
   </DynamicOuterCard>;
 }
