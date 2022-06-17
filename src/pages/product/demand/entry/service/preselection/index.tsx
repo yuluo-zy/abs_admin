@@ -45,7 +45,7 @@ export default function ServicePreselection() {
     );
     setCollapse(false);
     return () => {
-      setService([]); // This worked for me
+      setService([]);
     };
   }, []);
 

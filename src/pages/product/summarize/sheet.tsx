@@ -7,6 +7,8 @@ import { ProductStore } from '@/store/product';
 import shallow from 'zustand/shallow';
 import { getDemandDetails } from '@/api/demand';
 import { getProductionInfo } from '@/api/production';
+import { Button } from '@arco-design/web-react';
+import { useHistory } from 'react-router';
 
 const bodyStyle = {
   paddingTop: '0',
@@ -15,6 +17,7 @@ const bodyStyle = {
 };
 export default function Sheet() {
   const t = useLocale();
+  const history = useHistory();
   // 获取用来存储数据的所有对象
   const [checkData, moduleInfo, demandId, info, macData, labelData, burnData, fitData] =
     ProductStore(state =>
@@ -30,6 +33,10 @@ export default function Sheet() {
   const [setModuleInfo,] = ProductStore( state => [
     state.setModuleInfo,
   ], shallow)
+
+  const [serviceType, setServiceType] = ProductStore(state => [state.serviceType, state.setServiceType], shallow);
+  const [serviceId, setServiceId] = ProductStore(state => [state.serviceId, state.setServiceId], shallow);
+
   useEffect(()=> {
     getDemandDetails(demandId).then(res => {
       if(res.data.success && res.data.result) {
@@ -60,10 +67,16 @@ export default function Sheet() {
 
   // 设置 自定义服务选型
   const setSelServeVO = (data) => {
+    setServiceId(data?.id)
+    setServiceType(data?.serveIds)
+  }
 
+  const toEdit = () => {
+    history.push(`/product/demand/hardware`)
   }
 
   return <DynamicOuterCard title={t['summarize.sheet.title']} bodyStyle={bodyStyle}>
+    <Button className={styles['edit']} onClick={toEdit}>{t['summarize.sheet.edit']}</Button>
     <table cellPadding='1' cellSpacing='1' className={styles['table-style']}>
     <tbody>
       <tr>

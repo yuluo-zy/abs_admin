@@ -3,6 +3,7 @@ const i18n = {
   'zh-CN': {
 'summarize.sheet.title': '需求总览',
     'summarize.history.title': '历史记录',
+    'summarize.sheet.edit': '重新编辑'
   },
 };
 
