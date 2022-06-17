@@ -248,6 +248,7 @@ export default function HardwareSelection() {
   useEffect(() => {
     fetchProductionList();
     setCollapse(true)
+    setSelectedRowKeys([moduleInfo?.id])
   }, []);
 
   const [columns, setColumns] = useState(

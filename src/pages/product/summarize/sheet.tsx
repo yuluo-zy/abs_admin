@@ -6,6 +6,7 @@ import DynamicMiniInput from '@/components/Dynamic/Input/mini';
 import { ProductStore } from '@/store/product';
 import shallow from 'zustand/shallow';
 import { getDemandDetails } from '@/api/demand';
+import { getProductionInfo } from '@/api/production';
 
 const bodyStyle = {
   paddingTop: '0',
@@ -26,15 +27,45 @@ export default function Sheet() {
         state.burnData,
         state.fitData
       ], shallow);
-
+  const [setModuleInfo,] = ProductStore( state => [
+    state.setModuleInfo,
+  ], shallow)
   useEffect(()=> {
     getDemandDetails(demandId).then(res => {
-      if(res.data.success) {
-
+      if(res.data.success && res.data.result) {
+        if(res.data.result?.selDemandProduction){
+          setSelDemandProduction(res.data.result?.selDemandProduction)
+        }
+        // 设置 自定义服务
+        if(res.data.result?.selServeVO){
+          setSelServeVO(res.data.result?.selServeVO)
+        }
     }})
   }, [])
+
+  // 设置硬件选型
+  const setSelDemandProduction = (data) => {
+    setModuleInfo({
+      sid: data?.id,
+      id: data.productionId
+    })
+    getProductionInfo().then(res => {
+      for(const info of res.data?.result){
+        if(info?.id === moduleInfo?.id){
+          setModuleInfo(info)
+        }
+      }
+    })
+  }
+
+  // 设置 自定义服务选型
+  const setSelServeVO = (data) => {
+
+  }
+
   return <DynamicOuterCard title={t['summarize.sheet.title']} bodyStyle={bodyStyle}>
     <table cellPadding='1' cellSpacing='1' className={styles['table-style']}>
+    <tbody>
       <tr>
         <th className={styles['mini']}>勾选</th>
         <th className={styles['mini']}>IDs</th>
@@ -45,7 +76,7 @@ export default function Sheet() {
         <td></td>
         <td>1</td>
         <td>Module Name:</td>
-        <td colSpan={6}><DynamicMiniInput /></td>
+        <td colSpan={6}><div>{moduleInfo.mpn}</div></td>
       </tr>
       <tr>
         <td rowSpan={12}></td>
@@ -186,6 +217,7 @@ export default function Sheet() {
         <td>package</td>
         <td colSpan={4}><DynamicMiniInput /></td>
       </tr>
+    </tbody>
     </table>
   </DynamicOuterCard>;
 }
