@@ -425,16 +425,19 @@ export default function ServicePreselection() {
       Message.error("校验失败");
       return;
     }
-    setBurnData({
+    let temp = {
+      ...burnData,
       ...info.forms["firmware.burn.flash.title"]?.getFieldsValue(),
       ...info.forms["firmware.burn.efuse.title"]?.getFieldsValue()
-    });
+    }
+
     postBurnCustomDemand({
-      ...burnData,
+      ...temp,
       demandId: demandId
     }).then(res => {
       if (res.data.success) {
         setBurnData({
+          ...temp,
           id: res.data.result
         })
         history.push(getNextRouter(2, serviceType))

@@ -29,12 +29,13 @@ export default function Sheet() {
         state.macData,
         state.labelData,
         state.burnData,
-        state.fitData
+        state.fitData,
       ], shallow);
-  const [setModuleInfo,setInfo, setMacData] = ProductStore( state => [
+  const [setModuleInfo,setInfo, setMacData, setBurnData] = ProductStore( state => [
     state.setModuleInfo,
     state.setInfo,
-    state.setMacData
+    state.setMacData,
+    state.setBurnData
   ], shallow)
 
   const [serviceType, setServiceType] = ProductStore(state => [state.serviceType, state.setServiceType], shallow);
@@ -54,8 +55,13 @@ export default function Sheet() {
         if(res.data.result?.selFirmwareVO){
           setSelFirmwareVO(res.data.result?.selFirmwareVO)
         }
+        // 设置定制mac
         if(res.data.result?.selDemandMac){
           setSelDemandMac(res.data.result?.selDemandMac)
+        }
+        // 设置定制烧录内容
+        if(res.data.result?.selContentVO){
+          setSelContentVO(res.data.result?.selContentVO)
         }
     }})
   }, [])
@@ -88,9 +94,20 @@ export default function Sheet() {
   const setSelDemandMac = (data) => {
     setMacData(data)
   }
+
+  const setSelContentVO = (data) => {
+    setBurnData(data)
+  }
   const toEdit = () => {
     history.push(`/product/demand/hardware`)
   }
+
+  const options = [
+    t["firmware.burn.flash.planA"],
+    t["firmware.burn.flash.planB.NVS"],
+    t["firmware.burn.flash.planB.NO_NVS"],
+    t["firmware.burn.flash.planC"]
+  ]
 
   return <DynamicOuterCard title={t['summarize.sheet.title']} bodyStyle={bodyStyle}>
     <Button className={styles['edit']} onClick={toEdit}>{t['summarize.sheet.edit']}</Button>
@@ -205,30 +222,28 @@ export default function Sheet() {
         <td rowSpan={5}>4</td>
         <td rowSpan={5}>Customized Content</td>
         <td rowSpan={3}>Flash</td>
-        <td>data type</td>
+        <td>Burn type</td>
         <td>flash offset</td>
         <td colSpan={3}>Serial port print string</td>
       </tr>
       <tr>
-        <td><DynamicMiniInput /></td>
-        <td><DynamicMiniInput /></td>
-        <td colSpan={3}><DynamicMiniInput /></td>
+        <td>{burnData?.flashType !== -1 ? options[burnData?.flashType]: ""}</td>
+        <td>{burnData?.burnOffset}</td>
+        <td colSpan={3}>{burnData?.flashOkSerialLabel}</td>
       </tr>
       <tr>
-        <td><DynamicMiniInput /></td>
-        <td><DynamicMiniInput /></td>
-        <td colSpan={3}><DynamicMiniInput /></td>
+        <td></td>
+        <td></td>
+        <td colSpan={3}></td>
       </tr>
       <tr>
         <td rowSpan={2}>eFuse</td>
-        <td>data type</td>
         <td>eFuse offset</td>
-        <td colSpan={3}>Serial port print string</td>
+        <td colSpan={4}>Serial port print string</td>
       </tr>
       <tr>
-        <td><DynamicMiniInput /></td>
-        <td><DynamicMiniInput /></td>
-        <td colSpan={3}><DynamicMiniInput /></td>
+        <td>{burnData?.efuseBurnAddr}</td>
+        <td colSpan={4}>{burnData?.efuseOkSerialLabel}</td>
       </tr>
 
       {/*第五节内容*/}
