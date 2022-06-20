@@ -31,9 +31,10 @@ export default function Sheet() {
         state.burnData,
         state.fitData
       ], shallow);
-  const [setModuleInfo,setInfo] = ProductStore( state => [
+  const [setModuleInfo,setInfo, setMacData] = ProductStore( state => [
     state.setModuleInfo,
-    state.setInfo
+    state.setInfo,
+    state.setMacData
   ], shallow)
 
   const [serviceType, setServiceType] = ProductStore(state => [state.serviceType, state.setServiceType], shallow);
@@ -52,6 +53,9 @@ export default function Sheet() {
         // 设置固件自定义
         if(res.data.result?.selFirmwareVO){
           setSelFirmwareVO(res.data.result?.selFirmwareVO)
+        }
+        if(res.data.result?.selDemandMac){
+          setSelDemandMac(res.data.result?.selDemandMac)
         }
     }})
   }, [])
@@ -81,6 +85,9 @@ export default function Sheet() {
     setInfo(data)
   }
 
+  const setSelDemandMac = (data) => {
+    setMacData(data)
+  }
   const toEdit = () => {
     history.push(`/product/demand/hardware`)
   }
@@ -174,23 +181,23 @@ export default function Sheet() {
         <td rowSpan={5}>3</td>
         <td rowSpan={5}>Custom MAC</td>
         <td colSpan={2}>Starting Address</td>
-        <td colSpan={4}><DynamicMiniInput /></td>
+        <td colSpan={4}>{macData?.macStart}</td>
       </tr>
       <tr>
         <td colSpan={2}>Ending Address</td>
-        <td colSpan={4}><DynamicMiniInput /></td>
+        <td colSpan={4}>{macData?.macEnd}</td>
       </tr>
       <tr>
         <td colSpan={2}>MAC Address total</td>
-        <td colSpan={4}><DynamicMiniInput /></td>
+        <td colSpan={4}>{macData?.macTotalNum}</td>
       </tr>
       <tr>
         <td colSpan={2}>每个模组占用 MAC 数量</td>
-        <td colSpan={4}><DynamicMiniInput /></td>
+        <td colSpan={4}>{macData?.macNumPerProduction}</td>
       </tr>
       <tr>
         <td colSpan={2}>可用于生产模组数量</td>
-        <td colSpan={4}><DynamicMiniInput /></td>
+        <td colSpan={4}>{macData?.productionNum}</td>
       </tr>
       {/*第四行*/}
       <tr>

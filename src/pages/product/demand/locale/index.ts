@@ -56,6 +56,7 @@ const i18n = {
     'firmware.customization.info.version.hint': '此信息用于显示在卷盘和外箱标签上',
     'firmware.customization.info.project': '固件所属项目 : ',
     'firmware.customization.info.project.hint': '请注明固件用于贵司的哪个项目, 如空调',
+    'firmware.customization.info.project.form.error': '请填写完整本表单',
     'firmware.customization.info.project.history': '固件导入历史 : ',
     'firmware.customization.info.project.history.first': '项目首次在 ESPRESSIF 导入的固件',
     'firmware.customization.info.project.history.next': '项目在 ESPRESSIF 导入过, 本次为固件升级',

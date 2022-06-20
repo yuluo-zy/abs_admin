@@ -87,7 +87,7 @@ export default function FirmwareInformation(props: {initialValues, number?}) {
             return <DynamicForm title={`firmware.information.title-${item}`}
                                 col={4}
                                 key={item}
-                                data={initialValues[item]}
+                                data={initialValues ? initialValues[item] : {}}
                                 formItem={informationProps} />;
           })
           }

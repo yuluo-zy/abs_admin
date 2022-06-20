@@ -65,17 +65,20 @@ export default function CustomMac() {
     } catch (error) {
       return;
     }
-    setMacData({
-      ...form.getFieldsValue()
-    });
-    postMacCustomDemand({
+    let temp ={
       ...macData,
+      ...form.getFieldsValue()
+    }
+    
+    postMacCustomDemand({
+      ...temp,
       demandId: demandId
     }).then(res => {
       if (res.data.success) {
         setMacData({
-          id: res.data.result
-        })
+          id: res.data.result,
+          ...temp
+        });
         history.push(getNextRouter(1, serviceType))
         Message.success(t["submit.hardware.success"]);
       }
