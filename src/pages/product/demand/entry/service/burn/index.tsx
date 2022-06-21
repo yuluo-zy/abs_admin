@@ -395,7 +395,7 @@ export default function ServicePreselection() {
     }
   ];
   const colList = [
-    [4, 4, 14, 2],
+    [4, 4, 12, 4],
     [4, 4, 7, 3, 3, 3],
     [4, 4, 10, 3, 3],
     [4, 4, 7, 6, 3]
@@ -516,7 +516,7 @@ export default function ServicePreselection() {
               {t["firmware.burn.efuse.title"]}
             </Space>
             <div className={style["card"]}>
-              <DynamicForm data={{ ...burnData }}
+              <DynamicForm data={{...burnData }}
                            layout={"inline"}
                            col={[4, 4, 3, 7, 3, 3]}
                            title={"firmware.burn.efuse.title"}

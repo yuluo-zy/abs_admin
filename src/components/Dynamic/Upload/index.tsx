@@ -1,65 +1,77 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Message, Upload } from '@arco-design/web-react';
 import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
-import { postFile } from '@/api/file';
+import { getFileInfo, postFile } from '@/api/file';
 import axios from 'axios';
+import { UploadItem } from '@arco-design/web-react/es/Upload';
 
-function DynamicUpload(props: {limit, onChange, listType?, onPreview?, defaultFileList?}) {
-  const t = useLocale(locale)
-  const {limit,onChange, listType, onPreview, defaultFileList } = props
-  const filePath = "/file/download/"
 
-  const getDefaultFileList = (fileList) => {
-    let temp = []
+function DynamicUpload(props) {
+  const t = useLocale(locale);
+  const { limit, onChange, listType, onPreview, fileList } = props;
+  const filePath = '/file/download/';
+  const [defaultList, setDefaultList] = useState(fileList);
 
-    if(fileList){
-      temp = [...fileList]
-      for (let item of temp){
-        item.url = filePath + item.response
-      }
+  const initDate = (value) => {
+    if (value) {
+      getFileInfo(value).then(res => {
+        if (res.data.success) {
+          const data = res.data.result;
+          setDefaultList([{
+            uid: data?.id,
+            name: data?.fileName,
+            url: data?.downloadUrl
+          }]);
+          console.log(defaultList)
+        }
+      });
     }
+  };
 
-    return temp
-  }
+  useEffect(() => {
+    initDate(fileList);
+  }, []);
 
-  return (
-    <Upload
-      autoUpload
-      multiple
-      name='files'
-      listType={listType}
-      onChange={onChange}
-      onPreview={onPreview}
-      defaultFileList={getDefaultFileList(defaultFileList)}
-      customRequest={(option) => {
-        const { onProgress, file,onSuccess, onError } = option
-        let formData = new FormData();
-        formData.append('file', file);
-        const source = axios.CancelToken.source();
-        const onprogress = progressEvent => {
-          const complete = progressEvent.loaded / progressEvent.total * 100 | 0
-          onProgress(parseInt(String(complete), 10), progressEvent);
+
+  return <Upload
+    autoUpload
+    multiple
+    name='files'
+    listType={listType}
+    onChange={(fileList: UploadItem[], file: UploadItem) => {
+        setDefaultList(fileList)
+      onChange(fileList, file)
+    }}
+    onPreview={onPreview}
+    fileList={defaultList}
+    customRequest={(option) => {
+      const { onProgress, file, onSuccess, onError } = option;
+      let formData = new FormData();
+      formData.append('file', file);
+      const source = axios.CancelToken.source();
+      const onprogress = progressEvent => {
+        const complete = progressEvent.loaded / progressEvent.total * 100 | 0;
+        onProgress(parseInt(String(complete), 10), progressEvent);
+      };
+      postFile(formData, onprogress, source.token).then(r => {
+        const { success, result } = r.data;
+        if (success) {
+          Message.success(t['message.ok']);
+          onSuccess(result);
         }
-        postFile(formData,onprogress,source.token).then(r =>{
-          const {success, result} = r.data
-          if(success){
-            Message.success(t["message.ok"])
-            onSuccess(result)
-          }
-        } ).catch(error => {
-          Message.error(t["message.error"])
-          onError(t['message.error'])
-        })
-        return {
-          abort () {
-            source.cancel("cancel")
-          }
+      }).catch(error => {
+        Message.error(t['message.error']);
+        onError(t['message.error']);
+      });
+      return {
+        abort() {
+          source.cancel('cancel');
         }
-      }}
-      limit={limit}
-    />
-  );
+      };
+    }}
+    limit={limit}
+  />;
 }
 
 export default DynamicUpload;

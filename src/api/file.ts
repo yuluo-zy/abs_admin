@@ -1,5 +1,5 @@
-import { httpPost } from "@/utils/httpRequest";
-import { getAxios } from "@/utils/axios";
+import { httpGet, httpPost } from '@/utils/httpRequest';
+import { getAxios } from '@/utils/axios';
 
 export const postFile = (data, onUploadProgress, source) => {
   return getAxios().post(
@@ -18,3 +18,7 @@ export const postFile = (data, onUploadProgress, source) => {
 export const getFile = (id) => {
   return httpPost("/file/download/" + id);
 };
+
+export const getFileInfo = (id) => {
+  return httpGet(`/file/${id}`)
+}
