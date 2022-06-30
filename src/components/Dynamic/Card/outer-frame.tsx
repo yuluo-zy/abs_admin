@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Alert, Card, Space } from '@arco-design/web-react';
-import { DynamicCardProps } from '@/components/type';
-import { IconBulb } from '@arco-design/web-react/icon';
+import React, { useState } from "react";
+import { Alert, Card, Space } from "@arco-design/web-react";
+import { DynamicCardProps } from "@/components/type";
+import { IconBulb } from "@arco-design/web-react/icon";
 
 function DynamicOuterCard(props: DynamicCardProps) {
   const { title, children } = props;
@@ -13,8 +13,9 @@ function DynamicOuterCard(props: DynamicCardProps) {
     paddingBottom: 0
   };
   const bodyStyle = {
-    paddingLeft: '2rem',
-    paddingRight: '2rem'
+    // paddingLeft: '2rem',
+    // paddingRight: '2rem'
+    padding: '1.2rem'
   };
   const style = {
     marginBottom: '1rem',
@@ -27,7 +28,7 @@ function DynamicOuterCard(props: DynamicCardProps) {
   return (
     <Card
       {...props}
-      title={
+      title={title &&
         <Space size={4}>
           <b> {title}</b>
           {props.help && <div onClick={() => {

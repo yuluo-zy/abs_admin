@@ -10,7 +10,7 @@ const CustomResizeHandle = forwardRef<Ref,Props>((props, ref) => {
   return (
     <span
       ref={ref}
-      className={cs(styles['react-resizable-handle'],styles[`react-resizable-handle-${handleAxis}`] )}
+      className={cs([styles['react-resizable-handle'],styles[`react-resizable-handle-${handleAxis}`]] )}
       {...restProps}
       onClick={(e) => {
         e.stopPropagation();
@@ -34,7 +34,7 @@ const ResizableTitle = (props) => {
       onResize={onResize}
       draggableOpts={{ enableUserSelectHack: false }}
     >
-      <th {...restProps}  style={{position: 'relative', ...restProps?.style, userSelect: 'none',  backgroundClip: 'padding-box'}}/>
+      <th {...restProps}  style={{position: 'relative', ...restProps?.style, userSelect: 'none'}}/>
     </Resizable>
   );
 };

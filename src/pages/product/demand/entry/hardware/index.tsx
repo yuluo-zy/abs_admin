@@ -438,8 +438,24 @@ export default function HardwareSelection() {
                                                           onClick={onEmpty}>{t["hardware.production.info.operate"]}</Button>
         </div>
       </DynamicOuterCard>
+
       <DynamicOuterCard>
         <DynamicSkeleton text={{ rows: 10, width: "90rem" }}>
+          <div className={style['product-top']}>
+            {
+              productList &&
+              <div className={style["product-total"]}>
+                <p>{t["hardware.production.info.total"] + productList.length}</p>
+              </div>
+            }
+            {
+              moduleInfo.mpn &&
+              <div className={style["product-info"]}>
+                <p>{t["hardware.production.info.select.model"] + moduleInfo.mpn}</p>
+              </div>
+            }
+          </div>
+
           <Table
             scroll={{ x: true, y: 450 }}
             border
@@ -462,18 +478,7 @@ export default function HardwareSelection() {
         </DynamicSkeleton>
       </DynamicOuterCard>
       <div className={style["product-nuxt"]}>
-        {
-          productList &&
-          <div className={style["product-total"]}>
-            <p>{t["hardware.production.info.total"] + productList.length}</p>
-          </div>
-        }
-        {
-          moduleInfo.mpn &&
-          <div className={style["product-info"]}>
-            <p>{t["hardware.production.info.select.model"] + moduleInfo.mpn}</p>
-          </div>
-        }
+
         <Button type="primary"
                 size={"large"}
                 icon={<IconArrowRight />}
