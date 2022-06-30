@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
-import useLocale from '@/pages/product/demand/locale/useLocale';
-import { getProductionInfo } from '@/api/production';
+import React, { useEffect, useState } from "react";
+import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
+import useLocale from "@/pages/product/demand/locale/useLocale";
+import { getProductionInfo } from "@/api/production";
 import {
   Button,
   Descriptions,
@@ -12,19 +12,19 @@ import {
   Space,
   Table,
   Typography
-} from '@arco-design/web-react';
-import DynamicSkeleton from '@/components/Dynamic/Skeleton';
-import ResizableTitle from '@/components/Dynamic/Resizeable';
-import style from './style/index.module.less';
-import { ProductSelectItem } from '@/components/type';
-import cs from 'classnames';
-import { IconArrowRight, IconDelete } from '@arco-design/web-react/icon';
-import useFilter, { multiFilter } from '@/utils/useHook/useFilter';
-import DynamicRadioGroup from '@/components/Dynamic/Radio';
-import { ProductStore } from '@/store/product';
-import shallow from 'zustand/shallow';
-import { postProduction } from '@/api/demand';
-import { useHistory } from 'react-router';
+} from "@arco-design/web-react";
+import DynamicSkeleton from "@/components/Dynamic/Skeleton";
+import ResizableTitle from "@/components/Dynamic/Resizeable";
+import style from "./style/index.module.less";
+import { ProductSelectItem } from "@/components/type";
+import cs from "classnames";
+import { IconArrowRight, IconDelete } from "@arco-design/web-react/icon";
+import useFilter, { multiFilter } from "@/utils/useHook/useFilter";
+import DynamicRadioGroup from "@/components/Dynamic/Radio";
+import { ProductStore } from "@/store/product";
+import shallow from "zustand/shallow";
+import { postProduction } from "@/api/demand";
+import { useHistory } from "react-router";
 
 const bodyCellStyle = {};
 const originColumns = [
@@ -37,7 +37,7 @@ const originColumns = [
     headerCellStyle: {
       position: "sticky" as const,
       top: 0,
-      left: 40
+      left: 40,
     }
   },
   {
@@ -441,7 +441,6 @@ export default function HardwareSelection() {
       <DynamicOuterCard>
         <DynamicSkeleton text={{ rows: 10, width: "90rem" }}>
           <Table
-            className={style["table-resizable-column"]}
             scroll={{ x: true, y: 450 }}
             border
             borderCell

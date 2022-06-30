@@ -1,10 +1,11 @@
-import { RulesProps } from '@arco-design/web-react';
-import { AxiosResponse } from 'axios';
-import { Data } from '@/utils/httpRequest';
-import React from 'react';
+import { RulesProps } from "@arco-design/web-react";
+import { AxiosResponse } from "axios";
+import { Data } from "@/utils/httpRequest";
+import React from "react";
 
 export type Recordable<T = any> = Record<string, T>;
-
+export type Ref = HTMLElement
+export type Props = Recordable
 export type ReadonlyRecordable<T = any> = Readonly<Record<string, T>>;
 
 export interface CallBackHandle {

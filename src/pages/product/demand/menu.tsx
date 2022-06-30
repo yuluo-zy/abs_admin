@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { MenuItemProps } from '@/components/type';
-import { Menu } from '@arco-design/web-react';
-import styles from './style/index.module.less';
-import { ProductMenuInfo, ProductStore } from '@/store/product';
-import shallow from 'zustand/shallow';
+import React, { useEffect, useState } from "react";
+import { MenuItemProps } from "@/components/type";
+import { Menu } from "@arco-design/web-react";
+import styles from "./style/index.module.less";
+import { ProductMenuInfo, ProductStore } from "@/store/product";
+import shallow from "zustand/shallow";
+import { useDebounce, useWindowSize } from "react-use";
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
@@ -78,6 +79,18 @@ export default function ProductMenu(props) {
     setContext(getMenu([...temp]));
     return null;
   }, [menu, serviceType]);
+
+  // 设置 窗口监测 如果小于 1200px, 设置收起
+  const {width} = useWindowSize();
+  const [, cancel] = useDebounce(
+    () => {
+      if(width < 1300){
+        setCollapse(true)
+      }
+    },
+    1000,
+    [width]
+  );
 
   return <div className={styles['menu-demo-round']}>
     <Menu
