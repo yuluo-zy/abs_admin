@@ -247,7 +247,7 @@ export default function HardwareSelection() {
 
   useEffect(() => {
     fetchProductionList();
-    setCollapse(true)
+    setCollapse(false)
     setSelectedRowKeys([moduleInfo?.id])
   }, []);
 
