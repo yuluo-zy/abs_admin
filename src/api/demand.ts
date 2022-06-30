@@ -1,4 +1,4 @@
-import { httpGet, httpPost } from '@/utils/httpRequest';
+import { httpGet, httpPost } from "@/utils/httpRequest";
 
 export const getProductionDemand = (data) => {
   return httpGet('/demand', data);
@@ -13,8 +13,8 @@ export const postProduction = (data) => {
 };
 
 
-export const getProductionCustomDemand = () => {
-  return httpGet('/demand/custom/serve');
+export const getProductionCustomDemand = (demandId) => {
+  return httpGet('/demand/custom/serve'+ demandId);
 };
 
 export const postProductionCustomDemand = (data) => {

@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
-import useLocale from '@/pages/product/demand/locale/useLocale';
-import style from './style/index.module.less';
-import { Button, Divider, List, Message, Modal, Switch, Tag } from '@arco-design/web-react';
-import DynamicCard from '@/components/Dynamic/Card';
-import DynamicSkeleton from '@/components/Dynamic/Skeleton';
-import { IconArrowRight } from '@arco-design/web-react/icon';
-import { ProductStore } from '@/store/product';
-import shallow from 'zustand/shallow';
-import { useHistory } from 'react-router';
-import { getProductionCustomDemand, postProductionCustomDemand } from '@/api/demand';
-import { getNextRouter } from '@/utils/getNext';
+import React, { useEffect, useState } from "react";
+import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
+import useLocale from "@/pages/product/demand/locale/useLocale";
+import style from "./style/index.module.less";
+import { Button, Divider, List, Message, Modal, Switch, Tag } from "@arco-design/web-react";
+import DynamicCard from "@/components/Dynamic/Card";
+import DynamicSkeleton from "@/components/Dynamic/Skeleton";
+import { IconArrowRight } from "@arco-design/web-react/icon";
+import { ProductStore } from "@/store/product";
+import shallow from "zustand/shallow";
+import { useHistory } from "react-router";
+import { getProductionCustomDemand, postProductionCustomDemand } from "@/api/demand";
+import { getNextRouter } from "@/utils/getNext";
 
 export default function ServicePreselection() {
   const t = useLocale();
-  const [demandId,moduleInfo, setCollapse] = ProductStore(state => [state.demandId,state.moduleInfo, state.setCollapse], shallow);
+  const [demandId, moduleInfo, setCollapse] = ProductStore(state => [state.demandId, state.moduleInfo, state.setCollapse], shallow);
   const [serviceType, setServiceType] = ProductStore(state => [state.serviceType, state.setServiceType], shallow);
   const [serviceId, setServiceId] = ProductStore(state => [state.serviceId, state.setServiceId], shallow);
   const history = useHistory();
@@ -35,7 +35,7 @@ export default function ServicePreselection() {
         }
       });
     }
-    getProductionCustomDemand().then(res => {
+    getProductionCustomDemand(demandId).then(res => {
       if (res.data.success) {
         setService(res.data.result);
       }
@@ -50,26 +50,26 @@ export default function ServicePreselection() {
   }, []);
 
   const isCheck = (value) => {
-    if(serviceType){
-      return serviceType.includes(value)
+    if (serviceType) {
+      return serviceType.includes(value);
     }
-  }
+  };
   const render = (item, index) => (
     <List.Item key={index} actions={
-      [<span style={{paddingLeft: 5}}>
+      [<span style={{ paddingLeft: 5 }}>
               <Switch
-                checkedText={t['service.preselection.model.info.title.switch.open']}
-                uncheckedText={t['service.preselection.model.info.title.switch.close']}
+                checkedText={t["service.preselection.model.info.title.switch.open"]}
+                uncheckedText={t["service.preselection.model.info.title.switch.close"]}
                 checked={isCheck(item.type)}
-              onChange={(value: boolean)=> {
-                let copy = new Set([...serviceType]);
-                if(value) {
-                  copy.add(item.type)
-                } else {
-                  copy.delete(item.type)
-                }
-                setServiceType([...copy])
-              }}/>
+                onChange={(value: boolean) => {
+                  let copy = new Set([...serviceType]);
+                  if (value) {
+                    copy.add(item.type);
+                  } else {
+                    copy.delete(item.type);
+                  }
+                  setServiceType([...copy]);
+                }} />
           </span>]
     }>
       <List.Item.Meta
@@ -81,46 +81,46 @@ export default function ServicePreselection() {
   );
 
   const getService = () => {
-    const data = []
+    const data = [];
 
-    for(const i of service){
-      if(serviceType.includes(i.type)){
-        data.push(i.typeName)
+    for (const i of service) {
+      if (serviceType.includes(i.type)) {
+        data.push(i.typeName);
       }
     }
-    return data
-  }
+    return data;
+  };
 
   const postService = () => {
-    if(demandId === -1){
-      Message.error(t['hardware.production.info.select.model.demand.error'])
-      return
+    if (demandId === -1) {
+      Message.error(t["hardware.production.info.select.model.demand.error"]);
+      return;
     }
     postProductionCustomDemand({
-      'demandId': demandId,
-      'id': serviceId,
-      'serveIds': serviceType,
+      "demandId": demandId,
+      "id": serviceId,
+      "serveIds": serviceType
     }).then(res => {
-      if(res.data.success){
+      if (res.data.success) {
         Message.success(t["submit.hardware.success"]);
-        setVisible(false)
-        setServiceId(res.data.result)
+        setVisible(false);
+        setServiceId(res.data.result);
         // 根据选择的服务项目进行下一步导航
-        history.push(getNextRouter(-1, serviceType))
+        history.push(getNextRouter(-1, serviceType));
       }
     }).catch(error => {
       Message.error(t["submit.hardware.error"]);
     });
-  }
+  };
 
   return (<div className={style["model"]}>
     <DynamicOuterCard title={t["service.preselection.model.info.title"]}>
-      <Tag   closable={false} color="arcoblue" size="large" >
+      <Tag closable={false} color="arcoblue" size="large">
         <p>{t["hardware.production.info.select.model"]} <b>{moduleInfo.mpn}</b></p>
       </Tag>
       <Divider style={{ borderBottomStyle: "dashed" }} />
       <p>{t["service.preselection.model.info.title.description"]}</p>
-      <DynamicCard title={t['service.preselection.model.info.title.list']}>
+      <DynamicCard title={t["service.preselection.model.info.title.list"]}>
         <DynamicSkeleton text={{ rows: 10 }}>
           <List
             hoverable={true}
@@ -140,7 +140,7 @@ export default function ServicePreselection() {
                 size={"large"}
                 icon={<IconArrowRight />}
                 onClick={() => {
-                  setVisible(true)
+                  setVisible(true);
                 }}
         >
           {t["hardware.production.info.next"]}
@@ -161,13 +161,13 @@ export default function ServicePreselection() {
       <p>{t["service.preselection.model.service.info"]}</p>
       <List
         style={{ width: 622 }}
-        size='small'
+        size="small"
         bordered={false}
         split={false}
         dataSource={getService()}
         render={(item, index) => <List.Item key={index}>
-          <Tag   closable={false} color="arcoblue" >{item}</Tag>
-          </List.Item>}
+          <Tag closable={false} color="arcoblue">{item}</Tag>
+        </List.Item>}
       />
     </Modal>
   </div>);
