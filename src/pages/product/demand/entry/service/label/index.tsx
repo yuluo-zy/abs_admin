@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import useLocale from '@/pages/product/demand/locale/useLocale';
 import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
 import { Button, Checkbox, Divider, Form, Input, Link, Message, Space, Tag, Tooltip } from '@arco-design/web-react';
@@ -30,11 +30,15 @@ export default function CustomLabel() {
     } catch (error) {
       return;
     }
-    setLabelData({
-      ...form.getFieldsValue()
-    });
-    postLabelCustomDemand({
+    let temp = {
       ...labelData,
+      ...form.getFieldsValue()
+    }
+    setLabelData({
+      ...temp
+    })
+    postLabelCustomDemand({
+      ...temp,
       demandId: demandId
     }).then(res => {
       if (res.data.success) {
@@ -57,12 +61,12 @@ export default function CustomLabel() {
   };
 
   //重新创建的时候， 需要将上传的文件删除掉
-  useEffect(() => {
-    setLabelData({
-      laserFileId: undefined,
-      outboxFileId: undefined
-    });
-  }, []);
+  // useEffect(() => {
+  //   setLabelData({
+  //     laserFileId: undefined,
+  //     outboxFileId: undefined
+  //   });
+  // }, []);
 
 
   return (<DynamicOuterCard title={t["firmware.label.title"]}  bodyStyle={bodyStyle}>
@@ -113,6 +117,7 @@ export default function CustomLabel() {
           {labelData?.cusLaserLabel === 1 && <div className={style["label-img-context"]}>
             <div className={style["label-item"]}>
               <FormItem field="laserFileId"
+                        triggerPropName='fileList'
                         rules={[
                           {
                             required: true,
@@ -145,6 +150,7 @@ export default function CustomLabel() {
           {labelData?.cusOutboxLabel === 1 && <div className={style["label-img-context"]}>
             <div className={style["label-item"]}>
               <FormItem field="outboxFileId"
+                        triggerPropName='fileList'
                         rules={[
                           {
                             required: true,

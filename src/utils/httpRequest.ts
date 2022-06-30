@@ -1,5 +1,5 @@
 import Axios from '@/utils/axios';
-import { AxiosResponse, AxiosStatic } from "axios";
+import { AxiosResponse } from 'axios';
 
 export interface Data {
   code: number;

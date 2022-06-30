@@ -1,11 +1,14 @@
-import React from "react";
-import { Modal } from "@arco-design/web-react";
-import DynamicUpload from "@/components/Dynamic/Upload/index";
+import React from 'react';
+import { Modal } from '@arco-design/web-react';
+import DynamicUpload from '@/components/Dynamic/Upload/index';
 
-export function DynamicImgUpload(props: {limit, onChange, title?}) {
-  const {limit, onChange, title} = props
+export function DynamicImgUpload(props: {limit, onChange, title?, fileList?}) {
+  const {limit, onChange, title, fileList} = props
+
   return  <DynamicUpload
     limit={limit}
+
+    fileList = {fileList}
     listType='picture-card'
     onPreview={file => {
       Modal.success({

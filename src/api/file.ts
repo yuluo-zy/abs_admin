@@ -1,24 +1,26 @@
-import { httpGet, httpPost } from '@/utils/httpRequest';
+import { httpGet } from '@/utils/httpRequest';
 import { getAxios } from '@/utils/axios';
 
 export const postFile = (data, onUploadProgress, source) => {
   return getAxios().post(
-    "/file/upload",
-        data,
+    '/file/upload',
+    data,
     {
       headers: {
-        "Content-Type": "multipart/form-data;charset=UTF-8",
+        'Content-Type': 'multipart/form-data;charset=UTF-8'
       },
-      onUploadProgress:  onUploadProgress,
-      cancelToken:source
+      onUploadProgress: onUploadProgress,
+      cancelToken: source
     }
   );
 };
 
 export const getFile = (id) => {
-  return httpPost("/file/download/" + id);
+  return getAxios().get(
+    '/file/download/' + id,
+    { responseType: 'blob' });
 };
 
 export const getFileInfo = (id) => {
-  return httpGet(`/file/${id}`)
-}
+  return httpGet(`/file/${id}`);
+};

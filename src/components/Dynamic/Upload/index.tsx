@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Message, Upload } from '@arco-design/web-react';
 import useLocale from '@/utils/useHook/useLocale';
 import locale from './locale';
-import { getFileInfo, postFile } from '@/api/file';
+import { getFile, getFileInfo, postFile } from '@/api/file';
 import axios from 'axios';
 import { UploadItem } from '@arco-design/web-react/es/Upload';
 
@@ -10,10 +10,24 @@ import { UploadItem } from '@arco-design/web-react/es/Upload';
 function DynamicUpload(props) {
   const t = useLocale(locale);
   const { limit, onChange, listType, onPreview, fileList } = props;
-  const filePath = '/file/download/';
   const [defaultList, setDefaultList] = useState(fileList);
 
   const initDate = (value) => {
+    if (listType === 'picture-card') {
+      if (value) {
+
+      }
+      getFile(value).then(res => {
+          if (res.status === 200) {
+            setDefaultList([{
+              uid: value,
+              originFile: res.data
+            }]);
+          }
+        }
+      );
+      return;
+    }
     if (value) {
       getFileInfo(value).then(res => {
         if (res.data.success) {
@@ -23,7 +37,7 @@ function DynamicUpload(props) {
             name: data?.fileName,
             url: data?.downloadUrl
           }]);
-          console.log(defaultList)
+          console.log(defaultList);
         }
       });
     }
@@ -40,8 +54,8 @@ function DynamicUpload(props) {
     name='files'
     listType={listType}
     onChange={(fileList: UploadItem[], file: UploadItem) => {
-        setDefaultList(fileList)
-      onChange(fileList, file)
+      setDefaultList(fileList);
+      onChange(fileList, file);
     }}
     onPreview={onPreview}
     fileList={defaultList}

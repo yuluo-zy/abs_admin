@@ -31,12 +31,14 @@ export default function Sheet() {
         state.burnData,
         state.fitData,
       ], shallow);
-  const [setModuleInfo,setInfo, setMacData, setBurnData] = ProductStore( state => [
-    state.setModuleInfo,
-    state.setInfo,
-    state.setMacData,
-    state.setBurnData
-  ], shallow)
+  const [setModuleInfo,setInfo, setMacData, setBurnData, setLabelDate] =
+    ProductStore( state => [
+      state.setModuleInfo,
+      state.setInfo,
+      state.setMacData,
+      state.setBurnData,
+      state.setLabelData
+    ], shallow)
 
   const [serviceType, setServiceType] = ProductStore(state => [state.serviceType, state.setServiceType], shallow);
   const [serviceId, setServiceId] = ProductStore(state => [state.serviceId, state.setServiceId], shallow);
@@ -62,6 +64,10 @@ export default function Sheet() {
         // 设置定制烧录内容
         if(res.data.result?.selContentVO){
           setSelContentVO(res.data.result?.selContentVO)
+        }
+        // 设置定制标签
+        if(res.data.result?.selLabelVO){
+          setSelLabelVO(res.data.result?.selLabelVO)
         }
     }})
   }, [])
@@ -97,6 +103,10 @@ export default function Sheet() {
 
   const setSelContentVO = (data) => {
     setBurnData(data)
+  }
+
+  const setSelLabelVO = (data) => {
+    setLabelDate(data)
   }
   const toEdit = () => {
     history.push(`/product/demand/hardware`)
