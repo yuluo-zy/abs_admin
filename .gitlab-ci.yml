@@ -7,7 +7,7 @@
 # Stages run in sequential order, but jobs within stages run in parallel.
 #
 # For more information, see: https://docs.gitlab.com/ee/ci/yaml/README.html#stages
-image: docker:19.03.12
+image: registry-mm.espressif.cn/infra/docker:19.03.12
 
 stages:
   - npm
@@ -37,7 +37,7 @@ workflow:
 
 npm:
   stage: npm
-  image: node:16
+  image: registry-mm.espressif.cn/infra/node:16
   # Cache modules in between jobs
   cache:
     key: $CI_COMMIT_REF_SLUG
@@ -84,7 +84,7 @@ push-job:
 # dev can cd automatically
 deploy-dev:
   stage: deploy-dev
-  image: cnych/kustomize:v1.0
+  image: registry-mm.espressif.cn/infra/cnych/kustomize:v1.0
   before_script:
     - mkdir /k8s-config
     - cd /k8s-config
@@ -108,7 +108,7 @@ deploy-dev:
 # prod or sit should cd manually
 deploy:
   stage: deploy
-  image: cnych/kustomize:v1.0
+  image: registry-mm.espressif.cn/infra/cnych/kustomize:v1.0
   before_script:
     - mkdir /k8s-config
     - cd /k8s-config
