@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import useLocale from '@/pages/product/demand/locale/useLocale';
-import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
+import React, { useEffect, useState } from "react";
+import useLocale from "@/pages/product/demand/locale/useLocale";
+import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
 import {
   Button,
   Checkbox,
@@ -15,21 +15,22 @@ import {
   Space,
   Tooltip,
   Typography
-} from '@arco-design/web-react';
-import FirmwareInformation from '@/pages/product/demand/entry/service/firmware/firmware-information';
-import SerialCheck from '@/pages/product/demand/entry/service/firmware/serial-check';
-import DynamicRadioGroup from '@/components/Dynamic/Radio';
-import { IconArrowRight, IconLaunch, IconTags } from '@arco-design/web-react/icon';
-import FirmwareFlash from '@/pages/product/demand/entry/service/firmware/firmware-flash';
-import FirmwareEfuse from '@/pages/product/demand/entry/service/firmware/frimware-efuse';
-import DynamicSkeleton from '@/components/Dynamic/Skeleton';
-import { ProductStore } from '@/store/product';
-import shallow from 'zustand/shallow';
-import style from './style/index.module.less';
-import { sum } from '@/utils/listTools';
-import { getNextRouter } from '@/utils/getNext';
-import { useHistory } from 'react-router';
-import { postFirmwareCustomDemand } from '@/api/demand';
+} from "@arco-design/web-react";
+import FirmwareInformation from "@/pages/product/demand/entry/service/firmware/firmware-information";
+import SerialCheck from "@/pages/product/demand/entry/service/firmware/serial-check";
+import DynamicRadioGroup from "@/components/Dynamic/Radio";
+import { IconArrowRight, IconLaunch, IconTags } from "@arco-design/web-react/icon";
+import FirmwareFlash from "@/pages/product/demand/entry/service/firmware/firmware-flash";
+import FirmwareEfuse from "@/pages/product/demand/entry/service/firmware/frimware-efuse";
+import DynamicSkeleton from "@/components/Dynamic/Skeleton";
+import { ProductStore } from "@/store/product";
+import shallow from "zustand/shallow";
+import style from "./style/index.module.less";
+import { sum } from "@/utils/listTools";
+import { getNextRouter } from "@/utils/getNext";
+import { useHistory } from "react-router";
+import { postFirmwareCustomDemand } from "@/api/demand";
+import { getProjectList } from "@/api/project";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -38,10 +39,10 @@ export default function FirmwareCustomization() {
   const history = useHistory();
   const Option = Select.Option;
 
-  const options = ['Beijing', 'Shanghai', 'Guangzhou', 'Disabled'];
   const [demandId, serviceType] = ProductStore(state => [state.demandId, state.serviceType], shallow);
   const [info, setInfo] = ProductStore(state => [state.info, state.setInfo], shallow);
   const [visible, setVisible] = useState(false);
+  const [project, setProject] = useState([]);
 
   // 提交数据
   const postForm = async (name, values, infos) => {
@@ -103,6 +104,15 @@ export default function FirmwareCustomization() {
     }
   };
 
+  useEffect(() => {
+    // 用来获取相关的固件项目信息
+    getProjectList().then(res => {
+      if(res.data.success){
+        setProject(res.data.result)
+      }
+    })
+  }, [])
+
   return (<DynamicOuterCard title={t['firmware.customization.title']}>
     <DynamicSkeleton animation text={{ rows: 10, width: ['100%', 600, 400] }}>
       <Space size={30} direction='vertical'>
@@ -131,9 +141,9 @@ export default function FirmwareCustomization() {
                 firmwareProject: value
               })}
             >
-              {options.map((option, index) => (
-                <Option key={option} disabled={index === 3} value={option}>
-                  {option}
+              {project.map((option) => (
+                <Option key={option.id}  value={option.id}>
+                  {option.name}
                 </Option>
               ))}
             </Select>
@@ -164,11 +174,11 @@ export default function FirmwareCustomization() {
                 defaultValue={info?.lastMpn}
                 onChange={(value) => setInfo({ lastMpn: value })}
               >
-                {options.map((option, index) => (
-                  <Option key={option} disabled={index === 3} value={option}>
-                    {option}
-                  </Option>
-                ))}
+                {/*{project.map((option, index) => (*/}
+                {/*  <Option key={option} disabled={index === 3} value={option}>*/}
+                {/*    {option}*/}
+                {/*  </Option>*/}
+                {/*))}*/}
               </Select>
             </Space>
           }
