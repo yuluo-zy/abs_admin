@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
 import useLocale from "@/pages/product/demand/locale/useLocale";
 import style from "./style/index.module.less";
-import { Button, Divider, List, Message, Modal, Switch, Tag } from "@arco-design/web-react";
+import { Button, Divider, Link, List, Message, Modal, Switch, Tag, Typography } from "@arco-design/web-react";
 import DynamicCard from "@/components/Dynamic/Card";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
-import { IconArrowRight } from "@arco-design/web-react/icon";
+import { IconArrowRight, IconLaunch } from "@arco-design/web-react/icon";
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import { useHistory } from "react-router";
@@ -14,7 +14,10 @@ import { getNextRouter } from "@/utils/getNext";
 import axios from "axios";
 import { getProductionServe } from "@/api/production";
 import { Recordable } from "@/components/type";
+import ModelInfoZh from "@/assets/model_info_zh.png";
+import LabelInfoZh from "@/assets/label_info_zh.png";
 
+const { Title, Paragraph, Text } = Typography;
 
 export default function ServicePreselection() {
   const t = useLocale();
@@ -48,7 +51,7 @@ export default function ServicePreselection() {
       })
     ]).then(axios.spread((productionDemand, productionServe) => {
       if (productionDemand.data.success && productionServe.data.success) {
-        if(productionServe.data.result.length>0){
+        if (productionServe.data.result.length > 0) {
           setServiceData(productionServe.data.result[0]);
           setService([...getCustomService(productionDemand.data.result, productionServe.data.result[0])]);
         }
@@ -112,22 +115,104 @@ export default function ServicePreselection() {
     }
     return data;
   };
+
+  // 获取 服务的提示内容
+
+  const getServicesHint = (item) => {
+    // * 0 定制固件
+    // * 1 定制mac
+    // * 2 定制内容烧录
+    // * 3 预适配
+    // * 4 定制标签
+    switch (item) {
+      case 1:
+        useMacHint();
+        break;
+      case 2:
+        useBurnHint();
+        break;
+      case 4:
+        useLabelHint();
+        break;
+    }
+  };
+
+  function useMacHint() {
+    Modal.info({
+      title: t["preselection.hint.mac.title"],
+      okText: "got it",
+      className: style["typography"],
+      content: <div>
+        {t["preselection.hint.mac.context"]}
+        <Link target={"_blank"}
+              href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/system.html#mac-address">
+          <IconLaunch style={
+            { color: "#0E42D2", fontSize: 15 }
+          } />
+        </Link>
+      </div>
+    });
+  }
+
+  function useBurnHint() {
+    Modal.info({
+      title: t["preselection.hint.burn.title"],
+      okText: "got it",
+      className: style["typography"],
+      content: <Typography>
+        <Paragraph>{t["preselection.hint.burn.context1"]}</Paragraph>
+        <br />
+        <Paragraph>
+          <ol>
+            <li>{t["preselection.hint.burn.context2"]}</li>
+            <br />
+            <li>{t["preselection.hint.burn.context3"]}
+              <ol>
+                <br />
+                <li>{t["preselection.hint.burn.context4"]}</li>
+                <li>{t["preselection.hint.burn.context5"]}</li>
+              </ol>
+            </li>
+          </ol>
+        </Paragraph>
+      </Typography>
+    });
+  }
+
+  function useLabelHint() {
+    Modal.info({
+      title: t["preselection.hint.burn.title"],
+      okText: "got it",
+      alignCenter: false,
+      className: style["typography-top"],
+      //todo 完成中英文的图片返回
+      content: <div>
+        <div>{t["preselection.hint.label.context1"]}</div>
+        <div>
+          <img src={ModelInfoZh} className={style["model_info"]} alt={"model_img"} />
+          <img src={LabelInfoZh} className={style["label_info"]} alt={"label_img"} />
+        </div>
+      </div>
+    });
+  }
+
   const render = (item, index) => (
     <List.Item key={index} actions={
       [<span style={{ paddingLeft: 5 }}>
-              <Switch
-                checkedText={t["service.preselection.model.info.title.switch.open"]}
-                uncheckedText={t["service.preselection.model.info.title.switch.close"]}
-                checked={isCheck(item.type)}
-                onChange={(value: boolean) => {
-                  let copy = new Set([...serviceType]);
-                  if (value) {
-                    copy.add(item.type);
-                  } else {
-                    copy.delete(item.type);
-                  }
-                  setServiceType([...copy]);
-                }} />
+                 <Switch
+                   checkedText={t["service.preselection.model.info.title.switch.open"]}
+                   uncheckedText={t["service.preselection.model.info.title.switch.close"]}
+                   checked={isCheck(item.type)}
+                   onChange={(value: boolean) => {
+                     let copy = new Set([...serviceType]);
+                     if (value) {
+                       getServicesHint(item.type);
+                       copy.add(item.type);
+                     } else {
+                       copy.delete(item.type);
+                     }
+                     setServiceType([...copy]);
+                   }} />
           </span>]
     }>
       <List.Item.Meta

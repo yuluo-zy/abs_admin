@@ -202,7 +202,17 @@ const i18n = {
     'self.check.table.expected.value': '校验期望值',
     'self.check.table.Md5': 'MD5 (检查预期值是否和实际值一致)',
     'self.check.table.serial.port': '串口打印 (检查校验文件是否包含预期字符串)',
-    'self.check.table.efuse': 'eFuse (检查预期值是否与实际值一致)'
+    'self.check.table.efuse': 'eFuse (检查预期值是否与实际值一致)',
+    'preselection.hint.mac.context': '使用定制MAC的模型依旧包含乐鑫芯片MAC, 乐鑫芯片自带MAC, 定制MAC是指应用层面定制',
+    'preselection.hint.burn.title': '烧录 定制提示',
+    'preselection.hint.mac.title': 'MAC 定制提示',
+    'preselection.hint.burn.context1': '请仔细阅读下文，确认您是否需要定制内容烧录服务：',
+    'preselection.hint.burn.context2': '在乐鑫模组量产流程中，定制内容烧写特指：每个模组唯一且不重复的内容，如设备证书，序列号等。量产系统将在确保唯一性的前提下，将这些定制内容分配给每个设备，并完成烧录。',
+    'preselection.hint.burn.context3': '对于每个模组相同的部分，为了减少您的定制项目，相应地降低成本，我们建议：',
+    'preselection.hint.burn.context4': '如该部分需烧写到flash：请直接combine到定制固件中，按照定制固件的形式烧写',
+    'preselection.hint.burn.context5': '如该部分需烧写到eFuse: 请直接注明烧写要求即可，即efuse位和及其期望烧成的目标值',
+    'preselection.hint.label.title': '标签 定制提示',
+    'preselection.hint.label.context1': '以下为乐鑫模组通用标签, 请审阅评估通用标签是否满足您的需要: ',
   },
 };
 
