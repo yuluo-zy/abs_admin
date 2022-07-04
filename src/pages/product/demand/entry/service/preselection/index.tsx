@@ -11,12 +11,17 @@ import shallow from "zustand/shallow";
 import { useHistory } from "react-router";
 import { getProductionCustomDemand, postProductionCustomDemand } from "@/api/demand";
 import { getNextRouter } from "@/utils/getNext";
+import axios from "axios";
+import { getProductionServe } from "@/api/production";
+import { Recordable } from "@/components/type";
+
 
 export default function ServicePreselection() {
   const t = useLocale();
   const [demandId, moduleInfo, setCollapse] = ProductStore(state => [state.demandId, state.moduleInfo, state.setCollapse], shallow);
   const [serviceType, setServiceType] = ProductStore(state => [state.serviceType, state.setServiceType], shallow);
   const [serviceId, setServiceId] = ProductStore(state => [state.serviceId, state.setServiceId], shallow);
+  const [serviceData, setServiceData] = ProductStore(state => [state.serviceData, state.setServiceData], shallow);
   const history = useHistory();
   const [service, setService] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -35,14 +40,24 @@ export default function ServicePreselection() {
         }
       });
     }
-    getProductionCustomDemand(demandId).then(res => {
-      if (res.data.success) {
-        setService(res.data.result);
+    // 并发请求 获取所有的服务 并 匹配 本款物料 提供的服务
+    axios.all([
+      getProductionCustomDemand(),
+      getProductionServe({
+        mpn: moduleInfo.mpn
+      })
+    ]).then(axios.spread((productionDemand, productionServe) => {
+      if (productionDemand.data.success && productionServe.data.success) {
+        if(productionServe.data.result.length>0){
+          setServiceData(productionServe.data.result[0]);
+          setService([...getCustomService(productionDemand.data.result, productionServe.data.result[0])]);
+        }
       }
-    }).catch(error => {
-        Message.error(t["message.service.notfound"]);
-      }
-    );
+    }))
+      .catch(error => {
+          Message.error(t["message.service.notfound"]);
+        }
+      );
     setCollapse(false);
     return () => {
       setService([]);
@@ -53,6 +68,49 @@ export default function ServicePreselection() {
     if (serviceType) {
       return serviceType.includes(value);
     }
+  };
+
+  // 过滤生成支持的 服务内容
+  const getCustomService = (item, services) => {
+    // * 0 定制固件
+    // * 1 定制mac
+    // * 2 定制内容烧录
+    // * 3 预适配
+    // * 4 定制标签
+    let data: Array<Recordable> = [];
+    for (const datum of item) {
+      switch (datum.type) {
+        case 0:
+          if (services?.nonEncryptAndSecureBoot
+            + services?.flashEncrypt
+            + services?.secureBootV1
+            + services?.secureBootV2 > 0) {
+            data.push(datum);
+          }
+          break;
+        case 1:
+          if (services?.burnMacToFlash + services?.burnMacToEfuse > 0) {
+            data.push(datum);
+          }
+          break;
+        case 2:
+          if (services?.burnContentToFlash + services?.burnContentToEfuse > 0) {
+            data.push(datum);
+          }
+          break;
+        case 3:
+          if (services?.customPreAdapt > 0) {
+            data.push(datum);
+          }
+          break;
+        case 4:
+          if (services?.customLabel > 0) {
+            data.push(datum);
+          }
+          break;
+      }
+    }
+    return data;
   };
   const render = (item, index) => (
     <List.Item key={index} actions={
@@ -171,4 +229,4 @@ export default function ServicePreselection() {
       />
     </Modal>
   </div>);
-}
+};

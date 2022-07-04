@@ -1,6 +1,6 @@
-import create, { GetState, SetState } from 'zustand';
-import { Recordable } from '@/components/type';
-import { devtools, persist } from 'zustand/middleware';
+import create, { GetState, SetState } from "zustand";
+import { Recordable } from "@/components/type";
+import { devtools, persist } from "zustand/middleware";
 
 export type StoreSlice<T extends object, E extends object = T> = (
   set: SetState<E extends T ? E : E & T>,
@@ -43,6 +43,10 @@ export interface MacDemand {
 
 export interface LabelDemand {
   labelData: Recordable;
+}
+
+export interface ServiceDemand {
+  serviceData: Recordable;
 }
 
 export interface BurnDemand {
@@ -135,6 +139,17 @@ const createBurnDemand: StoreSlice<BurnDemand> = (set, get) => ({
   }))
 });
 
+// 获得本产品提供的详情服务
+const createServiceDemand: StoreSlice<ServiceDemand> = (set, get) => ({
+  serviceData: null,
+  setServiceData: value => set( (state) => ({
+    serviceData: {
+      ...state.serviceData,
+      ...value
+    }
+  }))
+})
+
 // 定制烧录内容
 const createPreFitDemand: StoreSlice<PreFitDemand> = (set, get) => ({
   fitData: null,
@@ -165,6 +180,7 @@ const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
   ...createBurnDemand(set, get),
   ...createPreFitDemand(set, get),
   ...createCheckDemand(set,get),
+  ...createServiceDemand(set,get),
   reset: () => {
     set({
       fitData: null,
@@ -181,6 +197,7 @@ const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
       stepList: [],
       stepRouter: '',
       collapse: true,
+      serviceData: null
     })
   },
 });

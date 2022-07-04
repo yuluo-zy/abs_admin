@@ -13,8 +13,8 @@ export const postProduction = (data) => {
 };
 
 
-export const getProductionCustomDemand = (demandId) => {
-  return httpGet('/demand/custom/serve'+ demandId);
+export const getProductionCustomDemand = () => {
+  return httpGet('/demand/custom/serve');
 };
 
 export const postProductionCustomDemand = (data) => {

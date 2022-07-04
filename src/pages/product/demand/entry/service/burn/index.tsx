@@ -1,18 +1,18 @@
-import React from 'react';
-import useLocale from '@/pages/product/demand/locale/useLocale';
-import style from './style/index.module.less';
-import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
-import { Button, Checkbox, Form, Message, Select, Space } from '@arco-design/web-react';
-import DynamicSkeleton from '@/components/Dynamic/Skeleton';
-import DynamicDivider from '@/components/Dynamic/Divider';
-import { FormItemProps } from '@/components/type';
-import DynamicForm from '@/components/Dynamic/Form';
-import { ProductStore } from '@/store/product';
-import shallow from 'zustand/shallow';
-import { IconArrowRight } from '@arco-design/web-react/icon';
-import { postBurnCustomDemand } from '@/api/demand';
-import { getNextRouter } from '@/utils/getNext';
-import { useHistory } from 'react-router';
+import React from "react";
+import useLocale from "@/pages/product/demand/locale/useLocale";
+import style from "./style/index.module.less";
+import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
+import { Button, Checkbox, Form, Message, Select, Space, Tooltip } from "@arco-design/web-react";
+import DynamicSkeleton from "@/components/Dynamic/Skeleton";
+import DynamicDivider from "@/components/Dynamic/Divider";
+import { FormItemProps } from "@/components/type";
+import DynamicForm from "@/components/Dynamic/Form";
+import { ProductStore } from "@/store/product";
+import shallow from "zustand/shallow";
+import { IconArrowRight } from "@arco-design/web-react/icon";
+import { postBurnCustomDemand } from "@/api/demand";
+import { getNextRouter } from "@/utils/getNext";
+import { useHistory } from "react-router";
 
 const Option = Select.Option;
 
@@ -394,24 +394,20 @@ export default function ServicePreselection() {
       ]
     }
   ];
-  const colList = [
-    [4, 4, 12, 4],
-    [4, 4, 7, 3, 3, 3],
-    [4, 4, 10, 3, 3],
-    [4, 4, 7, 6, 3]
-  ];
 
   const getFormList = (value: number | undefined) => {
     if (value != undefined && value > -1) {
       return <div className={style["card"]}>
         <div className={style["title"]}><b>{options[burnData?.flashType]}</b></div>
-        <DynamicForm data={{ ...burnData }}
-                     layout={"inline"}
-                     col={colList[burnData?.flashType]}
-                     title={"firmware.burn.flash.title"}
-                     formItem={FlashItem[value]}
-                     formData={form} onSubmit={() => {
-        }} /></div>;
+        {/*<DynamicForm data={{ ...burnData }}*/}
+        {/*             layout={"inline"}*/}
+        {/*             col={colList[burnData?.flashType]}*/}
+        {/*             title={"firmware.burn.flash.title"}*/}
+        {/*             formItem={FlashItem[value]}*/}
+        {/*             formData={form} onSubmit={() => {*/}
+        {/*}} />*/}
+
+      </div>;
     }
   };
 
@@ -489,9 +485,12 @@ export default function ServicePreselection() {
             <DynamicDivider />
             <Space size={15}>
               {t["firmware.burn.flash.title"]}
+              <Tooltip color={'#1380ea'} position={'rt'}
+                       defaultPopupVisible
+                       content= {t["firmware.burn.hint"]}>
               <Select
                 placeholder="Please select"
-                style={{ width: 500 }}
+                style={{ width: 430 }}
                 defaultValue={burnData?.flashType}
                 onChange={(value) => {
                   setBurnData({ flashType: value });
@@ -503,10 +502,12 @@ export default function ServicePreselection() {
                   </Option>
                 ))}
               </Select>
+              </Tooltip>
             </Space>
           </div>
         }
 
+        {/*获取flash 烧录方案*/}
         {getFormList(burnData?.flashType)}
 
         < DynamicDivider />
