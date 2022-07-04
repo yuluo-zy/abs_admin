@@ -1,15 +1,15 @@
-import React, { useMemo } from 'react';
-import { Button, DatePicker, Form, Grid, Input, InputNumber, Select } from '@arco-design/web-react';
-import useLocale from '@/utils/useHook/useLocale';
-import styles from './style/index.module.less';
-import { FormItemProps, FormList, FormProps, Recordable } from '@/components/type';
-import locale from './locale';
-import dayjs from 'dayjs';
-import { IconCheck, IconDelete, IconPlus, IconRefresh } from '@arco-design/web-react/icon';
-import cs from 'classnames';
-import useDebounce from '@/utils/useHook/useDebounce';
-import DynamicUpload from '@/components/Dynamic/Upload';
-import { UploadItem } from '@arco-design/web-react/es/Upload';
+import React, { useMemo } from "react";
+import { Button, DatePicker, Form, Grid, Input, InputNumber, Select } from "@arco-design/web-react";
+import useLocale from "@/utils/useHook/useLocale";
+import styles from "./style/index.module.less";
+import { FormItemProps, FormList, FormProps, Recordable } from "@/components/type";
+import locale from "./locale";
+import dayjs from "dayjs";
+import { IconCheck, IconDelete, IconPlus, IconRefresh } from "@arco-design/web-react/icon";
+import cs from "classnames";
+import useDebounce from "@/utils/useHook/useDebounce";
+import DynamicUpload from "@/components/Dynamic/Upload";
+import { UploadItem } from "@arco-design/web-react/es/Upload";
 
 const { Row, Col } = Grid;
 const FormItem = Form.Item;
@@ -37,6 +37,7 @@ function DynamicForm(props: FormProps) {
           label={item.label}
           field={item.field}
           rules={item.rules}
+          style={item.style}
         >
           <Input allowClear placeholder={item.placeholder} />
         </FormItem>
@@ -51,6 +52,7 @@ function DynamicForm(props: FormProps) {
           label={item.label}
           field={item.field}
           rules={item.rules}
+          style={item.style}
         >
           <Input type={'password'} allowClear placeholder={item.placeholder} />
         </FormItem>
@@ -65,6 +67,7 @@ function DynamicForm(props: FormProps) {
           label={item.label}
           field={item.field}
           rules={item.rules}
+          style={item.style}
         >
           <InputNumber placeholder={item.placeholder} />
         </FormItem>
@@ -79,6 +82,7 @@ function DynamicForm(props: FormProps) {
           label={item.label}
           field={item.field}
           rules={item.rules}
+          style={item.style}
         >
           <Select options={item.options} allowClear placeholder={item.placeholder} />
         </FormItem>
@@ -93,6 +97,7 @@ function DynamicForm(props: FormProps) {
           label={item.label}
           field={item.field}
           rules={item.rules}
+          style={item.style}
         >
           <TextArea allowClear autoSize placeholder={item.placeholder} />
         </FormItem>
@@ -107,6 +112,7 @@ function DynamicForm(props: FormProps) {
           label={item.label}
           field={item.field}
           rules={item.rules}
+          style={item.style}
         >
           <Select options={item.options} mode={'multiple'} allowClear placeholder={item.placeholder} />
         </FormItem>
@@ -120,6 +126,7 @@ function DynamicForm(props: FormProps) {
           required={item.required}
           label={item.label}
           field={item.field}
+          style={item.style}
           rules={item.rules}
         >
           <RangePicker
@@ -143,6 +150,7 @@ function DynamicForm(props: FormProps) {
           label={item.label}
           field={item.field}
           rules={item.rules}
+          style={item.style}
           triggerPropName='fileList'
           help={item.placeholder}
         >

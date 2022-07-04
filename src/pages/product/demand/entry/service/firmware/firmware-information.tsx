@@ -1,10 +1,10 @@
-import React, { useMemo, useState } from 'react';
-import { FormItemProps } from '@/components/type';
-import useLocale from '@/pages/product/demand/locale/useLocale';
-import DynamicForm from '@/components/Dynamic/Form';
-import DynamicCard from '@/components/Dynamic/Card';
-import { useUpdateEffect } from 'react-use';
-import { getList } from '@/utils/listTools';
+import React, { useMemo, useState } from "react";
+import { FormItemProps } from "@/components/type";
+import useLocale from "@/pages/product/demand/locale/useLocale";
+import DynamicForm from "@/components/Dynamic/Form";
+import DynamicCard from "@/components/Dynamic/Card";
+import { useUpdateEffect } from "react-use";
+import { getList } from "@/utils/listTools";
 
 
 export default function FirmwareInformation(props: {initialValues, number?}) {
@@ -27,7 +27,10 @@ export default function FirmwareInformation(props: {initialValues, number?}) {
           message: t["firmware.information.name.error"],
           minLength: 2
         }
-      ]
+      ],
+      style: {
+        minWidth: '15rem'
+      }
     },
     {
       label: t["firmware.information.MD5"],
@@ -41,22 +44,10 @@ export default function FirmwareInformation(props: {initialValues, number?}) {
           message: t["firmware.information.MD5.error"],
           minLength: 2
         }
-      ]
-    },
-    {
-      label: t["firmware.information.startAddress"],
-      type: "input",
-      labelCol: labelCol,
-      field: "beginAddr",
-      required: true,
-      placeholder: t["firmware.information.startAddress.message"],
-      rules: [
-        {
-          required: true,
-          message: t["firmware.information.startAddress.error"],
-          minLength: 2
-        }
-      ]
+      ],
+      style: {
+        minWidth: '17rem'
+      }
     },
     {
       label: t["firmware.information.upLoad"],
@@ -70,7 +61,10 @@ export default function FirmwareInformation(props: {initialValues, number?}) {
           required: true,
           message: t["firmware.information.upLoad.error"]
         }
-      ]
+      ],
+      style: {
+        minWidth: '17rem'
+      }
     }
   ];
 
@@ -85,7 +79,7 @@ export default function FirmwareInformation(props: {initialValues, number?}) {
         <DynamicCard title={t["firmware.information.title"]}>
           {number.map(item => {
             return <DynamicForm title={`firmware.information.title-${item}`}
-                                col={4}
+                                col={3}
                                 key={item}
                                 data={initialValues ? initialValues[item] : {}}
                                 formItem={informationProps} />;

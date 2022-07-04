@@ -36,6 +36,7 @@ export interface FormItemProps {
   node?: any;
   limit?: number;
   header?: string
+  style?: any
 }
 
 export interface FormList {
