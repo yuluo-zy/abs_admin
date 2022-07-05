@@ -213,6 +213,14 @@ const i18n = {
     'preselection.hint.burn.context5': '如该部分需烧写到eFuse: 请直接注明烧写要求即可，即efuse位和及其期望烧成的目标值',
     'preselection.hint.label.title': '标签 定制提示',
     'preselection.hint.label.context1': '以下为乐鑫模组通用标签, 请审阅评估通用标签是否满足您的需要: ',
+    'demand.service.firmware.serial.check.type': '串口类型',
+    'demand.service.firmware.serial.check.universal': '通用串口',
+    'demand.service.firmware.serial.check.self': '自定义串口',
+    'demand.service.firmware.serial.check.error': '串口设定不能为空',
+    'demand.service.firmware.serial.check.str': '串口校验-',
+    'demand.service.firmware.serial.check.str.help': '请填写串口校验字符串',
+    'demand.service.firmware.serial.check.add': '添加串口校验字符串',
+    'demand.service.firmware.serial.check.str.size': '串口校验字符串最多添加三条',
   },
 };
 

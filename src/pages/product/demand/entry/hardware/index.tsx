@@ -489,7 +489,7 @@ export default function HardwareSelection() {
         <Modal
           title={t["hardware.modal.title"]}
           visible={visible}
-          style={{ width: "50%" }}
+          style={{ minWidth: "50rem" }}
           onOk={() => postHardWare(moduleInfo,demandId)}
           onCancel={() => setVisible(false)}
           autoFocus={false}
