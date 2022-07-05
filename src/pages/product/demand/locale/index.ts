@@ -221,6 +221,10 @@ const i18n = {
     'demand.service.firmware.serial.check.str.help': '请填写串口校验字符串',
     'demand.service.firmware.serial.check.add': '添加串口校验字符串',
     'demand.service.firmware.serial.check.str.size': '串口校验字符串最多添加三条',
+    "firmware.customization.info.encryption.firmware.flash.info.link": '点击获取 Flash 加密详情',
+    "firmware.customization.info.encryption.firmware.add": '添加固件条目信息',
+    'firmware.customization.info.encryption.firmware.max_size': '固件信息条目字最多添加八条',
+    'firmware.customization.info.encryption.firmware.min_size': '固件信息条目字最少保留一条',
   },
 };
 

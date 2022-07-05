@@ -17,3 +17,49 @@
   position: absolute;
   right: -5rem;
 }
+
+.button_group_information {
+  position: absolute;
+  left: 10rem;
+  top: 15px;
+}
+.button_group_delete {
+  position: relative;
+  &-button {
+    position: absolute;
+    right: 20%;
+    @media screen and (max-width: 1600px){
+      right: 15%;
+    }
+    @media screen and (max-width: 1400px){
+      right: 13%;
+    }
+
+    @media screen and (max-width: 1200px){
+      right: 14%;
+    }
+    @media screen and (max-width: 1080px){
+      right: 11%;
+    }
+    top: 2rem;
+  }
+
+}
+
+.encryption{
+  position: relative;
+  &-group{
+    position: absolute;
+    right: -0.5rem;
+    bottom: -0.8rem;
+  }
+  &-secure {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    left: 12rem;
+    bottom: 2rem;
+
+  }
+
+}

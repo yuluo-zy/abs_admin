@@ -12,10 +12,13 @@ export default function SerialCheck(props: { initialValues? }) {
   const { initialValues } = props;
   const t = useLocale();
   const [form] = Form.useForm();
+  if(!initialValues?.serial_check_str){
+    initialValues.serial_check_str = [""]
+  }
   return (
     <DynamicCard title={t["firmware.serial.check.title"]}>
       <Row>
-        <Col xs={24} sm={20} lg={14} xxl={14}>
+        <Col xs={24} sm={22} lg={20} xxl={14}>
           <Form
             form={form}
             id={"firmware.serial.check.title"}
