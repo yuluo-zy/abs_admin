@@ -1,9 +1,206 @@
-import React, { useEffect, useState } from 'react';
-import useLocale from '@/pages/product/demand/locale/useLocale';
-import DynamicCard from '@/components/Dynamic/Card';
-import { Checkbox, Form, Input } from '@arco-design/web-react';
-import style from './style/index.module.less';
+import React, { useEffect, useState } from "react";
+import useLocale from "@/pages/product/demand/locale/useLocale";
+import DynamicCard from "@/components/Dynamic/Card";
+import { Checkbox, Form, Input } from "@arco-design/web-react";
+import style from "./style/index.module.less";
 
+const EfuseConfig = [
+  {
+    title: "Security fuses: ",
+    key: "securityFuses",
+    child: [
+      {
+        title: "JTAG_DISABLE",
+        key: "JTAG_DISABLE",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "DISABLE_DL_ENCRYPT",
+        key: "DISABLE_DL_ENCRYPT",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "DISABLE_DL_DECRYPT",
+        key: "DISABLE_DL_DECRYPT",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "DISABLE_DL_CACHE",
+        key: "DISABLE_DL_CACHE",
+        value: 0,
+        initValue: 0
+      }
+    ]
+  },
+  {
+    title: "Config fuses: ",
+    key: "configFuses",
+    child: [
+      {
+        title: "XPD_SDIO_FORCE",
+        key: "XPD_SDIO_FORCE",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "XPD_SDIO_REG",
+        key: "XPD_SDIO_REG",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "XPD_SDIO_TIEH",
+        key: "XPD_SDIO_TIEH",
+        value: 0,
+        initValue: 0
+      }
+    ]
+  }
+];
+
+const ESP32_C3_EfuseConfig = [
+  {
+    title: "Security fuses: ",
+    key: "securityFuses",
+    child: [
+      {
+        title: "DIS_DOWNLOAD_ICACHE",
+        key: "DIS_DOWNLOAD_ICACHE",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "DIS_PAD_JTAG",
+        key: "DIS_PAD_JTAG",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "DIS_LEGACY_SPI_BOOT",
+        key: "DIS_LEGACY_SPI_BOOT",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "DIS_USB_JTAG",
+        key: "DIS_USB_JTAG",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "DIS_DOWNLOAD_MANUAL_ENCRYPT",
+        key: "DIS_DOWNLOAD_MANUAL_ENCRYPT",
+        value: 0,
+        initValue: 0
+      }
+    ]
+  },
+]
+
+const ESP32_EfuseConfig = [
+  {
+    title: "Security fuses: ",
+    key: "securityFuses",
+    child: [
+      {
+        title: "JTAG_DISABLE",
+        key: "JTAG_DISABLE",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "DISABLE_DL_ENCRYPT",
+        key: "DISABLE_DL_ENCRYPT",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "DISABLE_DL_DECRYPT",
+        key: "DISABLE_DL_DECRYPT",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "DISABLE_DL_CACHE",
+        key: "DISABLE_DL_CACHE",
+        value: 0,
+        initValue: 0
+      }
+    ]
+  },
+  {
+    title: "Config fuses: ",
+    key: "configFuses",
+    child: [
+      {
+        title: "XPD_SDIO_FORCE",
+        key: "XPD_SDIO_FORCE",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "XPD_SDIO_REG",
+        key: "XPD_SDIO_REG",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "XPD_SDIO_TIEH",
+        key: "XPD_SDIO_TIEH",
+        value: 0,
+        initValue: 0
+      }
+    ]
+  }
+]
+
+const ESP32_S_EfuseConfig = [
+  {
+    title: "Security fuses: ",
+    key: "securityFuses",
+    child: [
+      {
+        title: "DIS_BOOT_REMAP",
+        key: "DIS_BOOT_REMAP",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "DIS_DOWNLOAD_ICACHE",
+        key: "DIS_DOWNLOAD_ICACHE",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "DIS_DOWNLOAD_DCACHE",
+        key: "DIS_DOWNLOAD_DCACHE",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "HARD_DIS_JTAG",
+        key: "HARD_DIS_JTAG",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "DIS_LEGACY_SPI_BOOT",
+        key: "DIS_LEGACY_SPI_BOOT",
+        value: 0,
+        initValue: 0
+      },
+      {
+        title: "DIS_DOWNLOAD_MANUAL_ENCRYPT",
+        key: "DIS_DOWNLOAD_MANUAL_ENCRYPT",
+        value: 0,
+        initValue: 0
+      },
+    ]
+  }
+]
 function CustomEfuseConfig(props) {
   const t = useLocale();
   const {entity} = props
@@ -80,7 +277,6 @@ function CustomEfuseConfig(props) {
     if (!('value' in props)) {
       setValue(newValue);
     }
-    // onChange is passed in by Form.Item and will update the fields bound to the form when triggered.
     props.onChange && props.onChange(newValue);
   }
 
@@ -103,66 +299,23 @@ function CustomEfuseConfig(props) {
     })
   );
 }
-export default function FirmwareEfuse(props: {initialValues}) {
-  const { initialValues } = props;
+export default function FirmwareEfuse(props: {initialValues, target}) {
+  const { initialValues, target } = props;
   const t = useLocale();
-  const EfuseConfig = [
-    {
-      title: "Security fuses: ",
-      key: "securityFuses",
-      child: [
-        {
-          title: "JTAG_DISABLE",
-          key: "JTAG_DISABLE",
-          value: 0,
-          initValue: 0
-        },
-        {
-          title: "DISABLE_DL_ENCRYPT",
-          key: "DISABLE_DL_ENCRYPT",
-          value: 0,
-          initValue: 0
-        },
-        {
-          title: "DISABLE_DL_DECRYPT",
-          key: "DISABLE_DL_DECRYPT",
-          value: 0,
-          initValue: 0
-        },
-        {
-          title: "DISABLE_DL_CACHE",
-          key: "DISABLE_DL_CACHE",
-          value: 0,
-          initValue: 0
-        }
-      ]
-    },
-    {
-      title: "Config fuses: ",
-      key: "configFuses",
-      child: [
-        {
-          title: "XPD_SDIO_FORCE",
-          key: "XPD_SDIO_FORCE",
-          value: 0,
-          initValue: 0
-        },
-        {
-          title: "XPD_SDIO_REG",
-          key: "XPD_SDIO_REG",
-          value: 0,
-          initValue: 0
-        },
-        {
-          title: "XPD_SDIO_TIEH",
-          key: "XPD_SDIO_TIEH",
-          value: 0,
-          initValue: 0
-        }
-      ]
-    }
-  ];
 
+  // 这里根据芯片型号的不同来返回相关的信息
+  const getEfuseConfig = (target) => {
+    if(target === "ESP32-S3" || target === "ESP32-S2"){
+      return ESP32_S_EfuseConfig
+    }
+    if(target=== "ESP32"){
+      return ESP32_EfuseConfig
+    }
+    if(target.search("ESP32-C3") !== -1){
+      return ESP32_C3_EfuseConfig
+    }
+
+  }
 
   return (
     <DynamicCard title={t["firmware.information.efuse.title"]}>
@@ -170,7 +323,7 @@ export default function FirmwareEfuse(props: {initialValues}) {
         id={"firmware.information.efuse.title"}
         style={{ maxWidth: 650 }}
         initialValues={initialValues}>
-        {EfuseConfig.map((item, index) => {
+        { target && getEfuseConfig(target).map((item, index) => {
             return <Form.Item
               label={item.title}
               field={item.key}

@@ -40,7 +40,8 @@ export default function FirmwareCustomization() {
   const history = useHistory();
   const Option = Select.Option;
 
-  const [demandId, serviceType, serviceData] = ProductStore(state => [state.demandId, state.serviceType, state.serviceData], shallow);
+  const [demandId, serviceType, serviceData, modelInfo] =
+    ProductStore(state => [state.demandId, state.serviceType, state.serviceData, state.moduleInfo], shallow);
   const [info, setInfo] = ProductStore(state => [state.info, state.setInfo], shallow);
   const [visible, setVisible] = useState(false);
   const [project, setProject] = useState([]);
@@ -440,7 +441,7 @@ export default function FirmwareCustomization() {
         {info?.keyType === 0 && <div>
           <FirmwareInformation initialValues={info?.fileList}  />
           <Divider style={{ borderBottomStyle: "dashed" }} />
-          <FirmwareEfuse initialValues={{ ...info }} />
+          <FirmwareEfuse initialValues={{ ...info }} target={modelInfo?.series} />
           <Divider style={{ borderBottomStyle: "dashed" }} />
           <SerialCheck initialValues={{ ...info }} />
           <Divider style={{ borderBottomStyle: "dashed" }} />
@@ -453,7 +454,7 @@ export default function FirmwareCustomization() {
             <Divider style={{ borderBottomStyle: "dashed" }} />
             <FirmwareFlash initialValues={{ ...info }} />
             <Divider style={{ borderBottomStyle: "dashed" }} />
-            <FirmwareEfuse initialValues={{ ...info }} />
+            <FirmwareEfuse initialValues={{ ...info }} target={modelInfo?.series} />
             <Divider style={{ borderBottomStyle: "dashed" }} />
             <SerialCheck initialValues={{ ...info }} />
             <Divider style={{ borderBottomStyle: "dashed" }} />
