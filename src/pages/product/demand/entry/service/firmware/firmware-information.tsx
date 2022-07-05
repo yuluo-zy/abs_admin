@@ -5,11 +5,13 @@ import DynamicForm from "@/components/Dynamic/Form";
 import DynamicCard from "@/components/Dynamic/Card";
 import { useUpdateEffect } from "react-use";
 import { getList } from "@/utils/listTools";
+import { Button } from "@arco-design/web-react";
+import style from "./style/index.module.less";
+import { IconDelete, IconPlus } from "@arco-design/web-react/icon";
 
-
-export default function FirmwareInformation(props: {initialValues, number?}) {
+export default function FirmwareInformation(props: {initialValues,addItem, deleteItem, number?, }) {
   const t = useLocale();
-  const {initialValues} = props;
+  const {initialValues,addItem, deleteItem} = props;
   const [number, setNumber] = useState(getList(props.number));
   const labelCol = {
     span: 12
@@ -72,19 +74,33 @@ export default function FirmwareInformation(props: {initialValues, number?}) {
     setNumber(getList(props.number));
   }, [props.number]);
 
-
   return useMemo(() => {
     return (
       <DynamicCard title={t["firmware.information.title"]}>
         <DynamicCard title={t["firmware.information.title"]}>
-          {number.map(item => {
-            return <DynamicForm title={`firmware.information.title-${item}`}
-                                col={3}
-                                key={item}
-                                data={initialValues ? initialValues[item] : {}}
-                                formItem={informationProps} />;
+
+          {number.map((item, index) => {
+            return <div key={index} className={style['button_group_delete']}>
+              <DynamicForm title={`firmware.information.title-${item}`}
+                           col={3}
+                           key={item}
+                           data={initialValues ? initialValues[item] : {}}
+                           formItem={informationProps} />
+              { item === number.length && <Button
+                className={style['button_group_delete-button']}
+                icon={<IconDelete />}
+                shape='circle'
+                status='danger'
+                style={{
+                  marginLeft: 32,
+                  marginTop: 4
+                }}
+                onClick={deleteItem}
+              ></Button>}
+            </div>
           })
           }
+          <Button type='primary' icon={<IconPlus />} onClick={addItem}>{t['firmware.customization.info.encryption.firmware.add']}</Button>
         </DynamicCard>
       </DynamicCard>
     );
