@@ -9,7 +9,7 @@ import { Button } from "@arco-design/web-react";
 import style from "./style/index.module.less";
 import { IconDelete, IconPlus } from "@arco-design/web-react/icon";
 
-export default function FirmwareInformation(props: {initialValues,addItem, deleteItem, number?, }) {
+export default function FirmwareInformation(props: {initialValues,addItem?, deleteItem?, number?, }) {
   const t = useLocale();
   const {initialValues,addItem, deleteItem} = props;
   const [number, setNumber] = useState(getList(props.number));
@@ -86,7 +86,7 @@ export default function FirmwareInformation(props: {initialValues,addItem, delet
                            key={item}
                            data={initialValues ? initialValues[item] : {}}
                            formItem={informationProps} />
-              { item === number.length && <Button
+              { (item === number.length) && deleteItem && <Button
                 className={style['button_group_delete-button']}
                 icon={<IconDelete />}
                 shape='circle'
@@ -100,8 +100,9 @@ export default function FirmwareInformation(props: {initialValues,addItem, delet
             </div>
           })
           }
-          <Button type='primary' icon={<IconPlus />} onClick={addItem}>{t['firmware.customization.info.encryption.firmware.add']}</Button>
-        </DynamicCard>
+          {addItem && <Button type="primary" icon={<IconPlus />}
+                   onClick={addItem}>{t["firmware.customization.info.encryption.firmware.add"]}</Button>
+          }        </DynamicCard>
       </DynamicCard>
     );
   }, [number]);

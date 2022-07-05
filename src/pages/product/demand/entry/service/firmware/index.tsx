@@ -430,7 +430,7 @@ export default function FirmwareCustomization() {
       >
         {/*非加密固件*/}
         {info?.encryption === false && <div>
-          <FirmwareInformation initialValues={info?.fileList} addItem={addItem} deleteItem={deleteItem}/>
+          <FirmwareInformation initialValues={info?.fileList}/>
           <Divider style={{ borderBottomStyle: "dashed" }} />
           <SerialCheck initialValues={{ ...info }} />
           <Divider style={{ borderBottomStyle: "dashed" }} />
@@ -438,7 +438,9 @@ export default function FirmwareCustomization() {
         }
         {/*flash 唯一*/}
         {info?.keyType === 0 && <div>
-          <FirmwareInformation initialValues={info?.fileList} addItem={addItem} deleteItem={deleteItem} />
+          <FirmwareInformation initialValues={info?.fileList}  />
+          <Divider style={{ borderBottomStyle: "dashed" }} />
+          <FirmwareEfuse initialValues={{ ...info }} />
           <Divider style={{ borderBottomStyle: "dashed" }} />
           <SerialCheck initialValues={{ ...info }} />
           <Divider style={{ borderBottomStyle: "dashed" }} />
