@@ -1,14 +1,14 @@
-import React from 'react';
-import { FormItemProps } from '@/components/type';
-import useLocale from '@/pages/product/demand/locale/useLocale';
-import DynamicForm from '@/components/Dynamic/Form';
-import DynamicCard from '@/components/Dynamic/Card';
+import React from "react";
+import { FormItemProps } from "@/components/type";
+import useLocale from "@/pages/product/demand/locale/useLocale";
+import DynamicForm from "@/components/Dynamic/Form";
+import DynamicCard from "@/components/Dynamic/Card";
 
 
 export default function FirmwareFlash(props: {initialValues}) {
   const t = useLocale();
   const labelCol = {
-    span: 12
+    span: 24
   };
   const {initialValues} = props
   const informationProps: Array<FormItemProps> = [{
@@ -21,7 +21,7 @@ export default function FirmwareFlash(props: {initialValues}) {
       { label: '40m', value: 1 },
       { label: '26m', value: 2 },
       { label: '20m', value: 3 },
-      { label: '28m', value: 4 }
+      { label: '80m', value: 4 }
     ],
   rules: [
     {
@@ -75,7 +75,7 @@ export default function FirmwareFlash(props: {initialValues}) {
   return (
     <DynamicCard title={t['firmware.information.flash.title']}>
       <DynamicForm title={'firmware.information.flash.title'}
-                   col={3}
+                   col={4}
                    data={initialValues}
                    formItem={informationProps} />
     </DynamicCard>
