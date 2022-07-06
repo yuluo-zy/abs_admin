@@ -13,7 +13,7 @@ import { postBurnCustomDemand } from "@/api/demand";
 import { getNextRouter } from "@/utils/getNext";
 import { useHistory } from "react-router";
 import EFuseData from "@/pages/product/demand/entry/service/burn/eFuse-data";
-import FlashScript from "@/pages/product/demand/entry/service/burn/flash-script";
+import FlashNvs from "@/pages/product/demand/entry/service/burn/flash-nvs";
 
 const Option = Select.Option;
 
@@ -236,74 +236,6 @@ export default function ServicePreselection() {
         ]
       }
     ],
-    [
-      {
-        placeholder: t["firmware.burn.flash.plan.data"],
-        type: "input",
-        field: "flashDataSize",
-        required: true,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.plan.data.error"],
-            minLength: 1
-          }
-        ]
-      },
-      {
-        placeholder: t["firmware.burn.flash.plan.address"],
-        type: "input",
-        field: "burnOffset",
-        required: true,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.plan.address.error"],
-            minLength: 1
-          }
-        ]
-      },
-      {
-        placeholder: t["firmware.burn.flash.plan.output"],
-        type: "text",
-        field: "flashOkSerialLabel",
-        required: true,
-        labelCol: 1,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.plan.output.error"],
-            minLength: 2
-          }
-        ]
-      },
-      {
-        placeholder: t["firmware.burn.flash.file.bin.data.script.cmd"],
-        type: "input",
-        field: "burnScriptCommand",
-        required: true,
-        limit: 1,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.file.bin.data.script.cmd.error"]
-          }
-        ]
-      },
-      {
-        placeholder: t["firmware.burn.flash.file.bin.data.script"],
-        type: "upload",
-        field: "burnScriptFile",
-        required: true,
-        limit: 1,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.file.bin.data.script.error"]
-          }
-        ]
-      }
-    ]
   ];
 
   const getFormList = (value: number | undefined) => {
@@ -317,8 +249,8 @@ export default function ServicePreselection() {
         {/*             formItem={FlashItem[value]}*/}
         {/*             formData={form} onSubmit={() => {*/}
         {/*}} />*/}
-        <FlashScript initialValues={burnData}/>
-
+        {/*<FlashScript initialValues={burnData}/>*/}
+        <FlashNvs initialValues={burnData} />
       </div>;
     }
   };
