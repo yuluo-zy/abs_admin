@@ -13,7 +13,10 @@ import { postBurnCustomDemand } from "@/api/demand";
 import { getNextRouter } from "@/utils/getNext";
 import { useHistory } from "react-router";
 import EFuseData from "@/pages/product/demand/entry/service/burn/eFuse-data";
-import FalshNvsNot from "@/pages/product/demand/entry/service/burn/falsh-nvs-not";
+import FlashNvsNot from "@/pages/product/demand/entry/service/burn/flash-nvs-not";
+import FlashBin from "@/pages/product/demand/entry/service/burn/flash-bin";
+import FlashNvs from "@/pages/product/demand/entry/service/burn/flash-nvs";
+import FlashScript from "@/pages/product/demand/entry/service/burn/flash-script";
 
 const Option = Select.Option;
 
@@ -113,24 +116,21 @@ export default function ServicePreselection() {
           }
         ]
       }
-    ],
+    ]
   ];
 
   const getFormList = (value: number | undefined) => {
     if (value != undefined && value > -1) {
-      return <div className={style["card"]}>
-        <div className={style["title"]}><b>{options[burnData?.flashType]}</b></div>
-        {/*<DynamicForm data={{ ...burnData }}*/}
-        {/*             layout={"inline"}*/}
-        {/*             col={colList[burnData?.flashType]}*/}
-        {/*             title={"firmware.burn.flash.title"}*/}
-        {/*             formItem={FlashItem[value]}*/}
-        {/*             formData={form} onSubmit={() => {*/}
-        {/*}} />*/}
-        {/*<FlashScript initialValues={burnData}/>*/}
-        {/*<FlashNvs initialValues={burnData} />*/}
-        <FalshNvsNot initialValues={burnData}/>
-      </div>;
+   switch (value){
+     case 0:
+       return <FlashBin initialValues={burnData}/>
+     case 1:
+       return <FlashNvs initialValues={burnData}/>
+     case 2:
+       return <FlashNvsNot initialValues={burnData}/>
+     case 3:
+       return <FlashScript initialValues={burnData}/>
+   }
     }
   };
 
@@ -148,8 +148,7 @@ export default function ServicePreselection() {
       ...burnData,
       ...info.forms["firmware.burn.flash.title"]?.getFieldsValue(),
       ...info.forms["firmware.burn.efuse.title"]?.getFieldsValue()
-    }
-    console.log(temp)
+    };
 
     postBurnCustomDemand({
       ...temp,
@@ -159,8 +158,8 @@ export default function ServicePreselection() {
         setBurnData({
           ...temp,
           id: res.data.result
-        })
-        history.push(getNextRouter(2, serviceType))
+        });
+        history.push(getNextRouter(2, serviceType));
         Message.success(t["submit.hardware.success"]);
       }
     });
@@ -209,39 +208,43 @@ export default function ServicePreselection() {
             <DynamicDivider />
             <Space size={15}>
               {t["firmware.burn.flash.title"]}
-              <Tooltip color={'#1380ea'} position={'rt'}
+              <Tooltip color={"#1380ea"} position={"rt"}
                        defaultPopupVisible
-                       content= {t["firmware.burn.hint"]}>
-              <Select
-                placeholder="Please select"
-                style={{ width: 430 }}
-                defaultValue={burnData?.flashType}
-                onChange={(value) => {
-                  setBurnData({ flashType: value });
-                }}
-              >
-                {options.map((option, index) => (
-                  <Option key={option} value={index}>
-                    {option}
-                  </Option>
-                ))}
-              </Select>
+                       content={t["firmware.burn.hint"]}>
+                <Select
+                  placeholder="Please select"
+                  style={{ width: 430 }}
+                  defaultValue={burnData?.flashType}
+                  onChange={(value) => {
+                    setBurnData({ flashType: value });
+                  }}
+                >
+                  {options.map((option, index) => (
+                    <Option key={option} value={index}>
+                      {option}
+                    </Option>
+                  ))}
+                </Select>
               </Tooltip>
             </Space>
           </div>
         }
 
         {/*获取flash 烧录方案*/}
-        {getFormList(burnData?.flashType)}
+        {(burnData?.flashType != undefined && burnData?.flashType > -1) && <div className={style["card"]}>
+          <div className={style["title"]}><b>{options[burnData?.flashType]}</b></div>
+          {getFormList(burnData?.flashType)}
+        </div>}
+
 
         < DynamicDivider />
         {
-          burnData?.efuseType === 0 && <div style={{width: '100%'}}>
+          burnData?.efuseType === 0 && <div style={{ width: "100%" }}>
             <Space>
               <b>{t["firmware.burn.efuse.title"]}</b>
             </Space>
             <div className={style["card"]}>
-              <EFuseData initialValues={burnData}/>
+              <EFuseData initialValues={burnData} />
             </div>
             <DynamicDivider />
           </div>

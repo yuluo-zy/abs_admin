@@ -6,7 +6,7 @@ import DynamicUpload from "@/components/Dynamic/Upload";
 import { UploadItem } from "@arco-design/web-react/es/Upload";
 
 const FormItem = Form.Item;
-export default function FalshNvsNot(props: { initialValues }) {
+export default function FlashNvsNot(props: { initialValues }) {
   const { initialValues } = props;
   const t = useLocale();
   const [form] = Form.useForm();
