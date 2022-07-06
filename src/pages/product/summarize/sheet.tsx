@@ -56,7 +56,7 @@ export default function Sheet() {
         }
         // 设置详细的 服务选项内容
         if(res.data.result?.productionCustomServe){
-          setProductionCustomServe(res.data.result?.selServeVO)
+          setProductionCustomServe(res.data.result?.productionCustomServe)
         }
         // 设置固件自定义
         if(res.data.result?.selFirmwareVO){

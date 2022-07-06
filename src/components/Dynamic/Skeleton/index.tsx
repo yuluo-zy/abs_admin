@@ -1,5 +1,5 @@
-import { Skeleton } from '@arco-design/web-react';
-import React, { useEffect, useState } from 'react';
+import { Skeleton } from "@arco-design/web-react";
+import React, { useEffect, useState } from "react";
 
 function DynamicSkeleton(props) {
   const [lazy, setLazy] = useState(true);
@@ -7,7 +7,7 @@ function DynamicSkeleton(props) {
   useEffect(() => {
     const creatInt = setTimeout(() => {
       setLazy(false);
-    }, 700);
+    }, 300);
     return () => {
       clearInterval(creatInt);
     };
