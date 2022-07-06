@@ -13,7 +13,7 @@ import { postBurnCustomDemand } from "@/api/demand";
 import { getNextRouter } from "@/utils/getNext";
 import { useHistory } from "react-router";
 import EFuseData from "@/pages/product/demand/entry/service/burn/eFuse-data";
-import FlashNvs from "@/pages/product/demand/entry/service/burn/flash-nvs";
+import FalshNvsNot from "@/pages/product/demand/entry/service/burn/falsh-nvs-not";
 
 const Option = Select.Option;
 
@@ -128,7 +128,8 @@ export default function ServicePreselection() {
         {/*             formData={form} onSubmit={() => {*/}
         {/*}} />*/}
         {/*<FlashScript initialValues={burnData}/>*/}
-        <FlashNvs initialValues={burnData} />
+        {/*<FlashNvs initialValues={burnData} />*/}
+        <FalshNvsNot initialValues={burnData}/>
       </div>;
     }
   };
