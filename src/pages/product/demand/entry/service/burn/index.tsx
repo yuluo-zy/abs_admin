@@ -13,6 +13,7 @@ import { postBurnCustomDemand } from "@/api/demand";
 import { getNextRouter } from "@/utils/getNext";
 import { useHistory } from "react-router";
 import EFuseData from "@/pages/product/demand/entry/service/burn/eFuse-data";
+import FlashScript from "@/pages/product/demand/entry/service/burn/flash-script";
 
 const Option = Select.Option;
 
@@ -316,6 +317,7 @@ export default function ServicePreselection() {
         {/*             formItem={FlashItem[value]}*/}
         {/*             formData={form} onSubmit={() => {*/}
         {/*}} />*/}
+        <FlashScript initialValues={burnData}/>
 
       </div>;
     }
@@ -425,7 +427,7 @@ export default function ServicePreselection() {
         {
           burnData?.efuseType === 0 && <div style={{width: '100%'}}>
             <Space>
-              {t["firmware.burn.efuse.title"]}
+              <b>{t["firmware.burn.efuse.title"]}</b>
             </Space>
             <div className={style["card"]}>
               <EFuseData initialValues={burnData}/>

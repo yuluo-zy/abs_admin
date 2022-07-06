@@ -1,6 +1,5 @@
 import React from "react";
 import { Form, Input, Select } from "@arco-design/web-react";
-import { FormItemProps } from "@/components/type";
 import useLocale from "@/pages/product/demand/locale/useLocale";
 import style from "./style/index.module.less";
 import DynamicUpload from "@/components/Dynamic/Upload";
@@ -11,95 +10,6 @@ export default function EFuseData(props: { initialValues }) {
   const { initialValues } = props;
   const t = useLocale();
   const [form] = Form.useForm();
-  const EfuseItem: Array<FormItemProps> = [
-    {
-      placeholder: t["firmware.burn.flash.plan.data"],
-      type: "input",
-      field: "efuseDataSize",
-      required: true,
-      rules: [
-        {
-          required: true,
-          message: t["firmware.burn.flash.plan.data.error"],
-          minLength: 1
-        }
-      ]
-    },
-    {
-      placeholder: "BLK",
-      type: "select",
-      field: "efuseBlk",
-      required: true,
-      options: [
-        { label: "EFUSE_BLK 3", value: 3 },
-        { label: "EFUSE_BLK 4", value: 4 },
-        { label: "EFUSE_BLK 5", value: 5 },
-        { label: "EFUSE_BLK 6", value: 6 },
-        { label: "EFUSE_BLK 7", value: 7 },
-        { label: "EFUSE_BLK 8", value: 8 },
-        { label: "EFUSE_BLK 9", value: 9 }
-      ],
-      rules: [
-        {
-          required: true,
-          message: t["firmware.burn.flash.plan.address.error"]
-        }
-      ]
-    },
-    {
-      placeholder: t["firmware.burn.flash.plan.address"],
-      type: "input",
-      field: "efuseBurnAddr",
-      required: true,
-      rules: [
-        {
-          required: true,
-          message: t["firmware.burn.flash.plan.address.error"],
-          minLength: 1
-        }
-      ]
-    },
-    {
-      placeholder: t["firmware.burn.flash.plan.output"],
-      type: "text",
-      field: "efuseOkSerialLabel",
-      required: true,
-      labelCol: 1,
-      rules: [
-        {
-          required: true,
-          message: t["firmware.burn.flash.plan.output.error"],
-          minLength: 2
-        }
-      ]
-    },
-    {
-      placeholder: t["firmware.burn.flash.file.bin.data.list"],
-      type: "upload",
-      field: "efuseListCsvFile",
-      required: true,
-      limit: 1,
-      rules: [
-        {
-          required: true,
-          message: t["firmware.burn.flash.file.bin.data.list.error"]
-        }
-      ]
-    },
-    {
-      placeholder: t["firmware.burn.flash.file.bin.data.result"],
-      type: "upload",
-      field: "efuseResultCsvFile",
-      required: true,
-      limit: 1,
-      rules: [
-        {
-          required: true,
-          message: t["firmware.burn.flash.file.bin.data.result.error"]
-        }
-      ]
-    }
-  ];
   return <Form
     className={style['efuse_data']}
     scrollToFirstError

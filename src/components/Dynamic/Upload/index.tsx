@@ -88,7 +88,7 @@ function DynamicUpload(props) {
       }}
       limit={limit}
     />
-    {title && <p style={{ position: "absolute", top: "-2rem" }}>{title}</p>}
+    {title && <p style={{ position: "absolute", top: "-1.8rem" }}>{title}</p>}
   </div>;
 }
 
