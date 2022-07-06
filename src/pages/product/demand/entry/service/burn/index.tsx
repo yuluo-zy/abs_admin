@@ -24,7 +24,7 @@ export default function ServicePreselection() {
   const t = useLocale();
   const history = useHistory();
   const [burnData, setBurnData] = ProductStore(state => [state.burnData, state.setBurnData], shallow);
-  const [demandId, serviceType] = ProductStore(state => [state.demandId, state.serviceType], shallow);
+  const [demandId, serviceType, serviceData] = ProductStore(state => [state.demandId, state.serviceType, state.serviceData], shallow);
   const options = [
     t["firmware.burn.flash.planA"],
     t["firmware.burn.flash.planB.NVS"],
@@ -173,15 +173,15 @@ export default function ServicePreselection() {
         <Space size={10} direction={"vertical"}>
           <Space size={15} direction={"vertical"}>
             {t["firmware.burn.title.context"]}
-            <Checkbox checked={burnData?.flashType !== -1} onChange={(value) => {
+            {serviceData?.burnContentToFlash === 1 && <Checkbox checked={burnData?.flashType !== -1} onChange={(value) => {
               if (value) {
                 setBurnData({ flashType: 0 });
               } else {
                 setBurnData({ flashType: -1 });
               }
 
-            }}>Flash</Checkbox>
-            <Checkbox checked={burnData?.efuseType === 0} onChange={(value) => {
+            }}>Flash</Checkbox>}
+            {serviceData?.burnContentToEfuse === 1 && <Checkbox checked={burnData?.efuseType === 0} onChange={(value) => {
               if (value) {
                 setBurnData({
                   efuseType: 0
@@ -192,7 +192,7 @@ export default function ServicePreselection() {
                 });
               }
 
-            }}>eFuse</Checkbox>
+            }}>eFuse</Checkbox>}
           </Space>
           <br />
           <Space>
