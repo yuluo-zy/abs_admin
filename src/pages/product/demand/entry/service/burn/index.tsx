@@ -32,61 +32,7 @@ export default function ServicePreselection() {
   const [form] = Form.useForm();
 
   const FlashItem: Array<Array<FormItemProps>> = [
-    [
-      {
-        placeholder: t["firmware.burn.flash.plan.data"],
-        type: "input",
-        field: "flashDataSize",
-        required: true,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.plan.data.error"],
-            minLength: 1
-          }
-        ]
-      },
-      {
-        placeholder: t["firmware.burn.flash.plan.address"],
-        type: "input",
-        field: "burnOffset",
-        required: true,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.plan.address.error"],
-            minLength: 1
-          }
-        ]
-      },
-      {
-        placeholder: t["firmware.burn.flash.plan.output"],
-        type: "text",
-        field: "flashOkSerialLabel",
-        required: true,
-        labelCol: 1,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.plan.output.error"],
-            minLength: 2
-          }
-        ]
-      },
-      {
-        placeholder: t["firmware.burn.flash.plan.bin"],
-        type: "upload",
-        field: "burnBin",
-        required: true,
-        limit: 1,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.plan.bin.error"]
-          }
-        ]
-      }
-    ],
+
     [
       {
         placeholder: t["firmware.burn.flash.plan.data"],
@@ -158,74 +104,6 @@ export default function ServicePreselection() {
         placeholder: t["firmware.burn.flash.plan.bin"],
         type: "upload",
         field: "sampleBinFile",
-        required: true,
-        limit: 1,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.plan.bin.error"]
-          }
-        ]
-      }
-    ],
-    [
-      {
-        placeholder: t["firmware.burn.flash.plan.data"],
-        type: "input",
-        field: "flashDataSize",
-        required: true,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.plan.data.error"],
-            minLength: 1
-          }
-        ]
-      },
-      {
-        placeholder: t["firmware.burn.flash.plan.address"],
-        type: "input",
-        field: "burnOffset",
-        required: true,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.plan.address.error"],
-            minLength: 1
-          }
-        ]
-      },
-      {
-        placeholder: t["firmware.burn.flash.plan.output"],
-        type: "text",
-        field: "flashOkSerialLabel",
-        required: true,
-        labelCol: 1,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.plan.output.error"],
-            minLength: 2
-          }
-        ]
-      },
-      {
-        placeholder: t["firmware.burn.flash.file.bin.data.list"],
-        type: "upload",
-        field: "flashListCsvFile",
-        required: true,
-        limit: 1,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.file.bin.data.list.error"]
-          }
-        ]
-      },
-      {
-        placeholder: t["firmware.burn.flash.plan.bin"],
-        type: "upload",
-        field: "burnBin",
         required: true,
         limit: 1,
         rules: [
