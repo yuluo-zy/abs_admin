@@ -225,6 +225,8 @@ const i18n = {
     "firmware.customization.info.encryption.firmware.add": '添加固件条目信息',
     'firmware.customization.info.encryption.firmware.max_size': '固件信息条目字最多添加八条',
     'firmware.customization.info.encryption.firmware.min_size': '固件信息条目字最少保留一条',
+    'demand.entry.service.burn.efuse.data.burn.info': '确认烧录信息',
+    'demand.entry.service.burn.efuse.data.burn.upload': '提供烧录数据',
   },
 };
 

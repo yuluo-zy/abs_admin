@@ -6,13 +6,13 @@ import { Button, Checkbox, Form, Message, Select, Space, Tooltip } from "@arco-d
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import DynamicDivider from "@/components/Dynamic/Divider";
 import { FormItemProps } from "@/components/type";
-import DynamicForm from "@/components/Dynamic/Form";
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import { IconArrowRight } from "@arco-design/web-react/icon";
 import { postBurnCustomDemand } from "@/api/demand";
 import { getNextRouter } from "@/utils/getNext";
 import { useHistory } from "react-router";
+import EFuseData from "@/pages/product/demand/entry/service/burn/eFuse-data";
 
 const Option = Select.Option;
 
@@ -305,96 +305,6 @@ export default function ServicePreselection() {
     ]
   ];
 
-  const EfuseItem: Array<FormItemProps> = [
-    {
-      placeholder: t["firmware.burn.flash.plan.data"],
-      type: "input",
-      field: "efuseDataSize",
-      required: true,
-      rules: [
-        {
-          required: true,
-          message: t["firmware.burn.flash.plan.data.error"],
-          minLength: 1
-        }
-      ]
-    },
-    {
-      placeholder: "BLK",
-      type: "select",
-      field: "efuseBlk",
-      required: true,
-      options: [
-        { label: "EFUSE_BLK 3", value: 3 },
-        { label: "EFUSE_BLK 4", value: 4 },
-        { label: "EFUSE_BLK 5", value: 5 },
-        { label: "EFUSE_BLK 6", value: 6 },
-        { label: "EFUSE_BLK 7", value: 7 },
-        { label: "EFUSE_BLK 8", value: 8 },
-        { label: "EFUSE_BLK 9", value: 9 }
-      ],
-      rules: [
-        {
-          required: true,
-          message: t["firmware.burn.flash.plan.address.error"]
-        }
-      ]
-    },
-    {
-      placeholder: t["firmware.burn.flash.plan.address"],
-      type: "input",
-      field: "efuseBurnAddr",
-      required: true,
-      rules: [
-        {
-          required: true,
-          message: t["firmware.burn.flash.plan.address.error"],
-          minLength: 1
-        }
-      ]
-    },
-    {
-      placeholder: t["firmware.burn.flash.plan.output"],
-      type: "text",
-      field: "efuseOkSerialLabel",
-      required: true,
-      labelCol: 1,
-      rules: [
-        {
-          required: true,
-          message: t["firmware.burn.flash.plan.output.error"],
-          minLength: 2
-        }
-      ]
-    },
-    {
-      placeholder: t["firmware.burn.flash.file.bin.data.list"],
-      type: "upload",
-      field: "efuseListCsvFile",
-      required: true,
-      limit: 1,
-      rules: [
-        {
-          required: true,
-          message: t["firmware.burn.flash.file.bin.data.list.error"]
-        }
-      ]
-    },
-    {
-      placeholder: t["firmware.burn.flash.file.bin.data.result"],
-      type: "upload",
-      field: "efuseResultCsvFile",
-      required: true,
-      limit: 1,
-      rules: [
-        {
-          required: true,
-          message: t["firmware.burn.flash.file.bin.data.result.error"]
-        }
-      ]
-    }
-  ];
-
   const getFormList = (value: number | undefined) => {
     if (value != undefined && value > -1) {
       return <div className={style["card"]}>
@@ -426,6 +336,7 @@ export default function ServicePreselection() {
       ...info.forms["firmware.burn.flash.title"]?.getFieldsValue(),
       ...info.forms["firmware.burn.efuse.title"]?.getFieldsValue()
     }
+    console.log(temp)
 
     postBurnCustomDemand({
       ...temp,
@@ -512,16 +423,12 @@ export default function ServicePreselection() {
 
         < DynamicDivider />
         {
-          burnData?.efuseType === 0 && <div>
+          burnData?.efuseType === 0 && <div style={{width: '100%'}}>
             <Space>
               {t["firmware.burn.efuse.title"]}
             </Space>
             <div className={style["card"]}>
-              <DynamicForm data={{...burnData }}
-                           layout={"inline"}
-                           col={[4, 4, 3, 7, 3, 3]}
-                           title={"firmware.burn.efuse.title"}
-                           formItem={EfuseItem} />
+              <EFuseData initialValues={burnData}/>
             </div>
             <DynamicDivider />
           </div>

@@ -162,7 +162,12 @@ function DynamicForm(props: FormProps) {
               })
               form.setFieldValue(item.field, res)
             }else {
-              form.setFieldValue(item.field, file.response)
+              if(fileList.length > 0){
+                form.setFieldValue(item.field, file.response)
+              }else {
+                form.setFieldValue(item.field, undefined)
+              }
+
             }
 
           }}  />
