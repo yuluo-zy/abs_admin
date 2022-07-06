@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
-import styles from './style/index.module.less';
-import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
-import useLocale from '@/pages/product/summarize/locale/useLocale';
-import DynamicMiniInput from '@/components/Dynamic/Input/mini';
-import { ProductStore } from '@/store/product';
-import shallow from 'zustand/shallow';
-import { getDemandDetails } from '@/api/demand';
-import { getProductionInfo } from '@/api/production';
-import { Button } from '@arco-design/web-react';
-import { useHistory } from 'react-router';
-import DynamicSkeleton from '@/components/Dynamic/Skeleton';
+import React, { useEffect } from "react";
+import styles from "./style/index.module.less";
+import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
+import useLocale from "@/pages/product/summarize/locale/useLocale";
+import DynamicMiniInput from "@/components/Dynamic/Input/mini";
+import { ProductStore } from "@/store/product";
+import shallow from "zustand/shallow";
+import { getDemandDetails } from "@/api/demand";
+import { getProductionInfo } from "@/api/production";
+import { Button } from "@arco-design/web-react";
+import { useHistory } from "react-router";
+import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 
 const bodyStyle = {
   paddingTop: '0',
@@ -31,13 +31,14 @@ export default function Sheet() {
         state.burnData,
         state.fitData,
       ], shallow);
-  const [setModuleInfo,setInfo, setMacData, setBurnData, setLabelDate] =
+  const [setModuleInfo,setInfo, setMacData, setBurnData, setLabelDate, setServiceData] =
     ProductStore( state => [
       state.setModuleInfo,
       state.setInfo,
       state.setMacData,
       state.setBurnData,
-      state.setLabelData
+      state.setLabelData,
+      state.setServiceData
     ], shallow)
 
   const [serviceType, setServiceType] = ProductStore(state => [state.serviceType, state.setServiceType], shallow);
@@ -52,6 +53,10 @@ export default function Sheet() {
         // 设置 自定义服务
         if(res.data.result?.selServeVO){
           setSelServeVO(res.data.result?.selServeVO)
+        }
+        // 设置详细的 服务选项内容
+        if(res.data.result?.productionCustomServe){
+          setProductionCustomServe(res.data.result?.selServeVO)
         }
         // 设置固件自定义
         if(res.data.result?.selFirmwareVO){
@@ -91,6 +96,11 @@ export default function Sheet() {
   const setSelServeVO = (data) => {
     setServiceId(data?.id)
     setServiceType(data?.serveIds)
+  }
+
+  // 设置详细信息的内容
+  const setProductionCustomServe = (data) => {
+    setServiceData(data)
   }
 
   const setSelFirmwareVO = (data) => {

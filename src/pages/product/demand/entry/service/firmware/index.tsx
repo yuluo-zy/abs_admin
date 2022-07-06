@@ -215,7 +215,7 @@ export default function FirmwareCustomization() {
               })}
             >
               {project.map((option) => (
-                <Option key={option.id} value={option.id}>
+                <Option key={option.id} value={option.name}>
                   {option.name}
                 </Option>
               ))}
