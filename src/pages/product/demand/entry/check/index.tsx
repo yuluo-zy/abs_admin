@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
-import useLocale from '@/pages/product/demand/locale/useLocale';
-import { Button, Message, Modal } from '@arco-design/web-react';
-import DynamicUpload from '@/components/Dynamic/Upload';
-import { UploadItem } from '@arco-design/web-react/es/Upload';
-import styles from './style/index.module.less';
-import { ProductStore } from '@/store/product';
-import shallow from 'zustand/shallow';
-import { IconArrowRight } from '@arco-design/web-react/icon';
-import { useHistory } from 'react-router';
-import { postCheckCustomDemand } from '@/api/demand';
-import CheckTable from '@/pages/product/demand/entry/check/check-table';
+import React, { useEffect, useState } from "react";
+import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
+import useLocale from "@/pages/product/demand/locale/useLocale";
+import { Button, Message, Modal } from "@arco-design/web-react";
+import DynamicUpload from "@/components/Dynamic/Upload";
+import { UploadItem } from "@arco-design/web-react/es/Upload";
+import styles from "./style/index.module.less";
+import { ProductStore } from "@/store/product";
+import shallow from "zustand/shallow";
+import { IconArrowRight } from "@arco-design/web-react/icon";
+import { useHistory } from "react-router";
+import { postCheckCustomDemand } from "@/api/demand";
+import CheckTable from "@/pages/product/demand/entry/check/check-table";
+import LogTable from "@/pages/product/demand/entry/check/log-table";
 
 const bodyStyle = {
   paddingTop: '0',
@@ -66,19 +67,20 @@ export default function CheckSelection() {
         <tbody>
         <tr>
           <th className={styles['medium']}>Items</th>
-          <th className={styles['max']}>提供示例文件</th>
-          <th colSpan={2}>备注</th>
+          <th className={styles['max']}>{t['self.check.boot.upload.file']}</th>
+          <th>{t['self.check.boot.upload.file.info']}</th>
         </tr>
         <tr>
           <td>{t['self.check.boot.log']}</td>
-          <td align='center'>
+          <td>
               <DynamicUpload limit={1}
+                             styles={{width: '5rem'}}
                              defaultFileList={checkData?.serialFileId}
                              onChange={(fileList: UploadItem, file: UploadItem) => {
                                setCheckData({ 'serialFileId': fileList });
                              }} /></td>
-          <td><p>{t['self.check.boot.file.context']}</p></td>
-          <td><p>{}</p></td>
+          {/*<td><p>{t['self.check.boot.file.context']}</p></td>*/}
+          <td><LogTable/></td>
         </tr>
 
         <tr>
@@ -89,7 +91,6 @@ export default function CheckSelection() {
               }} />
           </td>
           <td><p>{t['self.check.boot.efuse.context']}</p></td>
-          <td><p>{}</p></td>
         </tr>
         </tbody>
       </table>

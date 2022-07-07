@@ -227,7 +227,9 @@ const i18n = {
     'firmware.customization.info.encryption.firmware.min_size': '固件信息条目字最少保留一条',
     'demand.entry.service.burn.efuse.data.burn.info': '确认烧录信息',
     'demand.entry.service.burn.efuse.data.burn.upload': '提供烧录数据',
-    'demand.entry.service.label.default.model': '默认标签示意图'
+    'demand.entry.service.label.default.model': '默认标签示意图',
+    'self.check.boot.upload.file': '提供示例文件',
+    'self.check.boot.upload.file.info': '已提交的数据'
   },
 };
 
