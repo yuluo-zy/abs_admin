@@ -123,9 +123,9 @@ const i18n = {
     'firmware.mac.partitions.warn': '当您选择定制 MAC 服务， 模组屏蔽盖的二维码内将包含定制 MAC 地址',
     'firmware.label.title': '定制标签',
     'firmware.label.remark': '其他备注信息： ',
-    'firmware.label.model': '定制模组镭射标签',
+    'firmware.label.model': '模组镭射标签:',
     'firmware.label.model.error': '请上传定制模组镭射标签图片',
-    'firmware.label.box': '定制外箱标签',
+    'firmware.label.box': '定制外箱标签: ',
     'firmware.label.box.error': '请上传定制外箱标签图片',
     'firmware.label.help': '乐鑫模组包装规格详细信息',
     'firmware.burn.title': '烧录内容定制',
@@ -227,6 +227,7 @@ const i18n = {
     'firmware.customization.info.encryption.firmware.min_size': '固件信息条目字最少保留一条',
     'demand.entry.service.burn.efuse.data.burn.info': '确认烧录信息',
     'demand.entry.service.burn.efuse.data.burn.upload': '提供烧录数据',
+    'demand.entry.service.label.default.model': '默认标签示意图'
   },
 };
 
