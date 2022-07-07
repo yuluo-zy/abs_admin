@@ -147,7 +147,7 @@ export default function PreFit() {
 
         <FormItem label={t["firmware.pre.email"]}
                   labelAlign={"left"}
-                  field="type"
+                  field="espPgpEmail"
 
                   rules={[
                     {
@@ -156,7 +156,11 @@ export default function PreFit() {
                     }
                   ]}
         >
-          <Input style={maxWidth} maxLength={35}/>
+          <Input style={maxWidth} maxLength={35} value={fitData?.espPgpEmail} onChange={
+            (value) => {
+              setValue("espPgpEmail", value);
+            }
+          } />
         </FormItem>
 
         <Divider style={{ borderBottomStyle: "dashed" }} />
