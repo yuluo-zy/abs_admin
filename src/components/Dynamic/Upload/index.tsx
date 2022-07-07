@@ -13,23 +13,21 @@ function DynamicUpload(props) {
   const [defaultList, setDefaultList] = useState(fileList);
 
   const initDate = (value) => {
-    console.log(value)
     if (listType === 'picture-card') {
-      if (value) {
-
-      }
-      getFile(value).then(res => {
-          if (res.status === 200) {
-            setDefaultList([{
-              uid: value,
-              originFile: res.data
-            }]);
+      if (value  !== undefined) {
+        getFile(value).then(res => {
+            if (res.status === 200) {
+              setDefaultList([{
+                uid: value,
+                originFile: res.data
+              }]);
+            }
           }
-        }
-      );
-      return;
+        );
+        return;
+      }
     }
-    if (value) {
+    if (value !== undefined) {
       getFileInfo(value).then(res => {
         if (res.data.success) {
           const data = res.data.result;
