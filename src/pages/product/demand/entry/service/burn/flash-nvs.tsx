@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input } from "@arco-design/web-react";
+import { Form, Input, InputNumber, Tooltip } from "@arco-design/web-react";
 import useLocale from "@/pages/product/demand/locale/useLocale";
 import style from "./style/index.module.less";
 import DynamicUpload from "@/components/Dynamic/Upload";
@@ -27,11 +27,10 @@ export default function FlashNvs(props: { initialValues }) {
           {
             required: true,
             message: t["firmware.burn.flash.plan.data.error"],
-            minLength: 1
           }
         ]}
       >
-        <Input className={style['efuse_data_input']} allowClear placeholder={t["firmware.burn.flash.plan.data"]}/>
+        <InputNumber className={style['efuse_data_input']} placeholder={t["firmware.burn.flash.plan.data"]}/>
       </FormItem>
       <FormItem
         labelAlign={"left"}
@@ -61,7 +60,11 @@ export default function FlashNvs(props: { initialValues }) {
       </FormItem>
     </div>
     <div className={style['efuse_data_upload']}>
+      <Tooltip color={"#1380ea"} position={"rt"}
+               defaultPopupVisible
+               content={t["firmware.burn.hint.notice"]}>
       <b>{t['demand.entry.service.burn.efuse.data.burn.upload']}</b>
+      </Tooltip>
       <FormItem
         field="flashListCsvFile"
         triggerPropName='fileList'
