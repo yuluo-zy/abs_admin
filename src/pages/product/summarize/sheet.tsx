@@ -31,14 +31,15 @@ export default function Sheet() {
         state.burnData,
         state.fitData,
       ], shallow);
-  const [setModuleInfo,setInfo, setMacData, setBurnData, setLabelDate, setServiceData] =
+  const [setModuleInfo,setInfo, setMacData, setBurnData, setLabelDate, setServiceData, setFitData] =
     ProductStore( state => [
       state.setModuleInfo,
       state.setInfo,
       state.setMacData,
       state.setBurnData,
       state.setLabelData,
-      state.setServiceData
+      state.setServiceData,
+      state.setFitData
     ], shallow)
 
   const [serviceType, setServiceType] = ProductStore(state => [state.serviceType, state.setServiceType], shallow);
@@ -69,6 +70,10 @@ export default function Sheet() {
         // 设置定制烧录内容
         if(res.data.result?.selContentVO){
           setSelContentVO(res.data.result?.selContentVO)
+        }
+        // 设置预配置内容
+        if(res.data.result?.selAdaptVO){
+          setSelAdaptVo(res.data.result?.selAdaptVO)
         }
         // 设置定制标签
         if(res.data.result?.selLabelVO){
@@ -113,6 +118,10 @@ export default function Sheet() {
 
   const setSelContentVO = (data) => {
     setBurnData(data)
+  }
+
+  const setSelAdaptVo = (data) => {
+    setFitData(data)
   }
 
   const setSelLabelVO = (data) => {
