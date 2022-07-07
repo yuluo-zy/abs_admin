@@ -82,6 +82,7 @@ export default function CustomLabel() {
             } else {
               setValue("cusLaserLabel", 0);
             }
+            setValue("laserFileId", undefined);
           }}>
             <Tag color={"arcoblue"}>{t["firmware.label.model"]}</Tag>
           </Checkbox>
@@ -140,6 +141,7 @@ export default function CustomLabel() {
             } else {
               setValue("cusOutboxLabel", 0);
             }
+            setValue("outboxFileId", undefined);
           }}> <Tag color={"purple"}>{t["firmware.label.box"]}</Tag></Checkbox>
         </FormItem>
         {/*<Tooltip color={"#0E42D2"} position={"rt"}*/}
