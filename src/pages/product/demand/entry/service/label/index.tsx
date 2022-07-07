@@ -1,10 +1,10 @@
 import React from "react";
 import useLocale from "@/pages/product/demand/locale/useLocale";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
-import { Button, Checkbox, Form, Input, Message, Tag } from "@arco-design/web-react";
+import { Alert, Button, Checkbox, Form, Input, Link, Message, Tag } from "@arco-design/web-react";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import style from "./style/index.module.less";
-import { IconArrowRight } from "@arco-design/web-react/icon";
+import { IconArrowRight, IconLaunch } from "@arco-design/web-react/icon";
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import { DynamicImgUpload } from "@/components/Dynamic/Upload/img-upload";
@@ -67,6 +67,19 @@ export default function CustomLabel() {
 
   return (<DynamicOuterCard title={t["firmware.label.title"]} bodyStyle={bodyStyle}>
     <DynamicSkeleton animation text={{ rows: 10, width: ["100%", 600, 400] }}>
+
+      <Alert     closable
+                 className={style['alert']}
+                 type='info'
+                 content={<p>
+                  {t["firmware.label.help"]}
+                   <Link target={"_blank"}
+                           href="https://www.espressif.com/sites/default/files/documentation/Espressif_Module_Packing_Information_CN.pdf">
+                       <IconLaunch style={
+                         { color: "#0E42D2", fontSize: 15 }
+                       } />
+                     </Link>
+                 </p>}/>
       <Form
         scrollToFirstError
         form={form}
