@@ -12,6 +12,7 @@ import { useHistory } from "react-router";
 import { postCheckCustomDemand } from "@/api/demand";
 import CheckTable from "@/pages/product/demand/entry/check/check-table";
 import LogTable from "@/pages/product/demand/entry/check/log-table";
+import EFuseTable from "@/pages/product/demand/entry/check/eFuse-table";
 
 const bodyStyle = {
   paddingTop: '0',
@@ -64,20 +65,30 @@ export default function CheckSelection() {
 
   return <DynamicOuterCard title={t['hardware.production.info.title']} bodyStyle={bodyStyle}>
       <table cellPadding='1' cellSpacing='1' className={styles['table-style']}>
+        <colgroup>
+          <col className={styles['table-style-mid']}/>
+          <col className={styles['table-style-mid']}/>
+          <col/>
+        </colgroup>
         <tbody>
+
         <tr>
-          <th className={styles['medium']}>Items</th>
-          <th className={styles['max']}>{t['self.check.boot.upload.file']}</th>
+          <th>Items</th>
+          <th>{t['self.check.boot.upload.file']}</th>
           <th>{t['self.check.boot.upload.file.info']}</th>
         </tr>
         <tr>
           <td>{t['self.check.boot.log']}</td>
           <td>
               <DynamicUpload limit={1}
-                             styles={{width: '5rem'}}
                              defaultFileList={checkData?.serialFileId}
-                             onChange={(fileList: UploadItem, file: UploadItem) => {
-                               setCheckData({ 'serialFileId': fileList });
+                             onChange={(fileList: UploadItem[], file: UploadItem) => {
+                               if(fileList.length > 0 ){
+                                 setCheckData({ 'serialFileId': file.response });
+                               }else {
+                                 setCheckData({ 'serialFileId': null });
+                               }
+
                              }} /></td>
           {/*<td><p>{t['self.check.boot.file.context']}</p></td>*/}
           <td><LogTable/></td>
@@ -86,11 +97,15 @@ export default function CheckSelection() {
         <tr>
           <td>eFuse summary</td>
           <td>
-              <DynamicUpload limit={1} defaultFileList={checkData?.efuseFileId} onChange={(fileList: UploadItem, file: UploadItem) => {
-                setCheckData({ 'efuseFileId': fileList });
+              <DynamicUpload limit={1} defaultFileList={checkData?.efuseFileId} onChange={(fileList: UploadItem[], file: UploadItem) => {
+                if(fileList.length > 0 ){ setCheckData({ 'efuseFileId': fileList });}
+                else {
+                  setCheckData({ 'efuseFileId': null });
+                }
               }} />
           </td>
-          <td><p>{t['self.check.boot.efuse.context']}</p></td>
+          {/*<td><p>{t['self.check.boot.efuse.context']}</p></td>*/}
+          <td><EFuseTable/></td>
         </tr>
         </tbody>
       </table>
