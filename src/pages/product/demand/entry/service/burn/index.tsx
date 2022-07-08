@@ -5,7 +5,6 @@ import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
 import { Button, Checkbox, Form, Message, Select, Space, Tooltip } from "@arco-design/web-react";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import DynamicDivider from "@/components/Dynamic/Divider";
-import { FormItemProps } from "@/components/type";
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import { IconArrowRight } from "@arco-design/web-react/icon";
@@ -30,93 +29,6 @@ export default function ServicePreselection() {
     t["firmware.burn.flash.planB.NVS"],
     t["firmware.burn.flash.planB.NO_NVS"],
     t["firmware.burn.flash.planC"]
-  ];
-
-  const [form] = Form.useForm();
-
-  const FlashItem: Array<Array<FormItemProps>> = [
-
-    [
-      {
-        placeholder: t["firmware.burn.flash.plan.data"],
-        type: "input",
-        field: "flashDataSize",
-        required: true,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.plan.data.error"],
-            minLength: 1
-          }
-        ]
-      },
-      {
-        placeholder: t["firmware.burn.flash.plan.address"],
-        type: "input",
-        field: "burnOffset",
-        required: true,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.plan.address.error"],
-            minLength: 1
-          }
-        ]
-      },
-      {
-        placeholder: t["firmware.burn.flash.plan.output"],
-        type: "text",
-        field: "flashOkSerialLabel",
-        required: true,
-        labelCol: 1,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.plan.output.error"],
-            minLength: 2
-          }
-        ]
-      },
-      {
-        placeholder: t["firmware.burn.flash.file.bin.data.config"],
-        type: "upload",
-        field: "configFile",
-        required: true,
-        limit: 1,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.file.bin.data.config.error"]
-          }
-        ]
-      },
-      {
-        placeholder: t["firmware.burn.flash.file.bin.data.values"],
-        type: "upload",
-        field: "valuesFile",
-        required: true,
-        limit: 1,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.file.bin.data.values.error"]
-          }
-        ]
-      },
-      {
-        placeholder: t["firmware.burn.flash.plan.bin"],
-        type: "upload",
-        field: "sampleBinFile",
-        required: true,
-        limit: 1,
-        rules: [
-          {
-            required: true,
-            message: t["firmware.burn.flash.plan.bin.error"]
-          }
-        ]
-      }
-    ]
   ];
 
   const getFormList = (value: number | undefined) => {

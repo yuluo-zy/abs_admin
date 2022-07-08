@@ -234,7 +234,8 @@ const i18n = {
     'self.check.boot.upload.file.info': '已提交的数据',
     'self.check.boot.upload.port.hit': '请确认文件内容包含上文提供的字符串',
     'self.check.boot.upload.port.hit.firmware': '定制固件阶段',
-    'self.check.boot.upload.port.hit.mac': '定制 MAC 阶段'
+    'self.check.boot.upload.port.hit.mac': '定制 MAC 阶段',
+    'self.check.boot.upload.port.hit.burn': '定制烧录内容阶段'
   },
 };
 
