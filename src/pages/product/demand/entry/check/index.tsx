@@ -16,7 +16,8 @@ import EFuseTable from "@/pages/product/demand/entry/check/eFuse-table";
 
 const bodyStyle = {
   paddingTop: '0',
-  transition: ' 0.5s all ease-in-out'
+  transition: ' 0.5s all ease-in-out',
+  overflow: 'auto'
 };
 export default function CheckSelection() {
   const t = useLocale();
@@ -68,7 +69,7 @@ export default function CheckSelection() {
         <colgroup>
           <col className={styles['table-style-mid']}/>
           <col className={styles['table-style-mid']}/>
-          <col/>
+          <col className={styles['table-style-last']}/>
         </colgroup>
         <tbody>
 
@@ -109,6 +110,9 @@ export default function CheckSelection() {
         </tr>
         </tbody>
       </table>
+    <br/>
+    <br/>
+    <br/>
     <div className={styles['context-next']}>
       <Button
         type="primary"

@@ -4,18 +4,20 @@ import { DynamicCardProps } from "@/components/type";
 import { IconBulb } from "@arco-design/web-react/icon";
 
 function DynamicOuterCard(props: DynamicCardProps) {
-  const { title, children } = props;
-  const headerStyle = {
+  const { title, children, headerStyle, bodyStyle} = props;
+  const headerSelfStyle = {
     border: 'none',
     height: 'auto',
     paddingTop: '20px',
     padding: '1rem',
-    paddingBottom: 0
+    paddingBottom: 0,
+      ...headerStyle
   };
-  const bodyStyle = {
+  const bodySelfStyle = {
     // paddingLeft: '2rem',
     // paddingRight: '2rem'
-    padding: '1.2rem'
+    padding: '1.2rem',
+      ...bodyStyle
   };
   const style = {
     marginBottom: '1rem',
@@ -37,8 +39,8 @@ function DynamicOuterCard(props: DynamicCardProps) {
           {open && <Alert type='warning' content={props.help} />}
         </Space>}
       style={style}
-      headerStyle={headerStyle}
-      bodyStyle={bodyStyle}
+      headerStyle={headerSelfStyle}
+      bodyStyle={bodySelfStyle}
     >
       {children}
     </Card>

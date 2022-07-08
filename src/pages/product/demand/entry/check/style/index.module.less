@@ -5,6 +5,7 @@
   border-collapse: collapse;
   table-layout:fixed;
   vertical-align: middle;
+
   td, th {
     padding: 0px 1rem 0px 0px;
     border: 1px solid #F2F3F5;
@@ -17,12 +18,14 @@
     width: 16rem;
 
   }
+  &-last {
+    width: 50rem;
+  }
 
 }
 
 .context-next {
-  margin: 1rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  position: absolute;
+  right: 1rem;
+  bottom: 2rem;
 }
