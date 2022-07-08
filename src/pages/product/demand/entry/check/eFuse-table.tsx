@@ -4,5 +4,30 @@ import useLocale from "@/pages/product/demand/locale/useLocale";
 
 export default function EFuseTable() {
   const t = useLocale();
-  return <div>kljj</div>
+
+  const getEFuseInfo = () => {
+    return [
+      {
+        title: "Security fuses: ",
+        key: "securityFuses",
+        child: [
+          {
+            title: "JTAG_DISABLE",
+            key: "JTAG_DISABLE"
+          }]
+      },
+      {
+        title: "Security fuses: ",
+        key: "securityFuses",
+        child: [
+          {
+            title: "JTAG_DISABLE",
+            key: "JTAG_DISABLE"
+          }]
+      }
+    ]
+  }
+  return <div>
+
+  </div>
 }
