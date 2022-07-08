@@ -7,15 +7,12 @@ import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import { getDemandDetails } from "@/api/demand";
 import { getProductionInfo } from "@/api/production";
-import { Button } from "@arco-design/web-react";
+import { Button, Modal } from "@arco-design/web-react";
 import { useHistory } from "react-router";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
+import DynamicTag from "@/components/Dynamic/tag";
+import { getFile } from "@/api/file";
 
-const bodyStyle = {
-  paddingTop: '0',
-  marginRight: '1rem',
-  transition: ' 0.5s all ease-in-out'
-};
 export default function Sheet() {
   const t = useLocale();
   const history = useHistory();
@@ -29,10 +26,10 @@ export default function Sheet() {
         state.macData,
         state.labelData,
         state.burnData,
-        state.fitData,
+        state.fitData
       ], shallow);
-  const [setModuleInfo,setInfo, setMacData, setBurnData, setLabelDate, setServiceData, setFitData] =
-    ProductStore( state => [
+  const [setModuleInfo, setInfo, setMacData, setBurnData, setLabelDate, setServiceData, setFitData] =
+    ProductStore(state => [
       state.setModuleInfo,
       state.setInfo,
       state.setMacData,
@@ -40,120 +37,151 @@ export default function Sheet() {
       state.setLabelData,
       state.setServiceData,
       state.setFitData
-    ], shallow)
+    ], shallow);
 
   const [serviceType, setServiceType] = ProductStore(state => [state.serviceType, state.setServiceType], shallow);
   const [serviceId, setServiceId] = ProductStore(state => [state.serviceId, state.setServiceId], shallow);
 
-  useEffect(()=> {
+  useEffect(() => {
     getDemandDetails(demandId).then(res => {
-      if(res.data.success && res.data.result) {
-        if(res.data.result?.selDemandProduction){
-          setSelDemandProduction(res.data.result?.selDemandProduction)
+      if (res.data.success && res.data.result) {
+        if (res.data.result?.selDemandProduction) {
+          setSelDemandProduction(res.data.result?.selDemandProduction);
         }
         // 设置 自定义服务
-        if(res.data.result?.selServeVO){
-          setSelServeVO(res.data.result?.selServeVO)
+        if (res.data.result?.selServeVO) {
+          setSelServeVO(res.data.result?.selServeVO);
         }
         // 设置详细的 服务选项内容
-        if(res.data.result?.productionCustomServe){
-          setProductionCustomServe(res.data.result?.productionCustomServe)
+        if (res.data.result?.productionCustomServe) {
+          setProductionCustomServe(res.data.result?.productionCustomServe);
         }
         // 设置固件自定义
-        if(res.data.result?.selFirmwareVO){
-          setSelFirmwareVO(res.data.result?.selFirmwareVO)
+        if (res.data.result?.selFirmwareVO) {
+          setSelFirmwareVO(res.data.result?.selFirmwareVO);
         }
         // 设置定制mac
-        if(res.data.result?.selDemandMac){
-          setSelDemandMac(res.data.result?.selDemandMac)
+        if (res.data.result?.selDemandMac) {
+          setSelDemandMac(res.data.result?.selDemandMac);
         }
         // 设置定制烧录内容
-        if(res.data.result?.selContentVO){
-          setSelContentVO(res.data.result?.selContentVO)
+        if (res.data.result?.selContentVO) {
+          setSelContentVO(res.data.result?.selContentVO);
         }
         // 设置预配置内容
-        if(res.data.result?.selAdaptVO){
-          setSelAdaptVo(res.data.result?.selAdaptVO)
+        if (res.data.result?.selAdaptVO) {
+          setSelAdaptVo(res.data.result?.selAdaptVO);
         }
         // 设置定制标签
-        if(res.data.result?.selLabelVO){
-          setSelLabelVO(res.data.result?.selLabelVO)
+        if (res.data.result?.selLabelVO) {
+          setSelLabelVO(res.data.result?.selLabelVO);
         }
-    }})
-  }, [])
+      }
+    });
+  }, []);
 
   // 设置硬件选型
   const setSelDemandProduction = (data) => {
     setModuleInfo({
       sid: data?.id,
       id: data.productionId
-    })
+    });
     getProductionInfo().then(res => {
-      for(const temp of res.data?.result){
-        if(temp?.id === data.productionId){
-          setModuleInfo(temp)
+      for (const temp of res.data?.result) {
+        if (temp?.id === data.productionId) {
+          setModuleInfo(temp);
         }
       }
-    })
-  }
+    });
+  };
 
   // 设置 自定义服务选型
   const setSelServeVO = (data) => {
-    setServiceId(data?.id)
-    setServiceType(data?.serveIds)
-  }
+    setServiceId(data?.id);
+    setServiceType(data?.serveIds);
+  };
 
   // 设置详细信息的内容
   const setProductionCustomServe = (data) => {
-    setServiceData(data)
-  }
+    setServiceData(data);
+  };
 
   const setSelFirmwareVO = (data) => {
-    setInfo(data)
-  }
+    setInfo(data);
+  };
 
   const setSelDemandMac = (data) => {
-    setMacData(data)
-  }
+    setMacData(data);
+  };
 
   const setSelContentVO = (data) => {
-    setBurnData(data)
-  }
+    setBurnData(data);
+  };
 
   const setSelAdaptVo = (data) => {
-    setFitData(data)
-  }
+    setFitData(data);
+  };
 
   const setSelLabelVO = (data) => {
-    setLabelDate(data)
-  }
+    setLabelDate(data);
+  };
   const toEdit = () => {
-    history.push(`/product/demand/hardware`)
-  }
+    history.push(`/product/demand/hardware`);
+  };
 
   const options = [
     t["firmware.burn.flash.planA"],
     t["firmware.burn.flash.planB.NVS"],
     t["firmware.burn.flash.planB.NO_NVS"],
     t["firmware.burn.flash.planC"]
-  ]
+  ];
 
-  return <DynamicOuterCard title={t['summarize.sheet.title']} bodyStyle={bodyStyle}>
-    <Button className={styles['edit']} onClick={toEdit}>{t['summarize.sheet.edit']}</Button>
-    <DynamicSkeleton text={{ rows: 10, width: "90rem" }}>
-    <table cellPadding='1' cellSpacing='1' className={styles['table-style']}>
-    <tbody>
+  const getCustomPicture = () => {
+    if (labelData?.cusLaserLabel + labelData?.cusOutboxLabel) {
+      return <DynamicTag value={labelData?.cusLaserLabel + labelData?.cusOutboxLabel} />;
+    }
+    return <DynamicTag value={0} />;
+  };
+
+  const isDisabled= (data) => {
+    return !data;
+  }
+
+  const getSamplePicture = (tag) => {
+    // 远程获取图片
+    if (tag !== undefined && tag !== null) {
+      getFile(tag).then(res => {
+        if (res.status === 200) {
+          Modal.success({
+            title: "Picture Preview",
+            content: <div style={{ textAlign: "center" }}>
+              <img style={{ maxWidth: "100%" }} src={URL.createObjectURL(res.data)} alt={"Picture Preview"} />
+            </div>
+          });
+        }
+      });
+    }
+  };
+
+
+return <DynamicOuterCard title={t["summarize.sheet.title"]}>
+  <Button className={styles["edit"]} onClick={toEdit}>{t["summarize.sheet.edit"]}</Button>
+  <DynamicSkeleton text={{ rows: 10, width: "90rem" }}>
+    <table cellPadding="1" cellSpacing="1" className={styles["table-style"]}>
+      <tbody>
       <tr>
-        <th className={styles['mini']}>勾选</th>
-        <th className={styles['mini']}>IDs</th>
-        <th className={styles['medium']}>Project Name:</th>
-        <th colSpan={6}></th>
+        <th className={styles["mini"]}>勾选</th>
+        <th className={styles["mini"]}>IDs</th>
+        <th className={styles["medium"]}>Project Name:</th>
+        <th colSpan={6}>{info?.firmwareProject}</th>
       </tr>
       <tr>
         <td></td>
         <td>1</td>
         <td>Module Name:</td>
-        <td colSpan={6}><div>{moduleInfo?.mpn}</div></td>
+        <td colSpan={6}>
+          <div>{moduleInfo?.mpn}</div>
+        </td>
       </tr>
       <tr>
         <td rowSpan={12}></td>
@@ -256,7 +284,7 @@ export default function Sheet() {
         <td colSpan={3}>Serial port print string</td>
       </tr>
       <tr>
-        <td>{burnData?.flashType !== -1 ? options[burnData?.flashType]: ""}</td>
+        <td>{burnData?.flashType !== -1 ? options[burnData?.flashType] : ""}</td>
         <td>{burnData?.burnOffset}</td>
         <td colSpan={3}>{burnData?.flashOkSerialLabel}</td>
       </tr>
@@ -281,19 +309,19 @@ export default function Sheet() {
         <td rowSpan={3}>4</td>
         <td rowSpan={3}>Label</td>
         <td colSpan={2}>Custom or Not</td>
-        <td colSpan={4}><DynamicMiniInput /></td>
+        <td colSpan={4}>{getCustomPicture()}</td>
       </tr>
       <tr>
         <td rowSpan={2}> Sample</td>
         <td>Module Laser</td>
-        <td colSpan={4}><DynamicMiniInput /></td>
+        <td colSpan={4}><Button disabled={isDisabled(labelData?.laserFileId)} size='mini' style={{width: '6rem'}}  onClick={()=> getSamplePicture(labelData?.laserFileId)}>{t['label.img.open']}</Button></td>
       </tr>
       <tr>
         <td>package</td>
-        <td colSpan={4}><DynamicMiniInput /></td>
+        <td colSpan={4}><Button disabled={isDisabled(labelData?.outboxFileId )} size='mini' style={{width: '6rem'}} onClick={() => getSamplePicture(labelData?.outboxFileId)} >{t['label.img.open']}</Button></td>
       </tr>
-    </tbody>
+      </tbody>
     </table>
-    </DynamicSkeleton>
-  </DynamicOuterCard>;
+  </DynamicSkeleton>
+</DynamicOuterCard>;
 }

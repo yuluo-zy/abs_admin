@@ -8,6 +8,7 @@ const i18n = {
     'firmware.burn.flash.planB.NVS': '提供待烧录数据清单, 由乐鑫生成Bin文件后烧录 ( NVS DATA )',
     'firmware.burn.flash.planB.NO_NVS': '提供待烧录数据清单, 由乐鑫生成Bin文件后烧录 ( 非 NVS 数据 )',
     'firmware.burn.flash.planC': '提供烧录脚本',
+    'label.img.open': '图片预览'
   },
 };
 
