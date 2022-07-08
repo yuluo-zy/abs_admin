@@ -23,11 +23,12 @@ import { IconArrowRight } from "@arco-design/web-react/icon";
 import { postMacCustomDemand } from "@/api/demand";
 import { getNextRouter } from "@/utils/getNext";
 import { useHistory } from "react-router";
+import DynamicDivider from "@/components/Dynamic/Divider";
 
 const FormItem = Form.Item;
-const bodyStyle = {
-  padding: "3rem"
-};
+// const bodyStyle = {
+//   padding: "3rem"
+// };
 
 
 export default function CustomMac() {
@@ -105,7 +106,7 @@ export default function CustomMac() {
     return temp;
   };
 
-  return (<DynamicOuterCard title={t["firmware.mac.title"]} bodyStyle={bodyStyle}>
+  return (<DynamicOuterCard title={t["firmware.mac.title"]}>
     <DynamicSkeleton animation text={{ rows: 10, width: ["100%", 600, 400] }}>
       <Form
         scrollToFirstError
@@ -189,6 +190,23 @@ export default function CustomMac() {
                 macNumPerProduction: value
               });
             }}
+          />
+        </FormItem>
+        <DynamicDivider/>
+        <FormItem label={t["firmware.mac.partitions.flash.write.area.serial.port"]}
+                  labelAlign={"left"}
+                  field={"serialPort"}
+                  rules={[{ required: true, message: t["firmware.mac.partitions.flash.write.area.serial.port.error"]}]}>
+          {/*<Input*/}
+          {/*  style={{ width: "20rem" }}*/}
+          {/*  value={macData?.serialPort}*/}
+          {/*  onChange={(value) => {*/}
+          {/*    form.setFieldValue("serialPort", value);*/}
+          {/*  }}*/}
+          {/*/>*/}
+          <Input
+            style={{ width: 270 }}
+            maxLength={20}
           />
         </FormItem>
         <Divider style={{ borderBottomStyle: "dashed" }} />

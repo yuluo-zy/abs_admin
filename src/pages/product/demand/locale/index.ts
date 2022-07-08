@@ -112,6 +112,8 @@ const i18n = {
     'firmware.mac.partitions.flash.write.area': '写入 Offset 地址： ',
     'firmware.mac.partitions.flash.write.area.error': '写入 Offset 地址不能为空',
     'firmware.mac.partitions.flash.write.area.mac': '产品分配定制 MAC 地址数： ',
+    'firmware.mac.partitions.flash.write.area.serial.port': '串口校验信息: ',
+    'firmware.mac.partitions.flash.write.area.serial.port.error': '串口校验信息不能为空',
     'firmware.mac.partitions.flash.write.area.title': '提供连续的 MAC 地址段用于量产',
     'firmware.mac.partitions.start': '起始 MAC 地址: ',
     'firmware.mac.partitions.start.error': '起始 MAC 地址无效',
@@ -229,7 +231,10 @@ const i18n = {
     'demand.entry.service.burn.efuse.data.burn.upload': '提供烧录数据',
     'demand.entry.service.label.default.model': '默认标签示意图',
     'self.check.boot.upload.file': '提供示例文件',
-    'self.check.boot.upload.file.info': '已提交的数据'
+    'self.check.boot.upload.file.info': '已提交的数据',
+    'self.check.boot.upload.port.hit': '请确认文件内容包含上文提供的字符串',
+    'self.check.boot.upload.port.hit.firmware': '定制固件阶段',
+    'self.check.boot.upload.port.hit.mac': '定制 MAC 阶段'
   },
 };
 
