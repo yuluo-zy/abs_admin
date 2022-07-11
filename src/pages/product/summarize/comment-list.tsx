@@ -3,6 +3,9 @@ import { List } from "@arco-design/web-react";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import { Read } from "@/components/Dynamic/Makedown/read";
 import { GlobalContext } from "@/context";
+import styles from "./style/index.module.less";
+import DynamicDivider from "@/components/Dynamic/Divider";
+import UserInfo from "@/pages/product/summarize/user-info";
 
 const names = ["Socrates", "Balzac", "Plato"];
 const avatarSrc = [
@@ -17,13 +20,14 @@ const imageSrc = [
 ];
 const dataSource = new Array(15).fill(null).map((_, index) => {
   return {
-    index: index,
+    creator: 'name',
     avatar: avatarSrc[index % avatarSrc.length],
     title: names[index % names.length],
-    description:
+    remarks:
       "Beijing ByteDance Technology Co., Ltd. is an enterprise located in China. ByteDance has products such as TikTok, Toutiao, volcano video and Douyin (the Chinese version of TikTok).",
     imageSrc: imageSrc[index % imageSrc.length],
-    html: ""
+    created: "",
+
      };
 
 });
@@ -42,42 +46,13 @@ export default function CommentList() {
         dataSource={dataSource}
         pagination={{ pageSize: 3 }}
         render={(item, index) => (
-          // <List.Item
-          //   key={index}
-          //   style={{ padding: '20px 0', borderBottom: '1px solid var(--color-fill-3)' }}
-          //   actionLayout='vertical'
-          //   actions={[
-          //     <span key={1}>
-          //       <IconHeart />
-          //       {83}
-          //     </span>,
-          //     <span key={2}>
-          //       <IconStar />
-          //       {item.index}
-          //     </span>,
-          //     <span key={3}>
-          //       <IconMessage />
-          //       Reply
-          //     </span>,
-          //   ]}
-          //   extra={
-          //     <div className='image-area'>
-          //       <img alt='arcodesign' src={item.imageSrc} />
-          //     </div>
-          //   }
-          // >
-          //   <List.Item.Meta
-          //     avatar={
-          //       <Avatar shape='square'>
-          //         <img alt='avatar' src={`${item.avatar}`} />
-          //       </Avatar>
-          //     }
-          //     title={item.title}
-          //     description={item.description}
-          //   />
-          // </List.Item>
-          <div key={index}>
-            <Read key={index} theme={getTheme(theme)} html={item.html} />
+          <div key={index} className={styles['comment-item']}>
+            <div className={styles['user-info']}>
+             <UserInfo userId={item?.creator}/>
+              <div>{item?.created}</div>
+            </div>
+            <Read key={index} theme={getTheme(theme)} html={item.remarks} />
+            <DynamicDivider/>
           </div>
         )}
       />

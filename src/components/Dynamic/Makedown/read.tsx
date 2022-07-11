@@ -19,7 +19,7 @@ export function Read(props: { theme: boolean, html }) {
   console.log("makedown")
 
     return (
-    <div className={cs([theme ? styles["makedown"] : "none", styles["context"]])}>
+    <div className={cs([theme ? styles["makedown"] : "none",])}>
       <Editor
         defaultConfig={editorConfig}
         value={props.html}

@@ -1,4 +1,4 @@
-import { httpDelete, httpGet, httpPost, httpPut } from '@/utils/httpRequest';
+import { httpDelete, httpGet, httpPost, httpPut } from "@/utils/httpRequest";
 
 export const userInfo = () => {
   return httpGet('/user/info');
@@ -32,3 +32,7 @@ export const putUserPassword = (id: number, data) => {
 export const putUserLock = (id: number, data) => {
   return httpPut('/user/' + id + '/lock', data);
 };
+
+export const getSimpleInfo = (id: number) => {
+  return httpGet('/user/simple/'+ id)
+}
