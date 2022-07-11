@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useImperativeHandle, useState } from "react";
 import { Editor, Toolbar } from "@wangeditor/editor-for-react";
 import { Boot, IDomEditor, IEditorConfig, IToolbarConfig } from "@wangeditor/editor";
 import attachmentModule from "@wangeditor/plugin-upload-attachment";
@@ -22,7 +22,15 @@ function hideModal(editor: IDomEditor) {
   UserSelect.removeInstance();
 }
 
-export function MakeDown(props: { theme: boolean }) {
+export function MakeDown(props: { theme: boolean, onRef? }) {
+
+  useImperativeHandle(props.onRef, () => {
+    // 需要将暴露的接口返回出去
+    return {
+      getContext: getContext,
+    };
+  });
+
   const [editor, setEditor] = useState<IDomEditor | null>(null);
   // 存储 editor 实例
   const [html, setHtml] = useState("");
@@ -191,6 +199,10 @@ export function MakeDown(props: { theme: boolean }) {
     };
   }, [editor]);
 
+  const getContext = () => {
+    return html
+  }
+
   return (
     <div className={cs([theme ? styles["makedown"] : "none", styles["context"]])}>
       <Toolbar
@@ -205,7 +217,7 @@ export function MakeDown(props: { theme: boolean }) {
         onCreated={setEditor}
         onChange={editor => setHtml(editor.getHtml())}
         mode="simple"
-        style={{ height: "250px", overflowY: "hidden" }}
+        style={{ height: "300px", overflowY: "hidden" }}
       />
     </div>
   );

@@ -7,6 +7,7 @@ import Sheet from "@/pages/product/summarize/sheet";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
 import { GlobalContext } from "@/context";
 import { Button } from "@arco-design/web-react";
+import CommentList from "@/pages/product/summarize/comment-list";
 
 const bodyStyle = {
   padding: "1rem",
@@ -17,19 +18,34 @@ export default function Summarize() {
   const { theme } = useContext(GlobalContext);
 
   const getTheme = (theme) => {
-    return theme === 'dark';
+    return theme === "dark";
+  };
+
+  const ChildRef = React.createRef();
+
+  function handleOnClick() {
+    // @ts-ignore
+    const  data = ChildRef.current.getContext();
+    console.log(data)
   }
-  return <div className={styles['context']}>
-    <div className={styles['context-main']}>
-      <Sheet/>
+  const getConText = () => {
+
+  }
+  return <div className={styles["context"]}>
+    <div className={styles["context-main"]}>
+      <Sheet />
     </div>
 
     <DynamicOuterCard title={t["summarize.history.comment"]} bodyStyle={bodyStyle}>
-      <div className={styles['context-card']}>
-        <Button className={styles['context-card-button']} type={'primary'}>{t['summarize.history.comment.add']}</Button>
-        <MakeDown theme={getTheme(theme)}/>
+      <div className={styles["context-card"]}>
+        <Button className={styles["context-card-button"]} type={"primary"} onClick={handleOnClick}>{t["summarize.history.comment.add"]}</Button>
+        <MakeDown theme={getTheme(theme)} onRef={ChildRef} />
       </div>
     </DynamicOuterCard>
 
-  </div>
+    <DynamicOuterCard title={t["summarize.history.title"]} bodyStyle={bodyStyle}>
+      <CommentList />
+    </DynamicOuterCard>
+
+  </div>;
 }
