@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Editor, Toolbar } from "@wangeditor/editor-for-react";
 import { Boot, IDomEditor, IEditorConfig, IToolbarConfig } from "@wangeditor/editor";
 import attachmentModule from "@wangeditor/plugin-upload-attachment";
-import mentionModule, { MentionElement } from "@wangeditor/plugin-mention";
+import mentionModule from "@wangeditor/plugin-mention";
 import styles from "./style/index.module.less";
 import cs from "classnames";
 import { AutoComplete, Message } from "@arco-design/web-react";
@@ -17,125 +17,12 @@ Boot.registerModule(mentionModule);
 
 function showModal(editor: IDomEditor) {
   UserSelect.showInstance(editor);
-
-  // 当触发某事件（如点击一个按钮）时，插入 mention 节点
-  function insertMention() {
-    const mentionNode: MentionElement = {
-      type: "mention", // 必须是 'mention'
-      value: "张三", // 文本
-      info: { x: 1, y: 2 }, // 其他信息，自定义
-      children: [{ text: "" }] // 必须有一个空 text 作为 children
-    };
-
-    editor.restoreSelection(); // 恢复选区
-    editor.deleteBackward("character"); // 删除 '@'
-    editor.insertNode(mentionNode); // 插入 mention
-    editor.move(1); // 移动光标
-  }
 }
 
 // 隐藏弹框
 function hideModal(editor: IDomEditor) {
   UserSelect.removeInstance();
 }
-
-/**
- * 绑定 modal elem 事件
- * @param editor editor
- */
-export function bindModalEvent(editor: IDomEditor) {
-  const modalElem = document.getElementById("mention-modal");
-  if (modalElem == null) return;
-
-  // 点击 li 插入 mention
-  modalElem.addEventListener("click", (event: MouseEvent) => {
-    // @ts-ignore
-    if (event.target?.nodeName === "LI") {
-      editor.restoreSelection();
-      // @ts-ignore
-      const text = event.target.textContent;
-      if (text == null) return;
-
-      // 删除 '@'
-      editor.deleteBackward("character");
-      // 插入 mention 节点
-      const mentionNode: MentionElement = {
-        type: "mention",
-        value: text,
-        info: { x: 1, y: 2 }, // 其他信息
-        children: [{ text: "" }]
-      };
-      editor.insertNode(mentionNode);
-      // 光标移动一位
-      editor.move(1);
-      // 隐藏 modal elem
-      modalElem.style.display = "none";
-    }
-  });
-}
-
-/**
- * 绑定 input 事件
- * @param editor editor
- */
-export function bindInputEvent(editor: IDomEditor) {
-  const inputElem = document.getElementById("mention-input");
-  const listElem = document.getElementById("mention-list");
-  if (inputElem == null || listElem == null) return;
-
-  // input 输入文字，筛选 list
-  inputElem.addEventListener("input", event => {
-    // @ts-ignore
-    const inputValue = (event.target.value || "").trim();
-    const listChildren = Array.from(listElem.children);
-    if (inputValue) {
-      // input 有值，则筛选 list
-      for (const li of listChildren) {
-        const liText = (li.textContent || "").toLowerCase();
-        if (liText.includes(inputValue)) {
-          // @ts-ignore
-          li.style.display = "list-item"; // 显示
-        } else {
-          // @ts-ignore
-          li.style.display = "none"; // 隐藏
-        }
-      }
-    } else {
-      // input 无值，则显示所有 list
-      for (const li of listChildren) {
-        // @ts-ignore
-        li.style.display = "list-item";
-      }
-    }
-  });
-
-  // input 回车，插入 li
-  inputElem.addEventListener("keyup", event => {
-    if (event.key === "Enter") {
-      const listChildren = Array.from(listElem.children);
-      for (const li of listChildren) {
-        // @ts-ignore
-        if (li.style.display !== "none") {
-          // @ts-ignore
-          li.click();
-          break;
-        }
-      }
-    }
-  });
-
-  // esc ，退出
-  inputElem.addEventListener("keyup", event => {
-    if (event.key === "Escape") {
-      // hideModalElem(editor)
-      editor.restoreSelection();
-    }
-  });
-}
-
-
-
-
 
 export function MakeDown(props: { theme: boolean }) {
   const [editor, setEditor] = useState<IDomEditor | null>(null);

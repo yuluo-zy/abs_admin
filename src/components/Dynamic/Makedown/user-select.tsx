@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { AutoComplete, Input, Modal } from "@arco-design/web-react";
+import { AutoComplete, Button, Input, Modal } from "@arco-design/web-react";
 import styles from "./style/index.module.less";
+import { MentionElement } from "@wangeditor/plugin-mention";
 
 const { OptGroup, Option } = AutoComplete;
 
-export function UserSelect() {
-  // const { x,y } = props;
+export function UserSelect(props) {
+  const {insertMention} = props
   const [data, setData] = useState([]);
+
+  const [value, setValue] = useState('');
 
   const handleSearch = (inputValue) => {
     if (inputValue) {
@@ -30,19 +33,44 @@ export function UserSelect() {
     }
   };
 
+  const setUser= () => {
+    Modal.destroyAll();
+    insertMention({
+      value: value
+    });
+  }
 
-  return <AutoComplete
-    data={data}
-    allowClear
-    placeholder="Please Enter"
-    triggerElement={<Input.Search />}
-    onSearch={handleSearch}
-  />;
+
+  return <div className={styles['auto-complete']}>
+    <AutoComplete
+      data={data}
+      allowClear
+      defaultActiveFirstOption
+      onSelect={(value) => {
+        setValue(value);
+      }}
+      placeholder="query what you want @"
+      triggerElement={<Input.Search />}
+      onSearch={handleSearch}
+    /><Button type={"primary"} onClick={setUser}>@</Button>
+  </div>;
 }
 
 UserSelect.showInstance = function(editor) {
   const rect = editor.getEditableContainer().getBoundingClientRect();
-  console.log(rect)
+  function insertMention(data) {
+    const mentionNode: MentionElement = {
+      type: "mention", // 必须是 'mention'
+      value: data.value, // 文本
+      info: { ...data }, // 其他信息，自定义
+      children: [{ text: "" }] // 必须有一个空 text 作为 children
+    };
+
+    editor.restoreSelection(); // 恢复选区
+    editor.deleteBackward("character"); // 删除 '@'
+    editor.insertNode(mentionNode); // 插入 mention
+    editor.move(1); // 移动光标
+  }
   Modal.confirm({
     simple: true,
     title: false,
@@ -51,11 +79,9 @@ UserSelect.showInstance = function(editor) {
     style: { top: `${rect.top + 30}px`, left: `${rect.left + 30}px`},
     icon: null,
     footer: null,
-    content: <UserSelect />
+    content: <UserSelect insertMention={insertMention} />
   });
 };
 UserSelect.removeInstance = function() {
-  if (document.getElementById("select-people")) {
-    document.getElementById("select-people").remove();
-  }
+  Modal.destroyAll();
 };
