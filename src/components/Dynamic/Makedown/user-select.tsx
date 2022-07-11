@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { AutoComplete, Input, Modal } from "@arco-design/web-react";
+import styles from "./style/index.module.less";
 
 const { OptGroup, Option } = AutoComplete;
 
-export function UserSelect(props) {
-  const { x,y } = props;
+export function UserSelect() {
+  // const { x,y } = props;
   const [data, setData] = useState([]);
 
   const handleSearch = (inputValue) => {
@@ -28,23 +29,13 @@ export function UserSelect(props) {
       setData([]);
     }
   };
-  const callbackRef = useCallback((node) => {
-    console.log('callbackRef', node);
-    node && node.focus();
-  }, []);
+
 
   return <AutoComplete
     data={data}
     allowClear
-    style={{
-      padding: "14px 18px 18px",
-      position: "fixed",
-      width: "20rem",
-      top: `${y + 20}px`,
-      left: `${x+ 10}px`
-    }}
     placeholder="Please Enter"
-    triggerElement={<Input.Search ref={callbackRef}/>}
+    triggerElement={<Input.Search />}
     onSearch={handleSearch}
   />;
 }
@@ -53,9 +44,14 @@ UserSelect.showInstance = function(editor) {
   const rect = editor.getEditableContainer().getBoundingClientRect();
   console.log(rect)
   Modal.confirm({
-    modalRender: () => (<div>
-      <UserSelect x={rect.left} y={rect.top} />
-    </div>)
+    simple: true,
+    title: false,
+    className: styles['modal-head'],
+    alignCenter: false,
+    style: { top: `${rect.top + 30}px`, left: `${rect.left + 30}px`},
+    icon: null,
+    footer: null,
+    content: <UserSelect />
   });
 };
 UserSelect.removeInstance = function() {
