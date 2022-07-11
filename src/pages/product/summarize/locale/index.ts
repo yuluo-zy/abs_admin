@@ -3,6 +3,8 @@ const i18n = {
   'zh-CN': {
 'summarize.sheet.title': '需求总览',
     'summarize.history.title': '历史记录',
+    'summarize.history.comment': '评论',
+    'summarize.history.comment.add': '添加',
     'summarize.sheet.edit': '重新编辑',
     'firmware.burn.flash.planA': '提供代烧录Bin文件, 由乐鑫代替烧录',
     'firmware.burn.flash.planB.NVS': '提供待烧录数据清单, 由乐鑫生成Bin文件后烧录 ( NVS DATA )',

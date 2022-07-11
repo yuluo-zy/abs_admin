@@ -5,12 +5,10 @@ import attachmentModule from "@wangeditor/plugin-upload-attachment";
 import mentionModule from "@wangeditor/plugin-mention";
 import styles from "./style/index.module.less";
 import cs from "classnames";
-import { AutoComplete, Message } from "@arco-design/web-react";
+import { Message } from "@arco-design/web-react";
 import { postFile } from "@/api/file";
 import axios from "axios";
 import { UserSelect } from "@/components/Dynamic/Makedown/user-select";
-
-const { OptGroup, Option } = AutoComplete;
 
 Boot.registerModule(attachmentModule);
 Boot.registerModule(mentionModule);
@@ -207,7 +205,7 @@ export function MakeDown(props: { theme: boolean }) {
         onCreated={setEditor}
         onChange={editor => setHtml(editor.getHtml())}
         mode="simple"
-        style={{ height: "500px", overflowY: "hidden" }}
+        style={{ height: "250px", overflowY: "hidden" }}
       />
     </div>
   );
