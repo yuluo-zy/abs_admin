@@ -1,6 +1,6 @@
 import React, { useEffect, useImperativeHandle, useState } from "react";
 import { Editor, Toolbar } from "@wangeditor/editor-for-react";
-import { Boot, IDomEditor, IEditorConfig, IToolbarConfig } from "@wangeditor/editor";
+import { Boot, DomEditor, IDomEditor, IEditorConfig, IToolbarConfig } from "@wangeditor/editor";
 import attachmentModule from "@wangeditor/plugin-upload-attachment";
 import mentionModule from "@wangeditor/plugin-mention";
 import styles from "./style/index.module.less";
@@ -44,7 +44,10 @@ export function MakeDown(props: { theme: boolean, onRef? }) {
 
   const toolbarConfig: Partial<IToolbarConfig> = {
     excludeKeys: [
-      "fullScreen"
+      "fullScreen",
+      "insertVideo",
+      "insertTable",
+      "insertImage"
     ],
     insertKeys: {
       index: 4, // 自定义插入的位置
@@ -201,12 +204,16 @@ export function MakeDown(props: { theme: boolean, onRef? }) {
   }, [editor]);
 
   const getContext = () => {
+    const toolbar = DomEditor.getToolbar(editor)
+    console.log(toolbar.getConfig().toolbarKeys)
     return html
   }
-  
+
   const clear = () => {
     setHtml("")
   }
+
+
 
   return (
     <div className={cs([theme ? styles["makedown"] : "none", styles["context"]])}>
