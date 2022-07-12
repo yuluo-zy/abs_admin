@@ -20,7 +20,8 @@ export default function CommentList() {
     pageSize: 10,
     current: 1,
     pageSizeChangeResetCurrent: true,
-    onChange: onChangeTable
+    onChange: onChangeTable,
+    onPageSizeChange: onChangeSize
   });
   useEffect(() => {
     fetchData();
@@ -32,7 +33,14 @@ export default function CommentList() {
   function onChangeTable(page) {
     setPatination({
       ...pagination,
-      ...page,
+      current: page
+    });
+  }
+
+  function onChangeSize(size, current) {
+    setPatination({
+      ...pagination,
+      pageSize: size
     });
   }
 
@@ -49,17 +57,19 @@ export default function CommentList() {
     setLoading(true);
     getDemandComment({
       pageNo: current,
-      pageSize,
+      pageSize: pageSize,
       demandId: demandId
     }).then(res => {
-        setDataSource(res.data.result.data);
-        if (res.data.result.totalCount) {
-          setPatination({
-            ...pagination,
-            current,
-            pageSize,
-            total: res.data.result.totalCount
-          });
+        if (res.data.success) {
+          setDataSource(res.data.result.data);
+          if (res.data.result.totalCount) {
+            setPatination({
+              ...pagination,
+              current: res.data.result.pageNo,
+              pageSize: res.data.result.pageSize,
+              total: res.data.result.totalCount
+            });
+          }
         }
         setLoading(false);
       }

@@ -21,12 +21,11 @@ export function Read(props: { theme: boolean, html }) {
     readOnly: true,
   }
     return (
-    <div className={cs([theme ? styles["makedown"] : "none",])}>
+    <div className={cs([theme ? styles["makedown"] : "none", styles['read']])}>
       <Editor
         defaultConfig={editorConfig}
         value={data}
         mode="simple"
-        style={{ overflowY: "hidden" }}
       />
     </div>
   );
