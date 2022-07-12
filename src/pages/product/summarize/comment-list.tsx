@@ -3,7 +3,6 @@ import { Card, List, PaginationProps } from "@arco-design/web-react";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import { Read } from "@/components/Dynamic/Makedown/read";
 import { GlobalContext } from "@/context";
-import styles from "./style/index.module.less";
 import UserInfo from "@/pages/product/summarize/user-info";
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
@@ -80,10 +79,7 @@ export default function CommentList() {
             bordered
             style={{margin: 10}}
             hoverable>
-            <div className={styles["user-info"]}>
-              <UserInfo userId={item?.creator} />
-              <div>{item?.created}</div>
-            </div>
+            <UserInfo user={item} />
             <Read key={index} theme={getTheme(theme)} html={item.remarks} />
           </Card>
         )}

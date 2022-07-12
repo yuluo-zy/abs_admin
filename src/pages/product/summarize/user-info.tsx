@@ -1,23 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./style/index.module.less";
 
 export default function UserInfo(props) {
-  const { userId } = props;
-
-  const [info, setInfo] = useState({ name: "", avatar: "" });
-
-  useEffect(() => {
-    // getSimpleInfo(userId).then(
-    //   res => {
-    //     if (res.data.success) {
-    //       setInfo(res.data.result);
-    //     }
-    //   }
-    // );
-  }, []);
-
+  const { user } = props;
+  // todo 效果美化
   return <div className={styles['user-info']}>
     <div>头像</div>
-    <div>{info?.name}</div>
+    <div>{user?.creatorName}</div>
+    <div>{user?.created}</div>
   </div>;
 }
