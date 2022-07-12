@@ -14,14 +14,13 @@ export default function CommentList() {
 
   const { theme } = useContext(GlobalContext);
   const [dataSource, setDataSource] = useState();
-  const [pagination, setPatination] = useState<PaginationProps>({
+  const [pagination, setPagination] = useState<PaginationProps>({
     sizeCanChange: true,
     showTotal: true,
     pageSize: 10,
     current: 1,
     pageSizeChangeResetCurrent: true,
     onChange: onChangeTable,
-    onPageSizeChange: onChangeSize
   });
   useEffect(() => {
     fetchData();
@@ -30,17 +29,11 @@ export default function CommentList() {
     pagination.pageSize
   ]);
 
-  function onChangeTable(page) {
-    setPatination({
+  function onChangeTable(page, pageSize) {
+    setPagination({
       ...pagination,
-      current: page
-    });
-  }
-
-  function onChangeSize(size, current) {
-    setPatination({
-      ...pagination,
-      pageSize: size
+      current: page,
+      pageSize: pageSize
     });
   }
 
@@ -63,7 +56,7 @@ export default function CommentList() {
         if (res.data.success) {
           setDataSource(res.data.result.data);
           if (res.data.result.totalCount) {
-            setPatination({
+            setPagination({
               ...pagination,
               current: res.data.result.pageNo,
               pageSize: res.data.result.pageSize,
