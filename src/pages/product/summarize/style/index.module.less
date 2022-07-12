@@ -52,10 +52,13 @@
   top: 1rem;
   right: 2rem;
 }
-
-.comment-item{
-  max-height: 500px;
-  padding: 1rem;
+@keyframes animated-border {
+  0% {
+    box-shadow: rgba(255,255,255,0.4);
+  }
+  100% {
+    box-shadow: rgba(255,255,255,0);
+  }
 }
 
 .user-info {

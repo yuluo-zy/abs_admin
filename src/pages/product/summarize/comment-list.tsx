@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { List, PaginationProps } from "@arco-design/web-react";
+import { Card, List, PaginationProps } from "@arco-design/web-react";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import { Read } from "@/components/Dynamic/Makedown/read";
 import { GlobalContext } from "@/context";
 import styles from "./style/index.module.less";
-import DynamicDivider from "@/components/Dynamic/Divider";
 import UserInfo from "@/pages/product/summarize/user-info";
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
@@ -77,14 +76,16 @@ export default function CommentList() {
         pagination={pagination}
         loading={loading}
         render={(item, index) => (
-          <div key={index} className={styles["comment-item"]}>
+          <Card
+            bordered
+            style={{margin: 10}}
+            hoverable>
             <div className={styles["user-info"]}>
               <UserInfo userId={item?.creator} />
               <div>{item?.created}</div>
             </div>
             <Read key={index} theme={getTheme(theme)} html={item.remarks} />
-            <DynamicDivider />
-          </div>
+          </Card>
         )}
       />
     </DynamicSkeleton>
