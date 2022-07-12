@@ -28,6 +28,7 @@ export function MakeDown(props: { theme: boolean, onRef? }) {
     // 需要将暴露的接口返回出去
     return {
       getContext: getContext,
+      clear: clear
     };
   });
 
@@ -201,6 +202,10 @@ export function MakeDown(props: { theme: boolean, onRef? }) {
 
   const getContext = () => {
     return html
+  }
+  
+  const clear = () => {
+    setHtml("")
   }
 
   return (

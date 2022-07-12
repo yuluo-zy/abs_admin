@@ -6,8 +6,11 @@ import styles from "./style/index.module.less";
 import Sheet from "@/pages/product/summarize/sheet";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
 import { GlobalContext } from "@/context";
-import { Button } from "@arco-design/web-react";
+import { Button, Notification } from "@arco-design/web-react";
 import CommentList from "@/pages/product/summarize/comment-list";
+import { ProductStore } from "@/store/product";
+import shallow from "zustand/shallow";
+import { postDemandComment } from "@/api/comment";
 
 const bodyStyle = {
   padding: "1rem",
@@ -21,15 +24,31 @@ export default function Summarize() {
     return theme === "dark";
   };
 
+  const [demandId, ] = ProductStore(state =>
+    [state.demandId,], shallow);
+
   const ChildRef = React.createRef();
 
   function handleOnClick() {
     // @ts-ignore
     const  data = ChildRef.current.getContext();
-    console.log(data)
-  }
-  const getConText = () => {
+    // todo 针对 xss 的代码防范
+    if(demandId &&  demandId >0){
+      postDemandComment({
+        demandId: demandId,
+        remarks: data
+      }).then(r => {
+        if(r.data.success){
+          // @ts-ignore
+          ChildRef.current.clear()
+          Notification.success({
+            title: 'Success',
+            content: t['summarize.history.comment.success'],
+          })
 
+        }
+      })
+    }
   }
   return <div className={styles["context"]}>
     <div className={styles["context-main"]}>
