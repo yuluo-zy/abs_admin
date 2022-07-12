@@ -11,6 +11,7 @@ import CommentList from "@/pages/product/summarize/comment-list";
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import { postDemandComment } from "@/api/comment";
+import DOMPurify from "dompurify";
 
 const bodyStyle = {
   padding: "1rem",
@@ -31,8 +32,8 @@ export default function Summarize() {
 
   function handleOnClick() {
     // @ts-ignore
-    const  data = ChildRef.current.getContext();
-    // todo 针对 xss 的代码防范
+    let data = ChildRef.current.getContext();
+    data = DOMPurify.sanitize(data)
     if(demandId &&  demandId >0){
       postDemandComment({
         demandId: demandId,
@@ -45,7 +46,6 @@ export default function Summarize() {
             title: 'Success',
             content: t['summarize.history.comment.success'],
           })
-
         }
       })
     }

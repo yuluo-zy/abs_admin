@@ -29,6 +29,7 @@
     "bizcharts": "^4.1.11",
     "classnames": "^2.3.1",
     "copy-to-clipboard": "^3.3.1",
+    "dompurify": "^2.3.9",
     "lodash": "^4.17.21",
     "nprogress": "^0.2.0",
     "qs": "^6.10.3",
@@ -42,6 +43,7 @@
     "react-router-dom": "^5.2.0",
     "react-use": "^17.3.2",
     "redux": "^4.1.2",
+    "xss": "^1.0.13",
     "zustand": "^3.7.2"
   },
   "devDependencies": {
