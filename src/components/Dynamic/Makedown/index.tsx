@@ -65,38 +65,12 @@ export function MakeDown(props: { theme: boolean, onRef? }) {
     MENU_CONF: {
       // “上传附件”菜单的配置
       uploadAttachment: {
-        maxFileSize: 10 * 1024 * 1024, // 10M
-        onBeforeUpload(file: File) {
-          // todo 针对文件大小和类型进行验证
-          return file;
-          // return false // 会阻止上传
-        },
-        onProgress(progress: number) {
-          Message.info("OnProgress: " + progress);
-        },
-        onSuccess(file: File, res: any) {
-          Message.success("Upload Success");
-        },
-        onFailed(file: File, res: any) {
-          Message.error("Upload Error");
-        },
-        onError(file: File, err: Error, res: any) {
-          Message.error(err.message);
-        },
-
-        // // 上传成功后，用户自定义插入文件
-        customInsert(res: any, file: File, insertFn: Function) {
-          console.log("customInsert", res);
-          const { url } = res.data || {};
-          if (!url) throw new Error(`url is empty`);
-
-          // 插入附件到编辑器
-          insertFn(`customInsert-${file.name}`, url);
-        },
-
-        // // 用户自定义上传
+        // 用户自定义上传
         customUpload(file: File, insertFn: Function) {
-
+          if(file.size>  10 * 1024 * 1024){
+            Message.error("Upload file is too large, The maximum file size is 10M.");
+            return false;
+          }
           let formData = new FormData();
           formData.append("file", file);
           const source = axios.CancelToken.source();
@@ -117,50 +91,18 @@ export function MakeDown(props: { theme: boolean, onRef? }) {
               insertFn(`${file.name}`, result);
             }
           }).catch(error => {
-            // todo
+            Message.error(error?.message);
           });
 
         }
-        // // 自定义选择
-        // customBrowseAndUpload(insertFn: Function) {
-        //   alert('自定义选择文件，如弹出图床')
-        //   // 自己上传文件
-        //   // 上传之后用 insertFn(fileName, link) 插入到编辑器
-        // },
 
-        // 插入到编辑器后的回调
-        // onInsertedAttachment(elem) {
-        //   console.log("inserted attachment", elem);
-        // }
       },
       uploadImage: {
-        maxFileSize: 10 * 1024 * 1024, // 10M
-        onBeforeUpload(file: File) {
-          // todo 针对文件大小和类型进行验证
-          return file;
-          // return false // 会阻止上传
-        },
-        onProgress(progress: number) {
-          Message.info("OnProgress: " + progress);
-        },
-        onSuccess(file: File, res: any) {
-          Message.success("Upload Success");
-        },
-        onFailed(file: File, res: any) {
-          Message.error("Upload Error");
-        },
-        onError(file: File, err: Error, res: any) {
-          Message.error(err.message);
-        },
-        // // 上传成功后，用户自定义插入文件
-        customInsert(res: any, file: File, insertFn: Function) {
-          const { url, alt, href } = res.data || {};
-          if (!url) throw new Error(`url is empty`);
-
-          // 插入附件到编辑器
-          insertFn(url, alt, href);
-        },
         async customUpload(file: File, insertFn: Function) {
+          if(file.size>  10 * 1024 * 1024){
+            Message.error("Upload file is too large, The maximum file size is 10M.");
+            return false;
+          }
           let formData = new FormData();
           formData.append("file", file);
           const source = axios.CancelToken.source();
@@ -173,7 +115,6 @@ export function MakeDown(props: { theme: boolean, onRef? }) {
               position: "bottom"
             });
           };
-
           postFile(formData, onprogress, source.token).then(r => {
             const { success, result } = r.data;
             if (success) {
@@ -182,6 +123,7 @@ export function MakeDown(props: { theme: boolean, onRef? }) {
               insertFn(url, alt, href);
             }
           }).catch(error => {
+            Message.error(error?.message);
           });
 
         }
