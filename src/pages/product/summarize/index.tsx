@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useContext } from "react";
-import { MakeDown } from "@/components/Dynamic/Makedown";
+// import { MakeDown } from "@/components/Dynamic/Makedown";
 import useLocale from "./locale/useLocale";
 import styles from "./style/index.module.less";
 import Sheet from "@/pages/product/summarize/sheet";
@@ -59,7 +59,7 @@ export default function Summarize() {
     <DynamicOuterCard title={t["summarize.history.comment"]} bodyStyle={bodyStyle}>
       <div className={styles["context-card"]}>
         <Button className={styles["context-card-button"]} type={"primary"} onClick={handleOnClick}>{t["summarize.history.comment.add"]}</Button>
-        <MakeDown theme={getTheme(theme)} onRef={ChildRef} />
+        {/*<MakeDown theme={getTheme(theme)} onRef={ChildRef} />*/}
       </div>
     </DynamicOuterCard>
 

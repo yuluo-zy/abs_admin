@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Card, List, PaginationProps } from "@arco-design/web-react";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
-import { Read } from "@/components/Dynamic/Makedown/read";
+// import { Read } from "@/components/Dynamic/Makedown/read";
 import { GlobalContext } from "@/context";
 import UserInfo from "@/pages/product/summarize/user-info";
 import { ProductStore } from "@/store/product";
@@ -81,7 +81,7 @@ export default function CommentList() {
             style={{margin: 10}}
             hoverable>
             <UserInfo user={item}/>
-            <Read key={index} theme={getTheme(theme)} html={item.remarks} />
+            {/*<Read key={index} theme={getTheme(theme)} html={item.remarks} />*/}
           </Card>
         )}
       />
