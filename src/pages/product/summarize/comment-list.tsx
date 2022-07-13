@@ -77,9 +77,10 @@ export default function CommentList() {
         render={(item, index) => (
           <Card
             bordered
+            key={index}
             style={{margin: 10}}
             hoverable>
-            <UserInfo user={item} />
+            <UserInfo user={item}/>
             <Read key={index} theme={getTheme(theme)} html={item.remarks} />
           </Card>
         )}

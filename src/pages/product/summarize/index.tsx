@@ -33,6 +33,7 @@ export default function Summarize() {
   function handleOnClick() {
     // @ts-ignore
     let data = ChildRef.current.getContext();
+    console.log(data)
     data = DOMPurify.sanitize(data)
     if(demandId &&  demandId >0){
       postDemandComment({

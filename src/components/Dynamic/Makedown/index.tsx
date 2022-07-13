@@ -118,9 +118,8 @@ export function MakeDown(props: { theme: boolean, onRef? }) {
           postFile(formData, onprogress, source.token).then(r => {
             const { success, result } = r.data;
             if (success) {
-              const { url, alt, href } = result;
               Message.success("Upload Success");
-              insertFn(url, alt, href);
+              insertFn(URL.createObjectURL(file),`/file/download/${result}`);
             }
           }).catch(error => {
             Message.error(error?.message);
