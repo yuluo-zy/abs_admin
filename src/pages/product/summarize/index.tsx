@@ -60,7 +60,7 @@ export default function Summarize() {
     <DynamicOuterCard title={t["summarize.history.comment"]} bodyStyle={bodyStyle}>
       <div className={styles["context-card"]}>
         <Button className={styles["context-card-button"]} type={"primary"} onClick={handleOnClick}>{t["summarize.history.comment.add"]}</Button>
-        {/*<MakeDown theme={getTheme(theme)} onRef={ChildRef} />*/}
+        <MakeDown />
       </div>
     </DynamicOuterCard>
 
