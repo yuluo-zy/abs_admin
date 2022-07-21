@@ -12,9 +12,10 @@ import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import { postDemandComment } from "@/api/comment";
 import DOMPurify from "dompurify";
+import { MakeDown } from "@/components/Dynamic/Makedown";
 
 const bodyStyle = {
-  padding: "1rem",
+  padding: 0,
   transition: " 0.5s all ease-in-out"
 };
 export default function Summarize() {
