@@ -90,6 +90,7 @@ export default function Editor({onChange, initValue }: {
             placeholder={placeholder}
             initialEditorState={undefined}
           />
+          {/*todo 代码渲染问题*/}
           <CodeActionMenuPlugin />
           <CodeHighlightPlugin />
           <ListPlugin />
