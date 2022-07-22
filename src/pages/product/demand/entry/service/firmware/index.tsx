@@ -48,11 +48,10 @@ export default function FirmwareCustomization() {
 
   // 提交数据
   const postForm = async (name, values, infos) => {
-    // 检查固件相关信息
-    // if(!info?.firmwareVersion || !info.firstImport || info?.encryption == undefined){
-    //   Message.error(t['firmware.customization.info.project.form.error'])
-    //   return
-    // }
+    if(!info?.firmwareVersion || !info?.firstImport || info?.encryption == undefined){
+      Message.error(t['firmware.customization.info.project.form.error'])
+      return
+    }
     try {
       for (const item in infos.forms) {
         await infos.forms[item].validate();
