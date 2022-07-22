@@ -51,7 +51,10 @@ export default function Summarize() {
       </div>
     </DynamicOuterCard>
 
-    <DynamicOuterCard title={t["summarize.history.title"]} bodyStyle={bodyStyle}>
+    <DynamicOuterCard title={t["summarize.history.title"]} bodyStyle={{
+    margin: '1rem',
+      transition: " 0.5s all ease-in-out"
+    }}>
       <CommentList />
     </DynamicOuterCard>
 
