@@ -23,19 +23,21 @@ import CodeHighlightPlugin from "@/rice_text/plugins/CodeHighlightPlugin";
 import ListMaxIndentLevelPlugin from "@/rice_text/plugins/ListMaxIndentLevelPlugin";
 import TableCellActionMenuPlugin from "@/rice_text/plugins/TableActionMenuPlugin";
 import TableCellResizer from "@/rice_text/plugins/TableCellResizer";
-// import ImagesPlugin from "@/rice_text/plugins/ImagesPlugin";
 import ClickableLinkPlugin from "@/rice_text/plugins/ClickableLinkPlugin";
 import HorizontalRulePlugin from "@/rice_text/plugins/HorizontalRulePlugin";
 import TextFormatFloatingToolbarPlugin from "./plugins/TextFormatFloatingToolbarPlugin";
 import TabFocusPlugin from "./plugins/TabFocusPlugin";
 import ActionsPlugin from "@/rice_text/plugins/ActionsPlugin";
 import KeywordsPlugin from "./plugins/KeywordsPlugin";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import "./index.less";
 import ImagesPlugin from "./plugins/ImagesPlugin";
 import FilePlugin from "@/rice_text/plugins/FilePlugin";
 import MentionsPlugin from "./plugins/MentionsPlugin";
 
-export default function Editor(): JSX.Element {
+export default function Editor({onChange}: {
+  onChange: any
+}): JSX.Element {
   const { historyState } = useSharedHistoryContext();
   const {
     settings: {
@@ -67,6 +69,9 @@ export default function Editor(): JSX.Element {
         <HashtagPlugin />
         <KeywordsPlugin />
         <EspAutoLinkPlugin />
+        {
+          onChange &&<OnChangePlugin onChange={onChange}/>
+        }
         <AutoScrollPlugin scrollRef={scrollRef} />
         {isRichText && <>
           <HistoryPlugin externalHistoryState={historyState} />

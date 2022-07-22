@@ -1,18 +1,15 @@
 import * as React from "react";
-import { useContext } from "react";
-// import { MakeDown } from "@/components/Dynamic/Makedown";
+import { useState } from "react";
 import useLocale from "./locale/useLocale";
 import styles from "./style/index.module.less";
 import Sheet from "@/pages/product/summarize/sheet";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
-import { GlobalContext } from "@/context";
 import { Button, Notification } from "@arco-design/web-react";
 import CommentList from "@/pages/product/summarize/comment-list";
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import { postDemandComment } from "@/api/comment";
-import DOMPurify from "dompurify";
-import { MakeDown } from "@/components/Dynamic/Makedown";
+import RiceText from "@/rice_text";
 
 const bodyStyle = {
   padding: 0,
@@ -20,30 +17,20 @@ const bodyStyle = {
 };
 export default function Summarize() {
   const t = useLocale();
-  const { theme } = useContext(GlobalContext);
-
-  const getTheme = (theme) => {
-    return theme === "dark";
-  };
+  const [riceText, setRiceText] = useState();
 
   const [demandId, ] = ProductStore(state =>
     [state.demandId,], shallow);
 
-  const ChildRef = React.createRef();
-
   function handleOnClick() {
     // @ts-ignore
-    let data = ChildRef.current.getContext();
-    console.log(data)
-    data = DOMPurify.sanitize(data)
+    const data = riceText.toJSON()
     if(demandId &&  demandId >0){
       postDemandComment({
         demandId: demandId,
         remarks: data
       }).then(r => {
         if(r.data.success){
-          // @ts-ignore
-          ChildRef.current.clear()
           Notification.success({
             title: 'Success',
             content: t['summarize.history.comment.success'],
@@ -60,7 +47,7 @@ export default function Summarize() {
     <DynamicOuterCard title={t["summarize.history.comment"]} bodyStyle={bodyStyle}>
       <div className={styles["context-card"]}>
         <Button className={styles["context-card-button"]} type={"primary"} onClick={handleOnClick}>{t["summarize.history.comment.add"]}</Button>
-        <MakeDown />
+        <RiceText onChange={setRiceText} readOnly={false}/>
       </div>
     </DynamicOuterCard>
 

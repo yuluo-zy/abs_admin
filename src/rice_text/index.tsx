@@ -8,19 +8,23 @@ import Editor from "@/rice_text/Editor";
 import InitTheme from "@/rice_text/themes/InitTheme";
 import { TextNodes } from "@/rice_text/components/Node";
 
-export default function RiceText(): JSX.Element {
+export default function RiceText({readOnly, onChange}: {
+  readOnly : boolean,
+  onChange: any
+}): JSX.Element {
   const {
     settings: { emptyEditor }
   } = useSettings();
 
   const initialConfig = {
     editorState: undefined,
-    namespace: "espressif",
+    namespace: "espressif" +  Math.random(),
     nodes: [...TextNodes],
     onError: (error: Error) => {
       throw error;
     },
     theme: InitTheme,
+    readOnly: readOnly || false
   };
 
   return (
@@ -29,7 +33,7 @@ export default function RiceText(): JSX.Element {
         <SharedHistoryContext>
           <SharedAutocompleteContext>
             <div className="editor-shell">
-              <Editor />
+              <Editor onChange={onChange} />
             </div>
           </SharedAutocompleteContext>
         </SharedHistoryContext>
