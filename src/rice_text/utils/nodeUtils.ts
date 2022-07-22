@@ -45,7 +45,7 @@ export function positionEditorElement(
 
 export const getSelection = (): Selection | null => window.getSelection();
 
-const checkIsJSON=  (str): boolean => {
+export const checkIsJSON=  (str): boolean => {
   if (typeof str == 'string') {
     try {
       const obj = JSON.parse(str);
@@ -55,14 +55,4 @@ const checkIsJSON=  (str): boolean => {
     }
   }
   return false;
-}
-
-export function importFile(editor: LexicalEditor, text: string) {
-  if(checkIsJSON(text)){
-    const editorState = editor.parseEditorState(
-      text
-    );
-    editor.setEditorState(editorState);
-    editor.dispatchCommand(CLEAR_HISTORY_COMMAND, undefined);
-  }
 }

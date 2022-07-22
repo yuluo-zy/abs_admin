@@ -110,7 +110,6 @@ function onDragover(event: DragEvent): boolean {
     return false;
   }
   if (!canDrop(event, "code, span.editor-file")) {
-    console.log("jhhhh")
     event.preventDefault();
   }
   return true;

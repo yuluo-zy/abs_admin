@@ -47,7 +47,6 @@ function DownLoad({ src }: { src: string }): JSX.Element {
             const url = URL.createObjectURL(new Blob([res.data]));
             const link = document.createElement("a");
             link.href = url;
-            console.log(res)
             let name = res.headers['content-disposition']?.match(/fileName=(.*)/)[1]; // 获取filename的值
             name = decodeURIComponent(name);
             link.setAttribute("download", name);
@@ -71,9 +70,6 @@ function FileComponent({ src, name, nodeKey }: {
   name: string
   nodeKey?: NodeKey
 }): JSX.Element {
-  useEffect(() => {
-    console.log(nodeKey);
-  }, [nodeKey]);
   const ref = useRef(null);
   const [isSelected, setSelected, clearSelection] =
     useLexicalNodeSelection(nodeKey);
@@ -81,7 +77,6 @@ function FileComponent({ src, name, nodeKey }: {
   const [selection, setSelection] = useState<RangeSelection | NodeSelection | GridSelection | null>(null);
   const draggable = isSelected && $isNodeSelection(selection);
   useEffect(() => {
-    console.log(isSelected);
   }, [isSelected]);
   const isFocused = $isNodeSelection(selection) && isSelected;
 
@@ -184,7 +179,6 @@ export class FileNode extends DecoratorNode<JSX.Element> {
     key?: NodeKey
   ) {
     super(key);
-    console.log(key);
     this.__src = src;
     this.__name = name;
   }

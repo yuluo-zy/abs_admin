@@ -29,15 +29,15 @@ import TextFormatFloatingToolbarPlugin from "./plugins/TextFormatFloatingToolbar
 import TabFocusPlugin from "./plugins/TabFocusPlugin";
 import ActionsPlugin from "@/rice_text/plugins/ActionsPlugin";
 import KeywordsPlugin from "./plugins/KeywordsPlugin";
-import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import "./index.less";
 import ImagesPlugin from "./plugins/ImagesPlugin";
 import FilePlugin from "@/rice_text/plugins/FilePlugin";
 import MentionsPlugin from "./plugins/MentionsPlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { importFile } from "@/rice_text/utils/nodeUtils";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import { CLEAR_HISTORY_COMMAND } from "lexical";
 
-export default function Editor({onChange, initValue}: {
+export default function Editor({onChange, initValue }: {
   initValue?: string
   onChange: any
 }): JSX.Element {
@@ -56,18 +56,12 @@ export default function Editor({onChange, initValue}: {
   const placeholder = <Placeholder>{text}</Placeholder>;
   const scrollRef = useRef(null);
   const [editor] = useLexicalComposerContext();
-  const [readOnly, setReadOnly] = useState(false)
+  const [readOnly, setReadOnly] = useState(true)
 
   useEffect(() => {
     setReadOnly(editor.isReadOnly())
+    editor.dispatchCommand(CLEAR_HISTORY_COMMAND, undefined);
   }, [editor])
-
-  useEffect(() => {
-    if(initValue && initValue.length >0){
-      importFile(editor,initValue)
-      editor.setReadOnly(true)
-    }
-  }, [])
 
   return (
     <>

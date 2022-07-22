@@ -7,6 +7,7 @@ import { SharedAutocompleteContext } from "@/rice_text/context/SharedAutocomplet
 import Editor from "@/rice_text/Editor";
 import InitTheme from "@/rice_text/themes/InitTheme";
 import { TextNodes } from "@/rice_text/components/Node";
+import { checkIsJSON } from "@/rice_text/utils/nodeUtils";
 
 export default function RiceText({readOnly, onChange, initValue}: {
   readOnly: boolean,
@@ -17,8 +18,17 @@ export default function RiceText({readOnly, onChange, initValue}: {
     settings: { emptyEditor }
   } = useSettings();
 
+  let editorState = undefined
+
+
+    if(initValue && initValue.length >0){
+      if(checkIsJSON(initValue)){
+        editorState = initValue
+      }
+    }
+
   const initialConfig = {
-    editorState: undefined,
+    editorState: editorState,
     namespace: "espressif" +  Math.random(),
     nodes: [...TextNodes],
     onError: (error: Error) => {
