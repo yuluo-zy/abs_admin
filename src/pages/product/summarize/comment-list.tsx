@@ -5,6 +5,7 @@ import shallow from "zustand/shallow";
 import { getDemandComment } from "@/api/comment";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import UserInfo from "@/pages/product/summarize/user-info";
+import RiceText from "@/rice_text";
 
 export default function CommentList() {
 
@@ -78,7 +79,7 @@ export default function CommentList() {
             style={{margin: 10}}
             hoverable>
             <UserInfo user={item}/>
-
+            <RiceText key ={item.id} readOnly={true} initValue={item?.remarks}/>
           </Card>
         )}
       />

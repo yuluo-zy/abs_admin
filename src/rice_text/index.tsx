@@ -8,9 +8,10 @@ import Editor from "@/rice_text/Editor";
 import InitTheme from "@/rice_text/themes/InitTheme";
 import { TextNodes } from "@/rice_text/components/Node";
 
-export default function RiceText({readOnly, onChange}: {
-  readOnly : boolean,
-  onChange: any
+export default function RiceText({readOnly, onChange, initValue}: {
+  readOnly: boolean,
+  onChange?: any,
+  initValue?: string
 }): JSX.Element {
   const {
     settings: { emptyEditor }
@@ -24,7 +25,7 @@ export default function RiceText({readOnly, onChange}: {
       throw error;
     },
     theme: InitTheme,
-    readOnly: readOnly || false
+    readOnly: readOnly || false,
   };
 
   return (
@@ -33,7 +34,7 @@ export default function RiceText({readOnly, onChange}: {
         <SharedHistoryContext>
           <SharedAutocompleteContext>
             <div className="editor-shell">
-              <Editor onChange={onChange} />
+              <Editor onChange={onChange} initValue={initValue} />
             </div>
           </SharedAutocompleteContext>
         </SharedHistoryContext>

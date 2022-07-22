@@ -1,4 +1,4 @@
-import { ElementNode, RangeSelection, TextNode } from "lexical";
+import { CLEAR_HISTORY_COMMAND, ElementNode, LexicalEditor, RangeSelection, TextNode } from "lexical";
 import { $isAtNodeEnd } from "@lexical/selection";
 
 export function getSelectedNode(selection: RangeSelection): TextNode | ElementNode {
@@ -22,14 +22,14 @@ export function getSelectedNode(selection: RangeSelection): TextNode | ElementNo
 export function positionEditorElement(
   editor: HTMLElement,
   rect: ClientRect | null,
-  rootElement: HTMLElement,
+  rootElement: HTMLElement
 ): void {
   if (rect === null) {
-    editor.style.opacity = '0';
-    editor.style.top = '-1000px';
-    editor.style.left = '-1000px';
+    editor.style.opacity = "0";
+    editor.style.top = "-1000px";
+    editor.style.left = "-1000px";
   } else {
-    editor.style.opacity = '1';
+    editor.style.opacity = "1";
     editor.style.top = `${rect.top + rect.height + window.pageYOffset + 10}px`;
     const left = rect.left - editor.offsetWidth / 2 + rect.width / 2;
     const rootElementRect = rootElement.getBoundingClientRect();
@@ -44,3 +44,25 @@ export function positionEditorElement(
 }
 
 export const getSelection = (): Selection | null => window.getSelection();
+
+const checkIsJSON=  (str): boolean => {
+  if (typeof str == 'string') {
+    try {
+      const obj = JSON.parse(str);
+      return !!(typeof obj == 'object' && obj);
+    } catch (e) {
+      return false;
+    }
+  }
+  return false;
+}
+
+export function importFile(editor: LexicalEditor, text: string) {
+  if(checkIsJSON(text)){
+    const editorState = editor.parseEditorState(
+      text
+    );
+    editor.setEditorState(editorState);
+    editor.dispatchCommand(CLEAR_HISTORY_COMMAND, undefined);
+  }
+}

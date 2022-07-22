@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import { AutoScrollPlugin } from "@lexical/react/LexicalAutoScrollPlugin";
 import { CharacterLimitPlugin } from "@lexical/react/LexicalCharacterLimitPlugin";
@@ -34,8 +34,11 @@ import "./index.less";
 import ImagesPlugin from "./plugins/ImagesPlugin";
 import FilePlugin from "@/rice_text/plugins/FilePlugin";
 import MentionsPlugin from "./plugins/MentionsPlugin";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { importFile } from "@/rice_text/utils/nodeUtils";
 
-export default function Editor({onChange}: {
+export default function Editor({onChange, initValue}: {
+  initValue?: string
   onChange: any
 }): JSX.Element {
   const { historyState } = useSharedHistoryContext();
@@ -52,14 +55,27 @@ export default function Editor({onChange}: {
     : "Enter some plain text...";
   const placeholder = <Placeholder>{text}</Placeholder>;
   const scrollRef = useRef(null);
+  const [editor] = useLexicalComposerContext();
+  const [readOnly, setReadOnly] = useState(false)
+
+  useEffect(() => {
+    setReadOnly(editor.isReadOnly())
+  }, [editor])
+
+  useEffect(() => {
+    if(initValue && initValue.length >0){
+      importFile(editor,initValue)
+      editor.setReadOnly(true)
+    }
+  }, [])
 
   return (
     <>
       {/*设置 工具栏*/}
-      {isRichText && <ToolbarPlugin />}
+      {isRichText && ! readOnly && <ToolbarPlugin />}
       <div
         className={`editor-container ${
-          !isRichText ? "plain-text" : ""
+          readOnly ? "read-only" : ""
         }`}
         ref={scrollRef}>
         {isMaxLength && <MaxLengthPlugin maxLength={300} />}
@@ -70,7 +86,7 @@ export default function Editor({onChange}: {
         <KeywordsPlugin />
         <EspAutoLinkPlugin />
         {
-          onChange &&<OnChangePlugin onChange={onChange}/>
+          onChange && !readOnly &&<OnChangePlugin onChange={onChange}/>
         }
         <AutoScrollPlugin scrollRef={scrollRef} />
         {isRichText && <>
@@ -99,7 +115,7 @@ export default function Editor({onChange}: {
         {(isCharLimit || isCharLimitUtf8) && (
           <CharacterLimitPlugin charset={isCharLimit ? "UTF-16" : "UTF-8"} />
         )}
-        <ActionsPlugin />
+        {isRichText && !readOnly && <ActionsPlugin />}
       </div>
     </>
   );
