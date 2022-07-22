@@ -24,7 +24,7 @@ export default function Summarize() {
 
   function handleOnClick() {
     // @ts-ignore
-    const data = riceText.toJSON()
+    const data = JSON.stringify(riceText.toJSON())
     if(demandId &&  demandId >0){
       postDemandComment({
         demandId: demandId,
