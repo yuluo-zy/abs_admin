@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Radio } from '@arco-design/web-react';
-import { isArray, isObject } from '@/utils/is';
+import React, { useState } from "react";
+import { Radio } from "@arco-design/web-react";
+import { isArray, isObject } from "@/utils/is";
 import { useUpdateEffect } from "react-use";
 
 const RadioGroup = Radio.Group;
@@ -11,9 +11,6 @@ export default function DynamicRadioGroup(props) {
   useUpdateEffect(() => {
     onChange(myValue);
   }, [myValue]);
-  // useEffect(() => {
-  //   console.warn(defaultValue)
-  //   setMyValue(defaultValue)}, [])
   return <RadioGroup value={myValue} direction={props.direction}>
     {options && isArray(options)
       && options.map((option, index) => {

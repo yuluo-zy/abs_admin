@@ -46,11 +46,11 @@ export default function FirmwareCustomization() {
   const [info, setInfo] = ProductStore(state => [state.info, state.setInfo], shallow);
   const [visible, setVisible] = useState(false);
   const [project, setProject] = useState([]);
-  const [mpnList, setMpnList] = useState([])
+  const [mpnList, setMpnList] = useState([]);
 
   // 提交数据
   const postForm = async (name, values, infos) => {
-    if (!info?.firmwareVersion  === undefined || !info?.firstImport  === undefined || info?.encryption === undefined) {
+    if (!info?.firmwareVersion === undefined || !info?.firstImport === undefined || info?.encryption === undefined) {
       Message.error(t["firmware.customization.info.project.form.error"]);
       return;
     }
@@ -78,6 +78,14 @@ export default function FirmwareCustomization() {
     }
     temp.fileList = fileList;
 
+    //  转换 串口校验信息
+    if(temp?.serial_check_str?.length > 0){
+      temp.serialCheckStr1 = temp?.serial_check_str[0];
+      temp.serialCheckStr2 = temp?.serial_check_str[1];
+      temp.serialCheckStr3 = temp?.serial_check_str[2];
+    }
+
+
     setInfo({
       ...temp
     });
@@ -86,7 +94,7 @@ export default function FirmwareCustomization() {
       demandId: demandId
     }).then(res => {
       if (res.data.success) {
-        const { id } = res.data.result.id;
+        const id = res.data.result;
         setInfo({ id: id });
         Message.success(t["submit.hardware.success"]);
         history.push(getNextRouter(0, serviceType));
@@ -259,7 +267,7 @@ export default function FirmwareCustomization() {
                 onChange={(value) => setInfo({ lastMpn: value })}
               >
                 {mpnList.map((option, index) => (
-                  <Option key={index}  value={option?.id}>
+                  <Option key={index} value={option?.id}>
                     {option?.fwPn}
                   </Option>
                 ))}
@@ -281,7 +289,8 @@ export default function FirmwareCustomization() {
               encryption: value,
               firmwareType: -1,
               keyType: -1,
-              secureBoot: -1
+              secureBoot: -1,
+              partitionNum: 0
             });
           }} />
           {/*选择 flash 和 boot*/}

@@ -12,9 +12,13 @@ export default function SerialCheck(props: { initialValues? }) {
   const { initialValues } = props;
   const t = useLocale();
   const [form] = Form.useForm();
-  if(!initialValues?.serial_check_str){
-    initialValues.serial_check_str = [""]
-  }
+
+  initialValues.serial_check_str = [""]
+
+  initialValues.serial_check_str[0] = initialValues?.serialCheckStr1
+  initialValues.serial_check_str[1] = initialValues?.serialCheckStr2
+  initialValues.serial_check_str[2] = initialValues?.serialCheckStr3
+  console.log(initialValues.serial_check_str )
   return (
     <DynamicCard title={t["firmware.serial.check.title"]}>
       <Row>
@@ -27,11 +31,15 @@ export default function SerialCheck(props: { initialValues? }) {
             labelCol={{ span: 4, offset: 0 }}
             initialValues={initialValues}
           >
-            <Form.Item field="type" label={t['demand.service.firmware.serial.check.type']} required={true} rules={[ {
+            <Form.Item field="serialType" label={t['demand.service.firmware.serial.check.type']}
+
+                       required={true} rules={[ {
               required: true,
               message: t["demand.service.firmware.serial.check.error"],
             }]}>
-              <DynamicRadioGroup options={[
+              <DynamicRadioGroup
+                defaultValue={initialValues?.serialType}
+                options={[
                 { label: t["demand.service.firmware.serial.check.universal"], value: 0 },
                 { label: t["demand.service.firmware.serial.check.self"], value: 1 }
               ]}></DynamicRadioGroup>
@@ -40,7 +48,7 @@ export default function SerialCheck(props: { initialValues? }) {
               shouldUpdate
               noStyle>
               {(values) => {
-                return values?.type === 0 ? (
+                return values?.serialType === 0 ? (
                   <Form.Item field="generalSerial"
                              label={t["firmware.serial.universal.serial.port"]}
                              rules={[
@@ -57,7 +65,7 @@ export default function SerialCheck(props: { initialValues? }) {
 
                   </Form.Item>
                 ) : (
-                  values?.type === 1 && (
+                  values?.serialType === 1 && (
                     <Form.Item key={1} label={t["firmware.serial.self.serial.port"]} required style={{ marginBottom: 0 }}>
                       <Grid.Row gutter={8}>
                         <Grid.Col span={12}>
@@ -85,7 +93,7 @@ export default function SerialCheck(props: { initialValues? }) {
           ]}>
             <Input allowClear />
           </Form.Item>
-            <Form.List field='serial_check_str'>
+            <Form.List field='serial_check_str' initialValue={initialValues?.serial_check_str}>
               {(fields, { add, remove, move }) => {
                 return (
                   <div>
