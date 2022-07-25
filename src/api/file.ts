@@ -1,5 +1,5 @@
-import { httpGet } from '@/utils/httpRequest';
-import { getAxios } from '@/utils/axios';
+import { httpGet } from "@/utils/httpRequest";
+import { getAxios } from "@/utils/axios";
 
 export const postFile = (data, onUploadProgress, source) => {
   return getAxios().post(
@@ -18,6 +18,11 @@ export const postFile = (data, onUploadProgress, source) => {
 export const getFile = (id) => {
   return getAxios().get(
     '/file/download/' + id,
+    { responseType: 'blob' });
+};
+export const getFileByPath = (path) => {
+  return getAxios().get(
+    path,
     { responseType: 'blob' });
 };
 
