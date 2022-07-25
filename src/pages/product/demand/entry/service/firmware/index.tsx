@@ -50,7 +50,7 @@ export default function FirmwareCustomization() {
 
   // 提交数据
   const postForm = async (name, values, infos) => {
-    if (!info?.firmwareVersion || !info?.firstImport || info?.encryption == undefined) {
+    if (!info?.firmwareVersion  === undefined || !info?.firstImport  === undefined || info?.encryption === undefined) {
       Message.error(t["firmware.customization.info.project.form.error"]);
       return;
     }
@@ -330,7 +330,7 @@ export default function FirmwareCustomization() {
             {info?.secureBoot === 1 && <div className={style["encryption-secure"]}>
               <Typography.Text>{t["firmware.customization.info.encryption.firmware.v2.key"]}</Typography.Text>
               <InputNumber
-                style={{ width: 320, marginLeft: "2rem" }}                                                                         
+                style={{ width: 320, marginLeft: "2rem" }}
                 mode="button"
                 min={1}
                 max={3}
