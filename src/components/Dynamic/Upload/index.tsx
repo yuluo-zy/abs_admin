@@ -47,7 +47,7 @@ function DynamicUpload(props) {
   }, []);
 
 
-  return <div style={{marginTop: '1rem'}}>
+  return <div style={{marginTop: title ? '1rem': ''}}>
     <Upload
       autoUpload
       multiple
