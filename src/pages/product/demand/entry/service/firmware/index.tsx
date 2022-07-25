@@ -30,8 +30,9 @@ import style from "./style/index.module.less";
 import { sum } from "@/utils/listTools";
 import { getNextRouter } from "@/utils/getNext";
 import { useHistory } from "react-router";
-import { postFirmwareCustomDemand } from "@/api/demand";
+import { getMpnList, postFirmwareCustomDemand } from "@/api/demand";
 import { getProjectList } from "@/api/project";
+import axios from "axios";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -45,12 +46,13 @@ export default function FirmwareCustomization() {
   const [info, setInfo] = ProductStore(state => [state.info, state.setInfo], shallow);
   const [visible, setVisible] = useState(false);
   const [project, setProject] = useState([]);
+  const [mpnList, setMpnList] = useState([])
 
   // 提交数据
   const postForm = async (name, values, infos) => {
-    if(!info?.firmwareVersion || !info?.firstImport || info?.encryption == undefined){
-      Message.error(t['firmware.customization.info.project.form.error'])
-      return
+    if (!info?.firmwareVersion || !info?.firstImport || info?.encryption == undefined) {
+      Message.error(t["firmware.customization.info.project.form.error"]);
+      return;
     }
     try {
       for (const item in infos.forms) {
@@ -107,11 +109,21 @@ export default function FirmwareCustomization() {
 
   useEffect(() => {
     // 用来获取相关的固件项目信息
-    getProjectList().then(res => {
-      if (res.data.success) {
-        setProject(res.data.result);
+    axios.all([
+      getProjectList(),
+      getMpnList()
+    ]).then(axios.spread((projectList, mpnList) => {
+      if (projectList.data.success) {
+        setProject(projectList.data.result);
       }
-    });
+      if (mpnList.data.success) {
+        setMpnList(mpnList.data.result);
+      }
+    }))
+      .catch(error => {
+          Message.error(t["message.service.notfound"]);
+        }
+      );
   }, []);
 
   // 获取加密和非加密的选项内容
@@ -161,29 +173,29 @@ export default function FirmwareCustomization() {
 
   // 新增固件信息条目
   const addItem = () => {
-    if(info?.partitionNum < 8) {
+    if (info?.partitionNum < 8) {
       setInfo({
         partitionNum: info.partitionNum + 1
-      })
+      });
     } else {
       Notification.warning({
-        content: t['firmware.customization.info.encryption.firmware.max_size'],
-      })
+        content: t["firmware.customization.info.encryption.firmware.max_size"]
+      });
     }
-  }
+  };
   // 删除固件信息条目
   const deleteItem = () => {
     // 先在 form 中删除这里的信息, 然后再数量减一
-    if(info?.partitionNum > 1){
+    if (info?.partitionNum > 1) {
       setInfo({
         partitionNum: info.partitionNum - 1
-      })
+      });
     } else {
       Notification.warning({
-        content: t['firmware.customization.info.encryption.firmware.min_size'],
-      })
+        content: t["firmware.customization.info.encryption.firmware.min_size"]
+      });
     }
-  }
+  };
 
   return (<DynamicOuterCard title={t["firmware.customization.title"]}>
     <DynamicSkeleton animation text={{ rows: 10, width: ["100%", 600, 400] }}>
@@ -246,11 +258,11 @@ export default function FirmwareCustomization() {
                 defaultValue={info?.lastMpn}
                 onChange={(value) => setInfo({ lastMpn: value })}
               >
-                {/*{project.map((option, index) => (*/}
-                {/*  <Option key={option} disabled={index === 3} value={option}>*/}
-                {/*    {option}*/}
-                {/*  </Option>*/}
-                {/*))}*/}
+                {mpnList.map((option, index) => (
+                  <Option key={index}  value={option?.id}>
+                    {option?.fwPn}
+                  </Option>
+                ))}
               </Select>
             </Space>
           }
@@ -318,7 +330,7 @@ export default function FirmwareCustomization() {
             {info?.secureBoot === 1 && <div className={style["encryption-secure"]}>
               <Typography.Text>{t["firmware.customization.info.encryption.firmware.v2.key"]}</Typography.Text>
               <InputNumber
-                style={{ width: 320, marginLeft: '2rem' }}
+                style={{ width: 320, marginLeft: "2rem" }}
                 mode="button"
                 min={1}
                 max={3}
@@ -392,7 +404,7 @@ export default function FirmwareCustomization() {
               </div>
             </Space>
           </Modal>
-          {info?.keyType === 1 && <Space size={10} style={{marginLeft: '2rem'}}>
+          {info?.keyType === 1 && <Space size={10} style={{ marginLeft: "2rem" }}>
             <Typography.Text>
               {t["firmware.serial.partitions"]}
               <Tooltip color={"#0E42D2"} position={"top"}
@@ -430,7 +442,7 @@ export default function FirmwareCustomization() {
       >
         {/*非加密固件*/}
         {info?.encryption === false && <div>
-          <FirmwareInformation initialValues={info?.fileList}/>
+          <FirmwareInformation initialValues={info?.fileList} />
           <Divider style={{ borderBottomStyle: "dashed" }} />
           <SerialCheck initialValues={{ ...info }} />
           <Divider style={{ borderBottomStyle: "dashed" }} />
@@ -438,7 +450,7 @@ export default function FirmwareCustomization() {
         }
         {/*flash 唯一*/}
         {info?.keyType === 0 && <div>
-          <FirmwareInformation initialValues={info?.fileList}  />
+          <FirmwareInformation initialValues={info?.fileList} />
           <Divider style={{ borderBottomStyle: "dashed" }} />
           <FirmwareEfuse initialValues={{ ...info }} target={modelInfo?.series} />
           <Divider style={{ borderBottomStyle: "dashed" }} />
@@ -449,7 +461,8 @@ export default function FirmwareCustomization() {
 
         {
           info?.keyType === 1 && <div>
-            <FirmwareInformation number={info?.partitionNum} initialValues={info?.fileList} addItem={addItem} deleteItem={deleteItem}/>
+            <FirmwareInformation number={info?.partitionNum} initialValues={info?.fileList} addItem={addItem}
+                                 deleteItem={deleteItem} />
             <Divider style={{ borderBottomStyle: "dashed" }} />
             <FirmwareFlash initialValues={{ ...info }} />
             <Divider style={{ borderBottomStyle: "dashed" }} />

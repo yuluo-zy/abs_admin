@@ -48,3 +48,6 @@ export const postCheckCustomDemand = (data) => {
 export const getDemandDetails = (demandId) => {
   return httpGet('/demand/custom/'+demandId)
 }
+export const getMpnList = () => {
+  return httpGet('/demand/MPN')
+}
