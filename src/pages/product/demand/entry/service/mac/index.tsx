@@ -26,10 +26,6 @@ import { useHistory } from "react-router";
 import DynamicDivider from "@/components/Dynamic/Divider";
 
 const FormItem = Form.Item;
-// const bodyStyle = {
-//   padding: "3rem"
-// };
-
 
 export default function CustomMac() {
   const [form] = Form.useForm();
@@ -46,7 +42,9 @@ export default function CustomMac() {
     form.setFieldValue("macStart", temp);
   };
   const getMacEndInfo = (value) => {
+    console.log(value)
     const temp = getMac(value, macData?.macEnd || "");
+    console.log(temp)
     setMacData({
       macEnd: temp
     });
@@ -223,7 +221,7 @@ export default function CustomMac() {
                       {
                         required: true,
                         message: t["firmware.mac.partitions.start.error"],
-                        length: 17
+                        minLength: 17
                       }
                     ]}>
             <Input value={macData?.macStart} onChange={getMacStartInfo} style={{ maxWidth: "20rem" }} />
@@ -237,7 +235,7 @@ export default function CustomMac() {
             {
               required: true,
               message: t["firmware.mac.partitions.end.error"],
-              length: 17
+              minLength: 17
             }
           ]}
           >
