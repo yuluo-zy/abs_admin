@@ -14,11 +14,16 @@ export default function SerialCheck(props: { initialValues? }) {
   const [form] = Form.useForm();
 
   initialValues.serial_check_str = [""]
+  if(initialValues?.serialCheckStr1 && initialValues?.serialCheckStr1.length > 0){
+    initialValues.serial_check_str[0] = initialValues?.serialCheckStr1
+  }
+  if(initialValues?.serialCheckStr2 && initialValues?.serialCheckStr2.length > 0){
+    initialValues.serial_check_str[1] = initialValues?.serialCheckStr2
+  }
+  if(initialValues?.serialCheckStr3 && initialValues?.serialCheckStr3.length > 0){
+    initialValues.serial_check_str[2] = initialValues?.serialCheckStr3
+  }
 
-  initialValues.serial_check_str[0] = initialValues?.serialCheckStr1
-  initialValues.serial_check_str[1] = initialValues?.serialCheckStr2
-  initialValues.serial_check_str[2] = initialValues?.serialCheckStr3
-  console.log(initialValues.serial_check_str )
   return (
     <DynamicCard title={t["firmware.serial.check.title"]}>
       <Row>
