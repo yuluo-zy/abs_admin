@@ -58,7 +58,7 @@ export default function CustomMac() {
     return temp.toLocaleString("en-US");
   };
   const getProjectNumber = (start, end, project) => {
-    const temp = convertToNumber(end) - convertToNumber(start)
+    const temp = convertToNumber(end) - convertToNumber(start) +1
     if(temp <= 0){
       return 0
     }
