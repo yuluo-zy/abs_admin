@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import useLocale from "@/pages/product/demand/locale/useLocale";
 import DynamicCard from "@/components/Dynamic/Card";
-import { Checkbox, Form, Input } from "@arco-design/web-react";
+import { Button, Checkbox, Form, Input, Space } from "@arco-design/web-react";
 import style from "./style/index.module.less";
+import { IconDelete } from "@arco-design/web-react/icon";
 
 const EfuseConfig = [
   {
@@ -201,6 +202,7 @@ const ESP32_S_EfuseConfig = [
     ]
   }
 ]
+
 function CustomEfuseConfig(props) {
   const t = useLocale();
   const {entity} = props
@@ -333,13 +335,62 @@ export default function FirmwareEfuse(props: {initialValues, target}) {
             </Form.Item>;
           }
         )}
+        <Form.List field='otherCustom'>
+          {(fields, { add, remove, move }) => {
+            return (
+              <div>
+                {fields.map((item, index) => {
+                  return (
+                    <div key={item.key}>
+                      <Form.Item label={'Custom Fuses' + index}>
+                        <Space>
+                          <Form.Item
+                            field={item.field + '.port'}
+                            rules={[{ required: true }]}
+                            noStyle
+                          >
+                            <Input  placeholder={'efuse bit'}/>
+                          </Form.Item>
+                          <Form.Item
+                            field={item.field + '.value'}
+                            rules={[{ required: true }]}
+                            noStyle
+                          >
+                            <Input  placeholder={'efuse value'}/>
+                          </Form.Item>
+                          <Button
+                            icon={<IconDelete />}
+                            shape='circle'
+                            status='danger'
+                            onClick={() => remove(index)}
+                          ></Button>
+                        </Space>
+                      </Form.Item>
+                    </div>
+                  );
+                })}
+                <Form.Item wrapperCol={{ offset: 5 }}>
+                  <Button
+                    onClick={() => {
+                      add();
+                    }}
+                  >
+                    Add Other Custom Fuses
+                  </Button>
+                </Form.Item>
+              </div>
+            );
+          }}
+        </Form.List>
 
-        <Form.Item
-          label="other Custom"
-          field="otherCustom"
-        >
-          <Input.TextArea placeholder={t["firmware.information.efuse.other.port.help"]} />
-        </Form.Item>
+        {/*<Form.Item*/}
+        {/*  label="other Custom"*/}
+        {/*  field="otherCustom"*/}
+        {/*>*/}
+        {/*  <Input.TextArea placeholder={t["firmware.information.efuse.other.port.help"]} />*/}
+        {/*</Form.Item>*/}
+        {/*添加 自定义 efuse 位 和目标烧录值*/}
+
       </Form>
     </DynamicCard>
   );
