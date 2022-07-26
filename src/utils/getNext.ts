@@ -24,6 +24,7 @@ const router = [
     key: 5
   }
 ]
+// 这个函数主要是保证 在保存 next 的时候 找到合适的下一步跳转
 export const getNextRouter = (currentIndex, routerList) => {
   // 获得下一个路由
   const temp = [...routerList.sort(function(a, b){return a - b})]
