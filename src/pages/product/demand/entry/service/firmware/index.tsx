@@ -85,6 +85,15 @@ export default function FirmwareCustomization() {
       temp.serialCheckStr3 = temp?.serial_check_str[2];
     }
 
+    // 转换 自定义efuse otherCustom
+    if(temp?.efuseConfig?.otherCustom && temp?.efuseConfig?.otherCustom.length > 0){
+      let otherCustom = {}
+      for (const  item of temp?.efuseConfig?.otherCustom){
+        // @ts-ignore
+        otherCustom[item?.key || 'defines'] = item?.data
+      }
+      temp.efuseConfig.otherCustom = otherCustom
+    }
 
     setInfo({
       ...temp

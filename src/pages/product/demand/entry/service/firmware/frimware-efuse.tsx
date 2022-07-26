@@ -335,6 +335,7 @@ export default function FirmwareEfuse(props: {initialValues, target}) {
             </Form.Item>;
           }
         )}
+        <br/>
         <Form.List field='otherCustom'>
           {(fields, { add, remove, move }) => {
             return (
@@ -342,21 +343,24 @@ export default function FirmwareEfuse(props: {initialValues, target}) {
                 {fields.map((item, index) => {
                   return (
                     <div key={item.key}>
-                      <Form.Item label={'Custom Fuses' + index}>
+                      <Form.Item label={'Custom Fuses - ' + index}>
                         <Space>
                           <Form.Item
-                            field={item.field + '.port'}
-                            rules={[{ required: true }]}
+                            field={item.field + '.key'}
+                            rules={[{ required: true , message: t['firmware.information.efuse.custom.port.key']}]}
                             noStyle
                           >
-                            <Input  placeholder={'efuse bit'}/>
+                            <Input maxLength={30}  placeholder={'efuse bit'}/>
                           </Form.Item>
                           <Form.Item
-                            field={item.field + '.value'}
-                            rules={[{ required: true }]}
+                            field={item.field + '.data'}
+                            rules={[{ required: true , message: t['firmware.information.efuse.custom.port.value']}]}
                             noStyle
                           >
-                            <Input  placeholder={'efuse value'}/>
+                            <Input
+                              type={"number"}
+                              max={1000}
+                              placeholder={'efuse value'}/>
                           </Form.Item>
                           <Button
                             icon={<IconDelete />}

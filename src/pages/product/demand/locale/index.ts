@@ -236,7 +236,9 @@ const i18n = {
     'self.check.boot.upload.port.hit.firmware': '定制固件阶段',
     'self.check.boot.upload.port.hit.mac': '定制 MAC 阶段',
     'self.check.boot.upload.port.hit.burn': '定制烧录内容阶段',
-    'self.check.boot.upload.file.empty': '请上传对应文件, 进行数据校验'
+    'self.check.boot.upload.file.empty': '请上传对应文件, 进行数据校验',
+    'firmware.information.efuse.custom.port.key': '自定义 Efuse位 不能为空',
+    'firmware.information.efuse.custom.port.value': '自定义 Efuse值 不能为空',
   },
 };
 
