@@ -79,7 +79,7 @@ export default function FirmwareCustomization() {
     temp.fileList = fileList;
 
     //  转换 串口校验信息
-    if(temp?.serial_check_str?.length > 0){
+    if (temp?.serial_check_str?.length > 0) {
       temp.serialCheckStr1 = temp?.serial_check_str[0];
       temp.serialCheckStr2 = temp?.serial_check_str[1];
       temp.serialCheckStr3 = temp?.serial_check_str[2];
@@ -91,6 +91,7 @@ export default function FirmwareCustomization() {
     });
     postFirmwareCustomDemand({
       ...temp,
+      // efuseConfig: JSON.stringify(temp?.efuseConfig, replacer),
       demandId: demandId
     }).then(res => {
       if (res.data.success) {

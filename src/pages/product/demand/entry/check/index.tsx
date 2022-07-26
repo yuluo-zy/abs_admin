@@ -88,10 +88,10 @@ export default function CheckSelection() {
                                }else {
                                  setCheckData({ 'serialFileId': null });
                                }
-
                              }} /></td>
           {/*<td><p>{t['self.check.boot.file.context']}</p></td>*/}
           {/*<td><LogTable/></td>*/}
+
           <td><EmptyStatus/></td>
         </tr>
 
