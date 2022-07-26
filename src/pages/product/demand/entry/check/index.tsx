@@ -11,8 +11,7 @@ import { IconArrowRight } from "@arco-design/web-react/icon";
 import { useHistory } from "react-router";
 import { postCheckCustomDemand } from "@/api/demand";
 import CheckTable from "@/pages/product/demand/entry/check/check-table";
-import LogTable from "@/pages/product/demand/entry/check/log-table";
-import EFuseTable from "@/pages/product/demand/entry/check/eFuse-table";
+import EmptyStatus from "@/pages/product/demand/entry/check/empty";
 
 const bodyStyle = {
   paddingTop: '0',
@@ -92,7 +91,8 @@ export default function CheckSelection() {
 
                              }} /></td>
           {/*<td><p>{t['self.check.boot.file.context']}</p></td>*/}
-          <td><LogTable/></td>
+          {/*<td><LogTable/></td>*/}
+          <td><EmptyStatus/></td>
         </tr>
 
         <tr>
@@ -106,7 +106,8 @@ export default function CheckSelection() {
               }} />
           </td>
           {/*<td><p>{t['self.check.boot.efuse.context']}</p></td>*/}
-          <td><EFuseTable/></td>
+          {/*<td><EFuseTable/></td>*/}
+          <td><EmptyStatus/></td>
         </tr>
         </tbody>
       </table>

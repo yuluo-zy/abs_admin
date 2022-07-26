@@ -1,28 +1,12 @@
 import React from "react";
 import { Empty } from "@arco-design/web-react";
-import { IconExclamation } from "@arco-design/web-react/icon";
+import useLocale from "@/pages/product/demand/locale/useLocale";
 
 const EmptyStatus = () => {
+  const t = useLocale();
   return (
     <Empty
-      icon={
-        <div
-          style={{
-            background: "#f2994b",
-            display: "inline-flex",
-            borderRadius: "50%",
-            width: 50,
-            height: 50,
-            fontSize: 30,
-            alignItems: "center",
-            color: "white",
-            justifyContent: "center"
-          }}
-        >
-          <IconExclamation />
-        </div>
-      }
-      description="No data, please reload!"
+      description={t['self.check.boot.upload.file.empty']}
     />
   );
 };
