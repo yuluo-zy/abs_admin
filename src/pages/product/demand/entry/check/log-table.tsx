@@ -14,9 +14,9 @@ export default function LogTable() {
     <div>
       <div>
         <b>{t["self.check.boot.upload.port.hit.firmware"]}</b>
-        {info?.serial_check_str.map((item, index) => {
-          return <p key={index}>{item}</p>;
-        })}
+        {/*{info?.serial_check_str.map((item, index) => {*/}
+        {/*  return <p key={index}>{item}</p>;*/}
+        {/*})}*/}
       </div>
       <div>
         <b>{t["self.check.boot.upload.port.hit.mac"]}</b>
