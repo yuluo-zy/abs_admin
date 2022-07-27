@@ -36,7 +36,7 @@ function DownLoad({ src }) {
 
 function DynamicUpload(props) {
   const t = useLocale(locale);
-  const { limit, onChange, listType, onPreview, fileList, title } = props;
+  const { limit, onChange, listType, onPreview, fileList, title, customRequest } = props;
   const [defaultList, setDefaultList] = useState(fileList);
 
   const initDate = (value) => {
@@ -72,6 +72,32 @@ function DynamicUpload(props) {
     initDate(fileList);
   }, []);
 
+  const uploadData = (option) => {
+    const { onProgress, file, onSuccess, onError } = option;
+    let formData = new FormData();
+    formData.append("file", file);
+    const source = axios.CancelToken.source();
+    const onprogress = progressEvent => {
+      const complete = progressEvent.loaded / progressEvent.total * 100 | 0;
+      onProgress(parseInt(String(complete), 10), progressEvent);
+    };
+    postFile(formData, onprogress, source.token).then(r => {
+      const { success, result } = r.data;
+      if (success) {
+        Message.success(t["message.ok"]);
+        onSuccess(result);
+      }
+    }).catch(error => {
+      Message.error(t["message.error"]);
+      onError(t["message.error"]);
+    });
+    return {
+      abort() {
+        source.cancel("cancel");
+      }
+    };
+  };
+
 
   return <div style={{ marginTop: title ? "1rem" : "" }}>
     <Trigger
@@ -106,31 +132,7 @@ function DynamicUpload(props) {
         }}
         onPreview={onPreview}
         fileList={defaultList}
-        customRequest={(option) => {
-          const { onProgress, file, onSuccess, onError } = option;
-          let formData = new FormData();
-          formData.append("file", file);
-          const source = axios.CancelToken.source();
-          const onprogress = progressEvent => {
-            const complete = progressEvent.loaded / progressEvent.total * 100 | 0;
-            onProgress(parseInt(String(complete), 10), progressEvent);
-          };
-          postFile(formData, onprogress, source.token).then(r => {
-            const { success, result } = r.data;
-            if (success) {
-              Message.success(t["message.ok"]);
-              onSuccess(result);
-            }
-          }).catch(error => {
-            Message.error(t["message.error"]);
-            onError(t["message.error"]);
-          });
-          return {
-            abort() {
-              source.cancel("cancel");
-            }
-          };
-        }}
+        customRequest={customRequest || uploadData}
         limit={limit}
       />
       {title && <p style={{ position: "absolute", top: "-1.8rem" }}>{title}</p>}

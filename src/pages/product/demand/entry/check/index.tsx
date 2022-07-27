@@ -12,6 +12,8 @@ import { useHistory } from "react-router";
 import { postCheckCustomDemand } from "@/api/demand";
 import CheckTable from "@/pages/product/demand/entry/check/check-table";
 import EmptyStatus from "@/pages/product/demand/entry/check/empty";
+import axios from "axios";
+import { postFile } from "@/api/file";
 
 const bodyStyle = {
   paddingTop: "0",
@@ -24,6 +26,9 @@ export default function CheckSelection() {
   const [checkData, setCheckData, moduleInfo, demandId] =
     ProductStore(state => [state.checkData, state.setCheckData, state.moduleInfo, state.demandId], shallow);
   const [visible, setVisible] = useState(false);
+
+  const [serialFile, setSerialFile] = useState({});
+  const [efuseFileId, setEfuseFileId] = useState({});
   useEffect(() => {
     if (moduleInfo.mpn == null) {
       Modal.confirm({
@@ -41,6 +46,7 @@ export default function CheckSelection() {
   }, []);
 
   const postCheck = () => {
+    // todo 判断是否上传, 上传之后结果是否为全都 pass
     postCheckCustomDemand({
       "demandId": demandId,
       "serialFileId": checkData?.serialFileId[0]?.response,
@@ -55,6 +61,33 @@ export default function CheckSelection() {
         });
       }
     });
+  };
+
+  const getPassSerialFile = (option) => {
+    console.log("lkjjj");
+    const { onProgress, file, onSuccess, onError } = option;
+    let formData = new FormData();
+    formData.append("file", file);
+    const source = axios.CancelToken.source();
+    const onprogress = progressEvent => {
+      const complete = progressEvent.loaded / progressEvent.total * 100 | 0;
+      onProgress(parseInt(String(complete), 10), progressEvent);
+    };
+    postFile(formData, onprogress, source.token).then(r => {
+      const { success, result } = r.data;
+      if (success) {
+        Message.success(t["message.ok"]);
+        onSuccess(result);
+      }
+    }).catch(error => {
+      Message.error(t["message.error"]);
+      onError(t["message.error"]);
+    });
+    return {
+      abort() {
+        source.cancel("cancel");
+      }
+    };
   };
 
   const nextStep = () => {
@@ -85,10 +118,13 @@ export default function CheckSelection() {
                          onChange={(fileList: UploadItem[], file: UploadItem) => {
                            if (fileList.length > 0) {
                              setCheckData({ "serialFileId": file.response });
+                             // getPassSerialFile(file.response)
                            } else {
                              setCheckData({ "serialFileId": null });
                            }
-                         }} /></td>
+                         }}
+                         customRequest={getPassSerialFile}
+          /></td>
         {/*<td><p>{t['self.check.boot.file.context']}</p></td>*/}
         {/*<td><LogTable/></td>*/}
 
