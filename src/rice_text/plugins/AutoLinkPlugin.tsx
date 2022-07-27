@@ -15,7 +15,7 @@ const MATCHERS = [
         index: match.index,
         length: match[0].length,
         text: match[0],
-        url: match[0],
+        url: match[0]
       }
     );
   },
@@ -26,10 +26,10 @@ const MATCHERS = [
         index: match.index,
         length: match[0].length,
         text: match[0],
-        url: `mailto:${match[0]}`,
+        url: `mailto:${match[0]}`
       }
     );
-  },
+  }
 ];
 
 export default function EspAutoLinkPlugin(): JSX.Element {

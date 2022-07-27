@@ -14,12 +14,12 @@ const Context: React.Context<ContextShape> = createContext([
   },
   (_newSuggestion: Suggestion) => {
     return;
-  },
+  }
 ]);
 
 export const SharedAutocompleteContext = ({
-  children,
-}: {
+                                            children
+                                          }: {
   children: ReactNode;
 }): JSX.Element => {
   const context: ContextShape = useMemo(() => {
@@ -38,7 +38,7 @@ export const SharedAutocompleteContext = ({
         for (const listener of listeners) {
           listener(newSuggestion);
         }
-      },
+      }
     ];
   }, []);
   return <Context.Provider value={context}>{children}</Context.Provider>;

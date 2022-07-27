@@ -1,5 +1,5 @@
-import React, { forwardRef, useImperativeHandle, useState } from 'react';
-import { Tree } from '@arco-design/web-react';
+import React, { forwardRef, useImperativeHandle, useState } from "react";
+import { Tree } from "@arco-design/web-react";
 
 function DynamicTree(props, ref) {
   const [checked, setChecked] = useState(props.checkedKeys);
@@ -7,7 +7,7 @@ function DynamicTree(props, ref) {
   useImperativeHandle(ref, () => ({
     getTreeChecked: () => {
       return checked;
-    },
+    }
   }));
 
   return (
@@ -23,9 +23,9 @@ function DynamicTree(props, ref) {
           setChecked(keys);
         }}
         showLine={true}
-        size={'large'}
+        size={"large"}
         virtualListProps={{
-          height: '50rem',
+          height: "50rem"
         }}
       >
         {props.children}

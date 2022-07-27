@@ -31,22 +31,23 @@ const Content = Layout.Content;
 
 function getIconFromKey(key) {
   switch (key) {
-    case 'dashboard':
+    case "dashboard":
       return <IconDashboard className={styles.icon} />;
-    case 'account':
+    case "account":
       return <IconUserGroup className={styles.icon} />;
-    case 'user':
+    case "user":
       return <IconUser className={styles.icon} />;
-    case 'product':
+    case "product":
       return <IconNav className={styles.icon} />;
     default:
-      return <div className={styles['icon-empty']} />;
+      return <div className={styles["icon-empty"]} />;
   }
 }
 
 function getFlattenRoutes(routes) {
-  const mod = import.meta.glob('./pages/**/[a-z[]*.tsx');
+  const mod = import.meta.glob("./pages/**/[a-z[]*.tsx");
   const res = [];
+
   function travel(_routes) {
     _routes.forEach((route) => {
       if (route.key && !route.children) {
@@ -57,16 +58,17 @@ function getFlattenRoutes(routes) {
       }
     });
   }
+
   travel(routes);
   return res;
 }
 
 function getUrlParamsPrefix(url: string): string[] {
   const res = [];
-  let temp = '';
-  for (const str of url.split('/')) {
+  let temp = "";
+  for (const str of url.split("/")) {
     if (str.length > 0) {
-      temp = temp + '/' + str;
+      temp = temp + "/" + str;
       res.push(temp);
     }
   }
@@ -85,7 +87,7 @@ function PageLayout() {
 
   const [routes, defaultRoute] = useMenu(userMenu);
   const defaultSelectedKeys = [currentComponent || defaultRoute];
-  const paths = (currentComponent || defaultRoute).split('/');
+  const paths = (currentComponent || defaultRoute).split("/");
   const defaultOpenKeys = paths.slice(0, paths.length - 1);
 
   const [breadcrumb, setBreadCrumb] = useState([]);
@@ -126,6 +128,7 @@ function PageLayout() {
   function renderRoutes(locale) {
     routeMap.current.clear();
     const nodes = [];
+
     function travel(_routes, level, parentNode = []) {
       return _routes.map((route) => {
         const { breadcrumb = true } = route;
@@ -175,6 +178,7 @@ function PageLayout() {
         }
       });
     }
+
     travel(routes, 1);
     return nodes;
   }
@@ -195,8 +199,8 @@ function PageLayout() {
   return (
     <Layout className={styles.layout}>
       <div
-        className={cs(styles['layout-navbar'], {
-          [styles['layout-navbar-hidden']]: !showNavbar,
+        className={cs(styles["layout-navbar"], {
+          [styles["layout-navbar-hidden"]]: !showNavbar
         })}
       >
         <Navbar show={showNavbar} />
@@ -204,7 +208,7 @@ function PageLayout() {
       <Layout>
         {showMenu && (
           <Sider
-            className={styles['layout-sider']}
+            className={styles["layout-sider"]}
             width={menuWidth}
             collapsed={collapsed}
             onCollapse={setCollapsed}
@@ -213,7 +217,7 @@ function PageLayout() {
             breakpoint="xl"
             style={paddingTop}
           >
-            <div className={styles['menu-wrapper']}>
+            <div className={styles["menu-wrapper"]}>
               <Menu
                 collapse={collapsed}
                 onClickMenuItem={onClickMenuItem}
@@ -226,19 +230,19 @@ function PageLayout() {
                 {renderRoutes(locale)}
               </Menu>
             </div>
-            <div className={styles['collapse-btn']} onClick={toggleCollapse}>
+            <div className={styles["collapse-btn"]} onClick={toggleCollapse}>
               {collapsed ? <IconMenuUnfold /> : <IconMenuFold />}
             </div>
           </Sider>
         )}
-        <Layout className={styles['layout-content']} style={paddingStyle}>
-          <div className={styles['layout-content-wrapper']}>
+        <Layout className={styles["layout-content"]} style={paddingStyle}>
+          <div className={styles["layout-content-wrapper"]}>
             {!!breadcrumb.length && (
-              <div className={styles['layout-breadcrumb']}>
+              <div className={styles["layout-breadcrumb"]}>
                 <Breadcrumb>
                   {breadcrumb.map((node, index) => (
                     <Breadcrumb.Item key={index}>
-                      {typeof node === 'string' ? locale[node] || node : node}
+                      {typeof node === "string" ? locale[node] || node : node}
                     </Breadcrumb.Item>
                   ))}
                 </Breadcrumb>
@@ -260,7 +264,7 @@ function PageLayout() {
                 </Route>
                 <Route
                   path="*"
-                  component={lazyload(() => import('./components/Exception/403'))}
+                  component={lazyload(() => import("./components/Exception/403"))}
                 />
               </Switch>
             </Content>

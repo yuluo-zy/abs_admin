@@ -1,6 +1,7 @@
-import React from 'react';
-import styles from '../style/blocks.module.less';
-import { Card, Avatar, Typography, Skeleton } from '@arco-design/web-react';
+import React from "react";
+import styles from "../style/blocks.module.less";
+import { Avatar, Card, Skeleton, Typography } from "@arco-design/web-react";
+
 const { Text, Title } = Typography;
 
 export interface ProjectProps {
@@ -18,7 +19,7 @@ export interface ProjectProps {
 function ProjectCard(props: ProjectProps) {
   const { loading, contributors } = props;
   return (
-    <Card className={styles['project-wrapper']} bordered={true} size="small">
+    <Card className={styles["project-wrapper"]} bordered={true} size="small">
       {loading ? (
         <Skeleton text={{ rows: 1 }} animation />
       ) : (
@@ -26,9 +27,9 @@ function ProjectCard(props: ProjectProps) {
       )}
 
       {loading ? (
-        <Skeleton text={{ rows: 1 }} animation style={{ marginTop: '4px' }} />
+        <Skeleton text={{ rows: 1 }} animation style={{ marginTop: "4px" }} />
       ) : (
-        <Text type="secondary" ellipsis style={{ margin: '0' }}>
+        <Text type="secondary" ellipsis style={{ margin: "0" }}>
           {props.enTitle}
         </Text>
       )}

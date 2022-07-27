@@ -16,16 +16,16 @@ export interface CallBackHandle {
 export interface FormItemProps {
   label?: string;
   type:
-    | 'input'
-    | 'select'
-    | 'date'
-    | 'multiple'
-    | 'rate'
-    | 'password'
-    | 'number'
-    | 'text'
-    | 'tree'
-    | 'upload' | 'self';
+    | "input"
+    | "select"
+    | "date"
+    | "multiple"
+    | "rate"
+    | "password"
+    | "number"
+    | "text"
+    | "tree"
+    | "upload" | "self";
   onChange?: () => void;
   field: string;
   options?: any;
@@ -35,8 +35,8 @@ export interface FormItemProps {
   labelCol?: Recordable | number;
   node?: any;
   limit?: number;
-  header?: string
-  style?: any
+  header?: string;
+  style?: any;
 }
 
 export interface FormList {
@@ -59,7 +59,7 @@ export interface FormProps {
   col?: number | number[];
   className?: string | string[];
   children?: any;
-  layout?: 'horizontal' | 'vertical' | 'inline';
+  layout?: "horizontal" | "vertical" | "inline";
   formList?: FormList;
 }
 

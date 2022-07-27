@@ -37,7 +37,7 @@ const originColumns = [
     headerCellStyle: {
       position: "sticky" as const,
       top: 0,
-      left: 40,
+      left: 40
     }
   },
   {
@@ -247,8 +247,8 @@ export default function HardwareSelection() {
 
   useEffect(() => {
     fetchProductionList();
-    setCollapse(false)
-    setSelectedRowKeys([moduleInfo?.id])
+    setCollapse(false);
+    setSelectedRowKeys([moduleInfo?.id]);
   }, []);
 
   const [columns, setColumns] = useState(
@@ -359,27 +359,27 @@ export default function HardwareSelection() {
   };
 
   const postHardWare = (moduleInfo, demandId) => {
-    if(Object.keys(moduleInfo).length <= 0 || moduleInfo.id === undefined){
-      console.log(moduleInfo)
-      Notification.error({ title: "error", content: t["hardware.production.info.select.model.error"] })
-      return
+    if (Object.keys(moduleInfo).length <= 0 || moduleInfo.id === undefined) {
+      console.log(moduleInfo);
+      Notification.error({ title: "error", content: t["hardware.production.info.select.model.error"] });
+      return;
     }
-    if(demandId == undefined || demandId<=0){
-      Notification.error({ title: "error", content: t["hardware.production.info.select.model.demand.error"] })
-      return
+    if (demandId == undefined || demandId <= 0) {
+      Notification.error({ title: "error", content: t["hardware.production.info.select.model.demand.error"] });
+      return;
     }
     postProduction({
       demandId: demandId,
-      id:moduleInfo?.sid,
+      id: moduleInfo?.sid,
       productionId: moduleInfo.id
     }).then(res => {
-      if(res.data.success){
+      if (res.data.success) {
         Message.success(t["submit.hardware.success"]);
         setModuleInfo({
           sid: res.data.result
-        })
-        setVisible(false)
-        history.push(`/product/demand/service/preselection`)
+        });
+        setVisible(false);
+        history.push(`/product/demand/service/preselection`);
       }
     }).catch(error => {
       Message.error(t["submit.hardware.error"]);
@@ -441,7 +441,7 @@ export default function HardwareSelection() {
 
       <DynamicOuterCard>
         <DynamicSkeleton text={{ rows: 10, width: "90rem" }}>
-          <div className={style['product-top']}>
+          <div className={style["product-top"]}>
             {
               productList &&
               <div className={style["product-total"]}>
@@ -490,7 +490,7 @@ export default function HardwareSelection() {
           title={t["hardware.modal.title"]}
           visible={visible}
           style={{ minWidth: "50rem" }}
-          onOk={() => postHardWare(moduleInfo,demandId)}
+          onOk={() => postHardWare(moduleInfo, demandId)}
           onCancel={() => setVisible(false)}
           autoFocus={false}
           focusLock={true}

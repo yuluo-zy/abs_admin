@@ -11,13 +11,13 @@ export default function DynamicInputNumber(props) {
   }, [props.value]);
 
   const handleChange = (newValue) => {
-    if (!('value' in props)) {
+    if (!("value" in props)) {
       setValue(newValue);
     }
 
     props.onChange && props.onChange(newValue);
   };
-  return <InputNumber {...props}  value={value} onChange={(number) => {
+  return <InputNumber {...props} value={value} onChange={(number) => {
     handleChange(number);
   }
   } />;

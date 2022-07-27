@@ -1,9 +1,9 @@
-import React from 'react';
-import { Button, Link, Result, Typography } from '@arco-design/web-react';
-import { IconLink } from '@arco-design/web-react/icon';
-import useLocale from '@/utils/useHook/useLocale';
-import locale from './locale';
-import styles from './style/index.module.less';
+import React from "react";
+import { Button, Link, Result, Typography } from "@arco-design/web-react";
+import { IconLink } from "@arco-design/web-react/icon";
+import useLocale from "@/utils/useHook/useLocale";
+import locale from "./locale";
+import styles from "./style/index.module.less";
 
 function Success() {
   const t = useLocale(locale);
@@ -14,33 +14,33 @@ function Success() {
         <Result
           className={styles.result}
           status="error"
-          title={t['error.result.title']}
-          subTitle={t['error.result.subTitle']}
+          title={t["error.result.title"]}
+          subTitle={t["error.result.subTitle"]}
           extra={[
             <Button key="again" type="secondary" style={{ marginRight: 16 }}>
-              {t['error.result.goBack']}
+              {t["error.result.goBack"]}
             </Button>,
             <Button key="back" type="primary">
-              {t['error.result.retry']}
-            </Button>,
+              {t["error.result.retry"]}
+            </Button>
           ]}
         />
-        <div className={styles['details-wrapper']}>
+        <div className={styles["details-wrapper"]}>
           <Typography.Title heading={6} style={{ marginTop: 0 }}>
-            {t['error.detailTitle']}
+            {t["error.detailTitle"]}
           </Typography.Title>
           <Typography.Paragraph style={{ marginBottom: 0 }}>
             <ol>
               <li>
-                {t['error.detailLine.record']}
+                {t["error.detailLine.record"]}
                 <Link>
                   <IconLink />
-                  {t['error.detailLine.record.link']}
+                  {t["error.detailLine.record.link"]}
                 </Link>
               </li>
               <li>
-                {t['error.detailLine.auth']}
-                <Link>{t['error.detailLine.auth.link']}</Link>
+                {t["error.detailLine.auth"]}
+                <Link>{t["error.detailLine.auth.link"]}</Link>
               </li>
             </ol>
           </Typography.Paragraph>

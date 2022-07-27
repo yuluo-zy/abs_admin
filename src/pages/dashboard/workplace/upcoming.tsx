@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Link, Skeleton, Tag, Typography } from '@arco-design/web-react';
-import useLocale from '@/utils/useHook/useLocale';
-import locale from './locale';
-import styles from './style/announcement.module.less';
+import React, { useEffect, useState } from "react";
+import { Card, Link, Skeleton, Tag, Typography } from "@arco-design/web-react";
+import useLocale from "@/utils/useHook/useLocale";
+import locale from "./locale";
+import styles from "./style/announcement.module.less";
 
 function Upcoming() {
   const [data, setData] = useState([]);
@@ -29,26 +29,26 @@ function Upcoming() {
 
   function getTagColor(type) {
     switch (type) {
-      case 'activity':
-        return 'orangered';
-      case 'info':
-        return 'cyan';
-      case 'notice':
-        return 'arcoblue';
+      case "activity":
+        return "orangered";
+      case "info":
+        return "cyan";
+      case "notice":
+        return "arcoblue";
       default:
-        return 'arcoblue';
+        return "arcoblue";
     }
   }
 
   return (
     <Card>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         <Typography.Title heading={6}>
-          {t['workplace.upcoming.title']}
+          {t["workplace.upcoming.title"]}
         </Typography.Title>
-        <Link>{t['workplace.seeMore']}</Link>
+        <Link>{t["workplace.seeMore"]}</Link>
       </div>
-      <Skeleton loading={loading} text={{ rows: 5, width: '100%' }} animation>
+      <Skeleton loading={loading} text={{ rows: 5, width: "100%" }} animation>
         <div>
           {data.map((d) => (
             <div key={d.key} className={styles.item}>

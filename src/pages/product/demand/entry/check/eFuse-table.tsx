@@ -25,9 +25,9 @@ export default function EFuseTable() {
             key: "JTAG_DISABLE"
           }]
       }
-    ]
-  }
+    ];
+  };
   return <div>
 
-  </div>
+  </div>;
 }

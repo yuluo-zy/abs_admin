@@ -29,7 +29,7 @@ export default function HorizontalRulePlugin(): null {
 
         return true;
       },
-      COMMAND_PRIORITY_EDITOR,
+      COMMAND_PRIORITY_EDITOR
     );
   }, [editor]);
 

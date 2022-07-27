@@ -20,75 +20,75 @@ export default function UserPermission() {
 
   const permissionProps: Array<FormItemProps> = [
     {
-      label: t['permission.list.name'],
-      type: 'input',
-      field: 'name',
+      label: t["permission.list.name"],
+      type: "input",
+      field: "name",
       required: true,
       rules: [
         {
           required: true,
-          message: t['permission.list.operate.error'],
-          minLength: 2,
-        },
-      ],
+          message: t["permission.list.operate.error"],
+          minLength: 2
+        }
+      ]
     },
     {
-      label: t['permission.list.type'],
-      type: 'select',
-      field: 'type',
+      label: t["permission.list.type"],
+      type: "select",
+      field: "type",
       required: true,
       options: [
-        { label: t['permission.list.type.menu'], value: 1 },
-        { label: t['permission.list.type.button'], value: 2 },
+        { label: t["permission.list.type.menu"], value: 1 },
+        { label: t["permission.list.type.button"], value: 2 }
       ],
       rules: [
         {
           required: true,
-          message: t['permission.list.operate.error'],
-          minLength: 2,
-        },
-      ],
+          message: t["permission.list.operate.error"],
+          minLength: 2
+        }
+      ]
     },
     {
-      label: t['permission.list.mark'],
-      type: 'input',
-      field: 'permission',
+      label: t["permission.list.mark"],
+      type: "input",
+      field: "permission",
       required: true,
       rules: [
         {
           required: true,
-          message: t['permission.list.operate.error'],
-          minLength: 2,
-        },
-      ],
+          message: t["permission.list.operate.error"],
+          minLength: 2
+        }
+      ]
     },
     {
-      label: t['permission.list.icon'],
-      type: 'input',
-      field: 'icon',
+      label: t["permission.list.icon"],
+      type: "input",
+      field: "icon",
       required: true,
       rules: [
         {
           required: true,
-          message: t['permission.list.operate.error'],
-          minLength: 2,
-        },
-      ],
+          message: t["permission.list.operate.error"],
+          minLength: 2
+        }
+      ]
     },
     {
-      label: t['permission.list.sort'],
-      type: 'number',
-      field: 'sort',
+      label: t["permission.list.sort"],
+      type: "number",
+      field: "sort",
       required: true,
       rules: [
         {
           required: true,
-          type: 'number',
-          message: t['permission.list.operate.error'],
-          min: 0,
-        },
-      ],
-    },
+          type: "number",
+          message: t["permission.list.operate.error"],
+          min: 0
+        }
+      ]
+    }
   ];
 
   const colseMode = (update) => {
@@ -99,54 +99,54 @@ export default function UserPermission() {
     }
   };
 
-  const update = (type: 'UpdateSelf' | 'SameLevel' | 'LowerLevel', record) => {
+  const update = (type: "UpdateSelf" | "SameLevel" | "LowerLevel", record) => {
     permission.current = { ...record };
     let newNode = null;
     switch (type) {
-      case 'UpdateSelf':
+      case "UpdateSelf":
         newNode = {
-          title: t['permission.list.title.update'],
+          title: t["permission.list.title.update"],
           formItem: permissionProps,
           data: permission.current,
           onSubmit: async (value) => {
-            value['id'] = permission.current.id;
+            value["id"] = permission.current.id;
             await putPermission(value).then((res) => {
               if (res.data.success === true) {
-                Message.success(t['permission.list.operate.success']);
+                Message.success(t["permission.list.operate.success"]);
               }
             });
             colseMode(value);
-          },
+          }
         };
         break;
-      case 'SameLevel':
+      case "SameLevel":
         newNode = {
-          title: t['permission.list.operate.same.level'],
+          title: t["permission.list.operate.same.level"],
           formItem: permissionProps,
           onSubmit: async (value) => {
-            value['parentId'] = permission.current.parentId;
+            value["parentId"] = permission.current.parentId;
             await postPermission(value).then((res) => {
               if (res.data.success === true) {
-                Message.success(t['permission.list.operate.success']);
+                Message.success(t["permission.list.operate.success"]);
               }
             });
             colseMode(value);
-          },
+          }
         };
         break;
-      case 'LowerLevel':
+      case "LowerLevel":
         newNode = {
-          title: t['permission.list.operate.next.level'],
+          title: t["permission.list.operate.next.level"],
           formItem: permissionProps,
           onSubmit: async (value) => {
-            value['parentId'] = permission.current.id;
+            value["parentId"] = permission.current.id;
             await postPermission(value).then((res) => {
               if (res.data.success === true) {
-                Message.success(t['permission.list.operate.success']);
+                Message.success(t["permission.list.operate.success"]);
               }
             });
             colseMode(value);
-          },
+          }
         };
         break;
     }
@@ -157,14 +157,14 @@ export default function UserPermission() {
   const columns = () => {
     return [
       {
-        title: t['permission.list.name'],
-        dataIndex: 'name',
+        title: t["permission.list.name"],
+        dataIndex: "name",
         render: (value) => <div>{value}</div>,
-        width: 70,
+        width: 70
       },
       {
-        title: t['permission.list.type'],
-        dataIndex: 'typeName',
+        title: t["permission.list.type"],
+        dataIndex: "typeName",
         render: (value, record) => (
           <div>
             {record.type == 1 ? (
@@ -178,29 +178,29 @@ export default function UserPermission() {
             )}
           </div>
         ),
-        width: 70,
+        width: 70
       },
       {
-        title: t['permission.list.mark'],
-        dataIndex: 'permission',
+        title: t["permission.list.mark"],
+        dataIndex: "permission",
         render: (value) => <div>{value}</div>,
-        width: 70,
+        width: 70
       },
       {
-        title: t['permission.list.icon'],
-        dataIndex: 'icon',
+        title: t["permission.list.icon"],
+        dataIndex: "icon",
         render: (value) => <div>{value}</div>,
-        width: 70,
+        width: 70
       },
       {
-        title: t['permission.list.sort'],
-        dataIndex: 'sort',
+        title: t["permission.list.sort"],
+        dataIndex: "sort",
         render: (value) => <div>{value}</div>,
-        width: 70,
+        width: 70
       },
       {
-        title: t['permission.list.operate'],
-        dataIndex: 'id',
+        title: t["permission.list.operate"],
+        dataIndex: "id",
         render: (_, record) => (
           <div>
             <Dropdown.Button
@@ -209,28 +209,28 @@ export default function UserPermission() {
                 <Menu>
                   <Menu.Item
                     key="1"
-                    onClick={() => update('SameLevel', record)}
+                    onClick={() => update("SameLevel", record)}
                   >
-                    {t['permission.list.operate.same.level']}
+                    {t["permission.list.operate.same.level"]}
                   </Menu.Item>
                   <Menu.Item
                     key="2"
-                    onClick={() => update('LowerLevel', record)}
+                    onClick={() => update("LowerLevel", record)}
                   >
-                    {t['permission.list.operate.next.level']}
+                    {t["permission.list.operate.next.level"]}
                   </Menu.Item>
                 </Menu>
               }
-              onClick={() => update('UpdateSelf', record)}
+              onClick={() => update("UpdateSelf", record)}
             >
-              {t['permission.list.operate.edit']}
+              {t["permission.list.operate.edit"]}
             </Dropdown.Button>
             <Popconfirm
-              title={t['permission.list.operate.delete']}
+              title={t["permission.list.operate.delete"]}
               onOk={() => {
                 deletePermission(record.id).then((res) => {
                   if (res.data.success === true) {
-                    Message.info({ content: 'ok' });
+                    Message.info({ content: "ok" });
                   }
                 });
               }}
@@ -239,15 +239,15 @@ export default function UserPermission() {
             </Popconfirm>
           </div>
         ),
-        width: 70,
-      },
+        width: 70
+      }
     ];
   };
 
   return (
     <div>
       <SearchList
-        name={t['permission.list.title']}
+        name={t["permission.list.title"]}
         download={false}
         upload={false}
         fetchRemoteData={getPermission}

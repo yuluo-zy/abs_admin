@@ -9,7 +9,7 @@ import InitTheme from "@/rice_text/themes/InitTheme";
 import { TextNodes } from "@/rice_text/components/Node";
 import { checkIsJSON } from "@/rice_text/utils/nodeUtils";
 
-export default function RiceText({readOnly, onChange, initValue}: {
+export default function RiceText({ readOnly, onChange, initValue }: {
   readOnly: boolean,
   onChange?: any,
   initValue?: string
@@ -18,24 +18,24 @@ export default function RiceText({readOnly, onChange, initValue}: {
     settings: { emptyEditor }
   } = useSettings();
 
-  let editorState = undefined
+  let editorState = undefined;
 
 
-    if(initValue && initValue.length >0){
-      if(checkIsJSON(initValue)){
-        editorState = initValue
-      }
+  if (initValue && initValue.length > 0) {
+    if (checkIsJSON(initValue)) {
+      editorState = initValue;
     }
+  }
 
   const initialConfig = {
     editorState: editorState,
-    namespace: "espressif" +  Math.random(),
+    namespace: "espressif" + Math.random(),
     nodes: [...TextNodes],
     onError: (error: Error) => {
       throw error;
     },
     theme: InitTheme,
-    readOnly: readOnly || false,
+    readOnly: readOnly || false
   };
 
   return (

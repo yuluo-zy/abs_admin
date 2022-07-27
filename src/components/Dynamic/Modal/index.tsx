@@ -1,6 +1,6 @@
-import { Modal } from '@arco-design/web-react';
-import React from 'react';
-import { ModeProps } from '@/components/type';
+import { Modal } from "@arco-design/web-react";
+import React from "react";
+import { ModeProps } from "@/components/type";
 
 function DynamicModal(props: ModeProps) {
   return (

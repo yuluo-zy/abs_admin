@@ -1,28 +1,28 @@
-import React from 'react';
-import { Chart, Line, Axis, Area, Tooltip } from 'bizcharts';
-import { Spin } from '@arco-design/web-react';
-import CustomTooltip from './customer-tooltip';
+import React from "react";
+import { Area, Axis, Chart, Line, Tooltip } from "bizcharts";
+import { Spin } from "@arco-design/web-react";
+import CustomTooltip from "./customer-tooltip";
 
 function OverviewAreaLine({
-  data,
-  loading,
-  name = '总内容量',
-  color = '#4080FF',
-}: {
+                            data,
+                            loading,
+                            name = "总内容量",
+                            color = "#4080FF"
+                          }: {
   data: any[];
   loading: boolean;
   name?: string;
   color?: string;
 }) {
   return (
-    <Spin loading={loading} style={{ width: '100%' }}>
+    <Spin loading={loading} style={{ width: "100%" }}>
       <Chart
         scale={{ value: { min: 0 } }}
         padding={[10, 20, 50, 40]}
         autoFit
         height={300}
         data={data}
-        className={'chart-wrapper'}
+        className={"chart-wrapper"}
       >
         <Axis
           name="count"
@@ -30,17 +30,17 @@ function OverviewAreaLine({
           grid={{
             line: {
               style: {
-                lineDash: [4, 4],
-              },
-            },
+                lineDash: [4, 4]
+              }
+            }
           }}
           label={{
             formatter(text) {
               return `${Number(text) / 1000}k`;
-            },
+            }
           }}
         />
-        <Axis name="date" grid={{ line: { style: { stroke: '#E5E8EF' } } }} />
+        <Axis name="date" grid={{ line: { style: { stroke: "#E5E8EF" } } }} />
         <Line
           shape="smooth"
           position="date*count"
@@ -58,9 +58,9 @@ function OverviewAreaLine({
           marker={{
             lineWidth: 3,
             stroke: color,
-            fill: '#ffffff',
-            symbol: 'circle',
-            r: 8,
+            fill: "#ffffff",
+            symbol: "circle",
+            r: 8
           }}
         >
           {(title, items) => {

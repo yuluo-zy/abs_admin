@@ -520,7 +520,7 @@ export function LexicalTypeaheadMenuPlugin<TOption extends TypeaheadOption>({
           text === null ||
           range === null
         ) {
-           setResolution(null);
+          setResolution(null);
           return;
         }
         previousText = text;
@@ -534,14 +534,14 @@ export function LexicalTypeaheadMenuPlugin<TOption extends TypeaheadOption>({
         ) {
           const isRangePositioned = tryToPositionRange(match.leadOffset, range);
           if (isRangePositioned !== null) {
-              setResolution({
-                match,
-                range
-              })
+            setResolution({
+              match,
+              range
+            });
             return;
           }
         }
-        setResolution(null)
+        setResolution(null);
       });
     };
 

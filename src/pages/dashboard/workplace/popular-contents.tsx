@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Card, Link, Radio, Table, Typography } from '@arco-design/web-react';
-import { IconCaretDown, IconCaretUp } from '@arco-design/web-react/icon';
-import axios from 'axios';
-import useLocale from '@/utils/useHook/useLocale';
-import locale from './locale';
-import styles from './style/popular-contents.module.less';
+import React, { useCallback, useEffect, useState } from "react";
+import { Card, Link, Radio, Table, Typography } from "@arco-design/web-react";
+import { IconCaretDown, IconCaretUp } from "@arco-design/web-react/icon";
+import axios from "axios";
+import useLocale from "@/utils/useHook/useLocale";
+import locale from "./locale";
+import styles from "./style/popular-contents.module.less";
 
 function PopularContent() {
   const t = useLocale(locale);
@@ -35,65 +35,65 @@ function PopularContent() {
 
   const columns = [
     {
-      title: t['workplace.column.rank'],
-      dataIndex: 'rank',
-      width: 65,
+      title: t["workplace.column.rank"],
+      dataIndex: "rank",
+      width: 65
     },
     {
-      title: t['workplace.column.title'],
-      dataIndex: 'title',
+      title: t["workplace.column.title"],
+      dataIndex: "title",
       render: (x) => (
         <Typography.Paragraph style={{ margin: 0 }} ellipsis>
           {x}
         </Typography.Paragraph>
-      ),
+      )
     },
     {
-      title: t['workplace.column.pv'],
-      dataIndex: 'pv',
+      title: t["workplace.column.pv"],
+      dataIndex: "pv",
       width: 100,
       render: (text) => {
         return `${text / 1000}k`;
-      },
+      }
     },
     {
-      title: t['workplace.column.increase'],
-      dataIndex: 'increase',
+      title: t["workplace.column.increase"],
+      dataIndex: "increase",
       sorter: (a, b) => a.increase - b.increase,
       width: 110,
       render: (text) => {
         return (
           <span>
             {`${(text * 100).toFixed(2)}%`}
-            <span className={styles['symbol']}>
+            <span className={styles["symbol"]}>
               {text < 0 ? (
-                <IconCaretUp style={{ color: 'rgb(var(--green-6))' }} />
+                <IconCaretUp style={{ color: "rgb(var(--green-6))" }} />
               ) : (
-                <IconCaretDown style={{ color: 'rgb(var(--red-6))' }} />
+                <IconCaretDown style={{ color: "rgb(var(--red-6))" }} />
               )}
             </span>
           </span>
         );
-      },
-    },
+      }
+    }
   ];
 
   return (
     <Card>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         <Typography.Title heading={6}>
-          {t['workplace.popularContents']}
+          {t["workplace.popularContents"]}
         </Typography.Title>
-        <Link>{t['workplace.seeMore']}</Link>
+        <Link>{t["workplace.seeMore"]}</Link>
       </div>
       <Radio.Group
         type="button"
         value={type}
         onChange={setType}
         options={[
-          { label: t['workplace.text'], value: 0 },
-          { label: t['workplace.image'], value: 1 },
-          { label: t['workplace.video'], value: 2 },
+          { label: t["workplace.text"], value: 0 },
+          { label: t["workplace.image"], value: 1 },
+          { label: t["workplace.video"], value: 2 }
         ]}
         style={{ marginBottom: 16 }}
       />

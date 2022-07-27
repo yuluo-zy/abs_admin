@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Avatar, Typography, List, Skeleton } from '@arco-design/web-react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { Avatar, List, Skeleton, Typography } from "@arco-design/web-react";
+import axios from "axios";
 
 const { Text } = Typography;
 
@@ -16,7 +16,7 @@ function MyTeam() {
 
   const getData = async () => {
     const { data } = await axios
-      .get('/api/users/teamList')
+      .get("/api/users/teamList")
       .finally(() => setLoading(false));
     setData(data);
   };
@@ -34,15 +34,15 @@ function MyTeam() {
             key={index}
             style={
               index !== data.length - 1
-                ? { padding: '8px 0px' }
-                : { padding: '8px 0px 0px 0px' }
+                ? { padding: "8px 0px" }
+                : { padding: "8px 0px 0px 0px" }
             }
           >
             {loading ? (
               <Skeleton
                 animation
-                text={{ width: ['80%', '20%'], rows: 2 }}
-                image={{ shape: 'circle' }}
+                text={{ width: ["80%", "20%"], rows: 2 }}
+                image={{ shape: "circle" }}
               />
             ) : (
               <List.Item.Meta
@@ -53,7 +53,7 @@ function MyTeam() {
                 }
                 title={item.name}
                 description={
-                  <Text type="secondary" style={{ fontSize: '12px' }}>{`共${(
+                  <Text type="secondary" style={{ fontSize: "12px" }}>{`共${(
                     item.members || 0
                   ).toLocaleString()}人`}</Text>
                 }

@@ -48,14 +48,15 @@ export interface ImagePayload {
 
 const imageCache = new Map();
 
-function useSuspenseImage(fileId: string) : File  {
+function useSuspenseImage(fileId: string): File {
   if (!imageCache.has(fileId)) {
     throw getFile(fileId).then(res => {
       if (res.status === 200) {
-        imageCache.set(fileId, res.data)
+        imageCache.set(fileId, res.data);
       }
-  })}
-  return imageCache.get(fileId)
+    });
+  }
+  return imageCache.get(fileId);
 }
 
 function convertImageElement(domNode: Node): null | DOMConversionOutput {
@@ -87,7 +88,7 @@ function LazyImage({
   width: "inherit" | number;
   fileId: string
 }): JSX.Element {
-  const file  = useSuspenseImage(fileId);
+  const file = useSuspenseImage(fileId);
   return (
     <img
       className={className || undefined}
@@ -112,7 +113,7 @@ function ImageComponent({
                           width,
                           height,
                           maxWidth,
-                          resizable,
+                          resizable
                         }: {
   altText: string;
   fileId: string;
@@ -231,7 +232,7 @@ function ImageComponent({
             width={width}
             height={height}
             maxWidth={maxWidth}
-           fileId={fileId}/>
+            fileId={fileId} />
         </div>
         {resizable && isFocused && (
           <ImageResizer
@@ -267,6 +268,24 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   __height: "inherit" | number;
   __maxWidth: number;
 
+  constructor(
+    src: string,
+    altText: string,
+    fileId: string,
+    maxWidth: number,
+    width?: "inherit" | number,
+    height?: "inherit" | number,
+    key?: NodeKey
+  ) {
+    super(key);
+    this.__src = src;
+    this.__altText = altText;
+    this.__maxWidth = maxWidth;
+    this.__width = width || "inherit";
+    this.__height = height || "inherit";
+    this.__fileId = fileId;
+  }
+
   static getType(): string {
     return "image";
   }
@@ -297,15 +316,6 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     return node;
   }
 
-  exportDOM(): DOMExportOutput {
-    // todo 修改
-    // 主要是针对 html -> dom的转换指定 , 暂不考虑
-    const element = document.createElement("img");
-    element.setAttribute("src", this.__src);
-    element.setAttribute("alt", this.__altText);
-    return { element };
-  }
-
   static importDOM(): DOMConversionMap | null {
     // HTML -> Lexical
     return {
@@ -316,22 +326,13 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     };
   }
 
-  constructor(
-    src: string,
-    altText: string,
-    fileId: string,
-    maxWidth: number,
-    width?: "inherit" | number,
-    height?: "inherit" | number,
-    key?: NodeKey
-  ) {
-    super(key);
-    this.__src = src;
-    this.__altText = altText;
-    this.__maxWidth = maxWidth;
-    this.__width = width || "inherit";
-    this.__height = height || "inherit";
-    this.__fileId = fileId;
+  exportDOM(): DOMExportOutput {
+    // todo 修改
+    // 主要是针对 html -> dom的转换指定 , 暂不考虑
+    const element = document.createElement("img");
+    element.setAttribute("src", this.__src);
+    element.setAttribute("alt", this.__altText);
+    return { element };
   }
 
   exportJSON(): SerializedImageNode {
@@ -365,8 +366,8 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     const className = theme.image;
     if (className !== undefined) {
       span.className = className;
-    }else {
-      span.className = "editor-image"
+    } else {
+      span.className = "editor-image";
     }
     return span;
   }

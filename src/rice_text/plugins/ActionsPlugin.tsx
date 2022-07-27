@@ -53,7 +53,7 @@ export default function ActionsPlugin(): JSX.Element {
           <Button
             className="action-button import"
             onClick={() => {
-              setFileSrc(undefined)
+              setFileSrc(undefined);
               setFile(true);
             }}
             icon={<IconUpload />}
@@ -97,15 +97,15 @@ export default function ActionsPlugin(): JSX.Element {
         title="Upload Files"
         visible={file}
         onOk={() => {
-          if(fileSrc){
+          if (fileSrc) {
             editor.dispatchCommand(INSERT_FILE_COMMAND, { ...fileSrc });
             editor.focus();
             setFile(false);
           } else {
             Notification.error({
-              title: 'Error',
-              content: 'Please enter a legal File!',
-            })
+              title: "Error",
+              content: "Please enter a legal File!"
+            });
           }
 
         }}
@@ -121,9 +121,10 @@ export default function ActionsPlugin(): JSX.Element {
         <DynamicUpload limit={1}
                        onChange={(fileList: UploadItem[], file: UploadItem) => {
                          if (fileList.length > 0) {
-                           setFileSrc({ src: file?.response,
+                           setFileSrc({
+                             src: file?.response,
                              name: file.name
-                         });
+                           });
                          } else {
                            setFileSrc(null);
                          }

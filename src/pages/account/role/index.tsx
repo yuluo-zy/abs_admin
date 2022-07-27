@@ -15,8 +15,8 @@ function UserRole() {
   function fetchRoleList() {
     getRole().then((res) => {
       dispatch({
-        type: 'RoleList',
-        payload: res.data.result || [],
+        type: "RoleList",
+        payload: res.data.result || []
       });
     });
   }
@@ -24,8 +24,8 @@ function UserRole() {
   function fetchPermissionList() {
     getPermission().then((res) => {
       dispatch({
-        type: 'Permission',
-        payload: res.data.result?.data || [],
+        type: "Permission",
+        payload: res.data.result?.data || []
       });
     });
   }
@@ -39,10 +39,10 @@ function UserRole() {
     <RoleContext.Provider value={{ state, dispatch }}>
       <div>
         <div className={styles.layout}>
-          <div className={styles['layout-left-side']}>
+          <div className={styles["layout-left-side"]}>
             <RolePanel t={t} />
           </div>
-          <div className={styles['layout-content']}>
+          <div className={styles["layout-content"]}>
             <RoleInfo />
           </div>
         </div>

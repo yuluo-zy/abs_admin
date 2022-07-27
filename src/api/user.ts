@@ -1,38 +1,38 @@
 import { httpDelete, httpGet, httpPost, httpPut } from "@/utils/httpRequest";
 
 export const userInfo = () => {
-  return httpGet('/user/info');
+  return httpGet("/user/info");
 };
 
 export const userMenu = () => {
-  return httpGet('/user/nav');
+  return httpGet("/user/nav");
 };
 
 export const getUserList = (data) => {
-  return httpGet('/user', data);
+  return httpGet("/user", data);
 };
 
 export const addUser = (data) => {
   data.roleIds = data.roleIdList?.toString();
-  return httpPost('/user', data);
+  return httpPost("/user", data);
 };
 
 export const putUser = (data) => {
-  return httpPut('/user', data);
+  return httpPut("/user", data);
 };
 
 export const removeUser = (data) => {
-  return httpDelete('/user', data);
+  return httpDelete("/user", data);
 };
 
 export const putUserPassword = (id: number, data) => {
-  return httpPost('/user/' + id + '/change/password', data);
+  return httpPost("/user/" + id + "/change/password", data);
 };
 
 export const putUserLock = (id: number, data) => {
-  return httpPut('/user/' + id + '/lock', data);
+  return httpPut("/user/" + id + "/lock", data);
 };
 
 export const getSimpleInfo = (id: number) => {
-  return httpGet('/user/simple/'+ id)
-}
+  return httpGet("/user/simple/" + id);
+};

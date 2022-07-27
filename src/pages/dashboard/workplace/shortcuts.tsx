@@ -1,10 +1,10 @@
-import React from 'react';
-import { Card, Typography } from '@arco-design/web-react';
-import { IconSettings, IconStorage } from '@arco-design/web-react/icon';
-import useLocale from '@/utils/useHook/useLocale';
-import locale from './locale';
-import styles from './style/shortcuts.module.less';
-import { useHistory } from 'react-router';
+import React from "react";
+import { Card, Typography } from "@arco-design/web-react";
+import { IconSettings, IconStorage } from "@arco-design/web-react/icon";
+import useLocale from "@/utils/useHook/useLocale";
+import locale from "./locale";
+import styles from "./style/shortcuts.module.less";
+import { useHistory } from "react-router";
 
 function Shortcuts() {
   const t = useLocale(locale);
@@ -12,28 +12,28 @@ function Shortcuts() {
 
   const shortcuts = [
     {
-      title: t['workplace.contentStatistic'],
-      key: 'Content Statistic',
+      title: t["workplace.contentStatistic"],
+      key: "Content Statistic",
       icon: <IconStorage />,
-      path: 'product'
+      path: "product"
     },
     {
-      title: t['workplace.advancedMgmt'],
-      key: 'Advanced Management',
+      title: t["workplace.advancedMgmt"],
+      key: "Advanced Management",
       icon: <IconSettings />,
-      path: ''
+      path: ""
     }
   ];
 
   function onClickShortcut(path) {
-      history.push(path)
+    history.push(path);
   }
 
   return (
     <Card>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         <Typography.Title heading={6}>
-          {t['workplace.shortcuts']}
+          {t["workplace.shortcuts"]}
         </Typography.Title>
       </div>
       <div className={styles.shortcuts}>

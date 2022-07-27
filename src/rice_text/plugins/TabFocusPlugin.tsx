@@ -10,14 +10,14 @@ let hasRegisteredKeyDownListener = false;
 
 function registerKeyTimeStampTracker() {
   window.addEventListener(
-    'keydown',
+    "keydown",
     (event: KeyboardEvent) => {
       // Tab
       if (event.keyCode === 9) {
         lastTabKeyDownTimestamp = event.timeStamp;
       }
     },
-    true,
+    true
   );
 }
 
@@ -44,7 +44,7 @@ export default function TabFocusPlugin(): null {
         }
         return false;
       },
-      COMMAND_PRIORITY_LOW,
+      COMMAND_PRIORITY_LOW
     );
   }, [editor]);
 

@@ -12,25 +12,25 @@ export default function FlashNvsNot(props: { initialValues }) {
   const [form] = Form.useForm();
 
   return <Form
-    className={style['efuse_data']}
+    className={style["efuse_data"]}
     scrollToFirstError
     form={form}
-    layout={'inline'}
+    layout={"inline"}
     id={"firmware.burn.flash.title"}
     initialValues={{ ...initialValues }}>
-    <div className={style['efuse_data_detailed']}>
-      <b>{t['demand.entry.service.burn.efuse.data.burn.info']}</b>
+    <div className={style["efuse_data_detailed"]}>
+      <b>{t["demand.entry.service.burn.efuse.data.burn.info"]}</b>
       <FormItem
         labelAlign={"left"}
         field="flashDataSize"
         rules={[
           {
             required: true,
-            message: t["firmware.burn.flash.plan.data.error"],
+            message: t["firmware.burn.flash.plan.data.error"]
           }
         ]}
       >
-        <InputNumber className={style['efuse_data_input']} placeholder={t["firmware.burn.flash.plan.data"]}/>
+        <InputNumber className={style["efuse_data_input"]} placeholder={t["firmware.burn.flash.plan.data"]} />
       </FormItem>
       <FormItem
         labelAlign={"left"}
@@ -43,7 +43,7 @@ export default function FlashNvsNot(props: { initialValues }) {
           }
         ]}
       >
-        <Input className={style['efuse_data_input']} allowClear placeholder={t["firmware.burn.flash.plan.address"]}/>
+        <Input className={style["efuse_data_input"]} allowClear placeholder={t["firmware.burn.flash.plan.address"]} />
       </FormItem>
       <FormItem
         labelAlign={"left"}
@@ -56,66 +56,69 @@ export default function FlashNvsNot(props: { initialValues }) {
           }
         ]}
       >
-        <Input className={style['efuse_data_input']} allowClear placeholder={ t["firmware.burn.flash.plan.output"]}/>
+        <Input className={style["efuse_data_input"]} allowClear placeholder={t["firmware.burn.flash.plan.output"]} />
       </FormItem>
     </div>
-    <div className={style['efuse_data_upload']}>
+    <div className={style["efuse_data_upload"]}>
       <Tooltip color={"#1380ea"} position={"rt"}
                defaultPopupVisible
                content={t["firmware.burn.hint.notice"]}>
-      <b>{t['demand.entry.service.burn.efuse.data.burn.upload']}</b>
+        <b>{t["demand.entry.service.burn.efuse.data.burn.upload"]}</b>
       </Tooltip>
       <FormItem
         field="configFile"
-        triggerPropName='fileList'
+        triggerPropName="fileList"
         rules={[
           {
             required: true,
             message: t["firmware.burn.flash.file.bin.data.config.error"]
           }
         ]}>
-        <DynamicUpload title={t["firmware.burn.flash.file.bin.data.config"]} limit={1} onChange={(fileList: UploadItem[], file: UploadItem) => {
-          if(fileList.length > 0){
-            form.setFieldValue("configFile", file.response)
-          }else {
-            form.setFieldValue("configFile", undefined)
-          }
-        }}  />
+        <DynamicUpload title={t["firmware.burn.flash.file.bin.data.config"]} limit={1}
+                       onChange={(fileList: UploadItem[], file: UploadItem) => {
+                         if (fileList.length > 0) {
+                           form.setFieldValue("configFile", file.response);
+                         } else {
+                           form.setFieldValue("configFile", undefined);
+                         }
+                       }} />
       </FormItem>
       <FormItem
         field="valuesFile"
-        triggerPropName='fileList'
+        triggerPropName="fileList"
         rules={[
           {
             required: true,
             message: t["firmware.burn.flash.file.bin.data.values.error"]
           }
         ]}>
-        <DynamicUpload title={t["firmware.burn.flash.file.bin.data.values"]} limit={1} onChange={(fileList: UploadItem[], file: UploadItem) => {
-          if(fileList.length > 0){
-            form.setFieldValue("valuesFile", file.response)
-          }else {
-            form.setFieldValue("valuesFile", undefined)
-          }
-        }}  />
+        <DynamicUpload title={t["firmware.burn.flash.file.bin.data.values"]} limit={1}
+                       onChange={(fileList: UploadItem[], file: UploadItem) => {
+                         if (fileList.length > 0) {
+                           form.setFieldValue("valuesFile", file.response);
+                         } else {
+                           form.setFieldValue("valuesFile", undefined);
+                         }
+                       }} />
       </FormItem>
       <FormItem
         field="sampleBinFile"
-        triggerPropName='fileList'
+        triggerPropName="fileList"
         rules={[
           {
             required: true,
             message: t["firmware.burn.flash.plan.bin.error"]
           }
         ]}>
-        <DynamicUpload title={ t["firmware.burn.flash.plan.bin"]} limit={1} onChange={(fileList: UploadItem[], file: UploadItem) => {
-          if(fileList.length > 0){
-            form.setFieldValue("sampleBinFile", file.response)
-          }else {
-            form.setFieldValue("sampleBinFile", undefined)
-          }
-        }}  />
+        <DynamicUpload title={t["firmware.burn.flash.plan.bin"]} limit={1}
+                       onChange={(fileList: UploadItem[], file: UploadItem) => {
+                         if (fileList.length > 0) {
+                           form.setFieldValue("sampleBinFile", file.response);
+                         } else {
+                           form.setFieldValue("sampleBinFile", undefined);
+                         }
+                       }} />
       </FormItem>
     </div>
-  </Form>
+  </Form>;
 }

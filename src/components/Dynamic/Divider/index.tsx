@@ -1,6 +1,6 @@
-import React from 'react';
-import { Divider } from '@arco-design/web-react';
+import React from "react";
+import { Divider } from "@arco-design/web-react";
 
 export default function DynamicDivider() {
-  return <Divider style={{ borderBottomStyle: 'dashed' }} />;
+  return <Divider style={{ borderBottomStyle: "dashed" }} />;
 }

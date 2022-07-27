@@ -17,15 +17,13 @@ import "../styles/FloatingLinkEditor.less";
 import { IconEdit } from "@arco-design/web-react/icon";
 import { Input } from "@arco-design/web-react";
 
-export function FloatingLinkEditor({editor}: {editor: LexicalEditor}): JSX.Element {
+export function FloatingLinkEditor({ editor }: { editor: LexicalEditor }): JSX.Element {
 
   const editorRef = useRef<HTMLDivElement | null>(null);
   const [inputRef, setInputRef] = useState(null);
-  const [linkUrl, setLinkUrl] = useState('');
+  const [linkUrl, setLinkUrl] = useState("");
   const [isEditMode, setEditMode] = useState(false);
-  const [lastSelection, setLastSelection] = useState<
-    RangeSelection | GridSelection | NodeSelection | null
-    >(null);
+  const [lastSelection, setLastSelection] = useState<RangeSelection | GridSelection | NodeSelection | null>(null);
 
   const updateLinkEditor = useCallback(() => {
     const selection = $getSelection();
@@ -37,7 +35,7 @@ export function FloatingLinkEditor({editor}: {editor: LexicalEditor}): JSX.Eleme
       } else if ($isLinkNode(node)) {
         setLinkUrl(node.getURL());
       } else {
-        setLinkUrl('');
+        setLinkUrl("");
       }
     }
     const editorElem = editorRef.current;
@@ -70,13 +68,13 @@ export function FloatingLinkEditor({editor}: {editor: LexicalEditor}): JSX.Eleme
 
       positionEditorElement(editorElem, rect, rootElement);
       setLastSelection(selection);
-    } else if (!activeElement || activeElement.className !== 'link-input') {
+    } else if (!activeElement || activeElement.className !== "link-input") {
       if (rootElement !== null) {
         positionEditorElement(editorElem, null, rootElement);
       }
       setLastSelection(null);
       setEditMode(false);
-      setLinkUrl('');
+      setLinkUrl("");
     }
 
     return true;
@@ -88,16 +86,16 @@ export function FloatingLinkEditor({editor}: {editor: LexicalEditor}): JSX.Eleme
         updateLinkEditor();
       });
     };
-    window.addEventListener('resize', onResize);
+    window.addEventListener("resize", onResize);
 
     return () => {
-      window.removeEventListener('resize', onResize);
+      window.removeEventListener("resize", onResize);
     };
   }, [editor, updateLinkEditor]);
 
   useEffect(() => {
     return mergeRegister(
-      editor.registerUpdateListener(({editorState}) => {
+      editor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => {
           updateLinkEditor();
         });
@@ -109,8 +107,8 @@ export function FloatingLinkEditor({editor}: {editor: LexicalEditor}): JSX.Eleme
           updateLinkEditor();
           return true;
         },
-        COMMAND_PRIORITY_LOW,
-      ),
+        COMMAND_PRIORITY_LOW
+      )
     );
   }, [editor, updateLinkEditor]);
 
@@ -131,21 +129,21 @@ export function FloatingLinkEditor({editor}: {editor: LexicalEditor}): JSX.Eleme
       {isEditMode ? (
         <Input
           className="link-input"
-          ref={(ref) =>(setInputRef(ref))}
+          ref={(ref) => (setInputRef(ref))}
           value={linkUrl}
           onChange={(value) => {
             setLinkUrl(value);
           }}
           onKeyDown={(event) => {
-            if (event.key === 'Enter') {
+            if (event.key === "Enter") {
               event.preventDefault();
               if (lastSelection !== null) {
-                if (linkUrl !== '') {
+                if (linkUrl !== "") {
                   editor.dispatchCommand(TOGGLE_LINK_COMMAND, linkUrl);
                 }
                 setEditMode(false);
               }
-            } else if (event.key === 'Escape') {
+            } else if (event.key === "Escape") {
               event.preventDefault();
               setEditMode(false);
             }
@@ -164,7 +162,7 @@ export function FloatingLinkEditor({editor}: {editor: LexicalEditor}): JSX.Eleme
               onClick={() => {
                 setEditMode(true);
               }}
-            ><IconEdit/></div>
+            ><IconEdit /></div>
           </div>
           {/*<LinkPreview url={linkUrl} />*/}
         </>

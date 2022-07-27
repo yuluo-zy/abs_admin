@@ -1,7 +1,7 @@
-import React from 'react';
-import { Result } from '@arco-design/web-react';
-import MessageItem, { RoleItem } from './item';
-import styles from './style/index.module.less';
+import React from "react";
+import { Result } from "@arco-design/web-react";
+import MessageItem, { RoleItem } from "./item";
+import styles from "./style/index.module.less";
 
 interface MessageListProps {
   data: RoleItem[];
@@ -10,7 +10,7 @@ interface MessageListProps {
 function MessageList(props: MessageListProps) {
   const { data = [] } = props;
   return (
-    <div className={styles['message-list']}>
+    <div className={styles["message-list"]}>
       {data.map((item) => (
         <MessageItem key={item.id} data={item} />
       ))}

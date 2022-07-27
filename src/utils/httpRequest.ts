@@ -1,5 +1,5 @@
-import Axios from '@/utils/axios';
-import { AxiosResponse } from 'axios';
+import Axios from "@/utils/axios";
+import { AxiosResponse } from "axios";
 
 export interface Data {
   code: number;
@@ -11,21 +11,21 @@ export interface Data {
 export const httpGet = (url: string, data?): Promise<AxiosResponse<Data>> => {
   return Axios({
     url: url,
-    method: 'get',
+    method: "get",
     data
   });
 };
 export const httpPost = (url, data?): Promise<AxiosResponse<Data>> => {
   return Axios({
     url: url,
-    method: 'post',
+    method: "post",
     data
   });
 };
 export const httpDelete = (url, data?): Promise<AxiosResponse<Data>> => {
   return Axios({
     url: url,
-    method: 'delete',
+    method: "delete",
     data
   });
 };
@@ -33,7 +33,7 @@ export const httpDelete = (url, data?): Promise<AxiosResponse<Data>> => {
 export const httpPut = (url, data?): Promise<AxiosResponse<Data>> => {
   return Axios({
     url: url,
-    method: 'put',
+    method: "put",
     data
   });
 };

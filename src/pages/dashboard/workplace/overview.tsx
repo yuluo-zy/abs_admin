@@ -1,16 +1,16 @@
-import React, { ReactNode, useEffect, useState } from 'react';
-import { Card, Divider, Grid, Link, Skeleton, Typography } from '@arco-design/web-react';
-import { useSelector } from 'react-redux';
-import { IconCaretUp } from '@arco-design/web-react/icon';
-import OverviewAreaLine from '@/components/Chart/overview-area-line';
-import axios from 'axios';
-import locale from './locale';
-import useLocale from '@/utils/useHook/useLocale';
-import styles from './style/overview.module.less';
-import IconCalendar from './assets/calendar.svg';
-import IconComments from './assets/comments.svg';
-import IconContent from './assets/content.svg';
-import IconIncrease from './assets/increase.svg';
+import React, { ReactNode, useEffect, useState } from "react";
+import { Card, Divider, Grid, Link, Skeleton, Typography } from "@arco-design/web-react";
+import { useSelector } from "react-redux";
+import { IconCaretUp } from "@arco-design/web-react/icon";
+import OverviewAreaLine from "@/components/Chart/overview-area-line";
+import axios from "axios";
+import locale from "./locale";
+import useLocale from "@/utils/useHook/useLocale";
+import styles from "./style/overview.module.less";
+import IconCalendar from "./assets/calendar.svg";
+import IconComments from "./assets/comments.svg";
+import IconContent from "./assets/content.svg";
+import IconIncrease from "./assets/increase.svg";
 
 const { Row, Col } = Grid;
 
@@ -59,7 +59,7 @@ function Overview() {
   const fetchData = () => {
     setLoading(true);
     axios
-      .get('/api/workplace/overview-content')
+      .get("/api/workplace/overview-content")
       .then((res) => {
         setData(res.data);
       })
@@ -75,7 +75,7 @@ function Overview() {
   return (
     <Card>
       <Typography.Title heading={5}>
-        {t['workplace.welcomeBack']}
+        {t["workplace.welcomeBack"]}
         {userInfo.name}
       </Typography.Title>
       <Divider />
@@ -83,42 +83,42 @@ function Overview() {
         <Col flex={1}>
           <StatisticItem
             icon={<IconCalendar />}
-            title={t['workplace.totalOnlyData']}
+            title={t["workplace.totalOnlyData"]}
             count={data.allContents}
             loading={loading}
-            unit={t['workplace.pecs']}
+            unit={t["workplace.pecs"]}
           />
         </Col>
         <Divider type="vertical" className={styles.divider} />
         <Col flex={1}>
           <StatisticItem
             icon={<IconContent />}
-            title={t['workplace.contentInMarket']}
+            title={t["workplace.contentInMarket"]}
             count={data.liveContents}
             loading={loading}
-            unit={t['workplace.pecs']}
+            unit={t["workplace.pecs"]}
           />
         </Col>
         <Divider type="vertical" className={styles.divider} />
         <Col flex={1}>
           <StatisticItem
             icon={<IconComments />}
-            title={t['workplace.comments']}
+            title={t["workplace.comments"]}
             count={data.increaseComments}
             loading={loading}
-            unit={t['workplace.pecs']}
+            unit={t["workplace.pecs"]}
           />
         </Col>
         <Divider type="vertical" className={styles.divider} />
         <Col flex={1}>
           <StatisticItem
             icon={<IconIncrease />}
-            title={t['workplace.growth']}
+            title={t["workplace.growth"]}
             count={
               <span>
-                {data.growthRate}{' '}
+                {data.growthRate}{" "}
                 <IconCaretUp
-                  style={{ fontSize: 18, color: 'rgb(var(--green-6))' }}
+                  style={{ fontSize: 18, color: "rgb(var(--green-6))" }}
                 />
               </span>
             }
@@ -130,15 +130,15 @@ function Overview() {
       <div>
         <div className={styles.ctw}>
           <Typography.Paragraph
-            className={styles['chart-title']}
+            className={styles["chart-title"]}
             style={{ marginBottom: 0 }}
           >
-            {t['workplace.contentData']}
-            <span className={styles['chart-sub-title']}>
-              ({t['workplace.1year']})
+            {t["workplace.contentData"]}
+            <span className={styles["chart-sub-title"]}>
+              ({t["workplace.1year"]})
             </span>
           </Typography.Paragraph>
-          <Link>{t['workplace.seeMore']}</Link>
+          <Link>{t["workplace.seeMore"]}</Link>
         </div>
         <OverviewAreaLine data={data.chartData} loading={loading} />
       </div>

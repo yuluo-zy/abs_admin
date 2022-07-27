@@ -81,18 +81,18 @@ export default function ProductMenu(props) {
   }, [menu, serviceType]);
 
   // 设置 窗口监测 如果小于 1200px, 设置收起
-  const {width} = useWindowSize();
+  const { width } = useWindowSize();
   const [, cancel] = useDebounce(
     () => {
-      if(width < 1300){
-        setCollapse(true)
+      if (width < 1300) {
+        setCollapse(true);
       }
     },
     1000,
     [width]
   );
 
-  return <div className={styles['menu-demo-round']}>
+  return <div className={styles["menu-demo-round"]}>
     <Menu
       style={{ width: 170 }}
       hasCollapseButton
@@ -103,7 +103,7 @@ export default function ProductMenu(props) {
       onClickMenuItem={updateMenuKey}
       onCollapseChange={(value) => {
         setCollapse(value);
-        }
+      }
       }
     >
       {context}

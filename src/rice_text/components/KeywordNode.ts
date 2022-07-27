@@ -1,17 +1,15 @@
 import type { EditorConfig, LexicalNode, SerializedTextNode, Spread } from "lexical";
 import { TextNode } from "lexical";
 
-export type SerializedKeywordNode = Spread<
-  {
-    type: 'keyword';
-    version: 1;
-  },
-  SerializedTextNode
->;
+export type SerializedKeywordNode = Spread<{
+  type: "keyword";
+  version: 1;
+},
+  SerializedTextNode>;
 
 export class KeywordNode extends TextNode {
   static getType(): string {
-    return 'keyword';
+    return "keyword";
   }
 
   static clone(node: KeywordNode): KeywordNode {
@@ -30,15 +28,15 @@ export class KeywordNode extends TextNode {
   exportJSON(): SerializedKeywordNode {
     return {
       ...super.exportJSON(),
-      type: 'keyword',
-      version: 1,
+      type: "keyword",
+      version: 1
     };
   }
 
   createDOM(config: EditorConfig): HTMLElement {
     const dom = super.createDOM(config);
-    dom.style.cursor = 'default';
-    dom.className = 'keyword';
+    dom.style.cursor = "default";
+    dom.className = "keyword";
     return dom;
   }
 
@@ -60,7 +58,7 @@ export function $createKeywordNode(keyword: string): KeywordNode {
 }
 
 export function $isKeywordNode(
-  node: LexicalNode | null | undefined | undefined,
+  node: LexicalNode | null | undefined | undefined
 ): boolean {
   return node instanceof KeywordNode;
 }

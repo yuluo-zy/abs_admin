@@ -154,8 +154,8 @@ function getDragFileData(event: DragEvent): null | InsertFilePayload {
   if (!dragData) {
     return null;
   }
-  const {type, data } = JSON.parse(dragData);
-  if (type !== 'file'){
+  const { type, data } = JSON.parse(dragData);
+  if (type !== "file") {
     return null;
   }
   return data;

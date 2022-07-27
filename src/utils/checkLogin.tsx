@@ -1,5 +1,5 @@
-import { getSessionStorage } from '@/utils/storage';
+import { getSessionStorage } from "@/utils/storage";
 
 export default function checkLogin() {
-  return getSessionStorage().getItem('userStatus') === 'login';
+  return getSessionStorage().getItem("userStatus") === "login";
 }

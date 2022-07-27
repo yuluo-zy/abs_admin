@@ -68,18 +68,18 @@ export default function CustomLabel() {
   return (<DynamicOuterCard title={t["firmware.label.title"]} bodyStyle={bodyStyle}>
     <DynamicSkeleton animation text={{ rows: 10, width: ["100%", 600, 400] }}>
 
-      <Alert     closable
-                 className={style['alert']}
-                 type='info'
-                 content={<p>
-                  {t["firmware.label.help"]}
-                   <Link target={"_blank"}
-                           href="https://www.espressif.com/sites/default/files/documentation/Espressif_Module_Packing_Information_CN.pdf">
-                       <IconLaunch style={
-                         { color: "#0E42D2", fontSize: 15 }
-                       } />
-                     </Link>
-                 </p>}/>
+      <Alert closable
+             className={style["alert"]}
+             type="info"
+             content={<p>
+               {t["firmware.label.help"]}
+               <Link target={"_blank"}
+                     href="https://www.espressif.com/sites/default/files/documentation/Espressif_Module_Packing_Information_CN.pdf">
+                 <IconLaunch style={
+                   { color: "#0E42D2", fontSize: 15 }
+                 } />
+               </Link>
+             </p>} />
       <Form
         scrollToFirstError
         form={form}
@@ -101,51 +101,52 @@ export default function CustomLabel() {
           </Checkbox>
         </FormItem>
         {labelData?.cusLaserLabel === 1 && <div className={style["label-img-context"]}>
-          <p style={{width: '10rem'}}> {t["firmware.label.model"]}</p>
-            <FormItem field="laserFileId"
-                      triggerPropName="fileList"
-                      rules={[
-                        {
-                          required: true,
-                          message: t["firmware.label.model.error"],
-                          validator: (value, callback) => {
-                            if ((value === undefined || value === "") && labelData?.cusLaserLabel === 1) {
-                              callback(t["firmware.label.model.error"]);
-                            }
+          <p style={{ width: "10rem" }}> {t["firmware.label.model"]}</p>
+          <FormItem field="laserFileId"
+                    triggerPropName="fileList"
+                    rules={[
+                      {
+                        required: true,
+                        message: t["firmware.label.model.error"],
+                        validator: (value, callback) => {
+                          if ((value === undefined || value === "") && labelData?.cusLaserLabel === 1) {
+                            callback(t["firmware.label.model.error"]);
                           }
                         }
-                      ]}
-            >
-              <DynamicImgUpload
-                limit={1}
-                title={t["firmware.label.model"]}
-                onChange={(fileList: UploadItem[], file: UploadItem) => {
-                  let res = null;
-                  fileList.forEach(r => {
-                    res = r.response;
-                  });
-                  setValue("laserFileId", res);
-                }} />
-            </FormItem>
+                      }
+                    ]}
+          >
+            <DynamicImgUpload
+              limit={1}
+              title={t["firmware.label.model"]}
+              onChange={(fileList: UploadItem[], file: UploadItem) => {
+                let res = null;
+                fileList.forEach(r => {
+                  res = r.response;
+                });
+                setValue("laserFileId", res);
+              }} />
+          </FormItem>
 
         </div>}
-        {((labelData?.cusLaserLabel === undefined) || (labelData?.cusLaserLabel === 0)) && <div className={style["model-img"]}>
-          <b>{t["demand.entry.service.label.default.model"]}</b>
-          <DynamicImg zh={ModelInfoZh} en={LabelInfoZh} className={style["model_info"]} alt={"model_img"} />
-        </div>}
-        <br/>
+        {((labelData?.cusLaserLabel === undefined) || (labelData?.cusLaserLabel === 0)) &&
+          <div className={style["model-img"]}>
+            <b>{t["demand.entry.service.label.default.model"]}</b>
+            <DynamicImg zh={ModelInfoZh} en={LabelInfoZh} className={style["model_info"]} alt={"model_img"} />
+          </div>}
+        <br />
         <div className={style["remark"]}>
-        <FormItem label={t["firmware.label.remark"]} field={"cusLaserNotes"}>
-          <Input.TextArea
-            maxLength={{ length: 400, errorOnly: true }}
-            autoSize={{ minRows: 3 }}
-            showWordLimit
-            placeholder="More than 400 letters will be error"
-          />
-        </FormItem>
+          <FormItem label={t["firmware.label.remark"]} field={"cusLaserNotes"}>
+            <Input.TextArea
+              maxLength={{ length: 400, errorOnly: true }}
+              autoSize={{ minRows: 3 }}
+              showWordLimit
+              placeholder="More than 400 letters will be error"
+            />
+          </FormItem>
         </div>
         {/*设置默认的图片*/}
-        <DynamicDivider/>
+        <DynamicDivider />
 
         <FormItem field="cusOutboxLabel">
           <Checkbox checked={labelData?.cusOutboxLabel} onChange={(checked) => {
@@ -170,38 +171,39 @@ export default function CustomLabel() {
 
 
         {labelData?.cusOutboxLabel === 1 && <div className={style["label-img-context"]}>
-          <p style={{width: '10rem'}}>{t["firmware.label.box"]}</p>
-              <FormItem field="outboxFileId"
-                        triggerPropName="fileList"
-                        rules={[
-                          {
-                            required: true,
-                            message: t["firmware.label.box.error"],
-                            validator: (value, callback) => {
-                              if ((value === undefined || value === "") && labelData?.cusOutboxLabel === 1) {
-                                callback(t["firmware.label.box.error"]);
-                              }
-                            }
+          <p style={{ width: "10rem" }}>{t["firmware.label.box"]}</p>
+          <FormItem field="outboxFileId"
+                    triggerPropName="fileList"
+                    rules={[
+                      {
+                        required: true,
+                        message: t["firmware.label.box.error"],
+                        validator: (value, callback) => {
+                          if ((value === undefined || value === "") && labelData?.cusOutboxLabel === 1) {
+                            callback(t["firmware.label.box.error"]);
                           }
-                        ]}
-              >
-                <DynamicImgUpload
-                  limit={1}
-                  title={t["firmware.label.box"]}
-                  onChange={(fileList: UploadItem[], file: UploadItem) => {
-                    let res = null;
-                    fileList.forEach(r => {
-                      res = r.response;
-                    });
-                    setValue("outboxFileId", res);
-                  }} />
-              </FormItem>
-          </div>}
-        {((labelData?.cusOutboxLabel === undefined) || (labelData?.cusOutboxLabel === 0)) && <div className={style["model-img"]}>
-          <b>{t["demand.entry.service.label.default.model"]}</b>
-          <DynamicImg zh={LabelInfoZh} en={LabelInfoZh} className={style["model_info"]} alt={"label_img"} />
+                        }
+                      }
+                    ]}
+          >
+            <DynamicImgUpload
+              limit={1}
+              title={t["firmware.label.box"]}
+              onChange={(fileList: UploadItem[], file: UploadItem) => {
+                let res = null;
+                fileList.forEach(r => {
+                  res = r.response;
+                });
+                setValue("outboxFileId", res);
+              }} />
+          </FormItem>
         </div>}
-        <br/>
+        {((labelData?.cusOutboxLabel === undefined) || (labelData?.cusOutboxLabel === 0)) &&
+          <div className={style["model-img"]}>
+            <b>{t["demand.entry.service.label.default.model"]}</b>
+            <DynamicImg zh={LabelInfoZh} en={LabelInfoZh} className={style["model_info"]} alt={"label_img"} />
+          </div>}
+        <br />
         <div className={style["remark"]}>
           <FormItem label={t["firmware.label.remark"]} field={"cusOutboxNotes"}>
             <Input.TextArea
@@ -212,7 +214,7 @@ export default function CustomLabel() {
             />
           </FormItem>
         </div>
-        <DynamicDivider/>
+        <DynamicDivider />
         <div className={style["context-next"]}>
           <Button type="primary"
                   size={"large"}

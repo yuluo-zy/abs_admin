@@ -4,7 +4,7 @@ import { $restoreEditorState } from "@lexical/utils";
 import { $getSelection, $isRangeSelection, EditorState, RootNode } from "lexical";
 import { useEffect } from "react";
 
-export function MaxLengthPlugin({maxLength}: {maxLength:  number}): null {
+export function MaxLengthPlugin({ maxLength }: { maxLength: number }): null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export function MaxLengthPlugin({maxLength}: {maxLength:  number}): null {
       }
       const prevEditorState = editor.getEditorState();
       const prevTextContent = prevEditorState.read(() =>
-        rootNode.getTextContent(),
+        rootNode.getTextContent()
       );
       const textContent = rootNode.getTextContent();
       if (prevTextContent !== textContent) {

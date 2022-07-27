@@ -1,4 +1,4 @@
-import { CLEAR_HISTORY_COMMAND, ElementNode, LexicalEditor, RangeSelection, TextNode } from "lexical";
+import { ElementNode, RangeSelection, TextNode } from "lexical";
 import { $isAtNodeEnd } from "@lexical/selection";
 
 export function getSelectedNode(selection: RangeSelection): TextNode | ElementNode {
@@ -45,14 +45,14 @@ export function positionEditorElement(
 
 export const getSelection = (): Selection | null => window.getSelection();
 
-export const checkIsJSON=  (str): boolean => {
-  if (typeof str == 'string') {
+export const checkIsJSON = (str): boolean => {
+  if (typeof str == "string") {
     try {
       const obj = JSON.parse(str);
-      return !!(typeof obj == 'object' && obj);
+      return !!(typeof obj == "object" && obj);
     } catch (e) {
       return false;
     }
   }
   return false;
-}
+};

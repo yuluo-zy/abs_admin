@@ -11,25 +11,25 @@ export default function EFuseData(props: { initialValues }) {
   const t = useLocale();
   const [form] = Form.useForm();
   return <Form
-    className={style['efuse_data']}
+    className={style["efuse_data"]}
     scrollToFirstError
     form={form}
-    layout={'inline'}
+    layout={"inline"}
     id={"firmware.burn.efuse.title"}
     initialValues={{ ...initialValues }}>
-    <div className={style['efuse_data_detailed']}>
-      <b>{t['demand.entry.service.burn.efuse.data.burn.info']}</b>
+    <div className={style["efuse_data_detailed"]}>
+      <b>{t["demand.entry.service.burn.efuse.data.burn.info"]}</b>
       <FormItem
         labelAlign={"left"}
         field="efuseDataSize"
         rules={[
           {
             required: true,
-            message: t["firmware.burn.flash.plan.data.error"],
+            message: t["firmware.burn.flash.plan.data.error"]
           }
         ]}
       >
-        <InputNumber className={style['efuse_data_input']} placeholder={t["firmware.burn.flash.plan.data"]}/>
+        <InputNumber className={style["efuse_data_input"]} placeholder={t["firmware.burn.flash.plan.data"]} />
       </FormItem>
       <FormItem
         labelAlign={"left"}
@@ -50,7 +50,7 @@ export default function EFuseData(props: { initialValues }) {
           { label: "EFUSE_BLK 9", value: 9 }]}
                 allowClear
                 placeholder={"BLK"}
-                className={style['efuse_data_select']}/>
+                className={style["efuse_data_select"]} />
       </FormItem>
       <FormItem
         labelAlign={"left"}
@@ -62,18 +62,18 @@ export default function EFuseData(props: { initialValues }) {
           }
         ]}
       >
-        <Input className={style['efuse_data_input']} allowClear placeholder={t["firmware.burn.flash.plan.output"]} />
+        <Input className={style["efuse_data_input"]} allowClear placeholder={t["firmware.burn.flash.plan.output"]} />
       </FormItem>
     </div>
-    <div className={style['efuse_data_upload']}>
+    <div className={style["efuse_data_upload"]}>
       <Tooltip color={"#1380ea"} position={"rt"}
                defaultPopupVisible
                content={t["firmware.burn.hint.notice"]}>
-      <b>{t['demand.entry.service.burn.efuse.data.burn.upload']}</b>
+        <b>{t["demand.entry.service.burn.efuse.data.burn.upload"]}</b>
       </Tooltip>
       <FormItem
         field="efuseListCsvFile"
-        triggerPropName='fileList'
+        triggerPropName="fileList"
         rules={[
           {
             required: true,
@@ -81,33 +81,35 @@ export default function EFuseData(props: { initialValues }) {
           }
         ]}
       >
-        <DynamicUpload title={t["firmware.burn.flash.file.bin.data.list"]} limit={1} onChange={(fileList: UploadItem[], file: UploadItem) => {
-          if(fileList.length > 0){
-            form.setFieldValue("efuseListCsvFile", file.response)
-          }else {
-            form.setFieldValue("efuseListCsvFile", undefined)
-          }
-        }}  />
+        <DynamicUpload title={t["firmware.burn.flash.file.bin.data.list"]} limit={1}
+                       onChange={(fileList: UploadItem[], file: UploadItem) => {
+                         if (fileList.length > 0) {
+                           form.setFieldValue("efuseListCsvFile", file.response);
+                         } else {
+                           form.setFieldValue("efuseListCsvFile", undefined);
+                         }
+                       }} />
       </FormItem>
 
       <FormItem
         field="efuseResultCsvFile"
-        triggerPropName='fileList'
+        triggerPropName="fileList"
         rules={[
           {
             required: true,
             message: t["firmware.burn.flash.file.bin.data.result.error"]
-          },
+          }
         ]}
       >
-        <DynamicUpload title={t["firmware.burn.flash.file.bin.data.result"]} limit={1} onChange={(fileList: UploadItem[], file: UploadItem) => {
-          if(fileList.length > 0){
-            form.setFieldValue("efuseResultCsvFile", file.response)
-          }else {
-            form.setFieldValue("efuseResultCsvFile", undefined)
-          }
-        }}  />
+        <DynamicUpload title={t["firmware.burn.flash.file.bin.data.result"]} limit={1}
+                       onChange={(fileList: UploadItem[], file: UploadItem) => {
+                         if (fileList.length > 0) {
+                           form.setFieldValue("efuseResultCsvFile", file.response);
+                         } else {
+                           form.setFieldValue("efuseResultCsvFile", undefined);
+                         }
+                       }} />
       </FormItem>
     </div>
-  </Form>
+  </Form>;
 }

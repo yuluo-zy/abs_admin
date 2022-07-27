@@ -47,7 +47,7 @@ function DownLoad({ src }: { src: string }): JSX.Element {
             const url = URL.createObjectURL(new Blob([res.data]));
             const link = document.createElement("a");
             link.href = url;
-            let name = res.headers['content-disposition']?.match(/fileName=(.*)/)[1]; // 获取filename的值
+            let name = res.headers["content-disposition"]?.match(/fileName=(.*)/)[1]; // 获取filename的值
             name = decodeURIComponent(name);
             link.setAttribute("download", name);
             document.body.appendChild(link);
@@ -165,14 +165,6 @@ export class FileNode extends DecoratorNode<JSX.Element> {
   __src: string;
   __name: string;
 
-  static getType(): string {
-    return "fileNode";
-  }
-
-  static clone(node: FileNode): FileNode {
-    return new FileNode(node.__src, node.__name, node.__key);
-  }
-
   constructor(
     src: string,
     name: string,
@@ -181,6 +173,18 @@ export class FileNode extends DecoratorNode<JSX.Element> {
     super(key);
     this.__src = src;
     this.__name = name;
+  }
+
+  static getType(): string {
+    return "fileNode";
+  }
+
+  static clone(node: FileNode): FileNode {
+    return new FileNode(node.__src, node.__name, node.__key);
+  }
+
+  static importJSON(serializedNode: SerializedFileNode): FileNode {
+    return $createFileNode({ src: serializedNode.src, name: serializedNode.name });
   }
 
   createDOM(config: EditorConfig): HTMLElement {
@@ -214,10 +218,6 @@ export class FileNode extends DecoratorNode<JSX.Element> {
     const writable = this.getWritable();
     writable.__name = name;
     writable.__src = src;
-  }
-
-  static importJSON(serializedNode: SerializedFileNode): FileNode {
-    return $createFileNode({ src: serializedNode.src, name: serializedNode.name });
   }
 
   exportJSON(): SerializedFileNode {

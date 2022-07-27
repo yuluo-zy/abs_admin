@@ -18,14 +18,14 @@ interface Position {
 function CodeActionMenuContainer(): JSX.Element {
   const [editor] = useLexicalComposerContext();
 
-  const [lang, setLang] = useState('');
+  const [lang, setLang] = useState("");
   const [isShown, setShown] = useState<boolean>(false);
   const [shouldListenMouseMove, setShouldListenMouseMove] =
     useState<boolean>(false);
   const [isCopyCompleted, setCopyCompleted] = useState<boolean>(false);
   const [position, setPosition] = useState<Position>({
-    right: '0',
-    top: '0',
+    right: "0",
+    top: "0"
   });
   const codeSetRef = useRef<Set<string>>(new Set());
   const codeDOMNodeRef = useRef<HTMLElement | null>(null);
@@ -36,7 +36,7 @@ function CodeActionMenuContainer(): JSX.Element {
 
   const debouncedOnMouseMove = useDebounce(
     (event: MouseEvent) => {
-      const {codeDOMNode, isOutside} = getMouseInfo(event);
+      const { codeDOMNode, isOutside } = getMouseInfo(event);
 
       if (isOutside) {
         setShown(false);
@@ -50,31 +50,31 @@ function CodeActionMenuContainer(): JSX.Element {
       codeDOMNodeRef.current = codeDOMNode;
 
       let codeNode: CodeNode | null = null;
-      let _lang = '';
+      let _lang = "";
 
       editor.update(() => {
         const maybeCodeNode = $getNearestNodeFromDOMNode(codeDOMNode);
 
         if ($isCodeNode(maybeCodeNode)) {
           codeNode = maybeCodeNode;
-          _lang = codeNode.getLanguage() || '';
+          _lang = codeNode.getLanguage() || "";
         }
       });
 
       if (codeNode) {
-        const {y, right} = codeDOMNode.getBoundingClientRect();
+        const { y, right } = codeDOMNode.getBoundingClientRect();
         setLang(_lang);
         setShown(true);
         setPosition({
           right: `${
             window.innerWidth - right + CODE_PADDING - window.pageXOffset
           }px`,
-          top: `${y + window.pageYOffset}px`,
+          top: `${y + window.pageYOffset}px`
         });
       }
     },
     50,
-    1000,
+    1000
   );
 
   useEffect(() => {
@@ -82,12 +82,12 @@ function CodeActionMenuContainer(): JSX.Element {
       return;
     }
 
-    document.addEventListener('mousemove', debouncedOnMouseMove);
+    document.addEventListener("mousemove", debouncedOnMouseMove);
 
     return () => {
       setShown(false);
       debouncedOnMouseMove.cancel();
-      document.removeEventListener('mousemove', debouncedOnMouseMove);
+      document.removeEventListener("mousemove", debouncedOnMouseMove);
     };
   }, [shouldListenMouseMove, debouncedOnMouseMove]);
 
@@ -95,12 +95,12 @@ function CodeActionMenuContainer(): JSX.Element {
     editor.update(() => {
       for (const [key, type] of mutations) {
         switch (type) {
-          case 'created':
+          case "created":
             codeSetRef.current.add(key);
             setShouldListenMouseMove(codeSetRef.current.size > 0);
             break;
 
-          case 'destroyed':
+          case "destroyed":
             codeSetRef.current.delete(key);
             setShouldListenMouseMove(codeSetRef.current.size > 0);
             break;
@@ -131,7 +131,7 @@ function CodeActionMenuContainer(): JSX.Element {
           setCopyCompleted(true);
           removeSuccessIcon();
         } catch (err) {
-          console.error('Failed to copy: ', err);
+          console.error("Failed to copy: ", err);
         }
       }
     });
@@ -140,7 +140,7 @@ function CodeActionMenuContainer(): JSX.Element {
   return (
     <>
       {isShown ? (
-        <div className="code-action-menu-container" style={{...position}}>
+        <div className="code-action-menu-container" style={{ ...position }}>
           <div className="code-highlight-language">{lang}</div>
           <button className="menu-item" onClick={handleClick} aria-label="copy">
             {isCopyCompleted ? (
@@ -158,7 +158,7 @@ function CodeActionMenuContainer(): JSX.Element {
 function useDebounce<T extends (...args: never[]) => void>(
   fn: T,
   ms: number,
-  maxWait?: number,
+  maxWait?: number
 ) {
   const funcRef = useRef<T | null>(null);
   funcRef.current = fn;
@@ -172,9 +172,9 @@ function useDebounce<T extends (...args: never[]) => void>(
           }
         },
         ms,
-        {maxWait},
+        { maxWait }
       ),
-    [ms, maxWait],
+    [ms, maxWait]
   );
 }
 
@@ -186,16 +186,16 @@ function getMouseInfo(event: MouseEvent): {
 
   if (target && target instanceof HTMLElement) {
     const codeDOMNode = target.closest<HTMLElement>(
-      'code.PlaygroundEditorTheme__code',
+      "code.PlaygroundEditorTheme__code"
     );
     const isOutside = !(
       codeDOMNode ||
-      target.closest<HTMLElement>('div.code-action-menu-container')
+      target.closest<HTMLElement>("div.code-action-menu-container")
     );
 
-    return {codeDOMNode, isOutside};
+    return { codeDOMNode, isOutside };
   } else {
-    return {codeDOMNode: null, isOutside: true};
+    return { codeDOMNode: null, isOutside: true };
   }
 }
 

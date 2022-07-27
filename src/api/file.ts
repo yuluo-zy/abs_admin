@@ -3,11 +3,11 @@ import { getAxios } from "@/utils/axios";
 
 export const postFile = (data, onUploadProgress, source) => {
   return getAxios().post(
-    '/file/upload',
+    "/file/upload",
     data,
     {
       headers: {
-        'Content-Type': 'multipart/form-data;charset=UTF-8'
+        "Content-Type": "multipart/form-data;charset=UTF-8"
       },
       onUploadProgress: onUploadProgress,
       cancelToken: source
@@ -17,13 +17,13 @@ export const postFile = (data, onUploadProgress, source) => {
 
 export const getFile = (id) => {
   return getAxios().get(
-    '/file/download/' + id,
-    { responseType: 'blob' });
+    "/file/download/" + id,
+    { responseType: "blob" });
 };
 export const getFileByPath = (path) => {
   return getAxios().get(
     path,
-    { responseType: 'blob' });
+    { responseType: "blob" });
 };
 
 export const getFileInfo = (id) => {

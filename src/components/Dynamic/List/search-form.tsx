@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
-import { Button, DatePicker, Form, Grid, Input, Select } from '@arco-design/web-react';
-import { GlobalContext } from '@/context';
-import locale from './locale';
-import useLocale from '@/utils/useHook/useLocale';
-import { IconRefresh, IconSearch } from '@arco-design/web-react/icon';
-import styles from './style/index.module.less';
-import dayjs from 'dayjs';
-import { SearchItem } from '@/components/type';
+import React, { useContext } from "react";
+import { Button, DatePicker, Form, Grid, Input, Select } from "@arco-design/web-react";
+import { GlobalContext } from "@/context";
+import locale from "./locale";
+import useLocale from "@/utils/useHook/useLocale";
+import { IconRefresh, IconSearch } from "@arco-design/web-react/icon";
+import styles from "./style/index.module.less";
+import dayjs from "dayjs";
+import { SearchItem } from "@/components/type";
 
 const { Row, Col } = Grid;
 
@@ -19,49 +19,49 @@ function SearchForm(props: {
   const t = useLocale(locale);
   const FormItem = Form.Item;
 
-  const colSpan = lang === 'zh-CN' ? 8 : 12;
+  const colSpan = lang === "zh-CN" ? 8 : 12;
 
   const SelectFormItem = (item: SearchItem) => {
-    if (item.type === 'input') {
+    if (item.type === "input") {
       return (
         <FormItem label={item.name} field={item.field}>
           <Input allowClear />
         </FormItem>
       );
     }
-    if (item.type === 'select') {
+    if (item.type === "select") {
       return (
         <FormItem label={item.name} field={item.field}>
           <Select
             options={item.options.map((item, index) => ({
               label: item,
-              value: index,
+              value: index
             }))}
             allowClear
           />
         </FormItem>
       );
     }
-    if (item.type === 'multiple') {
+    if (item.type === "multiple") {
       return (
         <FormItem label={item.name} field={item.field}>
           <Select
             options={item.options.map((item, index) => ({
               label: item,
-              value: index,
+              value: index
             }))}
-            mode={'multiple'}
+            mode={"multiple"}
             allowClear
           />
         </FormItem>
       );
     }
-    if (item.type === 'date') {
+    if (item.type === "date") {
       return (
         <FormItem label={item.name} field={item.field}>
           <DatePicker.RangePicker
             allowClear
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
             disabledDate={(date) => dayjs(date).isAfter(dayjs())}
           />
         </FormItem>
@@ -71,10 +71,10 @@ function SearchForm(props: {
   };
 
   return (
-    <div className={styles['search-form-wrapper']}>
+    <div className={styles["search-form-wrapper"]}>
       <Form
         form={form}
-        className={styles['search-form']}
+        className={styles["search-form"]}
         labelAlign="left"
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 19 }}
@@ -87,7 +87,7 @@ function SearchForm(props: {
           ))}
         </Row>
       </Form>
-      <div className={styles['right-button']}>
+      <div className={styles["right-button"]}>
         <Button
           type="primary"
           icon={<IconSearch />}
@@ -96,7 +96,7 @@ function SearchForm(props: {
             props.onSearch(values);
           }}
         >
-          {t['searchTable.form.search']}
+          {t["searchTable.form.search"]}
         </Button>
 
         <Button
@@ -106,7 +106,7 @@ function SearchForm(props: {
             props.onSearch({});
           }}
         >
-          {t['searchTable.form.reset']}
+          {t["searchTable.form.reset"]}
         </Button>
       </div>
     </div>

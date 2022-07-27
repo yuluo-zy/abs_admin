@@ -69,8 +69,8 @@ export default function PreFit() {
       demandId: demandId
     }).then(res => {
       if (res.data.success) {
-        setFitData({id: res.data.result})
-        history.push(getNextRouter(3, serviceType))
+        setFitData({ id: res.data.result });
+        history.push(getNextRouter(3, serviceType));
         Message.success(t["submit.hardware.success"]);
       }
     });
@@ -129,11 +129,11 @@ export default function PreFit() {
   };
 
   const getDay = (day) => {
-    if(day !== undefined){
-      return day * 365
+    if (day !== undefined) {
+      return day * 365;
     }
-    return 0
-  }
+    return 0;
+  };
 
   return (<DynamicOuterCard title={t["firmware.pre.title"]} bodyStyle={bodyStyle}>
     <DynamicSkeleton animation text={{ rows: 10, width: ["100%", 600, 400] }}>
@@ -166,13 +166,13 @@ export default function PreFit() {
         <Divider style={{ borderBottomStyle: "dashed" }} />
         <b>{t["firmware.pre.ca.setting.config.title"]}</b>
         <br />
-        <div className={style['ca']}>
+        <div className={style["ca"]}>
           <FormItem label={t["firmware.pre.ca.setting.config.type"]}
                     labelAlign={"left"}
                     field={"isAdapt"}
                     labelCol={{ span: 7 }}
                     wrapperCol={{ span: 17 }}
-                    className={style['ca-way']}
+                    className={style["ca-way"]}
                     rules={[{ required: true, message: t["firmware.pre.ca.setting.config.type.error"] }]}>
 
             <DynamicRadioGroup direction="vertical"
@@ -186,7 +186,7 @@ export default function PreFit() {
                                }]}
                                onChange={(value) => {
                                  setValue("isAdapt", value);
-                                   setValue("transmissionMethod", undefined)
+                                 setValue("transmissionMethod", undefined);
                                }}
             />
           </FormItem>
@@ -196,7 +196,7 @@ export default function PreFit() {
                       field={"transmissionMethod"}
                       labelCol={{ span: 7 }}
                       wrapperCol={{ span: 17 }}
-                      className={style['ca-transmission']}
+                      className={style["ca-transmission"]}
                       rules={[{
                         required: true,
                         message: t["firmware.pre.ca.setting.config.type.transmission.method.error"],
@@ -222,7 +222,8 @@ export default function PreFit() {
               />
             </FormItem>}
           {fitData?.isAdapt === 0 && <Alert className={style["ca-text"]}
-                                            content={t["firmware.pre.ca.setting.config.type.no.custom.info"]} closeElement="Close" />}
+                                            content={t["firmware.pre.ca.setting.config.type.no.custom.info"]}
+                                            closeElement="Close" />}
           {fitData?.transmissionMethod === "PGP" && <Alert className={style["ca-text"]}
                                                            content={t["firmware.pre.ca.setting.config.type.no.custom.info.PGP"]}
                                                            closeElement="Close" />}
@@ -235,7 +236,7 @@ export default function PreFit() {
         {serviceData.storageType === 1 && <div>
           <b>EFUSE_KEY_BLOCK & Storage type of Device Certificate</b>
           <br />
-          <br/>
+          <br />
           <Space size={30} className={style["centered"]}>
             <Typography.Text>
               {t["firmware.pre.ca.setting.config.type.transmission.EFUSE_KEY_BLOCKx"]}
@@ -245,7 +246,7 @@ export default function PreFit() {
             >
               <Select
                 placeholder={t["firmware.pre.ca.setting.config.type.Leave"]}
-                style={{width: 400}}
+                style={{ width: 400 }}
                 defaultValue={fitData?.leaveBlock}
                 onChange={(value) => setValue("leaveBlock", value)}
               >
@@ -301,7 +302,7 @@ export default function PreFit() {
             (value) => {
               setValue("subject", value);
             }
-          } style={{ maxWidth: "20rem", margin: "1rem", marginLeft:0 }} />
+          } style={{ maxWidth: "20rem", margin: "1rem", marginLeft: 0 }} />
         </FormItem>
         <FormItem label={"commonName: "}
                   field={"commonName"}
@@ -313,7 +314,8 @@ export default function PreFit() {
                       message: "Common Name value cannot be empty"
                     }
                   ]}>
-          <Input value={fitData?.commonName} onChange={getMacStartInfo} style={{ maxWidth: "20rem", margin: "1rem", marginLeft:0 }} />
+          <Input value={fitData?.commonName} onChange={getMacStartInfo}
+                 style={{ maxWidth: "20rem", margin: "1rem", marginLeft: 0 }} />
         </FormItem>
 
         <FormItem label={"validityDate: "}
@@ -326,16 +328,16 @@ export default function PreFit() {
                       message: "Validity Date value cannot be empty"
                     }
                   ]}>
-          <div className={style['year']}>
+          <div className={style["year"]}>
             <InputNumber max={30} value={fitData?.validityDate} onChange={
               (value) => {
                 setValue("validityDate", value);
               }
-            } style={{ maxWidth: "5rem", margin: "1rem", marginLeft:0 }} />
+            } style={{ maxWidth: "5rem", margin: "1rem", marginLeft: 0 }} />
 
             <b>Year</b>
             <p>=</p>
-            <Tag color={'blue'} style={{margin: '1rem'}}>{getDay(fitData?.validityDate)}</Tag>
+            <Tag color={"blue"} style={{ margin: "1rem" }}>{getDay(fitData?.validityDate)}</Tag>
             <b>Day</b>
           </div>
 

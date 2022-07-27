@@ -1,7 +1,7 @@
-import React from 'react';
-import { Avatar, Button, List, Result, Space, Tag, Typography } from '@arco-design/web-react';
-import useLocale from '../../utils/useHook/useLocale';
-import styles from './style/index.module.less';
+import React from "react";
+import { Avatar, Button, List, Result, Space, Tag, Typography } from "@arco-design/web-react";
+import useLocale from "../../utils/useHook/useLocale";
+import styles from "./style/index.module.less";
 
 export interface MessageItemData {
   id: string;
@@ -44,17 +44,17 @@ function MessageList(props: MessageListProps) {
 
   return (
     <List
-      noDataElement={<Result status="404" subTitle={t['message.empty.tips']} />}
+      noDataElement={<Result status="404" subTitle={t["message.empty.tips"]} />}
       footer={
         <div className={styles.footer}>
-          <div className={styles['footer-item']}>
+          <div className={styles["footer-item"]}>
             <Button type="text" size="small" onClick={onAllBtnClick}>
-              {t['message.allRead']}
+              {t["message.allRead"]}
             </Button>
           </div>
-          <div className={styles['footer-item']}>
+          <div className={styles["footer-item"]}>
             <Button type="text" size="small">
-              {t['message.seeMore']}
+              {t["message.seeMore"]}
             </Button>
           </div>
         </div>
@@ -65,12 +65,12 @@ function MessageList(props: MessageListProps) {
           key={item.id}
           actionLayout="vertical"
           style={{
-            opacity: item.status ? 0.5 : 1,
+            opacity: item.status ? 0.5 : 1
           }}
         >
           <div
             style={{
-              cursor: 'pointer',
+              cursor: "pointer"
             }}
             onClick={() => {
               onItemClick(item, index);
@@ -85,7 +85,7 @@ function MessageList(props: MessageListProps) {
                 )
               }
               title={
-                <div className={styles['message-title']}>
+                <div className={styles["message-title"]}>
                   <Space size={4}>
                     <span>{item.title}</span>
                     <Typography.Text type="secondary">

@@ -1,18 +1,18 @@
-import React, { useEffect, useMemo } from 'react';
-import useLocale from '@/pages/product/demand/locale/useLocale';
-import ProductMenu from '@/pages/product/demand/menu';
+import React, { useEffect, useMemo } from "react";
+import useLocale from "@/pages/product/demand/locale/useLocale";
+import ProductMenu from "@/pages/product/demand/menu";
 
-import styles from './style/index.module.less';
-import { useHistory } from 'react-router-dom';
-import { isArray } from '@/utils/is';
-import { MenuItemProps } from '@/components/type';
-import { IconCalendar, IconMindMapping, IconSubscribed } from '@arco-design/web-react/icon';
-import NProgress from 'nprogress';
-import lazyload from '@/utils/lazyload';
-import { Route, Switch } from 'react-router';
-import { ProductStore, setMenu } from '@/store/product';
-import shallow from 'zustand/shallow';
-import { Button } from '@arco-design/web-react';
+import styles from "./style/index.module.less";
+import { useHistory } from "react-router-dom";
+import { isArray } from "@/utils/is";
+import { MenuItemProps } from "@/components/type";
+import { IconCalendar, IconMindMapping, IconSubscribed } from "@arco-design/web-react/icon";
+import NProgress from "nprogress";
+import lazyload from "@/utils/lazyload";
+import { Route, Switch } from "react-router";
+import { ProductStore, setMenu } from "@/store/product";
+import shallow from "zustand/shallow";
+import { Button } from "@arco-design/web-react";
 
 function getFlattenRoutes(routes) {
   const res = [];
@@ -112,7 +112,7 @@ export default function ProductDemand(props) {
   const [setStepRouter, setCollapse] = ProductStore(state => [state.setStepRouter, state.setCollapse, state.setStepList], shallow);
 
   useEffect(() => {
-    setMenu(MenuTree)
+    setMenu(MenuTree);
   }, []);
 
   function onClickMenuItem(key) {
@@ -128,8 +128,8 @@ export default function ProductDemand(props) {
   }
 
   const nextStep = () => {
-    history.push(`/product/demand/hardware`)
-  }
+    history.push(`/product/demand/hardware`);
+  };
 
   const bodyStyle = {
     paddingLeft: "2rem",
@@ -159,8 +159,8 @@ export default function ProductDemand(props) {
             <Route exact path={"/product/demand"}>
               <div>todo 添加导入过程声明和足以事项</div>
               <div>
-                <Button type='primary' onClick={nextStep}>
-                  {t['index.start']}
+                <Button type="primary" onClick={nextStep}>
+                  {t["index.start"]}
                 </Button>
               </div>
             </Route>

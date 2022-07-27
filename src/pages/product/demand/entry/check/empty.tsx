@@ -6,7 +6,7 @@ const EmptyStatus = () => {
   const t = useLocale();
   return (
     <Empty
-      description={t['self.check.boot.upload.file.empty']}
+      description={t["self.check.boot.upload.file.empty"]}
     />
   );
 };

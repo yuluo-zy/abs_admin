@@ -269,6 +269,20 @@ export class StickyNode extends DecoratorNode<JSX.Element> {
   __color: StickyNoteColor;
   __caption: LexicalEditor;
 
+  constructor(
+    x: number,
+    y: number,
+    color: "pink" | "yellow",
+    caption?: LexicalEditor,
+    key?: NodeKey
+  ) {
+    super(key);
+    this.__x = x;
+    this.__y = y;
+    this.__caption = caption || createEditor();
+    this.__color = color;
+  }
+
   static getType(): string {
     return "sticky";
   }
@@ -290,20 +304,6 @@ export class StickyNode extends DecoratorNode<JSX.Element> {
       serializedNode.color,
       serializedNode.caption
     );
-  }
-
-  constructor(
-    x: number,
-    y: number,
-    color: "pink" | "yellow",
-    caption?: LexicalEditor,
-    key?: NodeKey
-  ) {
-    super(key);
-    this.__x = x;
-    this.__y = y;
-    this.__caption = caption || createEditor();
-    this.__color = color;
   }
 
   exportJSON(): SerializedStickyNode {

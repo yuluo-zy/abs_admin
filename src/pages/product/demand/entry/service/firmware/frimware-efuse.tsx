@@ -225,10 +225,10 @@ function CustomEfuseConfig(props) {
   useEffect(() => {
     if (initialValue) {
       let temp = [];
-      let efuseTemp = {}
+      let efuseTemp = {};
       for (const item in initialValue) {
         temp.push(item);
-        efuseTemp[item] = initialValue[item]
+        efuseTemp[item] = initialValue[item];
       }
       setEfuse(efuseTemp);
       setEfuseList(new Set(temp));
@@ -294,7 +294,7 @@ function CustomEfuseConfig(props) {
 
 const getCustomList = (value) => {
   let customList = [];
-  if(value){
+  if (value) {
     for (const valueElement in value) {
       customList.push({
         key: valueElement,
@@ -334,7 +334,7 @@ export default function FirmwareEfuse(props: { initialValues, target }) {
               field={item.key}
               key={index}
             >
-              <CustomEfuseConfig entity={item.child} initialValue={initialValues?.efuseConfig[item.key]}/>
+              <CustomEfuseConfig entity={item.child} initialValue={initialValues?.efuseConfig[item.key]} />
             </Form.Item>;
           }
         )}

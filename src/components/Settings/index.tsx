@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Alert, Drawer, Message } from '@arco-design/web-react';
-import { IconSettings } from '@arco-design/web-react/icon';
-import copy from 'copy-to-clipboard';
-import { useSelector } from 'react-redux';
-import { GlobalState } from '../../store';
-import Block from './block';
-import ColorPanel from './color';
-import IconButton from '../NavBar/IconButton';
-import useLocale from '@/utils/useHook/useLocale';
+import React, { useState } from "react";
+import { Alert, Drawer, Message } from "@arco-design/web-react";
+import { IconSettings } from "@arco-design/web-react/icon";
+import copy from "copy-to-clipboard";
+import { useSelector } from "react-redux";
+import { GlobalState } from "../../store";
+import Block from "./block";
+import ColorPanel from "./color";
+import IconButton from "../NavBar/IconButton";
+import useLocale from "@/utils/useHook/useLocale";
 
 interface SettingProps {
   trigger?: React.ReactElement;
@@ -21,14 +21,14 @@ function Setting(props: SettingProps) {
 
   function onCopySettings() {
     copy(JSON.stringify(settings, null, 2));
-    Message.success(locale['settings.copySettings.message']);
+    Message.success(locale["settings.copySettings.message"]);
   }
 
   return (
     <>
       {trigger ? (
         React.cloneElement(trigger as React.ReactElement, {
-          onClick: () => setVisible(true),
+          onClick: () => setVisible(true)
         })
       ) : (
         <IconButton icon={<IconSettings />} onClick={() => setVisible(true)} />
@@ -38,32 +38,32 @@ function Setting(props: SettingProps) {
         title={
           <>
             <IconSettings />
-            {locale['settings.title']}
+            {locale["settings.title"]}
           </>
         }
         visible={visible}
-        okText={locale['settings.copySettings']}
-        cancelText={locale['settings.close']}
+        okText={locale["settings.copySettings"]}
+        cancelText={locale["settings.close"]}
         onOk={onCopySettings}
         onCancel={() => setVisible(false)}
       >
-        <Block title={locale['settings.themeColor']}>
+        <Block title={locale["settings.themeColor"]}>
           <ColorPanel />
         </Block>
         <Block
-          title={locale['settings.content']}
+          title={locale["settings.content"]}
           options={[
-            { name: 'settings.navbar', value: 'navbar' },
-            { name: 'settings.menu', value: 'menu' },
-            { name: 'settings.footer', value: 'footer' },
-            { name: 'settings.menuWidth', value: 'menuWidth', type: 'number' },
+            { name: "settings.navbar", value: "navbar" },
+            { name: "settings.menu", value: "menu" },
+            { name: "settings.footer", value: "footer" },
+            { name: "settings.menuWidth", value: "menuWidth", type: "number" }
           ]}
         />
         <Block
-          title={locale['settings.otherSettings']}
-          options={[{ name: 'settings.colorWeek', value: 'colorWeek' }]}
+          title={locale["settings.otherSettings"]}
+          options={[{ name: "settings.colorWeek", value: "colorWeek" }]}
         />
-        <Alert content={locale['settings.alertContent']} />
+        <Alert content={locale["settings.alertContent"]} />
       </Drawer>
     </>
   );

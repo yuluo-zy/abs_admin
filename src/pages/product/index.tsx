@@ -1,59 +1,67 @@
-import useLocale from '@/pages/product/locale/useLocale';
-import SearchList from '@/components/Dynamic/List';
-import React, { useState } from 'react';
-import { Link, Message, Modal, Typography } from '@arco-design/web-react';
-import { getProductionDemand, postProductionDemand } from '@/api/demand';
-import DynamicTag from '@/components/Dynamic/tag';
-import { ManageMenuProps, SearchItem } from '@/components/type';
-import DemandManageMenu from '@/pages/product/menu';
-import { Route, Switch, useHistory } from 'react-router';
-import lazyload from '@/utils/lazyload';
-import { ProductStore } from '@/store/product';
-import shallow from 'zustand/shallow';
-import styles from './style/index.module.less';
+import useLocale from "@/pages/product/locale/useLocale";
+import SearchList from "@/components/Dynamic/List";
+import React, { useState } from "react";
+import { Link, Message, Modal, Typography } from "@arco-design/web-react";
+import { getProductionDemand, postProductionDemand } from "@/api/demand";
+import DynamicTag from "@/components/Dynamic/tag";
+import { ManageMenuProps, SearchItem } from "@/components/type";
+import DemandManageMenu from "@/pages/product/menu";
+import { Route, Switch, useHistory } from "react-router";
+import lazyload from "@/utils/lazyload";
+import { ProductStore } from "@/store/product";
+import shallow from "zustand/shallow";
+import styles from "./style/index.module.less";
 
 const { Text } = Typography;
 
 export default function DemandManage() {
   const t = useLocale();
-  const mod = import.meta.glob('./**/index.tsx');
+  const mod = import.meta.glob("./**/index.tsx");
   const productDemand = lazyload(
     mod[`./demand/index.tsx`]
-  )
-  const productSummarize =lazyload(mod['./summarize/index.tsx'])
+  );
+  const productSummarize = lazyload(mod["./summarize/index.tsx"]);
   const history = useHistory();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [setDemandId, reset] = ProductStore(state => [state.setDemandId, state.reset], shallow)
+  const [setDemandId, reset] = ProductStore(state => [state.setDemandId, state.reset], shallow);
 
   const menu: Array<ManageMenuProps> = [
-    { name: t['product.manage.operate.select'] , onChange: item => {}},
-    { name: t['product.manage.operate.not.select'] , onChange: item => {}},
-    {name: t['product.manage.tools.add'], onChange: () => {
-        addDemandConfirm()
-      }}
-  ]
+    {
+      name: t["product.manage.operate.select"], onChange: item => {
+      }
+    },
+    {
+      name: t["product.manage.operate.not.select"], onChange: item => {
+      }
+    },
+    {
+      name: t["product.manage.tools.add"], onChange: () => {
+        addDemandConfirm();
+      }
+    }
+  ];
   const toRequirementsOverview = (demandId) => {
-    reset()
-    ProductStore.persist.clearStorage()
-    setDemandId(demandId)
-    history.push(`/product/summarize`)
-  }
+    reset();
+    ProductStore.persist.clearStorage();
+    setDemandId(demandId);
+    history.push(`/product/summarize`);
+  };
   const selectItem: Array<SearchItem> = [
     {
-      name:  t["product.manage.table.fwpn"],
-      field: 'fwPn',
-      type: 'input',
+      name: t["product.manage.table.fwpn"],
+      field: "fwPn",
+      type: "input"
     },
     {
       name: t["product.manage.table.client.name"],
-      field: 'customerName',
-      type: 'input',
+      field: "customerName",
+      type: "input"
     },
     {
       name: t["product.manage.table.client.code"],
-      field: 'customerCode',
-      type: 'input',
-    },
+      field: "customerCode",
+      type: "input"
+    }
   ];
   const getColumns = () => {
     return [
@@ -61,7 +69,9 @@ export default function DemandManage() {
         title: t["product.manage.table.fwpn"],
         dataIndex: "fwPn",
         width: 150,
-        render:  (col, record, index) =>  <div onClick={() => {toRequirementsOverview(record?.id)}}><Link className={styles['link']}> {record?.fwPn} </Link></div>
+        render: (col, record, index) => <div onClick={() => {
+          toRequirementsOverview(record?.id);
+        }}><Link className={styles["link"]}> {record?.fwPn} </Link></div>
       },
       {
         title: t["product.manage.table.client.name"],
@@ -86,32 +96,32 @@ export default function DemandManage() {
       {
         title: t["product.manage.table.client.firmware"],
         dataIndex: "customFirmware",
-        render: (value) => <DynamicTag value={value}/>
+        render: (value) => <DynamicTag value={value} />
       },
       {
         title: t["product.manage.table.client.firmware.type"],
         dataIndex: "firmwareType",
-        render: (value) =><DynamicTag value={value}/>
+        render: (value) => <DynamicTag value={value} />
       },
       {
         title: t["product.manage.table.client.mac"],
         dataIndex: "customMac",
-        render: (value) => <DynamicTag value={value}/>
+        render: (value) => <DynamicTag value={value} />
       },
       {
         title: t["product.manage.table.client.firmware.context"],
         dataIndex: "customContentBurn",
-        render: (value) => <DynamicTag value={value}/>
+        render: (value) => <DynamicTag value={value} />
       },
       {
         title: t["product.manage.table.client.efuse"],
         dataIndex: "customEfuse",
-        render: (value) => <DynamicTag value={value}/>
+        render: (value) => <DynamicTag value={value} />
       },
       {
         title: t["product.manage.table.client.label"],
         dataIndex: "customLabel",
-        render: (value) => <DynamicTag value={value}/>
+        render: (value) => <DynamicTag value={value} />
       },
       {
         title: t["product.manage.table.client.history.fwpn"],
@@ -153,22 +163,22 @@ export default function DemandManage() {
 
   function addDemandConfirm() {
     Modal.confirm({
-      title: 'Tips',
-      content: t['product.manage.tools.add.message'],
-      okButtonProps: { status: 'danger' },
+      title: "Tips",
+      content: t["product.manage.tools.add.message"],
+      okButtonProps: { status: "danger" },
       onOk: () => {
         // 清空
-        reset()
-        ProductStore.persist.clearStorage()
-        postProductionDemand().then(res=> {
-            Message.success(t["product.manage.tools.add.message.ok"])
-            setDemandId( res.data.result);
-            history.push(`/product/demand`)
-        }
-        ).catch(err=>
-          Message.error( err)
-        )
-      },
+        reset();
+        ProductStore.persist.clearStorage();
+        postProductionDemand().then(res => {
+            Message.success(t["product.manage.tools.add.message.ok"]);
+            setDemandId(res.data.result);
+            history.push(`/product/demand`);
+          }
+        ).catch(err =>
+          Message.error(err)
+        );
+      }
     });
   }
 
@@ -176,19 +186,19 @@ export default function DemandManage() {
     <Switch>
       <Route path={`/product/demand`} component={productDemand} />
       <Route path={`/product/summarize`} component={productSummarize} />
-      <Route exact path={'/product'}>
+      <Route exact path={"/product"}>
         <SearchList
           name={t["product.manage.title"]}
           download={false}
           upload={false}
-          tools={<DemandManageMenu  menu={menu}/>}
+          tools={<DemandManageMenu menu={menu} />}
           fetchRemoteData={getProductionDemand}
           getColumns={getColumns}
           select={true}
-          size={'mini'}
+          size={"mini"}
           selectItem={selectItem}
           rowSelection={{
-            type: 'checkbox',
+            type: "checkbox",
             checkAll: true,
             selectedRowKeys,
             onChange: (selectedRowKeys, selectedRows) => {

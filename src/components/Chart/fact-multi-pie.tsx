@@ -1,6 +1,6 @@
-import React from 'react';
-import { Chart, Facet, Legend } from 'bizcharts';
-import useBizTheme from '@/utils/useHook/useChartTheme';
+import React from "react";
+import { Chart, Facet, Legend } from "bizcharts";
+import useBizTheme from "@/utils/useHook/useChartTheme";
 
 interface FactMultiPieProps {
   data: any[];
@@ -20,45 +20,45 @@ function FactMultiPie(props: FactMultiPieProps) {
     >
       <Legend visible={true} />
       <Facet
-        fields={['category']}
+        fields={["category"]}
         type="rect"
         showTitle={false}
         eachView={(view, facet) => {
           const data = facet.data;
           view.coordinate({
-            type: 'theta',
+            type: "theta",
             cfg: {
               radius: 0.8,
-              innerRadius: 0.7,
-            },
+              innerRadius: 0.7
+            }
           });
           view
             .interval()
-            .adjust('stack')
-            .position('value')
-            .color('type', [
-              '#249eff',
-              '#846BCE',
-              '#21CCFF',
-              ' #86DF6C',
-              '#0E42D2',
+            .adjust("stack")
+            .position("value")
+            .color("type", [
+              "#249eff",
+              "#846BCE",
+              "#21CCFF",
+              " #86DF6C",
+              "#0E42D2"
             ])
-            .label('value', {
+            .label("value", {
               content: (content) => {
                 return `${(content.value * 100).toFixed(2)} %`;
-              },
+              }
             }),
             view.annotation().text({
-              position: ['50%', '46%'],
+              position: ["50%", "46%"],
               content: data[0].category,
               style: {
                 fontSize: 14,
                 fontWeight: 500,
-                textAlign: 'center',
+                textAlign: "center"
               },
-              offsetY: 10,
+              offsetY: 10
             });
-          view.interaction('element-single-selected');
+          view.interaction("element-single-selected");
         }}
       />
     </Chart>

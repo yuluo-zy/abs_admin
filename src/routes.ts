@@ -10,59 +10,59 @@ export type Route = AuthParams & {
   children?: Route[];
 };
 
-export const defaultRoute = 'dashboard/workplace';
+export const defaultRoute = "dashboard/workplace";
 
 export const routes: Route[] = [
   {
-    name: 'menu.dashboard',
-    key: 'dashboard',
+    name: "menu.dashboard",
+    key: "dashboard",
     children: [
       {
-        name: 'menu.dashboard.workplace',
-        key: 'dashboard/workplace',
-      },
-    ],
+        name: "menu.dashboard.workplace",
+        key: "dashboard/workplace"
+      }
+    ]
   },
   {
-    name: 'menu.user',
-    key: 'user',
+    name: "menu.user",
+    key: "user",
     children: [
       {
-        name: 'menu.user.info',
-        key: 'user/info',
+        name: "menu.user.info",
+        key: "user/info"
       },
       {
-        name: 'menu.user.setting',
-        key: 'user/setting',
-      },
-    ],
+        name: "menu.user.setting",
+        key: "user/setting"
+      }
+    ]
   },
   {
-    name: 'menu.account',
-    key: 'account',
+    name: "menu.account",
+    key: "account",
     children: [
       {
-        name: 'menu.account.manage',
-        key: 'account/manage',
-        permission: 'user:mgr'
+        name: "menu.account.manage",
+        key: "account/manage",
+        permission: "user:mgr"
       },
       {
-        name: 'menu.account.role',
-        key: 'account/role',
-        permission: 'role:view'
+        name: "menu.account.role",
+        key: "account/role",
+        permission: "role:view"
       },
       {
-        name: 'menu.account.permission',
-        key: 'account/permission',
-        permission: 'permission:view'
-      },
-    ],
+        name: "menu.account.permission",
+        key: "account/permission",
+        permission: "permission:view"
+      }
+    ]
   },
   {
-    name: 'product.management',
-    key: 'product',
-    permission: 'demand:mgr'
-  },
+    name: "product.management",
+    key: "product",
+    permission: "demand:mgr"
+  }
 ];
 
 export const getName = (path: string, routes) => {
@@ -77,7 +77,7 @@ export const getName = (path: string, routes) => {
 };
 
 export const generatePermission = (role: string) => {
-  const actions = role === 'admin' ? ['*'] : ['read'];
+  const actions = role === "admin" ? ["*"] : ["read"];
   const result = {};
   routes.forEach((item) => {
     if (item.children) {
@@ -129,7 +129,7 @@ const useRoute = (userPermission): [Route[], string] => {
     if (first) {
       return first?.children?.[0]?.key || first.key;
     }
-    return '';
+    return "";
   }, [permissionRoute]);
 
   return [permissionRoute, defaultRoute];
@@ -145,8 +145,8 @@ export const useMenu = (userMenu: []): [Route[], string] => {
     // const menu: Array<string> = userMenu &&  userMenu.filter(item => item.permission] !== undefined).map( item => item['item[\'permission\']']) || []
     if (userMenu != null && userMenu.length > 0) {
       userMenu.forEach(item => {
-        if (item['permission']) {
-          menu.push(item['permission']);
+        if (item["permission"]) {
+          menu.push(item["permission"]);
         }
       });
     }
@@ -186,7 +186,7 @@ export const useMenu = (userMenu: []): [Route[], string] => {
     if (first) {
       return first?.children?.[0]?.key || first.key;
     }
-    return '';
+    return "";
   }, [permissionMenu]);
 
   return [permissionMenu, defaultMenu];

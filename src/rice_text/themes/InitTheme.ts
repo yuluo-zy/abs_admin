@@ -3,25 +3,25 @@ import type { EditorThemeClasses } from "lexical";
 import "./InitTheme.less";
 
 const theme: EditorThemeClasses = {
-  table: 'PlaygroundEditorTheme__table',
-  tableCell: 'PlaygroundEditorTheme__tableCell',
-  tableCellHeader: 'PlaygroundEditorTheme__tableCellHeader',
+  table: "PlaygroundEditorTheme__table",
+  tableCell: "PlaygroundEditorTheme__tableCell",
+  tableCellHeader: "PlaygroundEditorTheme__tableCellHeader",
   list: {
-    listitem: 'PlaygroundEditorTheme__listItem',
-    listitemChecked: 'PlaygroundEditorTheme__listItemChecked',
-    listitemUnchecked: 'PlaygroundEditorTheme__listItemUnchecked',
+    listitem: "PlaygroundEditorTheme__listItem",
+    listitemChecked: "PlaygroundEditorTheme__listItemChecked",
+    listitemUnchecked: "PlaygroundEditorTheme__listItemUnchecked",
     nested: {
-      listitem: 'PlaygroundEditorTheme__nestedListItem',
+      listitem: "PlaygroundEditorTheme__nestedListItem"
     },
     olDepth: [
-      'PlaygroundEditorTheme__ol1',
-      'PlaygroundEditorTheme__ol2',
-      'PlaygroundEditorTheme__ol3',
-      'PlaygroundEditorTheme__ol4',
-      'PlaygroundEditorTheme__ol5',
+      "PlaygroundEditorTheme__ol1",
+      "PlaygroundEditorTheme__ol2",
+      "PlaygroundEditorTheme__ol3",
+      "PlaygroundEditorTheme__ol4",
+      "PlaygroundEditorTheme__ol5"
     ],
-    ul: 'PlaygroundEditorTheme__ul',
-  },
+    ul: "PlaygroundEditorTheme__ul"
+  }
   // characterLimit: 'PlaygroundEditorTheme__characterLimit',
   // code: 'PlaygroundEditorTheme__code',
   // codeHighlight: {

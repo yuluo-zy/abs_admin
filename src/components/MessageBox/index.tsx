@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import groupBy from 'lodash/groupBy';
-import { Avatar, Badge, Button, Spin, Tabs, Trigger } from '@arco-design/web-react';
-import { IconCustomerService, IconDesktop, IconFile, IconMessage } from '@arco-design/web-react/icon';
-import useLocale from '../../utils/useHook/useLocale';
-import MessageList, { MessageListType } from './list';
-import styles from './style/index.module.less';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import groupBy from "lodash/groupBy";
+import { Avatar, Badge, Button, Spin, Tabs, Trigger } from "@arco-design/web-react";
+import { IconCustomerService, IconDesktop, IconFile, IconMessage } from "@arco-design/web-react/icon";
+import useLocale from "../../utils/useHook/useLocale";
+import MessageList, { MessageListType } from "./list";
+import styles from "./style/index.module.less";
 
 function DropContent() {
   const t = useLocale();
@@ -18,7 +18,7 @@ function DropContent() {
   function fetchSourceData(showLoading = true) {
     showLoading && setLoading(true);
     axios
-      .get('/api/message/list')
+      .get("/api/message/list")
       .then((res) => {
         setSourceData(res.data);
       })
@@ -30,8 +30,8 @@ function DropContent() {
   function readMessage(data: MessageListType) {
     const ids = data.map((item) => item.id);
     axios
-      .post('/api/message/read', {
-        ids,
+      .post("/api/message/read", {
+        ids
       })
       .then(() => {
         fetchSourceData();
@@ -45,37 +45,37 @@ function DropContent() {
   useEffect(() => {
     const groupData: { [key: string]: MessageListType } = groupBy(
       sourceData,
-      'type'
+      "type"
     );
     setGroupData(groupData);
   }, [sourceData]);
 
   const tabList = [
     {
-      key: 'message',
-      title: t['message.tab.title.message'],
-      titleIcon: <IconMessage />,
+      key: "message",
+      title: t["message.tab.title.message"],
+      titleIcon: <IconMessage />
     },
     {
-      key: 'notice',
-      title: t['message.tab.title.notice'],
-      titleIcon: <IconCustomerService />,
+      key: "notice",
+      title: t["message.tab.title.notice"],
+      titleIcon: <IconCustomerService />
     },
     {
-      key: 'todo',
-      title: t['message.tab.title.todo'],
+      key: "todo",
+      title: t["message.tab.title.todo"],
       titleIcon: <IconFile />,
       avatar: (
-        <Avatar style={{ backgroundColor: '#0FC6C2' }}>
+        <Avatar style={{ backgroundColor: "#0FC6C2" }}>
           <IconDesktop />
         </Avatar>
-      ),
-    },
+      )
+    }
   ];
 
   return (
-    <div className={styles['message-box']}>
-      <Spin loading={loading} style={{ display: 'block' }}>
+    <div className={styles["message-box"]}>
+      <Spin loading={loading} style={{ display: "block" }}>
         <Tabs
           overflow="dropdown"
           type="rounded"
@@ -83,7 +83,7 @@ function DropContent() {
           destroyOnHide
           extra={
             <Button type="text" onClick={() => setSourceData([])}>
-              {t['message.empty']}
+              {t["message.empty"]}
             </Button>
           }
         >
@@ -97,7 +97,7 @@ function DropContent() {
                 title={
                   <span>
                     {title}
-                    {unReadData.length ? `(${unReadData.length})` : ''}
+                    {unReadData.length ? `(${unReadData.length})` : ""}
                   </span>
                 }
               >

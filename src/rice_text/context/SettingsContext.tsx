@@ -13,12 +13,12 @@ const Context: React.Context<SettingsContextShape> = createContext({
   setOption: (name: SettingName, value: boolean) => {
     return;
   },
-  settings: DEFAULT_SETTINGS,
+  settings: DEFAULT_SETTINGS
 });
 
 export const SettingsContext = ({
-  children,
-}: {
+                                  children
+                                }: {
   children: ReactNode;
 }): JSX.Element => {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
@@ -33,7 +33,7 @@ export const SettingsContext = ({
     // 为了避免 异步操作多次操作而不生效的问题
     setSettings((options) => ({
       ...options,
-      [setting as string]: value,
+      [setting as string]: value
     }));
     if (DEFAULT_SETTINGS[setting] === value) {
       setURLParam(setting, null);
@@ -43,7 +43,7 @@ export const SettingsContext = ({
   }, []);
 
   const contextValue = useMemo(() => {
-    return {setOption, settings};
+    return { setOption, settings };
   }, [setOption, settings]);
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
@@ -70,5 +70,5 @@ function setURLParam(param: SettingName, value: null | boolean) {
     }
   }
   url.search = params.toString();
-  window.history.pushState(null, '', url.toString());
+  window.history.pushState(null, "", url.toString());
 }

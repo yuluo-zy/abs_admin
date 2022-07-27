@@ -1,32 +1,32 @@
-import './style/global.less';
-import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { ConfigProvider } from '@arco-design/web-react';
-import zhCN from '@arco-design/web-react/es/locale/zh-CN';
-import enUS from '@arco-design/web-react/es/locale/en-US';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import rootReducer from './store';
-import PageLayout from './layout';
-import { GlobalContext } from './context';
-import Login from './pages/login';
-import checkLogin from './utils/checkLogin';
-import changeTheme from './utils/changeTheme';
-import useStorage from './utils/useHook/useStorage';
-import { userInfo, userMenu } from '@/api/user';
+import "./style/global.less";
+import React, { useEffect } from "react";
+import ReactDOM from "react-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import { ConfigProvider } from "@arco-design/web-react";
+import zhCN from "@arco-design/web-react/es/locale/zh-CN";
+import enUS from "@arco-design/web-react/es/locale/en-US";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import rootReducer from "./store";
+import PageLayout from "./layout";
+import { GlobalContext } from "./context";
+import Login from "./pages/login";
+import checkLogin from "./utils/checkLogin";
+import changeTheme from "./utils/changeTheme";
+import useStorage from "./utils/useHook/useStorage";
+import { userInfo, userMenu } from "@/api/user";
 
 const store = createStore(rootReducer);
 
 function Index() {
-  const [lang, setLang] = useStorage('arco-lang', 'en-US');
-  const [theme, setTheme] = useStorage('arco-theme', 'light');
+  const [lang, setLang] = useStorage("arco-lang", "en-US");
+  const [theme, setTheme] = useStorage("arco-theme", "light");
 
   function getArcoLocale() {
     switch (lang) {
-      case 'zh-CN':
+      case "zh-CN":
         return zhCN;
-      case 'en-US':
+      case "en-US":
         return enUS;
       default:
         return zhCN;
@@ -36,8 +36,8 @@ function Index() {
   function fetchUserInfo() {
     return userInfo().then((res) => {
       store.dispatch({
-        type: 'update-userInfo',
-        payload: { userInfo: res.data.result },
+        type: "update-userInfo",
+        payload: { userInfo: res.data.result }
       });
     });
   }
@@ -45,7 +45,7 @@ function Index() {
   function fetchUserMenu() {
     return userMenu().then((res) => {
       store.dispatch({
-        type: 'update-userMenu',
+        type: "update-userMenu",
         payload: { menu: res.data.result }
       });
     });
@@ -55,8 +55,8 @@ function Index() {
     if (checkLogin()) {
       Promise.all([fetchUserInfo(), fetchUserMenu()])
         .then();
-    } else if (window.location.pathname.replace(/\//g, '') !== 'login') {
-      window.location.pathname = '/login';
+    } else if (window.location.pathname.replace(/\//g, "") !== "login") {
+      window.location.pathname = "/login";
     }
   }, []);
 
@@ -68,7 +68,7 @@ function Index() {
     lang,
     setLang,
     theme,
-    setTheme,
+    setTheme
   };
 
   return (
@@ -77,14 +77,14 @@ function Index() {
         locale={getArcoLocale()}
         componentConfig={{
           Card: {
-            bordered: false,
+            bordered: false
           },
           List: {
-            bordered: false,
+            bordered: false
           },
           Table: {
-            border: false,
-          },
+            border: false
+          }
         }}
       >
         <Provider store={store}>
@@ -100,4 +100,4 @@ function Index() {
   );
 }
 
-ReactDOM.render(<Index />, document.getElementById('root'));
+ReactDOM.render(<Index />, document.getElementById("root"));

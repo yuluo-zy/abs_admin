@@ -11,31 +11,31 @@ const Direction = {
   east: 1 << 0,
   north: 1 << 3,
   south: 1 << 1,
-  west: 1 << 2,
+  west: 1 << 2
 };
 
 export default function ImageResizer({
-  onResizeStart,
-  onResizeEnd,
-  imageRef,
-  maxWidth,
-  editor,
-}: {
+                                       onResizeStart,
+                                       onResizeEnd,
+                                       imageRef,
+                                       maxWidth,
+                                       editor
+                                     }: {
   editor: LexicalEditor;
-  imageRef: {current: null | HTMLElement};
+  imageRef: { current: null | HTMLElement };
   maxWidth?: number;
-  onResizeEnd: (width: 'inherit' | number, height: 'inherit' | number) => void;
+  onResizeEnd: (width: "inherit" | number, height: "inherit" | number) => void;
   onResizeStart: () => void;
 }): JSX.Element {
   const buttonRef = useRef(null);
   const controlWrapperRef = useRef<HTMLDivElement>(null);
   const userSelect = useRef({
-    priority: '',
-    value: 'default',
+    priority: "",
+    value: "default"
   });
   const positioningRef = useRef<{
-    currentHeight: 'inherit' | number;
-    currentWidth: 'inherit' | number;
+    currentHeight: "inherit" | number;
+    currentWidth: "inherit" | number;
     direction: number;
     isResizing: boolean;
     ratio: number;
@@ -52,15 +52,15 @@ export default function ImageResizer({
     startHeight: 0,
     startWidth: 0,
     startX: 0,
-    startY: 0,
+    startY: 0
   });
   const editorRootElement = editor.getRootElement();
   // Find max width, accounting for editor padding.
   const maxWidthContainer = maxWidth
     ? maxWidth
     : editorRootElement !== null
-    ? editorRootElement.getBoundingClientRect().width - 20
-    : 100;
+      ? editorRootElement.getBoundingClientRect().width - 20
+      : 100;
   const maxHeightContainer =
     editorRootElement !== null
       ? editorRootElement.getBoundingClientRect().height - 20
@@ -76,58 +76,58 @@ export default function ImageResizer({
       (direction & Direction.north && direction & Direction.west) ||
       (direction & Direction.south && direction & Direction.east);
 
-    const cursorDir = ew ? 'ew' : ns ? 'ns' : nwse ? 'nwse' : 'nesw';
+    const cursorDir = ew ? "ew" : ns ? "ns" : nwse ? "nwse" : "nesw";
 
     if (editorRootElement !== null) {
       editorRootElement.style.setProperty(
-        'cursor',
+        "cursor",
         `${cursorDir}-resize`,
-        'important',
+        "important"
       );
     }
     if (document.body !== null) {
       document.body.style.setProperty(
-        'cursor',
+        "cursor",
         `${cursorDir}-resize`,
-        'important',
+        "important"
       );
       userSelect.current.value = document.body.style.getPropertyValue(
-        '-webkit-user-select',
+        "-webkit-user-select"
       );
       userSelect.current.priority = document.body.style.getPropertyPriority(
-        '-webkit-user-select',
+        "-webkit-user-select"
       );
       document.body.style.setProperty(
-        '-webkit-user-select',
+        "-webkit-user-select",
         `none`,
-        'important',
+        "important"
       );
     }
   };
 
   const setEndCursor = () => {
     if (editorRootElement !== null) {
-      editorRootElement.style.setProperty('cursor', 'default');
+      editorRootElement.style.setProperty("cursor", "default");
     }
     if (document.body !== null) {
-      document.body.style.setProperty('cursor', 'default');
+      document.body.style.setProperty("cursor", "default");
       document.body.style.setProperty(
-        '-webkit-user-select',
+        "-webkit-user-select",
         userSelect.current.value,
-        userSelect.current.priority,
+        userSelect.current.priority
       );
     }
   };
 
   const handlePointerDown = (
     event: React.PointerEvent<HTMLDivElement>,
-    direction: number,
+    direction: number
   ) => {
     const image = imageRef.current;
     const controlWrapper = controlWrapperRef.current;
 
     if (image !== null && controlWrapper !== null) {
-      const {width, height} = image.getBoundingClientRect();
+      const { width, height } = image.getBoundingClientRect();
       const positioning = positioningRef.current;
       positioning.startWidth = width;
       positioning.startHeight = height;
@@ -142,12 +142,12 @@ export default function ImageResizer({
       setStartCursor(direction);
       onResizeStart();
 
-      controlWrapper.classList.add('image-control-wrapper--resizing');
+      controlWrapper.classList.add("image-control-wrapper--resizing");
       image.style.height = `${height}px`;
       image.style.width = `${width}px`;
 
-      document.addEventListener('pointermove', handlePointerMove);
-      document.addEventListener('pointerup', handlePointerUp);
+      document.addEventListener("pointermove", handlePointerMove);
+      document.addEventListener("pointerup", handlePointerUp);
     }
   };
   const handlePointerMove = (event: PointerEvent) => {
@@ -168,7 +168,7 @@ export default function ImageResizer({
         const width = clamp(
           positioning.startWidth + diff,
           minWidth,
-          maxWidthContainer,
+          maxWidthContainer
         );
 
         const height = width / positioning.ratio;
@@ -183,7 +183,7 @@ export default function ImageResizer({
         const height = clamp(
           positioning.startHeight + diff,
           minHeight,
-          maxHeightContainer,
+          maxHeightContainer
         );
 
         image.style.height = `${height}px`;
@@ -195,7 +195,7 @@ export default function ImageResizer({
         const width = clamp(
           positioning.startWidth + diff,
           minWidth,
-          maxWidthContainer,
+          maxWidthContainer
         );
 
         image.style.width = `${width}px`;
@@ -219,13 +219,13 @@ export default function ImageResizer({
       positioning.currentHeight = 0;
       positioning.isResizing = false;
 
-      controlWrapper.classList.remove('image-control-wrapper--resizing');
+      controlWrapper.classList.remove("image-control-wrapper--resizing");
 
       setEndCursor();
       onResizeEnd(width, height);
 
-      document.removeEventListener('pointermove', handlePointerMove);
-      document.removeEventListener('pointerup', handlePointerUp);
+      document.removeEventListener("pointermove", handlePointerMove);
+      document.removeEventListener("pointerup", handlePointerUp);
     }
   };
   return (

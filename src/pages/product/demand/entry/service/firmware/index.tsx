@@ -86,13 +86,13 @@ export default function FirmwareCustomization() {
     }
 
     // 转换 自定义efuse otherCustom
-    if(temp?.efuseConfig?.otherCustom && temp?.efuseConfig?.otherCustom.length > 0){
-      let otherCustom = {}
-      for (const  item of temp?.efuseConfig?.otherCustom){
+    if (temp?.efuseConfig?.otherCustom && temp?.efuseConfig?.otherCustom.length > 0) {
+      let otherCustom = {};
+      for (const item of temp?.efuseConfig?.otherCustom) {
         // @ts-ignore
-        otherCustom[item?.key || 'defines'] = item?.data
+        otherCustom[item?.key || "defines"] = item?.data;
       }
-      temp.efuseConfig.otherCustom = otherCustom
+      temp.efuseConfig.otherCustom = otherCustom;
     }
 
     setInfo({

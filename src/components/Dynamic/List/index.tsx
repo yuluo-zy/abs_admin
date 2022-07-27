@@ -1,13 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Button, PaginationProps, Space, Table } from '@arco-design/web-react';
-import { IconDownload, IconPlus } from '@arco-design/web-react/icon';
-import useLocale from '@/utils/useHook/useLocale';
-import SearchForm from './search-form';
-import locale from './locale';
-import styles from './style/index.module.less';
-import DynamicCard from '@/components/Dynamic/Card';
-import { ListProps } from '@/components/type';
-import DynamicModal from '@/components/Dynamic/Modal';
+import React, { useEffect, useMemo, useState } from "react";
+import { Button, PaginationProps, Space, Table } from "@arco-design/web-react";
+import { IconDownload, IconPlus } from "@arco-design/web-react/icon";
+import useLocale from "@/utils/useHook/useLocale";
+import SearchForm from "./search-form";
+import locale from "./locale";
+import styles from "./style/index.module.less";
+import DynamicCard from "@/components/Dynamic/Card";
+import { ListProps } from "@/components/type";
+import DynamicModal from "@/components/Dynamic/Modal";
 
 export default function SearchList(props: ListProps) {
   const t = useLocale(locale);
@@ -39,7 +39,7 @@ export default function SearchList(props: ListProps) {
     showTotal: true,
     pageSize: 10,
     current: 1,
-    pageSizeChangeResetCurrent: true,
+    pageSizeChangeResetCurrent: true
   });
 
   const [loading, setLoading] = useState(true);
@@ -55,7 +55,7 @@ export default function SearchList(props: ListProps) {
     pagination.current,
     pagination.pageSize,
     called,
-    JSON.stringify(formParams),
+    JSON.stringify(formParams)
   ]);
 
   function fetchData() {
@@ -64,7 +64,7 @@ export default function SearchList(props: ListProps) {
     fetchRemoteData({
       pageNo: current,
       pageSize,
-      ...formParams,
+      ...formParams
     }).then((res) => {
       setData(res.data.result.data);
       if (res.data.result.totalCount) {
@@ -72,7 +72,7 @@ export default function SearchList(props: ListProps) {
           ...pagination,
           current,
           pageSize,
-          total: res.data.result.totalCount,
+          total: res.data.result.totalCount
         });
       }
 
@@ -99,7 +99,7 @@ export default function SearchList(props: ListProps) {
             <SearchForm onSearch={handleSearch} searchItem={selectItem} />
           </>
         )}
-        <div className={styles['button-group']}>
+        <div className={styles["button-group"]}>
           <Space>
             {add && (
               <>
@@ -108,7 +108,7 @@ export default function SearchList(props: ListProps) {
                   icon={<IconPlus />}
                   onClick={() => setVisible(true)}
                 >
-                  {t['searchTable.operations.add']}
+                  {t["searchTable.operations.add"]}
                 </Button>
 
                 <DynamicModal
@@ -126,15 +126,15 @@ export default function SearchList(props: ListProps) {
                       setVisible(false);
                       setConfirmLoading(false);
                       tableCallback();
-                    },
+                    }
                   })}
                 </DynamicModal>
               </>
             )}
             {upload === true && (
               <>
-                {' '}
-                <Button>{t['searchTable.operations.upload']}</Button>{' '}
+                {" "}
+                <Button>{t["searchTable.operations.upload"]}</Button>{" "}
               </>
             )}
             {tools}
@@ -143,7 +143,7 @@ export default function SearchList(props: ListProps) {
             {download === true && (
               <>
                 <Button icon={<IconDownload />}>
-                  {t['searchTable.operation.download']}
+                  {t["searchTable.operation.download"]}
                 </Button>
               </>
             )}
@@ -157,7 +157,7 @@ export default function SearchList(props: ListProps) {
           columns={columns}
           data={data}
           size={size}
-          rowSelection ={rowSelection}
+          rowSelection={rowSelection}
         />
       </DynamicCard>
     </div>

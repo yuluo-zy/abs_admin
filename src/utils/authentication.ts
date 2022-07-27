@@ -19,7 +19,7 @@ const judge = (actions: string[], perm: string[]) => {
     return false;
   }
 
-  if (perm.join('') === '*') {
+  if (perm.join("") === "*") {
     return true;
   }
 

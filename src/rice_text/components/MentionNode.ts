@@ -1,15 +1,13 @@
 import type { Spread } from "lexical";
 import { EditorConfig, LexicalNode, NodeKey, SerializedTextNode, TextNode } from "lexical";
 
-export type SerializedMentionNode = Spread<
-  {
-    mentionName: string;
-    userId: string;
-    type: 'mention';
-    version: 1;
-  },
-  SerializedTextNode
->;
+export type SerializedMentionNode = Spread<{
+  mentionName: string;
+  userId: string;
+  type: "mention";
+  version: 1;
+},
+  SerializedTextNode>;
 
 
 export interface MentionPayload {
@@ -22,13 +20,20 @@ export class MentionNode extends TextNode {
   __mention: string;
   __userId: string;
 
+  constructor(mentionName: string, userId: string, text?: string, key?: NodeKey) {
+    super(text ?? mentionName, key);
+    this.__mention = mentionName;
+    this.__userId = userId;
+  }
+
   static getType(): string {
-    return 'mention';
+    return "mention";
   }
 
   static clone(node: MentionNode): MentionNode {
-    return new MentionNode(node.__mention,node.__userId, node.__text, node.__key);
+    return new MentionNode(node.__mention, node.__userId, node.__text, node.__key);
   }
+
   static importJSON(serializedNode: SerializedMentionNode): MentionNode {
     const node = $createMentionNode({ ...serializedNode });
     node.setTextContent(serializedNode.text);
@@ -39,25 +44,19 @@ export class MentionNode extends TextNode {
     return node;
   }
 
-  constructor(mentionName: string,userId: string, text?: string, key?: NodeKey) {
-    super(text ?? mentionName, key);
-    this.__mention = mentionName;
-    this.__userId = userId
-  }
-
   exportJSON(): SerializedMentionNode {
     return {
       ...super.exportJSON(),
       mentionName: this.__mention,
       userId: this.__userId,
-      type: 'mention',
-      version: 1,
+      type: "mention",
+      version: 1
     };
   }
 
   createDOM(config: EditorConfig): HTMLElement {
     const dom = super.createDOM(config);
-    dom.className = 'mention';
+    dom.className = "mention";
     return dom;
   }
 
@@ -68,12 +67,12 @@ export class MentionNode extends TextNode {
 
 export function $createMentionNode({ mentionName, userId }: MentionPayload): MentionNode {
   const mentionNode = new MentionNode(mentionName, userId);
-  mentionNode.setMode('segmented').toggleDirectionless();
+  mentionNode.setMode("segmented").toggleDirectionless();
   return mentionNode;
 }
 
 export function $isMentionNode(
-  node: LexicalNode | null | undefined,
+  node: LexicalNode | null | undefined
 ): node is MentionNode {
   return node instanceof MentionNode;
 }

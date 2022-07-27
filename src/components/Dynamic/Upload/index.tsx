@@ -11,17 +11,17 @@ function DownLoad({ src }) {
   const downFile = (event) => {
     event.stopPropagation();
     if (src) {
-      console.log(src)
+      console.log(src);
       getFile(src[0]?.response || src[0]?.uid).then(res => {
-          if (res.status === 200) {
-            const url = URL.createObjectURL(new Blob([res.data]));
-            const link = document.createElement("a");
-            link.href = url;
-            let name = res.headers["content-disposition"]?.match(/fileName=(.*)/)[1]; // 获取filename的值
-            name = decodeURIComponent(name);
-            link.setAttribute("download", name);
-            document.body.appendChild(link);
-            link.click();
+        if (res.status === 200) {
+          const url = URL.createObjectURL(new Blob([res.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          let name = res.headers["content-disposition"]?.match(/fileName=(.*)/)[1]; // 获取filename的值
+          name = decodeURIComponent(name);
+          link.setAttribute("download", name);
+          document.body.appendChild(link);
+          link.click();
             document.body.removeChild(link);
           }
         }

@@ -8,9 +8,9 @@ import { useEffect } from "react";
 type LinkFilter = (event: MouseEvent, linkNode: LinkNode) => boolean;
 
 export default function ClickableLinkPlugin({
-  filter,
-  newTab = true,
-}: {
+                                              filter,
+                                              newTab = true
+                                            }: {
   filter?: LinkFilter;
   newTab?: boolean;
 }): JSX.Element | null {
@@ -24,10 +24,10 @@ export default function ClickableLinkPlugin({
         return;
       }
 
-      const href = linkDomNode.getAttribute('href');
+      const href = linkDomNode.getAttribute("href");
 
       if (
-        linkDomNode.getAttribute('contenteditable') === 'false' ||
+        linkDomNode.getAttribute("contenteditable") === "false" ||
         href === undefined
       ) {
         return;
@@ -59,7 +59,7 @@ export default function ClickableLinkPlugin({
         if (href !== null) {
           window.open(
             href,
-            newTab || event.metaKey || event.ctrlKey ? '_blank' : '_self',
+            newTab || event.metaKey || event.ctrlKey ? "_blank" : "_self"
           );
         }
       } catch {
@@ -70,28 +70,28 @@ export default function ClickableLinkPlugin({
     return editor.registerRootListener(
       (
         rootElement: null | HTMLElement,
-        prevRootElement: null | HTMLElement,
+        prevRootElement: null | HTMLElement
       ) => {
         if (prevRootElement !== null) {
-          prevRootElement.removeEventListener('click', onClick);
+          prevRootElement.removeEventListener("click", onClick);
         }
 
         if (rootElement !== null) {
-          rootElement.addEventListener('click', onClick);
+          rootElement.addEventListener("click", onClick);
         }
-      },
+      }
     );
   }, [editor, filter, newTab]);
   return null;
 }
 
 function isLinkDomNode(domNode: Node): boolean {
-  return domNode.nodeName.toLowerCase() === 'a';
+  return domNode.nodeName.toLowerCase() === "a";
 }
 
 function getLinkDomNode(
   event: MouseEvent,
-  editor: LexicalEditor,
+  editor: LexicalEditor
 ): HTMLAnchorElement | null {
   return editor.getEditorState().read(() => {
     const domNode = event.target as Node;

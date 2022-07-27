@@ -2,17 +2,17 @@
 
 export default function clipboard(text) {
   if (navigator.clipboard) {
-    return navigator.clipboard.writeText(text).catch(function (err) {
+    return navigator.clipboard.writeText(text).catch(function(err) {
       throw err !== undefined
         ? err
-        : new DOMException('The request is not allowed', 'NotAllowedError');
+        : new DOMException("The request is not allowed", "NotAllowedError");
     });
   }
 
-  const span = document.createElement('span');
+  const span = document.createElement("span");
   span.textContent = text;
 
-  span.style.whiteSpace = 'pre';
+  span.style.whiteSpace = "pre";
 
   document.body.appendChild(span);
 
@@ -24,10 +24,10 @@ export default function clipboard(text) {
 
   let success = false;
   try {
-    success = window.document.execCommand('copy');
+    success = window.document.execCommand("copy");
   } catch (err) {
     // eslint-disable-next-line
-    console.log('error', err);
+    console.log("error", err);
   }
 
   selection.removeAllRanges();
@@ -36,6 +36,6 @@ export default function clipboard(text) {
   return success
     ? Promise.resolve()
     : Promise.reject(
-        new DOMException('The request is not allowed', 'NotAllowedError')
-      );
+      new DOMException("The request is not allowed", "NotAllowedError")
+    );
 }

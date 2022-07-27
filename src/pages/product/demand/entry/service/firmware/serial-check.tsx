@@ -13,15 +13,15 @@ export default function SerialCheck(props: { initialValues? }) {
   const t = useLocale();
   const [form] = Form.useForm();
 
-  initialValues.serial_check_str = [""]
-  if(initialValues?.serialCheckStr1 && initialValues?.serialCheckStr1.length > 0){
-    initialValues.serial_check_str[0] = initialValues?.serialCheckStr1
+  initialValues.serial_check_str = [""];
+  if (initialValues?.serialCheckStr1 && initialValues?.serialCheckStr1.length > 0) {
+    initialValues.serial_check_str[0] = initialValues?.serialCheckStr1;
   }
-  if(initialValues?.serialCheckStr2 && initialValues?.serialCheckStr2.length > 0){
-    initialValues.serial_check_str[1] = initialValues?.serialCheckStr2
+  if (initialValues?.serialCheckStr2 && initialValues?.serialCheckStr2.length > 0) {
+    initialValues.serial_check_str[1] = initialValues?.serialCheckStr2;
   }
-  if(initialValues?.serialCheckStr3 && initialValues?.serialCheckStr3.length > 0){
-    initialValues.serial_check_str[2] = initialValues?.serialCheckStr3
+  if (initialValues?.serialCheckStr3 && initialValues?.serialCheckStr3.length > 0) {
+    initialValues.serial_check_str[2] = initialValues?.serialCheckStr3;
   }
 
   return (
@@ -36,18 +36,18 @@ export default function SerialCheck(props: { initialValues? }) {
             labelCol={{ span: 4, offset: 0 }}
             initialValues={initialValues}
           >
-            <Form.Item field="serialType" label={t['demand.service.firmware.serial.check.type']}
+            <Form.Item field="serialType" label={t["demand.service.firmware.serial.check.type"]}
 
-                       required={true} rules={[ {
+                       required={true} rules={[{
               required: true,
-              message: t["demand.service.firmware.serial.check.error"],
+              message: t["demand.service.firmware.serial.check.error"]
             }]}>
               <DynamicRadioGroup
                 defaultValue={initialValues?.serialType}
                 options={[
-                { label: t["demand.service.firmware.serial.check.universal"], value: 0 },
-                { label: t["demand.service.firmware.serial.check.self"], value: 1 }
-              ]}></DynamicRadioGroup>
+                  { label: t["demand.service.firmware.serial.check.universal"], value: 0 },
+                  { label: t["demand.service.firmware.serial.check.self"], value: 1 }
+                ]}></DynamicRadioGroup>
             </Form.Item>
             <Form.Item
               shouldUpdate
@@ -71,15 +71,18 @@ export default function SerialCheck(props: { initialValues? }) {
                   </Form.Item>
                 ) : (
                   values?.serialType === 1 && (
-                    <Form.Item key={1} label={t["firmware.serial.self.serial.port"]} required style={{ marginBottom: 0 }}>
+                    <Form.Item key={1} label={t["firmware.serial.self.serial.port"]} required
+                               style={{ marginBottom: 0 }}>
                       <Grid.Row gutter={8}>
                         <Grid.Col span={12}>
-                          <Form.Item field="customSerialTx" rules={[{ required: true, message: "TX: GPIO() is required" }]}>
+                          <Form.Item field="customSerialTx"
+                                     rules={[{ required: true, message: "TX: GPIO() is required" }]}>
                             <InputNumber min={0} placeholder="TX: GPIO()" />
                           </Form.Item>
                         </Grid.Col>
                         <Grid.Col span={12}>
-                          <Form.Item field="customSerialRx" rules={[{ required: true, message: "RX: GPIO() is required" }]}>
+                          <Form.Item field="customSerialRx"
+                                     rules={[{ required: true, message: "RX: GPIO() is required" }]}>
                             <InputNumber min={0} placeholder="RX: GPIO()" />
                           </Form.Item>
                         </Grid.Col>
@@ -89,16 +92,16 @@ export default function SerialCheck(props: { initialValues? }) {
                 );
               }}
             </Form.Item>
-          <Form.Item field="serialBaud" required={true} label={t["firmware.serial.self.serial.baud.rate"]} rules={[
-            {
-              required: true,
-              message: t["firmware.serial.self.serial.baud.rate.error"],
-              minLength: 1
-            }
-          ]}>
-            <Input allowClear />
-          </Form.Item>
-            <Form.List field='serial_check_str' initialValue={initialValues?.serial_check_str}>
+            <Form.Item field="serialBaud" required={true} label={t["firmware.serial.self.serial.baud.rate"]} rules={[
+              {
+                required: true,
+                message: t["firmware.serial.self.serial.baud.rate.error"],
+                minLength: 1
+              }
+            ]}>
+              <Input allowClear />
+            </Form.Item>
+            <Form.List field="serial_check_str" initialValue={initialValues?.serial_check_str}>
               {(fields, { add, remove, move }) => {
                 return (
                   <div>
@@ -108,28 +111,28 @@ export default function SerialCheck(props: { initialValues? }) {
                           <Form.Item
                             field={item.field}
                             labelCol={{ span: 4, offset: 0 }}
-                            label={t['demand.service.firmware.serial.check.str'] + (index+ 1)}
+                            label={t["demand.service.firmware.serial.check.str"] + (index + 1)}
                             rules={[
                               {
-                                required: true,
-                              },
+                                required: true
+                              }
                             ]}
                           >
-                            <Input allowClear placeholder={t['demand.service.firmware.serial.check.str.help']} />
+                            <Input allowClear placeholder={t["demand.service.firmware.serial.check.str.help"]} />
                           </Form.Item>
 
-                          <div className={style['button_group']}>
+                          <div className={style["button_group"]}>
                             <Button
                               icon={<IconDelete />}
-                              shape='circle'
-                              status='danger'
+                              shape="circle"
+                              status="danger"
                               style={{
-                                margin: '0 20px',
+                                margin: "0 20px"
                               }}
                               onClick={() => remove(index)}
                             ></Button>
                             <Button
-                              shape='circle'
+                              shape="circle"
                               onClick={() => move(index, index > 0 ? index - 1 : index + 1)}
                             >
                               {index > 0 ? <IconArrowRise /> : <IconArrowFall />}
@@ -142,20 +145,20 @@ export default function SerialCheck(props: { initialValues? }) {
                     })}
                     <div>
                       <Button
-                        type={'primary'}
+                        type={"primary"}
                         style={{ marginRight: 20 }}
                         onClick={() => {
-                          if(fields.length >=3){
+                          if (fields.length >= 3) {
                             Notification.warning({
-                              content: t['demand.service.firmware.serial.check.str.size'],
-                              position: 'bottomRight',
-                            })
-                          }else {
+                              content: t["demand.service.firmware.serial.check.str.size"],
+                              position: "bottomRight"
+                            });
+                          } else {
                             add();
                           }
 
                         }}
-                      >{t['demand.service.firmware.serial.check.add']}
+                      >{t["demand.service.firmware.serial.check.add"]}
                       </Button>
                     </div>
                   </div>

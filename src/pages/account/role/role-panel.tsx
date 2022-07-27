@@ -22,35 +22,35 @@ export default function RolePanel(props) {
     if (is_add) {
       roleList.unshift({
         id: 0,
-        role: '',
-        name: t['role.content.role.add'],
+        role: "",
+        name: t["role.content.role.add"]
       });
     }
 
     dispatch({
-      type: 'RoleList',
-      payload: roleList,
+      type: "RoleList",
+      payload: roleList
     });
     dispatch({
-      type: 'RoleId',
-      payload: 0,
+      type: "RoleId",
+      payload: 0
     });
     dispatch({
-      type: 'RoleInfo',
-      payload: roleList[0],
+      type: "RoleInfo",
+      payload: roleList[0]
     });
   };
 
   return useMemo(() => {
     return (
-      <div className={styles['role-panel']}>
+      <div className={styles["role-panel"]}>
         <DynamicSkeleton text={{ rows: 5 }} animation>
-          <div className={styles['role-panel-header']}>
+          <div className={styles["role-panel-header"]}>
             <Typography.Title
               style={{ marginTop: 0, marginBottom: 16 }}
               heading={6}
             >
-              {t['role.panel.title']}
+              {t["role.panel.title"]}
             </Typography.Title>
             <div>
               <Button
@@ -60,11 +60,11 @@ export default function RolePanel(props) {
                   addRole();
                 }}
               >
-                {t['role.panel.add']}
+                {t["role.panel.add"]}
               </Button>
             </div>
           </div>
-          <div className={styles['role-panel-content']}>
+          <div className={styles["role-panel-content"]}>
             <MessageList data={state.roleList} />
           </div>
         </DynamicSkeleton>

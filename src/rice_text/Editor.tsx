@@ -37,7 +37,7 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { CLEAR_HISTORY_COMMAND } from "lexical";
 
-export default function Editor({onChange, initValue }: {
+export default function Editor({ onChange, initValue }: {
   initValue?: string
   onChange: any
 }): JSX.Element {
@@ -56,17 +56,17 @@ export default function Editor({onChange, initValue }: {
   const placeholder = <Placeholder>{text}</Placeholder>;
   const scrollRef = useRef(null);
   const [editor] = useLexicalComposerContext();
-  const [readOnly, setReadOnly] = useState(true)
+  const [readOnly, setReadOnly] = useState(true);
 
   useEffect(() => {
-    setReadOnly(editor.isReadOnly())
+    setReadOnly(editor.isReadOnly());
     editor.dispatchCommand(CLEAR_HISTORY_COMMAND, undefined);
-  }, [editor])
+  }, [editor]);
 
   return (
     <>
       {/*设置 工具栏*/}
-      {isRichText && ! readOnly && <ToolbarPlugin />}
+      {isRichText && !readOnly && <ToolbarPlugin />}
       <div
         className={`editor-container ${
           readOnly ? "read-only" : ""
@@ -80,7 +80,7 @@ export default function Editor({onChange, initValue }: {
         <KeywordsPlugin />
         <EspAutoLinkPlugin />
         {
-          onChange && !readOnly &&<OnChangePlugin onChange={onChange}/>
+          onChange && !readOnly && <OnChangePlugin onChange={onChange} />
         }
         <AutoScrollPlugin scrollRef={scrollRef} />
         {isRichText && <>

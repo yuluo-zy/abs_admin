@@ -1,13 +1,13 @@
-import React from 'react';
-import { Grid, Space } from '@arco-design/web-react';
-import Overview from './overview';
-import PopularContents from './popular-contents';
-import ContentPercentage from './content-percentage';
-import Shortcuts from './shortcuts';
-import Announcement from './announcement';
-import Docs from './docs';
-import styles from './style/index.module.less';
-import Upcoming from '@/pages/dashboard/workplace/upcoming';
+import React from "react";
+import { Grid, Space } from "@arco-design/web-react";
+import Overview from "./overview";
+import PopularContents from "./popular-contents";
+import ContentPercentage from "./content-percentage";
+import Shortcuts from "./shortcuts";
+import Announcement from "./announcement";
+import Docs from "./docs";
+import styles from "./style/index.module.less";
+import Upcoming from "@/pages/dashboard/workplace/upcoming";
 
 const { Row, Col } = Grid;
 
@@ -29,7 +29,7 @@ function Workplace() {
       </Space>
       <Space className={styles.right} size={16} direction="vertical">
         {/*待办中心*/}
-        <Upcoming/>
+        <Upcoming />
         <Shortcuts />
         {/*// 公告*/}
         <Announcement />

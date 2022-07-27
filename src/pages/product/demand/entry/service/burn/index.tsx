@@ -33,16 +33,16 @@ export default function ServicePreselection() {
 
   const getFormList = (value: number | undefined) => {
     if (value != undefined && value > -1) {
-   switch (value){
-     case 0:
-       return <FlashBin initialValues={burnData}/>
-     case 1:
-       return <FlashNvs initialValues={burnData}/>
-     case 2:
-       return <FlashNvsNot initialValues={burnData}/>
-     case 3:
-       return <FlashScript initialValues={burnData}/>
-   }
+      switch (value) {
+        case 0:
+          return <FlashBin initialValues={burnData} />;
+        case 1:
+          return <FlashNvs initialValues={burnData} />;
+        case 2:
+          return <FlashNvsNot initialValues={burnData} />;
+        case 3:
+          return <FlashScript initialValues={burnData} />;
+      }
     }
   };
 
@@ -85,26 +85,28 @@ export default function ServicePreselection() {
         <Space size={10} direction={"vertical"}>
           <Space size={15} direction={"vertical"}>
             {t["firmware.burn.title.context"]}
-            {serviceData?.burnContentToFlash === 1 && <Checkbox checked={burnData?.flashType !== -1} onChange={(value) => {
-              if (value) {
-                setBurnData({ flashType: 0 });
-              } else {
-                setBurnData({ flashType: -1 });
-              }
+            {serviceData?.burnContentToFlash === 1 &&
+              <Checkbox checked={burnData?.flashType !== -1} onChange={(value) => {
+                if (value) {
+                  setBurnData({ flashType: 0 });
+                } else {
+                  setBurnData({ flashType: -1 });
+                }
 
-            }}>Flash</Checkbox>}
-            {serviceData?.burnContentToEfuse === 1 && <Checkbox checked={burnData?.efuseType === 0} onChange={(value) => {
-              if (value) {
-                setBurnData({
-                  efuseType: 0
-                });
-              } else {
-                setBurnData({
-                  efuseType: -1
-                });
-              }
+              }}>Flash</Checkbox>}
+            {serviceData?.burnContentToEfuse === 1 &&
+              <Checkbox checked={burnData?.efuseType === 0} onChange={(value) => {
+                if (value) {
+                  setBurnData({
+                    efuseType: 0
+                  });
+                } else {
+                  setBurnData({
+                    efuseType: -1
+                  });
+                }
 
-            }}>eFuse</Checkbox>}
+              }}>eFuse</Checkbox>}
           </Space>
           <br />
           <Space>

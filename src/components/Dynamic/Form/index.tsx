@@ -17,10 +17,10 @@ const TextArea = Input.TextArea;
 const { RangePicker } = DatePicker;
 
 function DynamicForm(props: FormProps) {
-  let form = null
-  if(props.formData){
-    form = props.formData
-  }else {
+  let form = null;
+  if (props.formData) {
+    form = props.formData;
+  } else {
     [form] = Form.useForm();
   }
   const t = useLocale(locale);
@@ -28,7 +28,7 @@ function DynamicForm(props: FormProps) {
 
   const DynamicFormItem = (props: { item: FormItemProps; index: number }) => {
     const { item, index } = props;
-    if (item.type === 'input') {
+    if (item.type === "input") {
       return (
         <FormItem
           key={index}
@@ -43,7 +43,7 @@ function DynamicForm(props: FormProps) {
         </FormItem>
       );
     }
-    if (item.type === 'password') {
+    if (item.type === "password") {
       return (
         <FormItem
           key={index}
@@ -54,11 +54,11 @@ function DynamicForm(props: FormProps) {
           rules={item.rules}
           style={item.style}
         >
-          <Input type={'password'} allowClear placeholder={item.placeholder} />
+          <Input type={"password"} allowClear placeholder={item.placeholder} />
         </FormItem>
       );
     }
-    if (item.type === 'number') {
+    if (item.type === "number") {
       return (
         <FormItem
           key={index}
@@ -73,7 +73,7 @@ function DynamicForm(props: FormProps) {
         </FormItem>
       );
     }
-    if (item.type === 'select') {
+    if (item.type === "select") {
       return (
         <FormItem
           key={index}
@@ -88,7 +88,7 @@ function DynamicForm(props: FormProps) {
         </FormItem>
       );
     }
-    if (item.type === 'text') {
+    if (item.type === "text") {
       return (
         <FormItem
           key={index}
@@ -103,7 +103,7 @@ function DynamicForm(props: FormProps) {
         </FormItem>
       );
     }
-    if (item.type === 'multiple') {
+    if (item.type === "multiple") {
       return (
         <FormItem
           key={index}
@@ -114,11 +114,11 @@ function DynamicForm(props: FormProps) {
           rules={item.rules}
           style={item.style}
         >
-          <Select options={item.options} mode={'multiple'} allowClear placeholder={item.placeholder} />
+          <Select options={item.options} mode={"multiple"} allowClear placeholder={item.placeholder} />
         </FormItem>
       );
     }
-    if (item.type === 'date') {
+    if (item.type === "date") {
       return (
         <FormItem
           key={index}
@@ -131,17 +131,17 @@ function DynamicForm(props: FormProps) {
         >
           <RangePicker
             allowClear
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
             disabledDate={(date) => dayjs(date).isAfter(dayjs())}
           />
         </FormItem>
       );
 
     }
-    if (item.type === 'self') {
+    if (item.type === "self") {
       return item.node;
     }
-    if (item.type === 'upload') {
+    if (item.type === "upload") {
       return (
         <FormItem
           key={index}
@@ -151,26 +151,26 @@ function DynamicForm(props: FormProps) {
           field={item.field}
           rules={item.rules}
           style={item.style}
-          triggerPropName='fileList'
+          triggerPropName="fileList"
           help={item.placeholder}
         >
           <DynamicUpload limit={item.limit} onChange={(fileList: UploadItem[], file: UploadItem) => {
-            if(item.limit > 1){
-              const res = []
-              fileList.forEach( r => {
-                res.push(r.response)
-              })
-              form.setFieldValue(item.field, res)
-            }else {
-              if(fileList.length > 0){
-                form.setFieldValue(item.field, file.response)
-              }else {
-                form.setFieldValue(item.field, undefined)
+            if (item.limit > 1) {
+              const res = [];
+              fileList.forEach(r => {
+                res.push(r.response);
+              });
+              form.setFieldValue(item.field, res);
+            } else {
+              if (fileList.length > 0) {
+                form.setFieldValue(item.field, file.response);
+              } else {
+                form.setFieldValue(item.field, undefined);
               }
 
             }
 
-          }}  />
+          }} />
         </FormItem>
       );
     }
@@ -185,28 +185,28 @@ function DynamicForm(props: FormProps) {
 
         {(fields, { add, remove }) => {
           return (
-            <div style={{ width: '100%' }}>
-              <div className={styles['list-button']}>
+            <div style={{ width: "100%" }}>
+              <div className={styles["list-button"]}>
                 <Button
                   style={{ marginRight: 20 }}
-                  status={'default'}
-                  type='primary'
+                  status={"default"}
+                  type="primary"
                   icon={<IconPlus />}
                   onClick={() => {
                     add();
                   }}
-                >{t['list.add']}</Button>
-                <Button icon={<IconDelete />} status='danger'
+                >{t["list.add"]}</Button>
+                <Button icon={<IconDelete />} status="danger"
                         onClick={() => {
                           remove(fields.length - 1);
-                        }}>{t['list.remove']}</Button>
+                        }}>{t["list.remove"]}</Button>
               </div>
               {fields.map((item, index) => {
                 return (
                   <div key={item.key} className={props.styles}>
 
                     {/*<Form.Item colon>*/}
-                    <Row gutter={10} justify='start' align='start'>
+                    <Row gutter={10} justify="start" align="start">
                       <Col span={props.fieldLabel}>{field}</Col>
                       {fieldList.map((item, index) => <Col key={index} span={item.labelCol as any}>{DynamicFormItem({
                         item,
@@ -234,7 +234,7 @@ function DynamicForm(props: FormProps) {
           id={props.title}
           {...props.formItemLayout}
           scrollToFirstError
-          labelAlign='left'
+          labelAlign="left"
           initialValues={props.data}
         >
           {DynamicFormList(props.formList)}
@@ -249,14 +249,14 @@ function DynamicForm(props: FormProps) {
           id={props.title}
           {...props.formItemLayout}
           scrollToFirstError
-          labelAlign='left'
+          labelAlign="left"
           initialValues={props.data}
           layout={props.layout}
-          style={props.layout === 'inline' ? { width: '100%' } : { }}
+          style={props.layout === "inline" ? { width: "100%" } : {}}
         >
-          <Row gutter={24} style={props.layout === 'inline' ? { width: '100%', alignItems: 'center' } : { }}>
+          <Row gutter={24} style={props.layout === "inline" ? { width: "100%", alignItems: "center" } : {}}>
             {props.formItem.map((item, index) => {
-              if( typeof props.col  === "number"){
+              if (typeof props.col === "number") {
                 return (
                   <Col key={index} span={Math.floor(24 / props.col)}>
                     {DynamicFormItem({ item, index })}
@@ -264,7 +264,7 @@ function DynamicForm(props: FormProps) {
                 );
               }
               return (
-                <Col key={index} span={ props.col[index]}>
+                <Col key={index} span={props.col[index]}>
                   {DynamicFormItem({ item, index })}
                 </Col>
               );
@@ -281,9 +281,9 @@ function DynamicForm(props: FormProps) {
         id={props.title}
         {...props.formItemLayout}
         scrollToFirstError
-        labelAlign='left'
+        labelAlign="left"
         initialValues={props.data}
-        style={props.layout === 'inline' ? { width: '100%' } : { maxWidth: 600 }}
+        style={props.layout === "inline" ? { width: "100%" } : { maxWidth: 600 }}
 
       >
         {props.formItem.map((item, index) => DynamicFormItem({ item, index }))}
@@ -302,24 +302,24 @@ function DynamicForm(props: FormProps) {
   }, 100);
 
   return (
-    <div style={{ paddingRight: '2rem' }} className={cs(className)}>
+    <div style={{ paddingRight: "2rem" }} className={cs(className)}>
       <div>{DynamicFormNode}</div>
       <div>{props.children}</div>
       {
-        (props.formData == undefined && props.onSubmit != undefined) && <div className={styles['right-button']}>
+        (props.formData == undefined && props.onSubmit != undefined) && <div className={styles["right-button"]}>
           <Button
-            type='primary'
+            type="primary"
             icon={<IconCheck />}
             onClick={submitData}
           >
-            {t['form.submit']}
+            {t["form.submit"]}
           </Button>
 
           <Button
             icon={<IconRefresh />}
             onClick={resetData}
           >
-            {t['form.reset']}
+            {t["form.reset"]}
           </Button>
         </div>
       }

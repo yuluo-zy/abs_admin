@@ -211,8 +211,8 @@ export default function ServicePreselection() {
                      } else {
                        copy.delete(item.type);
                      }
-                     if(!copy.has(5)){
-                       copy.add(5)
+                     if (!copy.has(5)) {
+                       copy.add(5);
                      }
                      setServiceType([...copy]);
                    }} />

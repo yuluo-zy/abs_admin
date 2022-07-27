@@ -16,7 +16,7 @@ export default function CommentList() {
     pageSize: 10,
     current: 1,
     pageSizeChangeResetCurrent: true,
-    onChange: onChangeTable,
+    onChange: onChangeTable
   });
   useEffect(() => {
     fetchData();
@@ -76,10 +76,10 @@ export default function CommentList() {
           <Card
             bordered
             key={index}
-            style={{margin: 10}}
+            style={{ margin: 10 }}
             hoverable>
-            <UserInfo user={item}/>
-            <RiceText key ={item.id} readOnly={true} initValue={item?.remarks}/>
+            <UserInfo user={item} />
+            <RiceText key={item.id} readOnly={true} initValue={item?.remarks} />
           </Card>
         )}
       />

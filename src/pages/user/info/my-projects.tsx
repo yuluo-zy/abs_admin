@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Grid } from '@arco-design/web-react';
-import ProjectCard, { ProjectProps } from './blocks/project';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Grid } from "@arco-design/web-react";
+import ProjectCard, { ProjectProps } from "./blocks/project";
 
 function MyProject() {
   const [data, setData] = useState<ProjectProps[]>(new Array(6).fill({}));
@@ -11,7 +11,7 @@ function MyProject() {
 
   const getData = async () => {
     setLoading(true);
-    const { data } = await axios.get('/api/user/projectList').finally(() => {
+    const { data } = await axios.get("/api/user/projectList").finally(() => {
       setLoading(false);
     });
     setData(data);
@@ -29,7 +29,7 @@ function MyProject() {
           span={8}
           style={
             index > data.length - 4 && index < data.length
-              ? { marginTop: '16px' }
+              ? { marginTop: "16px" }
               : {}
           }
         >

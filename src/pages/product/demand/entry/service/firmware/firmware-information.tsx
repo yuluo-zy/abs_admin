@@ -9,9 +9,9 @@ import { Button } from "@arco-design/web-react";
 import style from "./style/index.module.less";
 import { IconDelete, IconPlus } from "@arco-design/web-react/icon";
 
-export default function FirmwareInformation(props: {initialValues,addItem?, deleteItem?, number?, }) {
+export default function FirmwareInformation(props: { initialValues, addItem?, deleteItem?, number?, }) {
   const t = useLocale();
-  const {initialValues,addItem, deleteItem} = props;
+  const { initialValues, addItem, deleteItem } = props;
   const [number, setNumber] = useState(getList(props.number));
   const labelCol = {
     span: 12
@@ -31,7 +31,7 @@ export default function FirmwareInformation(props: {initialValues,addItem?, dele
         }
       ],
       style: {
-        minWidth: '15rem'
+        minWidth: "15rem"
       }
     },
     {
@@ -48,7 +48,7 @@ export default function FirmwareInformation(props: {initialValues,addItem?, dele
         }
       ],
       style: {
-        minWidth: '17rem'
+        minWidth: "17rem"
       }
     },
     {
@@ -65,7 +65,7 @@ export default function FirmwareInformation(props: {initialValues,addItem?, dele
         }
       ],
       style: {
-        minWidth: '17rem'
+        minWidth: "17rem"
       }
     }
   ];
@@ -80,28 +80,28 @@ export default function FirmwareInformation(props: {initialValues,addItem?, dele
         <DynamicCard title={t["firmware.information.title"]}>
 
           {number.map((item, index) => {
-            return <div key={index} className={style['button_group_delete']}>
+            return <div key={index} className={style["button_group_delete"]}>
               <DynamicForm title={`firmware.information.title-${item}`}
                            col={3}
                            key={item}
                            data={initialValues ? initialValues[item] : {}}
                            formItem={informationProps} />
-              { (item === number.length) && deleteItem && <Button
-                className={style['button_group_delete-button']}
+              {(item === number.length) && deleteItem && <Button
+                className={style["button_group_delete-button"]}
                 icon={<IconDelete />}
-                shape='circle'
-                status='danger'
+                shape="circle"
+                status="danger"
                 style={{
                   marginLeft: 32,
                   marginTop: 4
                 }}
                 onClick={deleteItem}
               ></Button>}
-            </div>
+            </div>;
           })
           }
           {addItem && <Button type="primary" icon={<IconPlus />}
-                   onClick={addItem}>{t["firmware.customization.info.encryption.firmware.add"]}</Button>
+                              onClick={addItem}>{t["firmware.customization.info.encryption.firmware.add"]}</Button>
           }        </DynamicCard>
       </DynamicCard>
     );

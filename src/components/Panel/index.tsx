@@ -1,7 +1,7 @@
-import React, { CSSProperties, ReactNode } from 'react';
-import { Typography } from '@arco-design/web-react';
-import cs from 'classnames';
-import styles from './style/index.module.less';
+import React, { CSSProperties, ReactNode } from "react";
+import { Typography } from "@arco-design/web-react";
+import cs from "classnames";
+import styles from "./style/index.module.less";
 
 interface PanelProps {
   className?: string;

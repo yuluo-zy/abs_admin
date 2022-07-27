@@ -19,26 +19,27 @@ export default function Summarize() {
   const t = useLocale();
   const [riceText, setRiceText] = useState();
 
-  const [demandId, ] = ProductStore(state =>
-    [state.demandId,], shallow);
+  const [demandId] = ProductStore(state =>
+    [state.demandId], shallow);
 
   function handleOnClick() {
     // @ts-ignore
-    const data = JSON.stringify(riceText.toJSON())
-    if(demandId &&  demandId >0){
+    const data = JSON.stringify(riceText.toJSON());
+    if (demandId && demandId > 0) {
       postDemandComment({
         demandId: demandId,
         remarks: data
       }).then(r => {
-        if(r.data.success){
+        if (r.data.success) {
           Notification.success({
-            title: 'Success',
-            content: t['summarize.history.comment.success'],
-          })
+            title: "Success",
+            content: t["summarize.history.comment.success"]
+          });
         }
-      })
+      });
     }
   }
+
   return <div className={styles["context"]}>
     <div className={styles["context-main"]}>
       <Sheet />
@@ -46,13 +47,14 @@ export default function Summarize() {
 
     <DynamicOuterCard title={t["summarize.history.comment"]} bodyStyle={bodyStyle}>
       <div className={styles["context-card"]}>
-        <Button className={styles["context-card-button"]} type={"primary"} onClick={handleOnClick}>{t["summarize.history.comment.add"]}</Button>
-        <RiceText onChange={setRiceText} readOnly={false}/>
+        <Button className={styles["context-card-button"]} type={"primary"}
+                onClick={handleOnClick}>{t["summarize.history.comment.add"]}</Button>
+        <RiceText onChange={setRiceText} readOnly={false} />
       </div>
     </DynamicOuterCard>
 
     <DynamicOuterCard title={t["summarize.history.title"]} bodyStyle={{
-    margin: '1rem',
+      margin: "1rem",
       transition: " 0.5s all ease-in-out"
     }}>
       <CommentList />

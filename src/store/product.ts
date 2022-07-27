@@ -56,14 +56,15 @@ export interface BurnDemand {
 export interface PreFitDemand {
   fitData: Recordable;
 }
+
 export interface CheckDemand {
   checkData: Recordable;
 }
 
 const createBearSlice: StoreSlice<StepSetting> = (set, get) => ({
-  stepKey: '',
+  stepKey: "",
   stepList: [],
-  stepRouter: '',
+  stepRouter: "",
   collapse: true,
 
   setStepKey: (value) => set(() => ({
@@ -142,13 +143,13 @@ const createBurnDemand: StoreSlice<BurnDemand> = (set, get) => ({
 // 获得本产品提供的详情服务
 const createServiceDemand: StoreSlice<ServiceDemand> = (set, get) => ({
   serviceData: null,
-  setServiceData: value => set( (state) => ({
+  setServiceData: value => set((state) => ({
     serviceData: {
       ...state.serviceData,
       ...value
     }
   }))
-})
+});
 
 // 定制烧录内容
 const createPreFitDemand: StoreSlice<PreFitDemand> = (set, get) => ({
@@ -179,8 +180,8 @@ const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
   ...createLabelDemand(set, get),
   ...createBurnDemand(set, get),
   ...createPreFitDemand(set, get),
-  ...createCheckDemand(set,get),
-  ...createServiceDemand(set,get),
+  ...createCheckDemand(set, get),
+  ...createServiceDemand(set, get),
   reset: () => {
     set({
       fitData: null,
@@ -193,21 +194,20 @@ const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
       demandId: -1,
       moduleInfo: {},
       serviceType: [],
-      stepKey: '',
+      stepKey: "",
       stepList: [],
-      stepRouter: '',
+      stepRouter: "",
       collapse: true,
       serviceData: null
-    })
-  },
+    });
+  }
 });
 
 export const ProductStore = create(devtools(persist(createRootSlice,
   {
-    name: 'product-storage',
+    name: "product-storage",
     getStorage: () => sessionStorage
   })));
-
 
 
 export const ProductMenuInfo = create(() => ({

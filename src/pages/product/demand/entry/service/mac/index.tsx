@@ -42,7 +42,7 @@ export default function CustomMac() {
     form.setFieldValue("macStart", temp);
   };
   const getMacEndInfo = (value) => {
-    console.log(value)
+    console.log(value);
     const temp = getMac(value, macData?.macEnd || "");
     setMacData({
       macEnd: temp
@@ -51,18 +51,18 @@ export default function CustomMac() {
   };
 
   const getMacNumber = (start, end) => {
-    const temp = convertToNumber(end) - convertToNumber(start) + 1
-    if(temp <= 0) {
-      return 0
+    const temp = convertToNumber(end) - convertToNumber(start) + 1;
+    if (temp <= 0) {
+      return 0;
     }
     return temp.toLocaleString("en-US");
   };
   const getProjectNumber = (start, end, project) => {
-    const temp = convertToNumber(end) - convertToNumber(start) +1
-    if(temp <= 0){
-      return 0
+    const temp = convertToNumber(end) - convertToNumber(start) + 1;
+    if (temp <= 0) {
+      return 0;
     }
-    return Math.floor( temp / project * 0.998).toLocaleString("en-US");
+    return Math.floor(temp / project * 0.998).toLocaleString("en-US");
   };
 
   const postMacCustom = () => {
@@ -189,11 +189,14 @@ export default function CustomMac() {
             }}
           />
         </FormItem>
-        <DynamicDivider/>
+        <DynamicDivider />
         <FormItem label={t["firmware.mac.partitions.flash.write.area.serial.port"]}
                   labelAlign={"left"}
                   field={"serialCheckStr"}
-                  rules={[{ required: true, message: t["firmware.mac.partitions.flash.write.area.serial.port.error"]}]}>
+                  rules={[{
+                    required: true,
+                    message: t["firmware.mac.partitions.flash.write.area.serial.port.error"]
+                  }]}>
           {/*<Input*/}
           {/*  style={{ width: "20rem" }}*/}
           {/*  value={macData?.serialPort}*/}

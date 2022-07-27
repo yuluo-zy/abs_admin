@@ -721,25 +721,25 @@ export default function ToolbarPlugin(): JSX.Element {
           if (rows > 0 && columns > 0) {
             activeEditor.dispatchCommand(INSERT_TABLE_COMMAND, { columns, rows });
             setTableModal(false);
-          }
-          else {
+          } else {
             Notification.error({
-              title: 'Error',
-              content: 'Please enter a legal value!',
-            })
+              title: "Error",
+              content: "Please enter a legal value!"
+            });
           }
         }}
         onCancel={() => setTableModal(false)}
       >
         <Space>
-          <p style={{width: '10rem'}}>No of rows</p>
-          <InputNumber style={{ margin: "1rem", width: "12rem" }} min={1} max={10} placeholder={"No of rows"} value={rows}
+          <p style={{ width: "10rem" }}>No of rows</p>
+          <InputNumber style={{ margin: "1rem", width: "12rem" }} min={1} max={10} placeholder={"No of rows"}
+                       value={rows}
                        onChange={(value) => {
                          setRows(value);
                        }} />
         </Space>
         <Space>
-          <p style={{width: '10rem'}}>No of columns</p>
+          <p style={{ width: "10rem" }}>No of columns</p>
           <InputNumber style={{ margin: "1rem", width: "12rem" }} min={1} max={10} placeholder={"No of columns"}
                        value={columns} onChange={(value) => {
             setColumns(value);

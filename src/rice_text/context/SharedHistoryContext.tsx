@@ -10,13 +10,13 @@ type ContextShape = {
 const Context: React.Context<ContextShape> = createContext({});
 
 export const SharedHistoryContext = ({
-  children,
-}: {
+                                       children
+                                     }: {
   children: ReactNode;
 }): JSX.Element => {
   const historyContext = useMemo(
-    () => ({historyState: createEmptyHistoryState()}),
-    [],
+    () => ({ historyState: createEmptyHistoryState() }),
+    []
   );
   return <Context.Provider value={historyContext}>{children}</Context.Provider>;
 };

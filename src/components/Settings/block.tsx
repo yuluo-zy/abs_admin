@@ -1,13 +1,13 @@
-import React, { ReactNode } from 'react';
-import { Divider, InputNumber, Switch } from '@arco-design/web-react';
-import { useDispatch, useSelector } from 'react-redux';
-import { GlobalState } from '../../store';
-import useLocale from '../../utils/useHook/useLocale';
-import styles from './style/block.module.less';
+import React, { ReactNode } from "react";
+import { Divider, InputNumber, Switch } from "@arco-design/web-react";
+import { useDispatch, useSelector } from "react-redux";
+import { GlobalState } from "../../store";
+import useLocale from "../../utils/useHook/useLocale";
+import styles from "./style/block.module.less";
 
 export interface BlockProps {
   title?: ReactNode;
-  options?: { name: string; value: string; type?: 'switch' | 'number' }[];
+  options?: { name: string; value: string; type?: "switch" | "number" }[];
   children?: ReactNode;
 }
 
@@ -22,35 +22,35 @@ export default function Block(props: BlockProps) {
       <h5 className={styles.title}>{title}</h5>
       {options &&
         options.map((option) => {
-          const type = option.type || 'switch';
+          const type = option.type || "switch";
 
           return (
-            <div className={styles['switch-wrapper']} key={option.value}>
+            <div className={styles["switch-wrapper"]} key={option.value}>
               <span>{locale[option.name]}</span>
-              {type === 'switch' && (
+              {type === "switch" && (
                 <Switch
                   size="small"
                   checked={!!settings[option.value]}
                   onChange={(checked) => {
                     const newSetting = {
                       ...settings,
-                      [option.value]: checked,
+                      [option.value]: checked
                     };
                     dispatch({
-                      type: 'update-settings',
-                      payload: { settings: newSetting },
+                      type: "update-settings",
+                      payload: { settings: newSetting }
                     });
                     // set color week
-                    if (checked && option.value === 'colorWeek') {
-                      document.body.style.filter = 'invert(80%)';
+                    if (checked && option.value === "colorWeek") {
+                      document.body.style.filter = "invert(80%)";
                     }
-                    if (!checked && option.value === 'colorWeek') {
-                      document.body.style.filter = 'none';
+                    if (!checked && option.value === "colorWeek") {
+                      document.body.style.filter = "none";
                     }
                   }}
                 />
               )}
-              {type === 'number' && (
+              {type === "number" && (
                 <InputNumber
                   style={{ width: 80 }}
                   size="small"
@@ -58,11 +58,11 @@ export default function Block(props: BlockProps) {
                   onChange={(value) => {
                     const newSetting = {
                       ...settings,
-                      [option.value]: value,
+                      [option.value]: value
                     };
                     dispatch({
-                      type: 'update-settings',
-                      payload: { settings: newSetting },
+                      type: "update-settings",
+                      payload: { settings: newSetting }
                     });
                   }}
                 />

@@ -1,12 +1,7 @@
-import React from 'react';
-import { Avatar, Space, Skeleton } from '@arco-design/web-react';
-import {
-  IconCamera,
-  IconLocation,
-  IconUser,
-  IconHome,
-} from '@arco-design/web-react/icon';
-import styles from './style/index.module.less';
+import React from "react";
+import { Avatar, Skeleton, Space } from "@arco-design/web-react";
+import { IconCamera, IconHome, IconLocation, IconUser } from "@arco-design/web-react/icon";
+import styles from "./style/index.module.less";
 
 interface HeaderProps {
   userInfo?: {
@@ -26,8 +21,8 @@ function UserInfoHeader(props: HeaderProps) {
     <Skeleton
       text={{
         rows: 1,
-        style: { width: '100px', height: '20px', marginBottom: '-4px' },
-        width: ['100%'],
+        style: { width: "100px", height: "20px", marginBottom: "-4px" },
+        width: ["100%"]
       }}
       animation
     />
@@ -35,7 +30,7 @@ function UserInfoHeader(props: HeaderProps) {
   const loadingImgNode = (
     <Skeleton
       text={{ rows: 0 }}
-      image={{ style: { width: '64px', height: '64px' }, shape: 'circle' }}
+      image={{ style: { width: "64px", height: "64px" }, shape: "circle" }}
       animation
     />
   );
@@ -45,7 +40,7 @@ function UserInfoHeader(props: HeaderProps) {
         size={8}
         direction="vertical"
         align="center"
-        className={styles['header-content']}
+        className={styles["header-content"]}
       >
         {loading ? (
           loadingImgNode
@@ -57,23 +52,23 @@ function UserInfoHeader(props: HeaderProps) {
         <div className={styles.username}>
           {loading ? loadingNode : userInfo.name}
         </div>
-        <div className={styles['user-msg']}>
+        <div className={styles["user-msg"]}>
           <Space size={18}>
             <div>
               <IconUser />
-              <span className={styles['user-msg-text']}>
+              <span className={styles["user-msg-text"]}>
                 {loading ? loadingNode : userInfo.jobName}
               </span>
             </div>
             <div>
               <IconHome />
-              <span className={styles['user-msg-text']}>
+              <span className={styles["user-msg-text"]}>
                 {loading ? loadingNode : userInfo.organizationName}
               </span>
             </div>
             <div>
               <IconLocation />
-              <span className={styles['user-msg-text']}>
+              <span className={styles["user-msg-text"]}>
                 {loading ? loadingNode : userInfo.locationName}
               </span>
             </div>
