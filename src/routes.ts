@@ -35,19 +35,25 @@ export const routes: Route[] = [
         name: 'menu.user.setting',
         key: 'user/setting',
       },
+    ],
+  },
+  {
+    name: 'menu.account',
+    key: 'account',
+    children: [
       {
-        name: 'menu.user.manage',
-        key: 'user/manage',
+        name: 'menu.account.manage',
+        key: 'account/manage',
         permission: 'user:mgr'
       },
       {
-        name: 'menu.user.role',
-        key: 'user/role',
+        name: 'menu.account.role',
+        key: 'account/role',
         permission: 'role:view'
       },
       {
-        name: 'menu.user.permission',
-        key: 'user/permission',
+        name: 'menu.account.permission',
+        key: 'account/permission',
         permission: 'permission:view'
       },
     ],

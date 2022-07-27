@@ -3,17 +3,12 @@ import { Link, Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { Breadcrumb, Layout, Menu } from "@arco-design/web-react";
 import cs from "classnames";
 import {
-  IconApps,
-  IconCheckCircle,
   IconDashboard,
-  IconExclamationCircle,
-  IconFile,
-  IconList,
   IconMenuFold,
   IconMenuUnfold,
   IconNav,
-  IconSettings,
-  IconUser
+  IconUser,
+  IconUserGroup
 } from "@arco-design/web-react/icon";
 import { useSelector } from "react-redux";
 import qs from "query-string";
@@ -38,18 +33,8 @@ function getIconFromKey(key) {
   switch (key) {
     case 'dashboard':
       return <IconDashboard className={styles.icon} />;
-    case 'list':
-      return <IconList className={styles.icon} />;
-    case 'form':
-      return <IconSettings className={styles.icon} />;
-    case 'profile':
-      return <IconFile className={styles.icon} />;
-    case 'visualization':
-      return <IconApps className={styles.icon} />;
-    case 'result':
-      return <IconCheckCircle className={styles.icon} />;
-    case 'exception':
-      return <IconExclamationCircle className={styles.icon} />;
+    case 'account':
+      return <IconUserGroup className={styles.icon} />;
     case 'user':
       return <IconUser className={styles.icon} />;
     case 'product':
@@ -273,10 +258,10 @@ function PageLayout() {
                 <Route exact path="/">
                   <Redirect to={`/${defaultRoute}`} />
                 </Route>
-                {/*<Route*/}
-                {/*  path="*"*/}
-                {/*  component={lazyload(() => import('./pages/exception/403'))}*/}
-                {/*/>*/}
+                <Route
+                  path="*"
+                  component={lazyload(() => import('./components/Exception/403'))}
+                />
               </Switch>
             </Content>
           </div>

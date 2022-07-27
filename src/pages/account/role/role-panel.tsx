@@ -1,10 +1,10 @@
-import React, { useContext, useMemo } from 'react';
-import { Button, Typography } from '@arco-design/web-react';
-import styles from './style/index.module.less';
-import MessageList from '@/pages/user/role/message-list';
-import { IconPlus } from '@arco-design/web-react/icon';
-import { RoleContext } from '@/store/context-manager';
-import DynamicSkeleton from '@/components/Dynamic/Skeleton';
+import React, { useContext, useMemo } from "react";
+import { Button, Typography } from "@arco-design/web-react";
+import styles from "./style/index.module.less";
+import MessageList from "./message-list";
+import { IconPlus } from "@arco-design/web-react/icon";
+import { RoleContext } from "@/store/context-manager";
+import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 
 export default function RolePanel(props) {
   const { t } = props;

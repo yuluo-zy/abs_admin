@@ -1,13 +1,13 @@
-import React, { useRef, useState } from 'react';
-import useLocale from '@/utils/useHook/useLocale';
-import locale from '@/pages/user/permission/locale';
-import { deletePermission, getPermission, postPermission, putPermission } from '@/api/permission';
-import SearchList from '@/components/Dynamic/List';
-import { Badge, Button, Dropdown, Menu, Message, Popconfirm } from '@arco-design/web-react';
-import { FormItemProps } from '@/components/type';
-import DynamicModal from '@/components/Dynamic/Modal';
-import DynamicForm from '@/components/Dynamic/Form';
-import { IconDelete } from '@arco-design/web-react/icon';
+import React, { useRef, useState } from "react";
+import useLocale from "@/utils/useHook/useLocale";
+import locale from "./locale";
+import { deletePermission, getPermission, postPermission, putPermission } from "@/api/permission";
+import SearchList from "@/components/Dynamic/List";
+import { Badge, Button, Dropdown, Menu, Message, Popconfirm } from "@arco-design/web-react";
+import { FormItemProps } from "@/components/type";
+import DynamicModal from "@/components/Dynamic/Modal";
+import DynamicForm from "@/components/Dynamic/Form";
+import { IconDelete } from "@arco-design/web-react/icon";
 
 export default function UserPermission() {
   const t = useLocale(locale);

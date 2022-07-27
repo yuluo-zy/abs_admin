@@ -1,12 +1,12 @@
-import React, { useEffect, useReducer } from 'react';
-import useLocale from '@/utils/useHook/useLocale';
-import locale from '@/pages/user/role/locale';
-import styles from '@/pages/user/role/style/index.module.less';
-import RolePanel from '@/pages/user/role/role-panel';
-import RoleStore, { initialRole, RoleContext } from '@/store/context-manager';
-import RoleInfo from '@/pages/user/role/role-info';
-import { getRole } from '@/api/role';
-import { getPermission } from '@/api/permission';
+import React, { useEffect, useReducer } from "react";
+import useLocale from "@/utils/useHook/useLocale";
+import locale from "./locale";
+import styles from "./style/index.module.less";
+import RolePanel from "./role-panel";
+import RoleStore, { initialRole, RoleContext } from "@/store/context-manager";
+import RoleInfo from "./role-info";
+import { getRole } from "@/api/role";
+import { getPermission } from "@/api/permission";
 
 function UserRole() {
   const [state, dispatch] = useReducer(RoleStore, initialRole);
