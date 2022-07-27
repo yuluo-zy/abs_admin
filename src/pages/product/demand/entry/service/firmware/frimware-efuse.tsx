@@ -347,7 +347,7 @@ export default function FirmwareEfuse(props: { initialValues, target }) {
                   return (
                     <div key={item.key}>
                       <Form.Item label={"Custom Fuses - " + index}>
-                        <Space>
+                        <Space size={"large"}>
                           <Form.Item
                             field={item.field + ".key"}
                             rules={[{ required: true, message: t["firmware.information.efuse.custom.port.key"] }]}
