@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
-import { Breadcrumb, Layout, Menu } from '@arco-design/web-react';
-import cs from 'classnames';
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Link, Redirect, Route, Switch, useHistory } from "react-router-dom";
+import { Breadcrumb, Layout, Menu } from "@arco-design/web-react";
+import cs from "classnames";
 import {
   IconApps,
   IconCheckCircle,
@@ -14,19 +14,19 @@ import {
   IconNav,
   IconSettings,
   IconUser
-} from '@arco-design/web-react/icon';
-import { useSelector } from 'react-redux';
-import qs from 'query-string';
-import NProgress from 'nprogress';
-import Navbar from './components/NavBar';
-import Footer from './components/Footer';
-import { isArray } from './utils/is';
-import useLocale from './utils/useHook/useLocale';
-import getUrlParams from './utils/getUrlParams';
-import lazyload from './utils/lazyload';
-import { GlobalState } from './store';
-import styles from './style/layout.module.less';
-import { useMenu } from '@/routes';
+} from "@arco-design/web-react/icon";
+import { useSelector } from "react-redux";
+import qs from "query-string";
+import NProgress from "nprogress";
+import Navbar from "./components/NavBar";
+import Footer from "./components/Footer";
+import { isArray } from "./utils/is";
+import useLocale from "./utils/useHook/useLocale";
+import getUrlParams from "./utils/getUrlParams";
+import lazyload from "./utils/lazyload";
+import { GlobalState } from "./store";
+import styles from "./style/layout.module.less";
+import { useMenu } from "@/routes";
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
@@ -273,10 +273,10 @@ function PageLayout() {
                 <Route exact path="/">
                   <Redirect to={`/${defaultRoute}`} />
                 </Route>
-                <Route
-                  path="*"
-                  component={lazyload(() => import('./pages/exception/403'))}
-                />
+                {/*<Route*/}
+                {/*  path="*"*/}
+                {/*  component={lazyload(() => import('./pages/exception/403'))}*/}
+                {/*/>*/}
               </Switch>
             </Content>
           </div>
