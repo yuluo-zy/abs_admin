@@ -205,8 +205,7 @@ const ESP32_S_EfuseConfig = [
 
 function CustomEfuseConfig(props) {
   const t = useLocale();
-  const { entity } = props;
-  const [stateValue, setValue] = useState(props.value);
+  const { entity, initialValue } = props;
   const [efuseList, setEfuseList] = useState(new Set());
   const [efuse, setEfuse] = useState({});
 
@@ -224,12 +223,14 @@ function CustomEfuseConfig(props) {
     }
   };
   useEffect(() => {
-    if (props.value) {
+    if (initialValue) {
       let temp = [];
-      for (const item in props.value) {
+      let efuseTemp = {}
+      for (const item in initialValue) {
         temp.push(item);
+        efuseTemp[item] = initialValue[item]
       }
-      setEfuse(props.value);
+      setEfuse(efuseTemp);
       setEfuseList(new Set(temp));
     }
   }, []);
@@ -266,21 +267,9 @@ function CustomEfuseConfig(props) {
   };
 
   useEffect(() => {
-    if (props.value !== stateValue && props.value === undefined) {
-      setValue(props.value);
-    }
-  }, [props.value]);
-
-  useEffect(() => {
-    handleChange(efuse);
+    props.onChange && props.onChange(efuse);
   }, [efuse]);
 
-  const handleChange = (newValue) => {
-    if (!("value" in props)) {
-      setValue(newValue);
-    }
-    props.onChange && props.onChange(newValue);
-  };
 
   return (
     entity.map((item, index) => {
@@ -345,7 +334,7 @@ export default function FirmwareEfuse(props: { initialValues, target }) {
               field={item.key}
               key={index}
             >
-              <CustomEfuseConfig entity={item.child} />
+              <CustomEfuseConfig entity={item.child} initialValue={initialValues?.efuseConfig[item.key]}/>
             </Form.Item>;
           }
         )}
