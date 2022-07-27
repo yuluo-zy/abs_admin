@@ -98,8 +98,8 @@ const ESP32_C3_EfuseConfig = [
         initValue: 0
       }
     ]
-  },
-]
+  }
+];
 
 const ESP32_EfuseConfig = [
   {
@@ -156,7 +156,7 @@ const ESP32_EfuseConfig = [
       }
     ]
   }
-]
+];
 
 const ESP32_S_EfuseConfig = [
   {
@@ -198,14 +198,14 @@ const ESP32_S_EfuseConfig = [
         key: "DIS_DOWNLOAD_MANUAL_ENCRYPT",
         value: 0,
         initValue: 0
-      },
+      }
     ]
   }
-]
+];
 
 function CustomEfuseConfig(props) {
   const t = useLocale();
-  const {entity} = props
+  const { entity } = props;
   const [stateValue, setValue] = useState(props.value);
   const [efuseList, setEfuseList] = useState(new Set());
   const [efuse, setEfuse] = useState({});
@@ -223,16 +223,16 @@ function CustomEfuseConfig(props) {
       setEfuse(temp);
     }
   };
-  useEffect( () => {
-    if(props.value){
-      let temp = []
-      for(const item in props.value){
-        temp.push(item)
+  useEffect(() => {
+    if (props.value) {
+      let temp = [];
+      for (const item in props.value) {
+        temp.push(item);
       }
-      setEfuse(props.value)
-      setEfuseList(new Set(temp))
+      setEfuse(props.value);
+      setEfuseList(new Set(temp));
     }
-  }, [])
+  }, []);
 
   const setCheckboxEffect = (checked, key) => {
     if (checked) {
@@ -246,10 +246,10 @@ function CustomEfuseConfig(props) {
           validity: true
         };
         setEfuse(efuseTemp);
-      }else {
+      } else {
         let efuseTemp = { ...efuse };
         efuseTemp[key] = {
-          data: '0',
+          data: "0",
           validity: true
         };
         setEfuse(efuseTemp);
@@ -263,29 +263,30 @@ function CustomEfuseConfig(props) {
       setEfuse(efuseTemp);
       setEfuseList(temp);
     }
-  }
+  };
 
   useEffect(() => {
     if (props.value !== stateValue && props.value === undefined) {
       setValue(props.value);
     }
-  }, [props.value])
+  }, [props.value]);
 
   useEffect(() => {
-  handleChange(efuse)
-  }, [efuse])
+    handleChange(efuse);
+  }, [efuse]);
 
   const handleChange = (newValue) => {
-    if (!('value' in props)) {
+    if (!("value" in props)) {
       setValue(newValue);
     }
     props.onChange && props.onChange(newValue);
-  }
+  };
 
   return (
-    entity.map(( item, index ) => {
+    entity.map((item, index) => {
       return <div key={index} className={style["efuse"]}>
-        <Checkbox onChange={(checked) => setCheckboxEffect(checked, item.key)} checked={efuseList.has(item.key)}>{item.title}</Checkbox>
+        <Checkbox onChange={(checked) => setCheckboxEffect(checked, item.key)}
+                  checked={efuseList.has(item.key)}>{item.title}</Checkbox>
         <Input
           style={{ width: 200 }}
           type={"number"}
@@ -301,23 +302,36 @@ function CustomEfuseConfig(props) {
     })
   );
 }
-export default function FirmwareEfuse(props: {initialValues, target}) {
+
+const getCustomList = (value) => {
+  let customList = [];
+  if(value){
+    for (const valueElement in value) {
+      customList.push({
+        key: valueElement,
+        data: value[valueElement]
+      });
+    }
+  }
+  return customList;
+};
+export default function FirmwareEfuse(props: { initialValues, target }) {
   const { initialValues, target } = props;
   const t = useLocale();
 
   // 这里根据芯片型号的不同来返回相关的信息
   const getEfuseConfig = (target) => {
-    if(target === "ESP32-S3" || target === "ESP32-S2"){
-      return ESP32_S_EfuseConfig
+    if (target === "ESP32-S3" || target === "ESP32-S2") {
+      return ESP32_S_EfuseConfig;
     }
-    if(target=== "ESP32"){
-      return ESP32_EfuseConfig
+    if (target === "ESP32") {
+      return ESP32_EfuseConfig;
     }
-    if(target.search("ESP32-C3") !== -1){
-      return ESP32_C3_EfuseConfig
+    if (target.search("ESP32-C3") !== -1) {
+      return ESP32_C3_EfuseConfig;
     }
 
-  }
+  };
 
   return (
     <DynamicCard title={t["firmware.information.efuse.title"]}>
@@ -325,47 +339,47 @@ export default function FirmwareEfuse(props: {initialValues, target}) {
         id={"firmware.information.efuse.title"}
         style={{ maxWidth: 650 }}
         initialValues={initialValues}>
-        { target && getEfuseConfig(target).map((item, index) => {
+        {target && getEfuseConfig(target).map((item, index) => {
             return <Form.Item
               label={item.title}
               field={item.key}
               key={index}
             >
-              <CustomEfuseConfig entity={item.child}/>
+              <CustomEfuseConfig entity={item.child} />
             </Form.Item>;
           }
         )}
-        <br/>
-        <Form.List field='otherCustom'>
+        <br />
+        <Form.List field="otherCustom" initialValue={getCustomList(initialValues?.efuseConfig?.otherCustom)}>
           {(fields, { add, remove, move }) => {
             return (
               <div>
                 {fields.map((item, index) => {
                   return (
                     <div key={item.key}>
-                      <Form.Item label={'Custom Fuses - ' + index}>
+                      <Form.Item label={"Custom Fuses - " + index}>
                         <Space>
                           <Form.Item
-                            field={item.field + '.key'}
-                            rules={[{ required: true , message: t['firmware.information.efuse.custom.port.key']}]}
+                            field={item.field + ".key"}
+                            rules={[{ required: true, message: t["firmware.information.efuse.custom.port.key"] }]}
                             noStyle
                           >
-                            <Input maxLength={30}  placeholder={'efuse bit'}/>
+                            <Input maxLength={30} placeholder={"efuse bit"} />
                           </Form.Item>
                           <Form.Item
-                            field={item.field + '.data'}
-                            rules={[{ required: true , message: t['firmware.information.efuse.custom.port.value']}]}
+                            field={item.field + ".data"}
+                            rules={[{ required: true, message: t["firmware.information.efuse.custom.port.value"] }]}
                             noStyle
                           >
                             <Input
                               type={"number"}
                               max={1000}
-                              placeholder={'efuse value'}/>
+                              placeholder={"efuse value"} />
                           </Form.Item>
                           <Button
                             icon={<IconDelete />}
-                            shape='circle'
-                            status='danger'
+                            shape="circle"
+                            status="danger"
                             onClick={() => remove(index)}
                           ></Button>
                         </Space>

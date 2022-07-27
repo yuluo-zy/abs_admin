@@ -302,7 +302,7 @@ export default function FirmwareCustomization() {
               firmwareType: -1,
               keyType: -1,
               secureBoot: -1,
-              partitionNum: 0
+              partitionNum: undefined
             });
           }} />
           {/*选择 flash 和 boot*/}
