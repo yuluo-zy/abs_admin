@@ -13,7 +13,7 @@ import { postCheckCustomDemand } from "@/api/demand";
 import CheckTable from "@/pages/product/demand/entry/check/check-table";
 import EmptyStatus from "@/pages/product/demand/entry/check/empty";
 import axios from "axios";
-import { postFile } from "@/api/file";
+import { postSerialCheckFile } from "@/api/file";
 
 const bodyStyle = {
   paddingTop: "0",
@@ -64,24 +64,24 @@ export default function CheckSelection() {
   };
 
   const getPassSerialFile = (option) => {
-    console.log("lkjjj");
     const { onProgress, file, onSuccess, onError } = option;
     let formData = new FormData();
     formData.append("file", file);
+    formData.append("demandId", demandId);
     const source = axios.CancelToken.source();
     const onprogress = progressEvent => {
       const complete = progressEvent.loaded / progressEvent.total * 100 | 0;
       onProgress(parseInt(String(complete), 10), progressEvent);
     };
-    postFile(formData, onprogress, source.token).then(r => {
+    postSerialCheckFile(formData, onprogress, source.token).then(r => {
       const { success, result } = r.data;
       if (success) {
-        Message.success(t["message.ok"]);
+        Message.success(t["self.check.boot.upload.file.success"]);
         onSuccess(result);
       }
     }).catch(error => {
-      Message.error(t["message.error"]);
-      onError(t["message.error"]);
+      Message.error(t["self.check.boot.upload.file.error"]);
+      onError(t["self.check.boot.upload.file.error"]);
     });
     return {
       abort() {
@@ -118,7 +118,6 @@ export default function CheckSelection() {
                          onChange={(fileList: UploadItem[], file: UploadItem) => {
                            if (fileList.length > 0) {
                              setCheckData({ "serialFileId": file.response });
-                             // getPassSerialFile(file.response)
                            } else {
                              setCheckData({ "serialFileId": null });
                            }

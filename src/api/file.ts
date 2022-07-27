@@ -29,3 +29,31 @@ export const getFileByPath = (path) => {
 export const getFileInfo = (id) => {
   return httpGet(`/file/${id}`);
 };
+
+export const postEfuseCheckFile = (data, onUploadProgress, source) => {
+  return getAxios().post(
+    "/file/efuseCheck/upload",
+    data,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data;charset=UTF-8"
+      },
+      onUploadProgress: onUploadProgress,
+      cancelToken: source
+    }
+  );
+};
+
+export const postSerialCheckFile = (data, onUploadProgress, source) => {
+  return getAxios().post(
+    "/file/serialCheck/upload",
+    data,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data;charset=UTF-8"
+      },
+      onUploadProgress: onUploadProgress,
+      cancelToken: source
+    }
+  );
+};
