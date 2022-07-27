@@ -273,7 +273,9 @@ export default function FirmwareCustomization() {
                 size={"large"}
                 style={{ width: 300 }}
                 placeholder={t["firmware.customization.info.project.hint"]}
-                defaultValue={mpnList[info?.lastMpn]?.fwPn}
+                defaultValue={
+                  info?.lastMpn
+                }
                 onChange={(value) => setInfo({ lastMpn: value })}
               >
                 {mpnList.map((option, index) => (
