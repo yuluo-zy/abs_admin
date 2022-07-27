@@ -100,7 +100,6 @@ export default function FirmwareCustomization() {
     });
     postFirmwareCustomDemand({
       ...temp,
-      // efuseConfig: JSON.stringify(temp?.efuseConfig, replacer),
       demandId: demandId
     }).then(res => {
       if (res.data.success) {

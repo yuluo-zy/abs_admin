@@ -84,6 +84,8 @@ export default function FirmwareInformation(props: { initialValues, addItem?, de
               <DynamicForm title={`firmware.information.title-${item}`}
                            col={3}
                            key={item}
+                           style={{ "float": (item === number.length) && deleteItem ? "left" : "" }}
+                           className={style["button_group_delete-form"]}
                            data={initialValues ? initialValues[item] : {}}
                            formItem={informationProps} />
               {(item === number.length) && deleteItem && <Button
@@ -91,10 +93,10 @@ export default function FirmwareInformation(props: { initialValues, addItem?, de
                 icon={<IconDelete />}
                 shape="circle"
                 status="danger"
-                style={{
-                  marginLeft: 32,
-                  marginTop: 4
-                }}
+                // style={{
+                //   marginLeft: 32,
+                //   marginTop: 4
+                // }}
                 onClick={deleteItem}
               ></Button>}
             </div>;

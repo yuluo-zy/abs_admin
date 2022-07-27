@@ -59,6 +59,7 @@ export interface FormProps {
   col?: number | number[];
   className?: string | string[];
   children?: any;
+  style?: any;
   layout?: "horizontal" | "vertical" | "inline";
   formList?: FormList;
 }

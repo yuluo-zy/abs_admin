@@ -302,7 +302,7 @@ function DynamicForm(props: FormProps) {
   }, 100);
 
   return (
-    <div style={{ paddingRight: "2rem" }} className={cs(className)}>
+    <div style={{ ...props.style, paddingRight: "2rem" }} className={cs(className)}>
       <div>{DynamicFormNode}</div>
       <div>{props.children}</div>
       {
