@@ -334,7 +334,7 @@ export default function FirmwareEfuse(props: { initialValues, target }) {
               field={item.key}
               key={index}
             >
-              <CustomEfuseConfig entity={item.child} initialValue={initialValues?.efuseConfig[item.key]} />
+              <CustomEfuseConfig entity={item.child} initialValue={initialValues?.efuseConfig?.[item.key]} />
             </Form.Item>;
           }
         )}

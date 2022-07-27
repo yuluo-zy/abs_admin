@@ -86,17 +86,13 @@ export default function FirmwareInformation(props: { initialValues, addItem?, de
                            key={item}
                            style={{ "float": (item === number.length) && deleteItem ? "left" : "" }}
                            className={style["button_group_delete-form"]}
-                           data={initialValues ? initialValues[item] : {}}
+                           data={initialValues?.[index]}
                            formItem={informationProps} />
               {(item === number.length) && deleteItem && <Button
                 className={style["button_group_delete-button"]}
                 icon={<IconDelete />}
                 shape="circle"
                 status="danger"
-                // style={{
-                //   marginLeft: 32,
-                //   marginTop: 4
-                // }}
                 onClick={deleteItem}
               ></Button>}
             </div>;
