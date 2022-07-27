@@ -387,14 +387,6 @@ export default function FirmwareEfuse(props: {initialValues, target}) {
           }}
         </Form.List>
 
-        {/*<Form.Item*/}
-        {/*  label="other Custom"*/}
-        {/*  field="otherCustom"*/}
-        {/*>*/}
-        {/*  <Input.TextArea placeholder={t["firmware.information.efuse.other.port.help"]} />*/}
-        {/*</Form.Item>*/}
-        {/*添加 自定义 efuse 位 和目标烧录值*/}
-
       </Form>
     </DynamicCard>
   );
