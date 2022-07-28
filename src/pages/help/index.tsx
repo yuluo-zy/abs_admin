@@ -48,7 +48,7 @@ function HelpInfo() {
         </div>
 
         <div className={styles["navigation"]}>
-          <MarkdownNavbar source={state} />
+          <MarkdownNavbar source={state} ordered={false} declarative={false} />
         </div>
       </div>
     </Modal>
