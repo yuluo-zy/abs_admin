@@ -13,7 +13,7 @@ import { postCheckCustomDemand } from "@/api/demand";
 import CheckTable from "@/pages/product/demand/entry/check/check-table";
 import EmptyStatus from "@/pages/product/demand/entry/check/empty";
 import axios from "axios";
-import { postSerialCheckFile } from "@/api/file";
+import { postEfuseCheckFile, postSerialCheckFile } from "@/api/file";
 
 const bodyStyle = {
   paddingTop: "0",
@@ -90,6 +90,33 @@ export default function CheckSelection() {
     };
   };
 
+  const getPassEfuseFile = (option) => {
+    const { onProgress, file, onSuccess, onError } = option;
+    let formData = new FormData();
+    formData.append("file", file);
+    formData.append("demandId", demandId);
+    const source = axios.CancelToken.source();
+    const onprogress = progressEvent => {
+      const complete = progressEvent.loaded / progressEvent.total * 100 | 0;
+      onProgress(parseInt(String(complete), 10), progressEvent);
+    };
+    postEfuseCheckFile(formData, onprogress, source.token).then(r => {
+      const { success, result } = r.data;
+      if (success) {
+        Message.success(t["self.check.boot.upload.file.success"]);
+        onSuccess(result);
+      }
+    }).catch(error => {
+      Message.error(t["self.check.boot.upload.file.error"]);
+      onError(t["self.check.boot.upload.file.error"]);
+    });
+    return {
+      abort() {
+        source.cancel("cancel");
+      }
+    };
+  };
+
   const nextStep = () => {
     setVisible(false);
     history.push(`/product/demand/hardware`);
@@ -140,7 +167,9 @@ export default function CheckSelection() {
                            } else {
                              setCheckData({ "efuseFileId": null });
                            }
-                         }} />
+                         }}
+                         customRequest={getPassEfuseFile}
+          />
         </td>
         {/*<td><p>{t['self.check.boot.efuse.context']}</p></td>*/}
         {/*<td><EFuseTable/></td>*/}
