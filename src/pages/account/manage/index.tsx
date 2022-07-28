@@ -9,6 +9,7 @@ import { CallBackHandle, FormItemProps, SearchItem } from "@/components/type";
 import { IconDelete, IconEdit, IconLock, IconUser } from "@arco-design/web-react/icon";
 import DynamicForm from "@/components/Dynamic/Form";
 import DynamicModal from "@/components/Dynamic/Modal";
+import RoleTag from "@/pages/account/manage/tag";
 
 function UserManage() {
   const { Text } = Typography;
@@ -108,11 +109,11 @@ function UserManage() {
       },
       {
         title: t["userTable.columns.roleList"],
-        dataIndex: "contentType",
+        dataIndex: "roleNames",
         width: 220,
-        render: (value) => (
+        render: (_, record) => (
           <div className={styles["content-type"]}>
-            <p>{value}</p>
+            <RoleTag roleName={record?.roleNames} roleId={record?.roleIds} />
           </div>
         )
       },
