@@ -4,7 +4,6 @@ import {
   Button,
   Divider,
   Dropdown,
-  Input,
   Menu,
   Message,
   Notification,
@@ -164,12 +163,12 @@ function Navbar({ show }: { show: boolean }) {
         <div className={styles["logo-name"]}>ESPRESSIF Custom Manufacturing Service</div>
       </div>
       <ul className={styles.right}>
-        <li>
-          <Input.Search
-            className={styles.round}
-            placeholder={t["navbar.search.placeholder"]}
-          />
-        </li>
+        {/*<li>*/}
+        {/*  <Input.Search*/}
+        {/*    className={styles.round}*/}
+        {/*    placeholder={t["navbar.search.placeholder"]}*/}
+        {/*  />*/}
+        {/*</li>*/}
         <li>
           <Select
             triggerElement={<IconButton icon={<IconLanguage />} />}
@@ -190,6 +189,17 @@ function Navbar({ show }: { show: boolean }) {
               Message.info(`${nextLang["message.lang.tips"]}${value}`);
             }}
           />
+        </li>
+        <li>
+          <Tooltip
+            content={
+              "help"
+            }
+          >
+            <IconButton
+              icon={<IconTag />}
+            />
+          </Tooltip>
         </li>
         <li>
           <MessageBox>

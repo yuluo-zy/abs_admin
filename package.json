@@ -44,6 +44,7 @@
     "lexical": "^0.3.7",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
+    "markdown-navbar": "^1.4.3",
     "nprogress": "^0.2.0",
     "qs": "^6.10.3",
     "query-string": "^6.13.8",

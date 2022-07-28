@@ -7,6 +7,7 @@ import {
   IconMenuFold,
   IconMenuUnfold,
   IconNav,
+  IconTag,
   IconUser,
   IconUserGroup
 } from "@arco-design/web-react/icon";
@@ -40,7 +41,7 @@ function getIconFromKey(key) {
     case "product":
       return <IconNav className={styles.icon} />;
     default:
-      return <div className={styles["icon-empty"]} />;
+      return <IconTag className={styles.icon} />;
   }
 }
 

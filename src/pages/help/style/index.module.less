@@ -1,0 +1,30 @@
+.modal {
+  width: 85%;
+  min-width: 850px;
+  max-height: 90%;
+  overflow: auto;
+
+  :global(.arco-modal-header) {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: var(--color-neutral-2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .context {
+    width: 100%;
+    display: flex;
+
+    .article {
+      width: 87%;
+      min-width: 700px;
+    }
+
+    .navigation {
+
+      min-width: 200px;
+    }
+  }
+
+}
