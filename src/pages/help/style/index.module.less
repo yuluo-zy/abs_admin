@@ -20,6 +20,27 @@
     .article {
       width: 87%;
       min-width: 700px;
+
+      h4:before {
+        content: " # ";
+        display: inline-block;
+        margin-inline: 2px;
+        color: rgb(var(--arcoblue-6));
+      }
+
+      h4 {
+        text-decoration: underline;
+        padding-bottom: 5px;
+        text-decoration-color: rgb(var(--arcoblue-2));
+        text-decoration-thickness: 6px;
+      }
+
+      h5 {
+        text-decoration: underline;
+        padding-bottom: 5px;
+        text-decoration-color: rgb(var(--arcoblue-1));
+        text-decoration-thickness: 4px;
+      }
     }
 
     .navigation {
