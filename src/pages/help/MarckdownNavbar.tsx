@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./style/markdown.navigation.less";
+import { Button } from "@arco-design/web-react";
 
 
 // 修建空值
@@ -78,6 +79,25 @@ const getNavStructure = (source) => {
   }
   return navData;
 };
+const safeScrollTo = (element, top, left = 0) => {
+  if (!element) return;
+  if (typeof element.scrollTo === "function") {
+    const scrollConfig = {
+      top,
+      left,
+      behavior: "smooth"
+    };
+    element.scrollTo(scrollConfig);
+  } else {
+    if (element === window) {
+      document.documentElement.scrollTop = top;
+      document.documentElement.scrollLeft = left;
+    } else {
+      element.scrollTop = top;
+      element.scrollLeft = left;
+    }
+  }
+};
 
 function MarkdownNavbar(props: {
   declarative?: boolean,
@@ -96,42 +116,26 @@ function MarkdownNavbar(props: {
         );
 
       if (curHeading) {
-        // curHeading.dataset.id = props.declarative
-        //   ? `${t.listNo}-${t.text}`
-        //   : `heading-${t.index}`;
         curHeading.setAttribute("id", props.declarative
           ? `${t.listNo}-${t.text}`
           : `heading-${t.index}`);
-
-        // if (headingId && headingId === curHeading.dataset.id) {
-        //   // scrollToTarget(headingId);
-        //   setCurrentListNo(t.listNo);
-        // }
       }
     });
   };
 
-  // const scrollToTarget = (dataId) => {
-  //   if (this.scrollTimeout) {
-  //     clearTimeout(this.scrollTimeout);
-  //   }
-  //   // 防抖
-  //
-  //   this.scrollTimeout = setTimeout(() => {
-  //     const target = document.querySelector(`[data-id="${dataId}"]`);
-  //     if (target && typeof target?.offsetTop === "number") {
-  //       this.safeScrollTo(window, target?.offsetTop - this.props.headingTopOffset, 0);
-  //     }
-  //   }, 1);
-  // };
-
+  const scrollTo = (tag) => {
+    const target = document.querySelector(`[id="${tag}"]`);
+    target.scrollIntoView({
+      behavior: "smooth"
+    });
+  };
   useEffect(() => {
     setNavStructure(getNavStructure(props.source));
   }, [props.source]);
   useEffect(() => {
     initHeadingsId(navStructure);
   }, [navStructure]);
-  return <div>ppp</div>;
+  return <Button onClick={() => scrollTo("heading-25")}></Button>;
 
 }
 
