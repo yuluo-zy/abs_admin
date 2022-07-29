@@ -63,10 +63,6 @@ export const routes: Route[] = [
     key: "product",
     permission: "demand:mgr"
   },
-  {
-    name: "help.info",
-    key: "help"
-  }
 ];
 
 export const getName = (path: string, routes) => {
