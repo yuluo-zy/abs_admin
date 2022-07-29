@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./style/markdown.navigation.less";
+import { useHistory } from "react-router";
 
 
 // 修建空值
@@ -129,6 +130,19 @@ function MarkdownNavbar(props: {
       behavior: "smooth"
     });
   };
+
+  const history = useHistory();
+  const setUrlPath = (value) => {
+    history.push(`${window.location.pathname}${window.location.search}#${value}`);
+  };
+  useEffect(() => {
+    history.listen(historyLocation => {
+      // 每次路由变化都会执行这个方法
+      const { hash } = historyLocation;
+      scrollTo(hash.replace("#", ""));
+
+    });
+  }, [history]);
   useEffect(() => {
     setNavStructure(getNavStructure(props.source));
   }, [props.source]);
@@ -148,7 +162,7 @@ function MarkdownNavbar(props: {
           const currentHash = props.declarative
             ? `${t.listNo}-${t.text}` // 加入listNo确保hash唯一ZZ
             : `heading-${t.index}`;
-          scrollTo(currentHash);
+          setUrlPath(currentHash);
           setCurrentListNo(t.listNo);
         }}
         key={`title_anchor_${Math.random().toString(36).substring(2)}`}>
