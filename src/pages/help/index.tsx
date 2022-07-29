@@ -5,14 +5,13 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Modal } from "@arco-design/web-react";
 import styles from "./style/index.module.less";
-import MarkdownNavbar from "markdown-navbar";
-import "./style/markdown.navigation.less";
+import MarkdownNavbar from "@/pages/help/MarckdownNavbar";
+
 
 function HelpInfo() {
   const { lang } = useContext(GlobalContext);
   const [state, setState] = useState("");
   const [open, setOpen] = useState(true);
-
   useEffect(() => {
     if (lang === "zh-CN") {
       setState(ZH);
@@ -48,7 +47,7 @@ function HelpInfo() {
         </div>
 
         <div className={styles["navigation"]}>
-          <MarkdownNavbar source={state} ordered={false} declarative={false} />
+          <MarkdownNavbar source={state} declarative={false} />
         </div>
       </div>
     </Modal>
