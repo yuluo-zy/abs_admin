@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./style/markdown.navigation.less";
-import { useHistory } from "react-router";
 
 
 // 修建空值
@@ -83,6 +82,7 @@ const getNavStructure = (source) => {
 function MarkdownNavbar(props: {
   declarative?: boolean,
   className?: any,
+  tag?: string,
   source: string,
 }) {
   const [navStructure, setNavStructure] = useState([]);
@@ -110,21 +110,17 @@ function MarkdownNavbar(props: {
     });
   };
 
-  const history = useHistory();
-  const setUrlPath = (value) => {
-    history.push(`${window.location.pathname}${window.location.search}#${value}`);
-  };
   useEffect(() => {
-    history.listen(historyLocation => {
-      // 每次路由变化都会执行这个方法
-      const { hash } = historyLocation;
-      scrollTo(hash.replace("#", ""));
-      setCurrentListNo(hash.replace("#heading-", ""));
-    });
-  }, [history]);
+    if (props.tag) {
+      scrollTo(props.tag);
+      setCurrentListNo(props.tag);
+    }
+  }, []);
+
   useEffect(() => {
     setNavStructure(getNavStructure(props.source));
   }, [props.source]);
+
   useEffect(() => {
     initHeadingsId(navStructure);
   }, [navStructure]);
@@ -139,7 +135,8 @@ function MarkdownNavbar(props: {
         className={cls}
         onClick={(evt) => {
           const currentHash = `heading-${t.listNo}`;
-          setUrlPath(currentHash);
+          scrollTo(currentHash);
+          setCurrentListNo(currentHash.replace("heading-", ""));
         }}
         key={`title_anchor_${Math.random().toString(36).substring(2)}`}>
         {t.text}

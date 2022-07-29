@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Avatar,
   Button,
@@ -36,6 +36,7 @@ import defaultLocale from "@/locale";
 import useStorage from "@/utils/useHook/useStorage";
 import { generatePermission } from "@/routes";
 import { loginOut } from "@/api/login";
+import HelpInfo from "@/pages/help";
 
 function Navbar({ show }: { show: boolean }) {
   const t = useLocale();
@@ -103,6 +104,8 @@ function Navbar({ show }: { show: boolean }) {
     setRole(newRole);
   };
 
+  const [help, setHelp] = useState(false);
+
   const droplist = (
     <Menu onClickMenuItem={onMenuItemClick}>
       <Menu.SubMenu
@@ -154,18 +157,23 @@ function Navbar({ show }: { show: boolean }) {
     </Menu>
   );
 
+  const getHelp = () => {
+    setHelp(!help);
+  };
+
   return (
-    <div className={styles.navbar}>
-      <div className={styles.left}>
-        <div className={styles.logo}>
-          <Logo />
+    <>
+      <div className={styles.navbar}>
+        <div className={styles.left}>
+          <div className={styles.logo}>
+            <Logo />
+          </div>
+          <div className={styles["logo-name"]}>ESPRESSIF Custom Manufacturing Service</div>
         </div>
-        <div className={styles["logo-name"]}>ESPRESSIF Custom Manufacturing Service</div>
-      </div>
-      <ul className={styles.right}>
-        {/*<li>*/}
-        {/*  <Input.Search*/}
-        {/*    className={styles.round}*/}
+        <ul className={styles.right}>
+          {/*<li>*/}
+          {/*  <Input.Search*/}
+          {/*    className={styles.round}*/}
         {/*    placeholder={t["navbar.search.placeholder"]}*/}
         {/*  />*/}
         {/*</li>*/}
@@ -198,6 +206,7 @@ function Navbar({ show }: { show: boolean }) {
           >
             <IconButton
               icon={<IconTag />}
+              onClick={() => getHelp()}
             />
           </Tooltip>
         </li>
@@ -230,8 +239,11 @@ function Navbar({ show }: { show: boolean }) {
             </Dropdown>
           </li>
         )}
-      </ul>
-    </div>
+        </ul>
+      </div>
+      <HelpInfo open={help} change={setHelp} />
+    </>
+
   );
 }
 

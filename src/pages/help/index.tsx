@@ -8,10 +8,10 @@ import styles from "./style/index.module.less";
 import MarkdownNavbar from "@/pages/help/MarckdownNavbar";
 
 
-function HelpInfo() {
+function HelpInfo(props: { tag?: string, open: boolean, change: any }) {
   const { lang } = useContext(GlobalContext);
   const [state, setState] = useState("");
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     if (lang === "zh-CN") {
       setState(ZH);
@@ -20,6 +20,10 @@ function HelpInfo() {
       setState(EN);
     }
   }, [lang]);
+
+  useEffect(() => {
+    setOpen(props.open);
+  }, [props.open]);
   return (
     <Modal
       title={
@@ -32,6 +36,9 @@ function HelpInfo() {
       footer={null}
       onCancel={() => {
         setOpen(false);
+        if (props.change) {
+          props.change(false);
+        }
       }}
       className={styles["modal"]}
       autoFocus={true}
@@ -47,7 +54,7 @@ function HelpInfo() {
         </div>
 
         <div className={styles["navigation"]}>
-          <MarkdownNavbar source={state} declarative={false} />
+          <MarkdownNavbar source={state} declarative={false} tag={props.tag} />
         </div>
       </div>
     </Modal>
