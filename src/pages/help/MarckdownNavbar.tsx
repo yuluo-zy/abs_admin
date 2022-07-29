@@ -79,25 +79,6 @@ const getNavStructure = (source) => {
   }
   return navData;
 };
-const safeScrollTo = (element, top, left = 0) => {
-  if (!element) return;
-  if (typeof element.scrollTo === "function") {
-    const scrollConfig = {
-      top,
-      left,
-      behavior: "smooth"
-    };
-    element.scrollTo(scrollConfig);
-  } else {
-    if (element === window) {
-      document.documentElement.scrollTop = top;
-      document.documentElement.scrollLeft = left;
-    } else {
-      element.scrollTop = top;
-      element.scrollLeft = left;
-    }
-  }
-};
 
 function MarkdownNavbar(props: {
   declarative?: boolean,
@@ -117,9 +98,7 @@ function MarkdownNavbar(props: {
         );
 
       if (curHeading) {
-        curHeading.setAttribute("id", props.declarative
-          ? `${t.listNo}-${t.text}`
-          : `heading-${t.index}`);
+        curHeading.setAttribute("id", `heading-${t.listNo}`);
       }
     });
   };
@@ -140,7 +119,7 @@ function MarkdownNavbar(props: {
       // 每次路由变化都会执行这个方法
       const { hash } = historyLocation;
       scrollTo(hash.replace("#", ""));
-
+      setCurrentListNo(hash.replace("#heading-", ""));
     });
   }, [history]);
   useEffect(() => {
@@ -159,11 +138,8 @@ function MarkdownNavbar(props: {
       <div
         className={cls}
         onClick={(evt) => {
-          const currentHash = props.declarative
-            ? `${t.listNo}-${t.text}` // 加入listNo确保hash唯一ZZ
-            : `heading-${t.index}`;
+          const currentHash = `heading-${t.listNo}`;
           setUrlPath(currentHash);
-          setCurrentListNo(t.listNo);
         }}
         key={`title_anchor_${Math.random().toString(36).substring(2)}`}>
         {t.text}
