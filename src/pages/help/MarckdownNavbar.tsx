@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./style/markdown.navigation.less";
-import { Button } from "@arco-design/web-react";
 
 
 // 修建空值
@@ -101,7 +100,8 @@ const safeScrollTo = (element, top, left = 0) => {
 
 function MarkdownNavbar(props: {
   declarative?: boolean,
-  source: string
+  className?: any,
+  source: string,
 }) {
   const [navStructure, setNavStructure] = useState([]);
   const [currentListNo, setCurrentListNo] = useState("");
@@ -135,7 +135,29 @@ function MarkdownNavbar(props: {
   useEffect(() => {
     initHeadingsId(navStructure);
   }, [navStructure]);
-  return <Button onClick={() => scrollTo("heading-25")}></Button>;
+
+  const tBlocks = navStructure.map((t) => {
+    const cls = `title-anchor title-level${t.level} ${
+      currentListNo === t.listNo ? "active" : ""
+    }`;
+
+    return (
+      <div
+        className={cls}
+        onClick={(evt) => {
+          const currentHash = props.declarative
+            ? `${t.listNo}-${t.text}` // 加入listNo确保hash唯一ZZ
+            : `heading-${t.index}`;
+          scrollTo(currentHash);
+          setCurrentListNo(t.listNo);
+        }}
+        key={`title_anchor_${Math.random().toString(36).substring(2)}`}>
+        {t.text}
+      </div>);
+  });
+  return <div className={`markdown-navigation ${props.className}`}>
+    {tBlocks}
+  </div>;
 
 }
 
