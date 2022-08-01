@@ -3,6 +3,8 @@ import useLocale from "@/pages/product/demand/locale/useLocale";
 import { Space, Table } from "@arco-design/web-react";
 import styles from "./style/index.module.less";
 import { IconCheckSquare, IconCloseCircle } from "@arco-design/web-react/icon";
+import DynamicSkeleton from "@/components/Dynamic/Skeleton";
+
 
 export default function CheckTable(props: { data }) {
   const t = useLocale();
@@ -114,11 +116,11 @@ export default function CheckTable(props: { data }) {
   };
 
 
-  return <div>
+  return <DynamicSkeleton text={{ rows: 10 }}>
     <Space>
       <p>{t["self.check.return.result"]}</p>
-      <b>{data.result}</b>
+      <b className={styles["project-pass"]}>{data.result}</b>
     </Space>
     <Table columns={columns} data={getData(data)} hover={false} pagination={false} />
-  </div>;
+  </DynamicSkeleton>;
 }
