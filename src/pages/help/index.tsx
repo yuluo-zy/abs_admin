@@ -27,7 +27,7 @@ function HelpInfo() {
           Help Manual
         </div>
       }
-      visible={help && help.length > 0}
+      visible={!!help}
       alignCenter
       footer={null}
       onCancel={() => {
