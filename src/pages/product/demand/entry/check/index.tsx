@@ -28,7 +28,7 @@ export default function CheckSelection() {
     ProductStore(state => [state.checkData, state.setCheckData, state.moduleInfo, state.demandId], shallow);
   const [visible, setVisible] = useState(false);
 
-  const [serialFile, setSerialFile] = useState({});
+  const [serialFile, setSerialFile] = useState([]);
   const [efuseFileId, setEfuseFileId] = useState({});
   useEffect(() => {
     if (moduleInfo.mpn == null) {
@@ -78,7 +78,9 @@ export default function CheckSelection() {
       const { success, result } = r.data;
       if (success) {
         Message.success(t["self.check.boot.upload.file.success"]);
-        onSuccess(result);
+        onSuccess(result?.fileId);
+        // 设置 上传结果验证内容
+        setSerialFile(result?.result);
       }
     }).catch(error => {
       Message.error(t["self.check.boot.upload.file.error"]);
@@ -105,7 +107,9 @@ export default function CheckSelection() {
       const { success, result } = r.data;
       if (success) {
         Message.success(t["self.check.boot.upload.file.success"]);
-        onSuccess(result);
+        onSuccess(result?.fileId);
+        // 设置 上传结果验证内容
+        // setSerialFile(result?.result);
       }
     }).catch(error => {
       Message.error(t["self.check.boot.upload.file.error"]);
@@ -124,7 +128,7 @@ export default function CheckSelection() {
   };
 
   const serialFileNode = (data) => {
-    if (data) {
+    if (data && data.length > 0) {
       return <EmptyStatus />;
     }
     return <LogTable />;
