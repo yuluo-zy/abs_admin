@@ -1,11 +1,7 @@
 import create, { GetState, SetState } from "zustand";
 import { Recordable } from "@/components/type";
 import { devtools, persist } from "zustand/middleware";
-
-export type StoreSlice<T extends object, E extends object = T> = (
-  set: SetState<E extends T ? E : E & T>,
-  get: GetState<E extends T ? E : E & T>
-) => T;
+import { StoreSlice } from "@/store/type";
 
 // 相关步骤设定
 export interface StepSetting {

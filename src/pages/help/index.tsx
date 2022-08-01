@@ -6,10 +6,12 @@ import remarkGfm from "remark-gfm";
 import { Modal } from "@arco-design/web-react";
 import styles from "./style/index.module.less";
 import MarkdownNavbar from "@/pages/help/MarckdownNavbar";
+import { HelpSetting, setHelpKey } from "@/store/help";
 
 
 function HelpInfo() {
-  const { lang, help, setHelp } = useContext(GlobalContext);
+  const { lang } = useContext(GlobalContext);
+  const helpKey = HelpSetting(state => state.helpKey);
   const [state, setState] = useState("");
   useEffect(() => {
     if (lang === "zh-CN") {
@@ -27,11 +29,11 @@ function HelpInfo() {
           Help Manual
         </div>
       }
-      visible={!!help}
+      visible={!!helpKey}
       alignCenter
       footer={null}
       onCancel={() => {
-        setHelp("");
+        setHelpKey("");
       }}
       className={styles["modal"]}
       autoFocus={true}
@@ -47,7 +49,7 @@ function HelpInfo() {
         </div>
 
         <div className={styles["navigation"]}>
-          <MarkdownNavbar source={state} declarative={false} tag={help} />
+          <MarkdownNavbar source={state} declarative={false} tag={helpKey} />
         </div>
       </div>
     </Modal>

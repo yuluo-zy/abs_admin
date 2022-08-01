@@ -37,6 +37,7 @@ import useStorage from "@/utils/useHook/useStorage";
 import { generatePermission } from "@/routes";
 import { loginOut } from "@/api/login";
 import HelpInfo from "@/pages/help";
+import { setHelpKey } from "@/store/help";
 
 function Navbar({ show }: { show: boolean }) {
   const t = useLocale();
@@ -51,7 +52,7 @@ function Navbar({ show }: { show: boolean }) {
     return `https://avatars.dicebear.com/v2/human/${user_url}.svg?options[mood][]=happy`;
   };
 
-  const { setLang, lang, theme, setTheme, setHelp } = useContext(GlobalContext);
+  const { setLang, lang, theme, setTheme } = useContext(GlobalContext);
 
   function logout() {
     setUserStatus("logout");
@@ -201,7 +202,7 @@ function Navbar({ show }: { show: boolean }) {
           >
             <IconButton
               icon={<IconTag />}
-              onClick={() => setHelp("1")}
+              onClick={() => setHelpKey("1")}
             />
           </Tooltip>
         </li>
