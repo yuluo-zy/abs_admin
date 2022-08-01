@@ -58,12 +58,14 @@ export default function CheckSelection() {
       "efuseFileId": checkData?.efuseFileId,
       "id": checkData?.id
     }).then(res => {
+      // 唤起model
       if (res.data.success) {
-        Message.success(t["self.check.boot.log.check.sum"]);
+        // Message.success(t["self.check.boot.log.check.sum"]);
         setCheckData({
           id: res.data.result?.selAutoCheckId,
           result: res.data.result
         });
+        setVisible(true);
       }
     });
   };
@@ -212,12 +214,13 @@ export default function CheckSelection() {
     <Modal
       title={t["self.check.result"]}
       visible={visible}
+      className={styles["modal"]}
       onOk={() => setVisible(false)}
       onCancel={() => setVisible(false)}
       autoFocus={false}
       focusLock={true}
       footer={
-        <Button onClick={nextStep}>OK</Button>
+        <Button>OK</Button>
       }
     >
       <CheckTable data={checkData?.result} />

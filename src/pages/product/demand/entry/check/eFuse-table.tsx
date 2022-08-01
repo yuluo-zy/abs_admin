@@ -25,11 +25,10 @@ export default function EFuseTable(props: { data }) {
       dataIndex: "result",
       width: 120,
       render: (col, record, index) => {
-        console.log(col);
         if (col && col === "FAIL") {
-          return <IconCloseCircle style={{ color: "rgb(var(--red-6))" }} />;
+          return <IconCloseCircle style={{ color: "rgb(var(--red-6))", fontSize: "1.5rem" }} />;
         }
-        return <IconCheckSquare style={{ color: "rgb(var(--green-6))" }} />;
+        return <IconCheckSquare style={{ color: "rgb(var(--green-6))", fontSize: "1.5rem" }} />;
       }
     }
   ];
