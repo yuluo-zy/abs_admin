@@ -1,8 +1,7 @@
 import React from "react";
 import useLocale from "@/pages/product/demand/locale/useLocale";
-import { Grid } from "@arco-design/web-react";
+import { Grid, Table, TableColumnProps, Typography } from "@arco-design/web-react";
 import { IconCheckSquare, IconCloseCircle } from "@arco-design/web-react/icon";
-import styles from "./style/index.module.less";
 
 const Row = Grid.Row;
 const Col = Grid.Col;
@@ -23,30 +22,39 @@ export default function LogTable(props: { data }) {
     return "";
   };
 
-  const pass = (value) => {
-    if (value && value === "FAIL") {
-      return <IconCloseCircle style={{ color: "rgb(var(--red-6))" }} />;
-    }
-    return <IconCheckSquare style={{ color: "rgb(var(--green-6))" }} />;
-  };
-
-  return <div>
-    <p>{t["self.check.boot.upload.port.hit"]}</p>
+  const columns: TableColumnProps[] = [
     {
-      data && data.map((item, index) => {
-        return <Row key={index} style={{ margin: 10 }} className={styles["log-table"]} gutter={12}>
-          <Col flex="30px">{index + 1 + "."}</Col>
-          <Col flex="130px">
-            {title(item?.serCustomPosition)}
-          </Col>
-          <Col flex="auto" className={styles["expected"]}>
-            {item?.expectedValue}
-          </Col>
-          <Col flex="100px">
-            {pass(item?.result)}
-          </Col>
-        </Row>;
-      })
+      align: "center",
+      title: t["self.check.boot.log.file.name"],
+      dataIndex: "serCustomPosition",
+      width: 150,
+      render: (col, record, index) => {
+        return title(col);
+      }
+    },
+    {
+      align: "center",
+      title: t["self.check.boot.log.expect.name"],
+      dataIndex: "expectedValue",
+      render: (col) => {
+        return <Typography.Paragraph style={{ width: "100%", margin: "3px" }}>
+          {col}
+        </Typography.Paragraph>;
+      }
+    },
+    {
+      align: "center",
+      title: t["self.check.boot.result"],
+      dataIndex: "result",
+      width: 120,
+      render: (col, record, index) => {
+        if (col && col === "FAIL") {
+          return <IconCloseCircle style={{ color: "rgb(var(--red-6))" }} />;
+        }
+        return <IconCheckSquare style={{ color: "rgb(var(--green-6))" }} />;
+      }
     }
-  </div>;
+  ];
+
+  return <Table columns={columns} data={data} stripe={true} pagination={false} size={"mini"} hover />;
 }

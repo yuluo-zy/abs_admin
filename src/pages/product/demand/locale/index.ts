@@ -242,7 +242,9 @@ const i18n = {
     "self.check.boot.upload.file.error": "文件上传失败",
     "self.check.boot.efuse.expect.name": "校验值",
     "self.check.boot.efuse.file.name": "串口名称",
-    "self.check.boot.result": "校验结果"
+    "self.check.boot.result": "校验结果",
+    "self.check.boot.log.expect.name": "校验值",
+    "self.check.boot.log.file.name": "日志LOG"
   }
 };
 

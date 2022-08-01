@@ -147,7 +147,7 @@ export default function CheckSelection() {
   return <DynamicOuterCard title={t["hardware.production.info.title"]} bodyStyle={bodyStyle}>
     <table cellPadding="1" cellSpacing="1" className={styles["table-style"]}>
       <colgroup>
-        <col className={styles["table-style-mid"]} />
+        <col className={styles["table-style-mini"]} />
         <col className={styles["table-style-mid"]} />
         <col className={styles["table-style-last"]} />
       </colgroup>

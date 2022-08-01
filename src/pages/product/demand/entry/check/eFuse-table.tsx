@@ -3,11 +3,6 @@ import useLocale from "@/pages/product/demand/locale/useLocale";
 import { Table, TableColumnProps } from "@arco-design/web-react";
 import { IconCheckSquare, IconCloseCircle } from "@arco-design/web-react/icon";
 
-
-const convert = (data) => {
-
-};
-
 export default function EFuseTable(props: { data }) {
   const { data } = props;
   const t = useLocale();
@@ -27,7 +22,7 @@ export default function EFuseTable(props: { data }) {
       align: "center",
       title: t["self.check.boot.result"],
       dataIndex: "result",
-      width: 100,
+      width: 120,
       render: (col, record, index) => {
         console.log(col);
         if (col && col === "FAIL") {

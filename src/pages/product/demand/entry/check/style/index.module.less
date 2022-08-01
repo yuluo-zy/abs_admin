@@ -7,24 +7,34 @@
   vertical-align: middle;
 
   td, th {
-    padding: 0px 1rem 0px 0px;
+    padding: 10px 1rem 10px 1rem;
     border: 1px solid #F2F3F5;
     text-align: center;
+  }
+
+  th {
+    background: var(--color-neutral-2);
   }
 
   input {
     border: none;
   }
 
+  &-mini {
+    width: 11rem;
+  }
+
   &-mid {
     width: 16rem;
-
   }
 
   &-last {
     width: 50rem;
   }
 
+  :global(.arco-table-th) {
+    padding: 3px 5px;
+  }
 }
 
 .context-next {
