@@ -104,10 +104,12 @@ function MarkdownNavbar(props: {
   };
 
   const scrollTo = (tag) => {
-    const target = document.querySelector(`[id="${tag}"]`);
-    target.scrollIntoView({
-      behavior: "smooth"
-    });
+    if (tag && tag.length > 0) {
+      const target = document.querySelector(`[id="${tag}"]`);
+      target && target.scrollIntoView({
+        behavior: "smooth"
+      });
+    }
   };
 
   useEffect(() => {

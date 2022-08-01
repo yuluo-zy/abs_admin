@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Avatar,
   Button,
@@ -51,7 +51,7 @@ function Navbar({ show }: { show: boolean }) {
     return `https://avatars.dicebear.com/v2/human/${user_url}.svg?options[mood][]=happy`;
   };
 
-  const { setLang, lang, theme, setTheme } = useContext(GlobalContext);
+  const { setLang, lang, theme, setTheme, setHelp } = useContext(GlobalContext);
 
   function logout() {
     setUserStatus("logout");
@@ -104,8 +104,6 @@ function Navbar({ show }: { show: boolean }) {
     setRole(newRole);
   };
 
-  const [help, setHelp] = useState(false);
-
   const droplist = (
     <Menu onClickMenuItem={onMenuItemClick}>
       <Menu.SubMenu
@@ -157,9 +155,6 @@ function Navbar({ show }: { show: boolean }) {
     </Menu>
   );
 
-  const getHelp = () => {
-    setHelp(!help);
-  };
 
   return (
     <>
@@ -206,7 +201,7 @@ function Navbar({ show }: { show: boolean }) {
           >
             <IconButton
               icon={<IconTag />}
-              onClick={() => getHelp()}
+              onClick={() => setHelp("1")}
             />
           </Tooltip>
         </li>
@@ -241,7 +236,7 @@ function Navbar({ show }: { show: boolean }) {
         )}
         </ul>
       </div>
-      <HelpInfo open={help} change={setHelp} />
+      <HelpInfo />
     </>
 
   );
