@@ -15,6 +15,7 @@ import EmptyStatus from "@/pages/product/demand/entry/check/empty";
 import axios from "axios";
 import { postEfuseCheckFile, postSerialCheckFile } from "@/api/file";
 import LogTable from "@/pages/product/demand/entry/check/log-table";
+import EFuseTable from "@/pages/product/demand/entry/check/eFuse-table";
 
 const bodyStyle = {
   paddingTop: "0",
@@ -29,7 +30,7 @@ export default function CheckSelection() {
   const [visible, setVisible] = useState(false);
 
   const [serialFile, setSerialFile] = useState([]);
-  const [efuseFileId, setEfuseFileId] = useState({});
+  const [efuseFile, setEfuseFile] = useState({});
   useEffect(() => {
     if (moduleInfo.mpn == null) {
       Modal.confirm({
@@ -109,7 +110,7 @@ export default function CheckSelection() {
         Message.success(t["self.check.boot.upload.file.success"]);
         onSuccess(result?.fileId);
         // 设置 上传结果验证内容
-        // setSerialFile(result?.result);
+        setEfuseFile(result?.result);
       }
     }).catch(error => {
       Message.error(t["self.check.boot.upload.file.error"]);
@@ -130,6 +131,14 @@ export default function CheckSelection() {
   const serialFileNode = (data) => {
     if (data && data.length > 0) {
       return <LogTable data={data} />;
+    }
+    return <EmptyStatus />;
+  };
+
+  const eFuseNode = (data) => {
+    console.log(data);
+    if (data && data.length > 0) {
+      return <EFuseTable data={data} />;
     }
     return <EmptyStatus />;
   };
@@ -163,8 +172,6 @@ export default function CheckSelection() {
                          }}
                          customRequest={getPassSerialFile}
           /></td>
-        {/*<td><p>{t['self.check.boot.file.context']}</p></td>*/}
-        {/*<td><LogTable/></td>*/}
 
         <td>{serialFileNode(serialFile)}</td>
       </tr>
@@ -183,7 +190,7 @@ export default function CheckSelection() {
                          customRequest={getPassEfuseFile}
           />
         </td>
-        <td><EmptyStatus /></td>
+        <td>{eFuseNode(efuseFile)}</td>
       </tr>
       </tbody>
     </table>

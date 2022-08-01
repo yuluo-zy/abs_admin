@@ -239,7 +239,10 @@ const i18n = {
     "firmware.information.efuse.custom.port.key": "自定义 Efuse位 不能为空",
     "firmware.information.efuse.custom.port.value": "自定义 Efuse值 不能为空",
     "self.check.boot.upload.file.success": "文件上传成功, 请检查校验结果",
-    "self.check.boot.upload.file.error": "文件上传失败"
+    "self.check.boot.upload.file.error": "文件上传失败",
+    "self.check.boot.efuse.expect.name": "校验值",
+    "self.check.boot.efuse.file.name": "串口名称",
+    "self.check.boot.result": "校验结果"
   }
 };
 
