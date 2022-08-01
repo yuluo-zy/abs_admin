@@ -15,7 +15,7 @@ import checkLogin from "./utils/checkLogin";
 import changeTheme from "./utils/changeTheme";
 import useStorage from "./utils/useHook/useStorage";
 import { userInfo, userMenu } from "@/api/user";
-
+// todo 去除 redux
 const store = createStore(rootReducer);
 
 function Index() {

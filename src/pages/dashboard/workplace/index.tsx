@@ -5,7 +5,6 @@ import PopularContents from "./popular-contents";
 import ContentPercentage from "./content-percentage";
 import Shortcuts from "./shortcuts";
 import Announcement from "./announcement";
-import Docs from "./docs";
 import styles from "./style/index.module.less";
 import Upcoming from "@/pages/dashboard/workplace/upcoming";
 
@@ -28,13 +27,11 @@ function Workplace() {
         </Row>
       </Space>
       <Space className={styles.right} size={16} direction="vertical">
+        {/*// 公告*/}
+        <Announcement />
         {/*待办中心*/}
         <Upcoming />
         <Shortcuts />
-        {/*// 公告*/}
-        <Announcement />
-        {/*// 文档中心*/}
-        <Docs />
       </Space>
     </Space>
   );

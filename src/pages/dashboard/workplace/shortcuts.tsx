@@ -15,13 +15,13 @@ function Shortcuts() {
       title: t["workplace.contentStatistic"],
       key: "Content Statistic",
       icon: <IconStorage />,
-      path: "product"
+      path: "/product"
     },
     {
       title: t["workplace.advancedMgmt"],
       key: "Advanced Management",
       icon: <IconSettings />,
-      path: ""
+      path: "/"
     }
   ];
 

@@ -7,7 +7,6 @@ import {
   IconMenuFold,
   IconMenuUnfold,
   IconNav,
-  IconTag,
   IconUser,
   IconUserGroup
 } from "@arco-design/web-react/icon";
@@ -40,8 +39,8 @@ function getIconFromKey(key) {
       return <IconUser className={styles.icon} />;
     case "product":
       return <IconNav className={styles.icon} />;
-    default:
-      return <IconTag className={styles.icon} />;
+    // default:
+    //   return <IconTag className={styles.icon} />;
   }
 }
 
@@ -83,7 +82,6 @@ function PageLayout() {
   const currentComponent = qs.parseUrl(pathname).url.slice(1);
   const locale = useLocale();
   const settings = useSelector((state: GlobalState) => state.settings);
-  // const userInfo = useSelector((state: GlobalState) => state.userInfo);
   const userMenu = useSelector((state: GlobalState) => state.menu);
 
   const [routes, defaultRoute] = useMenu(userMenu);
@@ -265,7 +263,7 @@ function PageLayout() {
                 </Route>
                 <Route
                   path="*"
-                  component={lazyload(() => import("./components/Exception/403"))}
+                  component={lazyload(() => import("./components/Exception/404"))}
                 />
               </Switch>
             </Content>
