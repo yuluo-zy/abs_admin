@@ -129,9 +129,9 @@ export default function CheckSelection() {
 
   const serialFileNode = (data) => {
     if (data && data.length > 0) {
-      return <EmptyStatus />;
+      return <LogTable data={data} />;
     }
-    return <LogTable />;
+    return <EmptyStatus />;
   };
 
 
@@ -183,8 +183,6 @@ export default function CheckSelection() {
                          customRequest={getPassEfuseFile}
           />
         </td>
-        {/*<td><p>{t['self.check.boot.efuse.context']}</p></td>*/}
-        {/*<td><EFuseTable/></td>*/}
         <td><EmptyStatus /></td>
       </tr>
       </tbody>
