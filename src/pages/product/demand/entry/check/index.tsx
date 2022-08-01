@@ -139,7 +139,6 @@ export default function CheckSelection() {
   };
 
   const eFuseNode = (data) => {
-    console.log(data);
     if (data && data.length > 0) {
       return <EFuseTable data={data} />;
     }
@@ -156,16 +155,16 @@ export default function CheckSelection() {
       </colgroup>
       <tbody>
 
-      <tr>
+      <tr key={0}>
         <th>Items</th>
         <th>{t["self.check.boot.upload.file"]}</th>
         <th>{t["self.check.boot.upload.file.info"]}</th>
       </tr>
-      <tr>
+      <tr key={1}>
         <td>{t["self.check.boot.log"]}</td>
         <td>
           <DynamicUpload limit={1}
-                         defaultFileList={checkData?.serialFileId}
+                         fileList={checkData?.serialFileId}
                          onChange={(fileList: UploadItem[], file: UploadItem) => {
                            if (fileList.length > 0) {
                              setCheckData({ "serialFileId": file?.response });
@@ -179,10 +178,10 @@ export default function CheckSelection() {
         <td>{serialFileNode(serialFile)}</td>
       </tr>
 
-      <tr>
+      <tr key={2}>
         <td>eFuse summary</td>
         <td>
-          <DynamicUpload limit={1} defaultFileList={checkData?.efuseFileId}
+          <DynamicUpload limit={1} fileList={checkData?.efuseFileId}
                          onChange={(fileList: UploadItem[], file: UploadItem) => {
                            if (fileList.length > 0) {
                              setCheckData({ "efuseFileId": file?.response });

@@ -28,7 +28,6 @@ function DownLoad({ src }) {
       );
     }
   };
-  // todo 下载菜单
   return <Button type="primary" icon={<IconDownload />} onClick={downFile}>
     Download
   </Button>;
@@ -37,7 +36,7 @@ function DownLoad({ src }) {
 function DynamicUpload(props) {
   const t = useLocale(locale);
   const { limit, onChange, listType, onPreview, fileList, title, customRequest } = props;
-  const [defaultList, setDefaultList] = useState(fileList);
+  const [defaultList, setDefaultList] = useState([]);
 
   const initDate = (value) => {
     if (listType === "picture-card") {
@@ -61,7 +60,6 @@ function DynamicUpload(props) {
           setDefaultList([{
             uid: data?.id,
             name: data?.fileName
-            // path: data?.downloadUrl
           }]);
         }
       });
