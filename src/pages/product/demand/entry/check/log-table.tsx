@@ -2,6 +2,7 @@ import React from "react";
 import useLocale from "@/pages/product/demand/locale/useLocale";
 import { Grid, Table, TableColumnProps, Typography } from "@arco-design/web-react";
 import { IconCheckSquare, IconCloseCircle } from "@arco-design/web-react/icon";
+import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 
 const Row = Grid.Row;
 const Col = Grid.Col;
@@ -56,5 +57,9 @@ export default function LogTable(props: { data }) {
     }
   ];
 
-  return <Table columns={columns} data={data} stripe={true} pagination={false} size={"mini"} hover />;
+  return <DynamicSkeleton text={{ rows: 5 }}>
+    <Table columns={columns} data={data} stripe={true}
+           pagination={false} size={"mini"} hover />
+
+  </DynamicSkeleton>;
 }

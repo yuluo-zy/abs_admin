@@ -59,7 +59,7 @@ export default function CheckSelection() {
       "id": checkData?.id
     }).then(res => {
       if (res.data.success) {
-        Message.success(t["submit.hardware.success"]);
+        Message.success(t["self.check.boot.log.check.sum"]);
         setCheckData({
           id: res.data.result?.selAutoCheckId,
           result: res.data.result
