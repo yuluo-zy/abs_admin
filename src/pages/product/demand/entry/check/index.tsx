@@ -48,11 +48,14 @@ export default function CheckSelection() {
   }, []);
 
   const postCheck = () => {
-    // todo 判断是否上传, 上传之后结果是否为全都 pass
+    if (!checkData?.serialFileId || !checkData?.efuseFileId) {
+      Message.error(t["self.check.boot.upload.file.empty"]);
+      return;
+    }
     postCheckCustomDemand({
       "demandId": demandId,
-      "serialFileId": checkData?.serialFileId[0]?.response,
-      "efuseFileId": checkData?.efuseFileId[0]?.response,
+      "serialFileId": checkData?.serialFileId,
+      "efuseFileId": checkData?.efuseFileId,
       "id": checkData?.id
     }).then(res => {
       if (res.data.success) {
@@ -165,7 +168,7 @@ export default function CheckSelection() {
                          defaultFileList={checkData?.serialFileId}
                          onChange={(fileList: UploadItem[], file: UploadItem) => {
                            if (fileList.length > 0) {
-                             setCheckData({ "serialFileId": file.response });
+                             setCheckData({ "serialFileId": file?.response });
                            } else {
                              setCheckData({ "serialFileId": null });
                            }
@@ -182,7 +185,7 @@ export default function CheckSelection() {
           <DynamicUpload limit={1} defaultFileList={checkData?.efuseFileId}
                          onChange={(fileList: UploadItem[], file: UploadItem) => {
                            if (fileList.length > 0) {
-                             setCheckData({ "efuseFileId": fileList });
+                             setCheckData({ "efuseFileId": file?.response });
                            } else {
                              setCheckData({ "efuseFileId": null });
                            }
