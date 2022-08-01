@@ -248,7 +248,8 @@ const i18n = {
     "self.check.boot.result": "校验结果",
     "self.check.boot.log.expect.name": "校验值",
     "self.check.boot.log.file.name": "日志LOG",
-    "self.check.boot.log.check.sum": "文件上传成功, 开始总体检验"
+    "self.check.boot.log.check.sum": "文件上传成功, 开始总体检验",
+    "self.check.boot.log.check.file": "校验失败, 无法创建"
   }
 };
 

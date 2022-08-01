@@ -130,7 +130,7 @@ export default function CheckSelection() {
 
   const nextStep = () => {
     setVisible(false);
-    history.push(`/product/demand/hardware`);
+    history.push(`/product`);
   };
 
   const serialFileNode = (data) => {
@@ -147,6 +147,9 @@ export default function CheckSelection() {
     return <EmptyStatus />;
   };
 
+  const isFail = () => {
+    return checkData?.result?.result === "FAIL";
+  };
 
   return <DynamicOuterCard title={t["hardware.production.info.title"]} bodyStyle={bodyStyle}>
     <table cellPadding="1" cellSpacing="1" className={styles["table-style"]}>
@@ -220,7 +223,9 @@ export default function CheckSelection() {
       autoFocus={false}
       focusLock={true}
       footer={
-        <Button>OK</Button>
+        <Button disabled={isFail()} type={isFail() ? "secondary" : "primary"} onClick={nextStep}>
+          {isFail() ? t["self.check.boot.log.check.file"] : "Ok"}
+        </Button>
       }
     >
       <CheckTable data={checkData?.result} />
