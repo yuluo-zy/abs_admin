@@ -14,6 +14,7 @@ import CheckTable from "@/pages/product/demand/entry/check/check-table";
 import EmptyStatus from "@/pages/product/demand/entry/check/empty";
 import axios from "axios";
 import { postEfuseCheckFile, postSerialCheckFile } from "@/api/file";
+import LogTable from "@/pages/product/demand/entry/check/log-table";
 
 const bodyStyle = {
   paddingTop: "0",
@@ -122,6 +123,13 @@ export default function CheckSelection() {
     history.push(`/product/demand/hardware`);
   };
 
+  const serialFileNode = (data) => {
+    if (data) {
+      return <EmptyStatus />;
+    }
+    return <LogTable />;
+  };
+
 
   return <DynamicOuterCard title={t["hardware.production.info.title"]} bodyStyle={bodyStyle}>
     <table cellPadding="1" cellSpacing="1" className={styles["table-style"]}>
@@ -154,7 +162,7 @@ export default function CheckSelection() {
         {/*<td><p>{t['self.check.boot.file.context']}</p></td>*/}
         {/*<td><LogTable/></td>*/}
 
-        <td><EmptyStatus /></td>
+        <td>{serialFileNode(serialFile)}</td>
       </tr>
 
       <tr>
