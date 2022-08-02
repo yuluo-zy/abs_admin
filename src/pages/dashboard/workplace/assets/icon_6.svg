@@ -1,0 +1,22 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" id="图层_1" data-name="图层 1" xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 58 58">
+    <defs>
+        <style>.cls-1{fill:url(#未命名的渐变_30);}.cls-2{fill:#fff;}.cls-3{fill:url(#未命名的渐变_30-2);}</style>
+        <linearGradient id="未命名的渐变_30" y1="29" x2="58" y2="29" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#73a1ff"/>
+            <stop offset="1" stop-color="#4877e6"/>
+        </linearGradient>
+        <linearGradient id="未命名的渐变_30-2" x1="23.28" y1="27.46" x2="31.37" y2="27.46" xlink:href="#未命名的渐变_30"/>
+    </defs>
+    <circle class="cls-1" cx="29" cy="29" r="29"/>
+    <polygon class="cls-2"
+             points="43.98 43.98 17.41 43.98 14.02 40.59 40.59 40.59 40.59 14.02 43.98 17.41 43.98 43.98"/>
+    <path class="cls-2"
+          d="M40.59,41.09H14a.51.51,0,0,1-.51-.5V14a.51.51,0,0,1,.51-.51H40.59a.51.51,0,0,1,.5.51V40.59A.51.51,0,0,1,40.59,41.09Zm-26.07-1H40.08V14.52H14.52Z"/>
+    <rect class="cls-3" x="23.28" y="23.42" width="8.09" height="8.09"/>
+    <polygon class="cls-2"
+             points="22.58 33.79 19.93 33.79 19.93 19.93 33.79 19.93 33.79 22.55 32.78 22.55 32.78 20.94 20.94 20.94 20.94 32.78 22.58 32.78 22.58 33.79"/>
+    <polygon class="cls-2" points="40.1 33.79 33.07 33.79 28.13 28.84 28.84 28.13 33.49 32.78 40.1 32.78 40.1 33.79"/>
+    <path class="cls-2"
+          d="M27.31,29.47a2.17,2.17,0,1,1,2.17-2.17A2.17,2.17,0,0,1,27.31,29.47Zm0-3.33a1.16,1.16,0,1,0,1.16,1.16A1.16,1.16,0,0,0,27.31,26.14Z"/>
+</svg>

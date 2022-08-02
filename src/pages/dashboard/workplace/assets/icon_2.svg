@@ -1,0 +1,15 @@
+<svg id="图层_1" data-name="图层 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 58 58">
+    <defs>
+        <style>.cls-1{fill:url(#未命名的渐变_30);}.cls-2{fill:#fff;}</style>
+        <linearGradient id="未命名的渐变_30" y1="29" x2="58" y2="29" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#73a1ff"/>
+            <stop offset="1" stop-color="#4877e6"/>
+        </linearGradient>
+    </defs>
+    <circle class="cls-1" cx="29" cy="29" r="29"/>
+    <polygon class="cls-2"
+             points="41.27 32.95 33.06 32.95 29 37.01 24.94 32.95 16.73 32.95 14.35 44.08 43.65 44.08 41.27 32.95"/>
+    <path class="cls-2"
+          d="M29,37.52a.51.51,0,0,1-.36-.15L21,29.68a11.37,11.37,0,1,1,16.08,0l-7.68,7.69A.51.51,0,0,1,29,37.52Zm0-26.25A10.37,10.37,0,0,0,21.67,29L29,36.3,36.33,29A10.37,10.37,0,0,0,29,11.27Z"/>
+    <circle class="cls-2" cx="29" cy="21.4" r="4.31"/>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" id="图层_1" data-name="图层 1" xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 32 32">
+    <defs>
+        <style>.cls-1{fill:#fff;}.cls-2{fill:#3f485b;}.cls-3{fill:url(#未命名的渐变_30);}.cls-4{fill:url(#未命名的渐变_30-2);}
+        </style>
+        <linearGradient id="未命名的渐变_30" x1="9.92" y1="3.26" x2="22.08" y2="3.26" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#73a1ff"/>
+            <stop offset="1" stop-color="#4877e6"/>
+        </linearGradient>
+        <linearGradient id="未命名的渐变_30-2" x1="9.25" y1="17.2" x2="22.75" y2="17.2" xlink:href="#未命名的渐变_30"/>
+    </defs>
+    <rect class="cls-1" x="3.65" y="3.3" width="24.71" height="26.7"/>
+    <path class="cls-2"
+          d="M28.35,30.5H3.65a.5.5,0,0,1-.5-.5V3.3a.5.5,0,0,1,.5-.5h24.7a.5.5,0,0,1,.5.5V30A.5.5,0,0,1,28.35,30.5Zm-24.2-1h23.7V3.8H4.15Z"/>
+    <rect class="cls-3" x="9.92" y="1.5" width="12.15" height="3.52"/>
+    <circle class="cls-4" cx="16" cy="17.2" r="6.75"/>
+    <path class="cls-1"
+          d="M15.08,20.76h0a.47.47,0,0,1-.35-.15l-3.5-3.49a.51.51,0,0,1,0-.71.5.5,0,0,1,.71,0l3.14,3.14L19.6,15a.5.5,0,0,1,.71.71l-4.87,4.87A.49.49,0,0,1,15.08,20.76Z"/>
+</svg>

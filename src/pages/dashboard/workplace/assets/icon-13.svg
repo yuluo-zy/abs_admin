@@ -1,0 +1,23 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" id="图层_1" data-name="图层 1" xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 32 32">
+    <defs>
+        <style>
+            .cls-1{fill:url(#未命名的渐变_30);}.cls-2{fill:#fff;}.cls-3{fill:#3f485b;}.cls-4{fill:url(#未命名的渐变_30-2);}.cls-5{fill:url(#未命名的渐变_30-3);}.cls-6{fill:url(#未命名的渐变_30-4);}
+        </style>
+        <linearGradient id="未命名的渐变_30" x1="0.61" y1="11.18" x2="25.52" y2="11.18" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#73a1ff"/>
+            <stop offset="1" stop-color="#4877e6"/>
+        </linearGradient>
+        <linearGradient id="未命名的渐变_30-2" x1="10.77" y1="16.56" x2="13.49" y2="16.56" xlink:href="#未命名的渐变_30"/>
+        <linearGradient id="未命名的渐变_30-3" x1="17.08" y1="16.56" x2="19.79" y2="16.56" xlink:href="#未命名的渐变_30"/>
+        <linearGradient id="未命名的渐变_30-4" x1="23.38" y1="16.56" x2="26.1" y2="16.56" xlink:href="#未命名的渐变_30"/>
+    </defs>
+    <rect class="cls-1" x="0.61" y="2.95" width="24.91" height="16.46"/>
+    <polygon class="cls-2"
+             points="5.98 8.32 5.98 24.78 20.37 24.78 26.66 28.55 26.66 24.78 30.89 24.78 30.89 8.32 5.98 8.32"/>
+    <path class="cls-3"
+          d="M26.66,29.05a.47.47,0,0,1-.25-.07l-6.18-3.7H6a.5.5,0,0,1-.5-.5V8.32a.5.5,0,0,1,.5-.5H30.89a.5.5,0,0,1,.5.5V24.78a.5.5,0,0,1-.5.5H27.16v3.27a.5.5,0,0,1-.25.44A.54.54,0,0,1,26.66,29.05ZM6.48,24.28H20.37a.43.43,0,0,1,.25.07l5.54,3.32V24.78a.5.5,0,0,1,.5-.5h3.73V8.82H6.48Z"/>
+    <rect class="cls-4" x="10.77" y="15.2" width="2.72" height="2.72"/>
+    <rect class="cls-5" x="17.08" y="15.2" width="2.72" height="2.72"/>
+    <rect class="cls-6" x="23.38" y="15.2" width="2.72" height="2.72"/>
+</svg>
