@@ -28,8 +28,9 @@
 }
 
 .title {
-  font-size: 12px;
-  color: var(--color-text-1);
+  font-size: 18px;
+  position: relative;
+  top: 1rem;
 }
 
 .divider {
@@ -40,10 +41,21 @@
   clear: both;
 }
 
-.context {
+.carousel {
+  width: 100%;
   margin: 1rem;
-  background: var(--color-neutral-1);
-  padding: 1rem;
-  border-radius: 2px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  height: 300px;
+
+  :global(.arco-carousel-indicator-wrapper-top) {
+    background: transparent;
+  }
+
+  .context {
+    background: var(--color-neutral-1);
+    padding: 10px;
+    border-radius: 20px;
+    width: 70%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
 }

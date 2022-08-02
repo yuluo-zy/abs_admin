@@ -73,7 +73,8 @@ const i18n = {
     "workplace.vue": "Vue 组件库",
 
     "workplace.contentStatistic": "需求管理",
-    "workplace.upcoming.title": "待办事项"
+    "workplace.upcoming.title": "待办事项",
+    "workplace.step.title": "定制流程概览"
   }
 };
 
