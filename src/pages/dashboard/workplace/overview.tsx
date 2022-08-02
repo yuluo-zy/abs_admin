@@ -1,37 +1,24 @@
-import React, { ReactNode, useState } from "react";
+import React from "react";
 import { Card, Divider, Grid, Typography } from "@arco-design/web-react";
 import { useSelector } from "react-redux";
 import locale from "./locale";
 import useLocale from "@/utils/useHook/useLocale";
 import styles from "./style/overview.module.less";
-import IconTagBack from "./assets/icon_11.svg";
-import IconTagHover from "./assets/icon_12.svg";
+import IconTag from "./assets/Tag.svg";
+import IconMac from "./assets/mac.svg";
+import IconInfo from "./assets/info.svg";
+import IconFirmWare from "./assets/firmware.svg";
+import IconConfigure from "./assets/configure.svg";
 
 const { Row, Col } = Grid;
-type StatisticItemType = {
-  icon?: ReactNode;
-  hoverIcon?: ReactNode;
-};
 
 
-function StatisticItem(props: StatisticItemType) {
-  const { icon, hoverIcon } = props;
-  const [currentCard, setCurrentCard] = useState(false);
-  const img = (hover) => {
-    if (hover) {
-      return hoverIcon;
-    }
-    return icon;
-  };
-  return <div className={styles.item}
-              onMouseLeave={() => setCurrentCard(false)}
-              onMouseEnter={() => setCurrentCard(true)}
-              style={{
-                margin: "2rem  0.5rem 0.5rem",
-                padding: "5px"
-              }}
-  >
-    <div className={styles.icon}>{img(currentCard)}</div>
+function StatisticItem(props) {
+  const { icon } = props;
+  return <div className={styles.item}>
+    <div className={styles.icon}>
+      {icon}
+    </div>
   </div>;
 }
 
@@ -49,29 +36,38 @@ function Overview() {
       <Row>
         <Col flex={1}>
           <StatisticItem
-            icon={<IconTagBack />}
-            hoverIcon={<IconTagHover />}
+            icon={<IconTag />}
           />
         </Col>
-        <Divider type="vertical" className={styles.divider} />
-        {/*<Col flex={1}>*/}
-        {/*  <StatisticItem*/}
-        {/*    // icon={<IconJiSuan />}*/}
-        {/*  />*/}
-        {/*</Col>*/}
-        {/*<Divider type="vertical" className={styles.divider} />*/}
-        {/*<Col flex={1}>*/}
-        {/*  <StatisticItem*/}
-        {/*    // icon={<IconWu />}*/}
-        {/*  />*/}
-        {/*</Col>*/}
-        {/*<Divider type="vertical" className={styles.divider} />*/}
-        {/*<Col flex={1}>*/}
-        {/*  <StatisticItem*/}
-        {/*    // icon={<IconQrcode />}*/}
-        {/*  />*/}
-        {/*</Col>*/}
+        <div className={styles.divider} />
+        <Col flex={1}>
+          <StatisticItem
+            icon={<IconMac />}
+          />
+        </Col>
+        <div className={styles.divider} />
+        <Col flex={1}>
+          <StatisticItem
+            icon={<IconInfo />}
+          />
+        </Col>
+        <div className={styles.divider} />
+        <Col flex={1}>
+          <StatisticItem
+            icon={<IconFirmWare />}
+          />
+        </Col>
+        <div className={styles.divider} />
+        <Col flex={1}>
+          <StatisticItem
+            icon={<IconConfigure />}
+          />
+        </Col>
       </Row>
+      <br />
+      <div className={styles["context"]}>
+        <p>kljlkj</p>
+      </div>
     </Card>
   );
 }
