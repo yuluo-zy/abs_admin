@@ -5,6 +5,7 @@ import Shortcuts from "./shortcuts";
 import Announcement from "./announcement";
 import Upcoming from "@/pages/dashboard/workplace/upcoming";
 import styles from "./style/index.module.less";
+import EspTable from "@/pages/dashboard/workplace/esp-table";
 
 const { Row, Col } = Grid;
 
@@ -15,6 +16,9 @@ function Workplace() {
     <Row gutter={24} className={styles["home"]}>
       <Col flex={"auto"}>
         <Overview />
+        {/*表格*/}
+        <br />
+        <EspTable />
       </Col>
       <Col flex={"380px"}>
         <Space size={"large"} direction={"vertical"} className={styles["right"]}>

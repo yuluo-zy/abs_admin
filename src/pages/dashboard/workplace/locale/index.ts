@@ -19,7 +19,25 @@ const i18n = {
     "workplace.step.firmware": "定制流程概览",
     "workplace.step.firmware.context": "支持客户在对具有内置Flash的模组和芯片进行烧录时, 使用自己的固件, 对于ESP32和ESP32-S ESP32-C系列模组, 我们还支持在生产过程中的 flash 加密和安全启动固件的烧写.\n 此外,对于内置flash的芯片,如 ESP8285, ESP32-U4WDH, ESP32-D2WD, ESP32-PICO-V4, ESP32-PICO-V3等,乐鑫也提供了定制固件烧写服务.",
     "workplace.step.configure": "定制流程概览",
-    "workplace.step.configure.context": "乐鑫提供模块预配置服务,在生产过程中对于ESP32和ESP32-S 系列模组进行安全配置,包括每个设备唯一的证书和私钥,出厂设备可支持与基于X.509认证的物联网云平台完成开箱即用的连接"
+    "workplace.step.configure.context": "乐鑫提供模块预配置服务,在生产过程中对于ESP32和ESP32-S 系列模组进行安全配置,包括每个设备唯一的证书和私钥,出厂设备可支持与基于X.509认证的物联网云平台完成开箱即用的连接",
+    "workplace.table.info.title": "模组清单",
+    "workplace.table.info.type": "服务类型",
+    "workplace.table.info.sub.type": "服务子类型",
+    "workplace.table.info.model": "适用模组产品类型",
+    "workplace.table.info.chip": "适用芯片产品类型",
+    "workplace.table.info.tip": "定制标签",
+    "workplace.table.info.mac": "定制MAC地址",
+    "workplace.table.info.firmware": "定制固件烧写",
+    "workplace.table.info.other": "其他内容烧写",
+    "workplace.table.info.config": "模组预配置",
+    "workplace.table.info.mac.flash": "烧写到Flash",
+    "workplace.table.info.mac.efuse": "烧写到efuse",
+    "workplace.table.info.firmware.not": "非加密固件烧写",
+    "workplace.table.info.firmware.flash": "Flash 加密烧写",
+    "workplace.table.info.firmware.secure": "Secure Boot加密烧写",
+    "workplace.table.info.other.flash": "Flash 烧写",
+    "workplace.table.info.other.eFuse": "eFuse 烧写"
+
   }
 };
 

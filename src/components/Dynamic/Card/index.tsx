@@ -27,8 +27,9 @@ function DynamicCard(props: DynamicCardProps) {
         }}><IconBulb style={{ fontSize: 20, color: "#FADC19" }} /></div>}
         {open && <Alert type="warning" content={props.help} />}
       </Space>
-
-    } headerStyle={headerStyle} bodyStyle={bodyStyle}>
+    }
+          headerStyle={headerStyle}
+          bodyStyle={bodyStyle}>
 
       {children}
     </Card>
