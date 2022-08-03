@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Card, Carousel, Divider, Grid, Tag, Typography } from "@arco-design/web-react";
 import { useSelector } from "react-redux";
 import locale from "./locale";
@@ -9,6 +9,7 @@ import IconMac from "./assets/mac.svg";
 import IconInfo from "./assets/info.svg";
 import IconFirmWare from "./assets/firmware.svg";
 import IconConfigure from "./assets/configure.svg";
+import cs from "classnames";
 
 const imageSrc = [
   "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/cd7a1aaea8e1c5e3d26fe2591e561798.png~tplv-uwbnlip3yd-webp.webp",
@@ -18,20 +19,43 @@ const imageSrc = [
 ];
 const { Row, Col } = Grid;
 
-
 function StatisticItem(props) {
-  const { icon } = props;
-  return <div className={styles.item}>
-    <div className={styles.icon}>
-      {icon}
-    </div>
-  </div>;
+  const { icon, item } = props;
+  const [hover, setHover] = useState(false);
+  useEffect(() => {
+    if (props.index === item) {
+      // 设置 鼠标覆盖样式
+      setHover(true);
+    } else {
+      setHover(false);
+    }
+  }, [props.index]);
+  return useMemo(() => {
+    let cssList = [styles.icon];
+    if (hover) {
+      cssList.push(styles.iconhover);
+      console.log(cssList);
+    }
+    return <div className={styles.item}>
+      <div className={cs(cssList)}>
+        {icon}
+      </div>
+    </div>;
+  }, [hover]);
 }
 
+const iconList = [
+  <IconTag />,
+  <IconMac />,
+  <IconInfo />,
+  <IconFirmWare />,
+  <IconConfigure />
+];
 
 function Overview() {
   const t = useLocale(locale);
   const userInfo = useSelector((state: any) => state.userInfo || {});
+  const [indexNode, setIndexNode] = useState(0);
 
   return (
     <Card>
@@ -44,35 +68,20 @@ function Overview() {
       </Tag>
       <Divider />
       <Row>
-        <Col flex={1}>
-          <StatisticItem
-            icon={<IconTag />}
-          />
-        </Col>
-        <div className={styles.divider} />
-        <Col flex={1}>
-          <StatisticItem
-            icon={<IconMac />}
-          />
-        </Col>
-        <div className={styles.divider} />
-        <Col flex={1}>
-          <StatisticItem
-            icon={<IconInfo />}
-          />
-        </Col>
-        <div className={styles.divider} />
-        <Col flex={1}>
-          <StatisticItem
-            icon={<IconFirmWare />}
-          />
-        </Col>
-        <div className={styles.divider} />
-        <Col flex={1}>
-          <StatisticItem
-            icon={<IconConfigure />}
-          />
-        </Col>
+        {
+          iconList.map((item, index) => {
+            return <>
+              <Col flex={1}>
+                <StatisticItem
+                  index={indexNode}
+                  item={index}
+                  icon={item}
+                />
+              </Col>
+              <div className={styles.divider} />
+            </>;
+          })
+        }
       </Row>
       <br />
       <Carousel
@@ -82,6 +91,9 @@ function Overview() {
         indicatorType={"line"}
         indicatorPosition={"top"}
         className={styles["carousel"]}
+        onChange={(index, prevIndex, isManual) => {
+          setIndexNode(index);
+        }}
       >
         {imageSrc.map((text, index) => (
           <div
