@@ -20,7 +20,7 @@ const imageSrc = [
 const { Row, Col } = Grid;
 
 function StatisticItem(props) {
-  const { icon, item } = props;
+  const { icon, item, title } = props;
   const [hover, setHover] = useState(false);
   useEffect(() => {
     if (props.index === item) {
@@ -36,11 +36,16 @@ function StatisticItem(props) {
       cssList.push(styles.iconhover);
       console.log(cssList);
     }
-    return <div className={styles.item}>
-      <div className={cs(cssList)}>
-        {icon}
+    return <>
+      <div className={styles.item}>
+        <div className={cs(cssList)}>
+          {icon}
+        </div>
+        {hover && < Tag color="blue" className={styles["title"]}>
+          {title}
+        </Tag>}
       </div>
-    </div>;
+    </>;
   }, [hover]);
 }
 
@@ -56,7 +61,13 @@ function Overview() {
   const t = useLocale(locale);
   const userInfo = useSelector((state: any) => state.userInfo || {});
   const [indexNode, setIndexNode] = useState(0);
-
+  const titleList = [
+    t["workplace.step.label"],
+    t["workplace.step.mac"],
+    t["workplace.step.info"],
+    t["workplace.step.firmware"],
+    t["workplace.step.configure"]
+  ];
   return (
     <Card>
       <Typography.Title heading={5}>
@@ -76,14 +87,14 @@ function Overview() {
                   index={indexNode}
                   item={index}
                   icon={item}
+                  title={titleList[index]}
                 />
               </Col>
-              <div className={styles.divider} />
+              {index + 1 !== iconList.length && <div className={styles.divider} />}
             </>;
           })
         }
       </Row>
-      <br />
       <Carousel
         autoPlay
         animation="card"
