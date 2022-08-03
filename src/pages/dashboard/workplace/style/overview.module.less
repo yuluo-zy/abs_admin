@@ -1,9 +1,16 @@
 .item {
   display: flex;
   flex-direction: column;
+  position: relative;
   align-items: center;
   color: var(--color-text-1);
   margin: 1rem;
+
+  .title {
+    position: absolute;
+    top: 5rem;
+    z-index: 10;
+  }
 }
 
 .icon {
@@ -51,9 +58,8 @@
 }
 
 .carousel {
-  min-width: 700px;
   width: 100%;
-  margin-top: 1rem;
+  margin: auto;
   height: 300px;
 
   :global(.arco-carousel-indicator-wrapper-top) {
@@ -61,12 +67,10 @@
   }
 
   .context {
-
     background: rgb(var(--arcoblue-1));
     padding: 5rem;
-    text-align: center;
     border-radius: 20px;
-    width: 65%;
+    width: 70%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
