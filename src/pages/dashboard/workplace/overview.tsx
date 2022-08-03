@@ -97,9 +97,7 @@ function Overview() {
       </Row>
       <br />
       <Carousel
-        autoPlay={{
-          interval: 100000
-        }}
+        autoPlay
         animation="card"
         showArrow="never"
         indicatorType={"line"}

@@ -50,24 +50,27 @@
 }
 
 .divider {
-  width: 40px;
+  width: 45px;
   margin: auto;
   display: inline-block;
-  border-bottom: 1px solid var(--color-neutral-3);
+  border-bottom: 3px solid;
+  border-image: linear-gradient(to right, rgb(90, 207, 254), rgb(79, 163, 254)) 1;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  opacity: 50%;
   clear: both;
 }
 
 .carousel {
   width: 100%;
   margin: auto;
-  height: 300px;
+  height: 250px;
 
   :global(.arco-carousel-indicator-wrapper-top) {
     background: transparent;
   }
 
   .context {
-    background: rgb(var(--arcoblue-1));
+    background: var(--color-neutral-1);
     padding: 5rem;
     border-radius: 20px;
     width: 70%;
