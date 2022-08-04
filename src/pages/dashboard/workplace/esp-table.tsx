@@ -11,7 +11,31 @@ function EspTable() {
   const columns = [
     {
       title: t["workplace.table.info.type"],
-      dataIndex: "type"
+      dataIndex: "type",
+      render: (col, item, index) => {
+        const obj = {
+          children: col,
+          props: { rowSpan: 0 }
+        };
+
+        if (index === 0) {
+          obj.props.rowSpan = 1;
+        }
+        if (index === 1) {
+          obj.props.rowSpan = 2;
+        }
+        if (index === 3) {
+          obj.props.rowSpan = 3;
+        }
+        if (index === 6) {
+          obj.props.rowSpan = 2;
+        }
+        if (index === 8) {
+          obj.props.rowSpan = 1;
+        }
+
+        return obj;
+      }
     },
     {
       title: t["workplace.table.info.sub.type"],

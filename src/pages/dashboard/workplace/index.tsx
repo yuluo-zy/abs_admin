@@ -14,7 +14,6 @@ const gutter = 16;
 function Workplace() {
   return (
     <>
-
       <Row gutter={24} className={styles["home"]}>
         <Col span={16}>
           <Overview />
@@ -29,8 +28,6 @@ function Workplace() {
       </Row>
       <EspTable />
     </>
-
-
   );
 }
 
