@@ -2,14 +2,14 @@ import React from "react";
 import { Table, TableColumnProps, Typography } from "@arco-design/web-react";
 
 const { Text } = Typography;
-const EFuseBit = (props) => {
+const SerialPort = (props) => {
   const { data } = props;
   const columns: TableColumnProps[] = [
     {
-      title: "eFuse bit",
-      dataIndex: "bit",
+      title: "Number",
+      dataIndex: "key",
       align: "center",
-      render: (value) => <Text copyable>{value}</Text>
+      width: 50
     },
     {
       title: "Target Value",
@@ -20,20 +20,17 @@ const EFuseBit = (props) => {
   ];
 
   const getData = (data) => {
-    let key = 0;
+    let key = 1;
     const temp = [];
     for (const items in data) {
-      for (const item in data[items]) {
-        temp.push({
-          key: key++,
-          bit: item,
-          value: data[items][item]
-        });
-      }
+      temp.push({
+        key: key++,
+        value: data[items]
+      });
     }
     return temp;
   };
   return <Table pagination={false} size={"mini"} data={getData(data)} columns={columns} />;
 };
 
-export default EFuseBit;
+export default SerialPort;

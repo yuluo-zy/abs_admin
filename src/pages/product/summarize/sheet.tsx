@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import styles from "./style/index.module.less";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
 import useLocale from "@/pages/product/summarize/locale/useLocale";
-import DynamicMiniInput from "@/components/Dynamic/Input/mini";
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import { getDemandDetails } from "@/api/demand";
@@ -15,6 +14,7 @@ import { getFile } from "@/api/file";
 import { IconBulb, IconCheck, IconClose } from "@arco-design/web-react/icon";
 import BinFile from "@/pages/product/summarize/bin-file";
 import EFuseBit from "@/pages/product/summarize/eFuse-bit";
+import SerialPort from "@/pages/product/summarize/serial-port";
 
 export default function Sheet() {
   const t = useLocale();
@@ -293,8 +293,12 @@ export default function Sheet() {
           <td colSpan={8}><EFuseBit data={info?.efuseConfig} /></td>
         </tr>
         <tr>
-          <td colSpan={2}> Serial Port Print String</td>
-          <td colSpan={4}><DynamicMiniInput /></td>
+          <td colSpan={1}> Serial Port Print String</td>
+          <td colSpan={5}><SerialPort data={[
+            info?.serialCheckStr1,
+            info?.serialCheckStr2,
+            info?.serialCheckStr3
+          ]} /></td>
         </tr>
         {/*第三行*/}
         <tr>
