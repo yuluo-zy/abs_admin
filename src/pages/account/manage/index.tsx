@@ -11,8 +11,8 @@ import DynamicForm from "@/components/Dynamic/Form";
 import DynamicModal from "@/components/Dynamic/Modal";
 import RoleTag from "@/pages/account/manage/tag";
 
+const { Text } = Typography;
 function UserManage() {
-  const { Text } = Typography;
   const t = useLocale(locale);
 
   const [visible, setVisible] = useState(false);

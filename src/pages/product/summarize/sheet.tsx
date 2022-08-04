@@ -12,6 +12,9 @@ import { useHistory } from "react-router";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import DynamicTag from "@/components/Dynamic/tag";
 import { getFile } from "@/api/file";
+import { IconBulb, IconCheck, IconClose } from "@arco-design/web-react/icon";
+import BinFile from "@/pages/product/summarize/bin-file";
+import EFuseBit from "@/pages/product/summarize/eFuse-bit";
 
 export default function Sheet() {
   const t = useLocale();
@@ -179,6 +182,58 @@ export default function Sheet() {
     }
   };
 
+  // 加密类型
+  const getFirmware = (firmwareType, index) => {
+    if (firmwareType === "flash") {
+      return index === 1 || index === 3;
+
+    }
+    if (firmwareType === "secure") {
+      return index === 2 || index === 3;
+    }
+  };
+  // flash 加密类型
+  const getFlash = (data) => {
+    let keyType = null;
+    if (data && data === 0) {
+      keyType = "only key";
+    }
+    if (data && data === 1) {
+      keyType = "random keys";
+    }
+    return <>
+      <IconBulb />
+      {keyType}
+    </>;
+  };
+// secrue 设置
+  const getSecrue = (data) => {
+    let keyType = null;
+    if (data && data === 0) {
+      keyType = "V1";
+    }
+    if (data && data === 1) {
+      keyType = "V2";
+    }
+    return <>
+      <IconBulb />
+      {keyType}
+    </>;
+  };
+
+  // 获取flash 相关数据
+  const flashSpeed = (data) => {
+    if (data) {
+      return ["40m", "26m", "20m", "80m"][data];
+    }
+    return "";
+  };
+  const flashSize = (data) => {
+    if (data) {
+      return ["1MB", "2MB", "4MB", "8MB", "16MB"][data];
+    }
+    return "";
+  };
 
   return <DynamicOuterCard title={t["summarize.sheet.title"]}>
     <Button className={styles["edit"]} onClick={toEdit}>{t["summarize.sheet.edit"]}</Button>
@@ -186,58 +241,39 @@ export default function Sheet() {
       <table cellPadding="1" cellSpacing="1" className={styles["table-style"]}>
         <tbody>
         <tr>
-          <th className={styles["mini"]}>勾选</th>
           <th className={styles["mini"]}>IDs</th>
           <th className={styles["medium"]}>Project Name:</th>
           <th colSpan={6}>{info?.firmwareProject}</th>
         </tr>
         <tr>
-          <td></td>
           <td>1</td>
           <td>Module Name:</td>
           <td colSpan={6}>
             <div>{moduleInfo?.mpn}</div>
           </td>
         </tr>
+        {/*第二行*/}
         <tr>
-          <td rowSpan={12}></td>
-          <td rowSpan={12}>2</td>
-          <td rowSpan={12}>Coustome Firmware</td>
+          <td rowSpan={8}>2</td>
+          <td rowSpan={8}>Coustome Firmware</td>
           <td rowSpan={2}>Firmware Version Number</td>
           <td rowSpan={2} colSpan={2}>{info?.firmwareVersion}</td>
           <td>Flash Encryption</td>
-          <td colSpan={2}><DynamicMiniInput /></td>
+          <td colSpan={1}>{getFirmware("flash", info?.firmwareType) ? <IconCheck /> : <IconClose />}</td>
+          <td colSpan={1}>{getFlash(info?.keyType)}</td>
         </tr>
         <tr>
           <td>Secure Boot</td>
-          <td><DynamicMiniInput /></td>
-          <td><DynamicMiniInput /></td>
+          <td>{getFirmware("secure", info?.firmwareType) ? <IconCheck /> : <IconClose />}</td>
+          <td>{getSecrue(info?.secureBoot)}</td>
         </tr>
         <tr>
-          <td rowSpan={5}> Bin Files</td>
-          <td colSpan={2}>Name of Firmware bin files</td>
-          <td colSpan={2}>Md5 value of the "xxx.bin" file</td>
-          <td>Flash Offset</td>
+          <td rowSpan={2}>Bin Files</td>
         </tr>
+
+
         <tr>
-          <td colSpan={2}><DynamicMiniInput /></td>
-          <td colSpan={2}><DynamicMiniInput /></td>
-          <td><DynamicMiniInput /></td>
-        </tr>
-        <tr>
-          <td colSpan={2}><DynamicMiniInput /></td>
-          <td colSpan={2}><DynamicMiniInput /></td>
-          <td><DynamicMiniInput /></td>
-        </tr>
-        <tr>
-          <td colSpan={2}><DynamicMiniInput /></td>
-          <td colSpan={2}><DynamicMiniInput /></td>
-          <td><DynamicMiniInput /></td>
-        </tr>
-        <tr>
-          <td colSpan={2}><DynamicMiniInput /></td>
-          <td colSpan={2}><DynamicMiniInput /></td>
-          <td><DynamicMiniInput /></td>
+          <td colSpan={5}><BinFile data={info?.fileList} /></td>
         </tr>
         <tr>
           <td rowSpan={2}>Flash SPI Configuration</td>
@@ -248,18 +284,13 @@ export default function Sheet() {
         </tr>
         <tr>
           <td> Target Configurations</td>
-          <td colSpan={2}><DynamicMiniInput /></td>
-          <td><DynamicMiniInput /></td>
-          <td><DynamicMiniInput /></td>
+          <td colSpan={2}>{flashSpeed(info?.flashFrequency)}</td>
+          <td>{info?.flashMode}</td>
+          <td>{flashSize(info?.flashSize)}</td>
         </tr>
         <tr>
-          <td rowSpan={2}>eFuse requirements</td>
-          <td>eFuse bit</td>
-          <td colSpan={4}><DynamicMiniInput /></td>
-        </tr>
-        <tr>
-          <td>Target Value</td>
-          <td colSpan={4}><DynamicMiniInput /></td>
+          <td rowSpan={1}>eFuse requirements</td>
+          <td colSpan={8}><EFuseBit data={info?.efuseConfig} /></td>
         </tr>
         <tr>
           <td colSpan={2}> Serial Port Print String</td>
@@ -267,7 +298,6 @@ export default function Sheet() {
         </tr>
         {/*第三行*/}
         <tr>
-          <td rowSpan={5}></td>
           <td rowSpan={5}>3</td>
           <td rowSpan={5}>Custom MAC</td>
           <td colSpan={2}>Starting Address</td>
@@ -291,7 +321,6 @@ export default function Sheet() {
         </tr>
         {/*第四行*/}
         <tr>
-          <td rowSpan={5}></td>
           <td rowSpan={5}>4</td>
           <td rowSpan={5}>Customized Content</td>
           <td rowSpan={3}>Flash</td>
@@ -321,7 +350,6 @@ export default function Sheet() {
 
         {/*第五节内容*/}
         <tr>
-          <td rowSpan={3}></td>
           <td rowSpan={3}>4</td>
           <td rowSpan={3}>Label</td>
           <td colSpan={2}>Custom or Not</td>
