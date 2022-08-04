@@ -14,7 +14,8 @@ function DynamicCard(props: DynamicCardProps) {
   };
   const bodyStyle = {
     paddingLeft: "2rem",
-    paddingRight: "2rem"
+    paddingRight: "2rem",
+    overflow: "auto"
   };
   const [open, setOpen] = useState(false);
 
@@ -29,7 +30,9 @@ function DynamicCard(props: DynamicCardProps) {
       </Space>
     }
           headerStyle={headerStyle}
-          bodyStyle={bodyStyle}>
+          bodyStyle={bodyStyle}
+          {...props}
+    >
 
       {children}
     </Card>

@@ -94,6 +94,7 @@ export interface DynamicCardProps {
   headerStyle?: any;
   bodyStyle?: any;
   style?: any;
+  className?: any;
 }
 
 export interface ListProps {

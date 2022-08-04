@@ -67,6 +67,7 @@ function EspTable() {
 
   const data = [
     {
+      key: "1",
       "type": t["workplace.table.info.tip"],
       "subtype": "NA",
       "c3": "√",
@@ -127,7 +128,7 @@ function EspTable() {
       "v3": "√"
     },
     {
-      key: "6",
+      key: "7",
       "type": t["workplace.table.info.other"],
       "subtype": t["workplace.table.info.other.flash"],
       "c3": "√",
@@ -136,7 +137,7 @@ function EspTable() {
       "8286": "√"
     },
     {
-      key: "6",
+      key: "8",
       "type": t["workplace.table.info.other"],
       "subtype": t["workplace.table.info.other.eFuse"],
       "c3": "√",
@@ -144,7 +145,7 @@ function EspTable() {
       "32": "√"
     },
     {
-      key: "6",
+      key: "9",
       "type": t["workplace.table.info.other"],
       "subtype": "NA",
       "c3": "√",
