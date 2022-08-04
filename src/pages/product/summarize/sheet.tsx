@@ -28,7 +28,7 @@ export default function Sheet() {
         state.burnData,
         state.fitData
       ], shallow);
-  const [setModuleInfo, setInfo, setMacData, setBurnData, setLabelDate, setServiceData, setFitData] =
+  const [setModuleInfo, setInfo, setMacData, setBurnData, setLabelDate, setServiceData, setFitData, setCheckData] =
     ProductStore(state => [
       state.setModuleInfo,
       state.setInfo,
@@ -36,7 +36,8 @@ export default function Sheet() {
       state.setBurnData,
       state.setLabelData,
       state.setServiceData,
-      state.setFitData
+      state.setFitData,
+      state.setCheckData
     ], shallow);
 
   const [serviceType, setServiceType] = ProductStore(state => [state.serviceType, state.setServiceType], shallow);
@@ -75,6 +76,10 @@ export default function Sheet() {
         // 设置定制标签
         if (res.data.result?.selLabelVO) {
           setSelLabelVO(res.data.result?.selLabelVO);
+        }
+        // 设置校验结果
+        if (res.data.result?.selAutoCheckVO) {
+          setSelAutoCheckVO(res.data.result?.selAutoCheckVO);
         }
       }
     });
@@ -124,6 +129,17 @@ export default function Sheet() {
 
   const setSelLabelVO = (data) => {
     setLabelDate(data);
+  };
+
+  const setSelAutoCheckVO = (data) => {
+    const temp = {
+      "id": data?.id,
+      "serialFileId": data?.serialFileId,
+      "efuseFileId": data?.efuseFileId,
+      "efuseRsp": data?.efuseRsp?.result,
+      "serialRsp": data?.serialRsp?.result
+    };
+    setCheckData(temp);
   };
   const toEdit = () => {
     history.push(`/product/demand/hardware`);

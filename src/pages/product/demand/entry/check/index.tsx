@@ -29,8 +29,8 @@ export default function CheckSelection() {
     ProductStore(state => [state.checkData, state.setCheckData, state.moduleInfo, state.demandId], shallow);
   const [visible, setVisible] = useState(false);
 
-  const [serialFile, setSerialFile] = useState([]);
-  const [efuseFile, setEfuseFile] = useState({});
+  // const [serialFile, setSerialFile] = useState([]);
+  // const [efuseFile, setEfuseFile] = useState({});
   useEffect(() => {
     if (moduleInfo.mpn == null) {
       Modal.confirm({
@@ -86,7 +86,9 @@ export default function CheckSelection() {
         Message.success(t["self.check.boot.upload.file.success"]);
         onSuccess(result?.fileId);
         // 设置 上传结果验证内容
-        setSerialFile(result?.result);
+        setCheckData(
+          { "serialRsp": result?.result }
+        );
       }
     }).catch(error => {
       Message.error(t["self.check.boot.upload.file.error"]);
@@ -115,7 +117,9 @@ export default function CheckSelection() {
         Message.success(t["self.check.boot.upload.file.success"]);
         onSuccess(result?.fileId);
         // 设置 上传结果验证内容
-        setEfuseFile(result?.result);
+        setCheckData(
+          { "efuseRsp": result?.result }
+        );
       }
     }).catch(error => {
       Message.error(t["self.check.boot.upload.file.error"]);
@@ -180,7 +184,7 @@ export default function CheckSelection() {
                          customRequest={getPassSerialFile}
           /></td>
 
-        <td>{serialFileNode(serialFile)}</td>
+        <td>{serialFileNode(checkData?.serialRsp)}</td>
       </tr>
 
       <tr key={2}>
@@ -197,7 +201,7 @@ export default function CheckSelection() {
                          customRequest={getPassEfuseFile}
           />
         </td>
-        <td>{eFuseNode(efuseFile)}</td>
+        <td>{eFuseNode(checkData?.efuseRsp)}</td>
       </tr>
       </tbody>
     </table>
