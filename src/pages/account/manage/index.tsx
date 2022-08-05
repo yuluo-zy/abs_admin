@@ -4,12 +4,13 @@ import locale from "./locale";
 import SearchList from "@/components/Dynamic/List";
 import { addUser, getUserList, putUser, putUserLock, putUserPassword, removeUser } from "@/api/user";
 import styles from "./style/index.module.less";
-import { Badge, Dropdown, Menu, Message, Typography } from "@arco-design/web-react";
+import { Badge, Button, Dropdown, Menu, Message, Typography } from "@arco-design/web-react";
 import { CallBackHandle, FormItemProps, SearchItem } from "@/components/type";
 import { IconUser } from "@arco-design/web-react/icon";
 import DynamicForm from "@/components/Dynamic/Form";
 import DynamicModal from "@/components/Dynamic/Modal";
 import RoleTag from "@/pages/account/manage/tag";
+import PermissionWrapper from "@/components/PermissionWrapper";
 
 const { Text } = Typography;
 
@@ -139,43 +140,50 @@ function UserManage() {
         width: 100,
         headerCellStyle: { paddingLeft: "15px" },
         render: (_, record) => (
-          <Dropdown.Button size={"small"} droplist={
-            <Menu>
-              <Menu.Item key="1" onClick={() => {
-                setUserInfo({
-                  ...record
-                });
-                setPasswordVisible(!passwordVisible);
-              }}>Change Password</Menu.Item>
-              <Menu.Item key="2" onClick={() => {
-                putUserLock(record.id, {
-                  locked: record.locked === 0 ? 1 : 0
-                }).then((res) => {
-                  if (res.data.success === true) {
-                    callback();
-                    Message.info({ content: "ok" });
-                  }
-                });
-              }
-              }>Lock</Menu.Item>
-              <Menu.Item key="3" onClick={() => {
-                removeUser({ ids: [record.id] }).then((res) => {
-                  if (res.data.success === true) {
-                    callback();
-                    Message.info({ content: "ok" });
-                  }
-                });
-              }
-              }>Delete</Menu.Item>
-            </Menu>
-          } onClick={() => {
-            setUserInfo({
-              ...record
-            });
-            setVisible(!visible);
-          }}>
-            <IconUser /> Edit
-          </Dropdown.Button>
+          <>
+            <PermissionWrapper
+              requiredPermissions={[{ resource: "user:approval" }]}
+            >
+              <Button>删除</Button>
+            </PermissionWrapper>
+            <Dropdown.Button size={"small"} droplist={
+              <Menu>
+                <Menu.Item key="1" onClick={() => {
+                  setUserInfo({
+                    ...record
+                  });
+                  setPasswordVisible(!passwordVisible);
+                }}>Change Password</Menu.Item>
+                <Menu.Item key="2" onClick={() => {
+                  putUserLock(record.id, {
+                    locked: record.locked === 0 ? 1 : 0
+                  }).then((res) => {
+                    if (res.data.success === true) {
+                      callback();
+                      Message.info({ content: "ok" });
+                    }
+                  });
+                }
+                }>Lock</Menu.Item>
+                <Menu.Item key="3" onClick={() => {
+                  removeUser({ ids: [record.id] }).then((res) => {
+                    if (res.data.success === true) {
+                      callback();
+                      Message.info({ content: "ok" });
+                    }
+                  });
+                }
+                }>Delete</Menu.Item>
+              </Menu>
+            } onClick={() => {
+              setUserInfo({
+                ...record
+              });
+              setVisible(!visible);
+            }}>
+              <IconUser /> Edit
+            </Dropdown.Button>
+          </>
         )
       }
     ];

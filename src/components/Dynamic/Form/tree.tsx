@@ -3,10 +3,11 @@ import { Tree } from "@arco-design/web-react";
 
 function DynamicTree(props, ref) {
   const [checked, setChecked] = useState(props.checkedKeys);
+  const [halfCheckedKeys, setHalfCheckedKeys] = useState([]);
 
   useImperativeHandle(ref, () => ({
     getTreeChecked: () => {
-      return checked;
+      return [...checked, ...halfCheckedKeys];
     }
   }));
 
@@ -19,8 +20,10 @@ function DynamicTree(props, ref) {
         treeData={props.data}
         checkable
         checkedKeys={checked}
-        onCheck={(keys) => {
-          setChecked(keys);
+        checkedStrategy={"all"}
+        onCheck={(keys, extra) => {
+          setChecked([...keys]);
+          setHalfCheckedKeys(extra.halfCheckedKeys);
         }}
         showLine={true}
         size={"large"}

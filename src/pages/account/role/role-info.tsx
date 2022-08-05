@@ -16,6 +16,37 @@ export default function RoleInfo() {
   const { state, dispatch } = useContext(RoleContext);
   const t = useLocale(locale);
 
+  const getInitData = (data, userList) => {
+    let temp = [];
+    if (data && userList) {
+      let treeMap = new Map();
+      const addLsit = (data) => {
+        data.forEach((ele) => {
+          treeMap.set(ele.id, ele);
+          if (ele.children && ele.children.length > 0) {
+            addLsit(ele.children);
+          }
+        });
+      };
+      addLsit(data);
+      temp = [...userList];
+      for (const item of userList) {
+        const value = treeMap.get(item);
+        if (value) {
+          if (value?.children) {
+            for (const node of value?.children) {
+              if (!userList.includes(node.id)) {
+                temp.splice(temp.findIndex(item => item === value.id), 1);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return temp;
+  };
+
   const getTreeDate = (treeList) => {
     treeList.forEach((ele) => {
       ele["title"] = ele["name"];
@@ -123,12 +154,15 @@ export default function RoleInfo() {
     });
   };
 
+  // 根据叶子节点 去掉半悬状态 的子选项
+
   return useMemo(() => {
     if (state.roleId === "") {
       return (
         <Result status="404" className={styles["layout-content-result"]} />
       );
     }
+    // 初始化 对应的 树结构
     const initialValues = cloneDeep(state.permission);
     getTreeDate(initialValues);
     return (
@@ -142,10 +176,10 @@ export default function RoleInfo() {
               data={state.roleInfo}
               onSubmit={async (value) => {
                 if (state.roleId === 0) {
-                  postRoleInfo(value);
+                  await postRoleInfo(value);
                   return;
                 }
-                putRoleInfo(value);
+                await putRoleInfo(value);
               }}
               className={styles["role-form"]}
             >
@@ -153,7 +187,7 @@ export default function RoleInfo() {
                 ref={treeRef}
                 title={t["role.content.permission.tree"]}
                 data={initialValues}
-                checkedKeys={state.roleInfo?.permissionIds}
+                checkedKeys={getInitData(initialValues, state.roleInfo?.permissionIds)}
               />
             </DynamicForm>
           </DynamicSkeleton>
