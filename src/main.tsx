@@ -83,6 +83,7 @@ function Index() {
             bordered: false
           },
           Table: {
+
             border: false
           }
         }}
