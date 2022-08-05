@@ -40,7 +40,7 @@ export const routes: Route[] = [
   {
     name: "menu.account",
     key: "account",
-    // permission: "user:mgr",
+    permission: "user:mgr",
     children: [
       {
         name: "menu.account.manage",
@@ -55,7 +55,7 @@ export const routes: Route[] = [
       {
         name: "menu.account.permission",
         key: "account/permission",
-        // permission: "permission:view"
+        permission: "permission:view"
       }
     ]
   },
