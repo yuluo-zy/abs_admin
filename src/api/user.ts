@@ -23,6 +23,12 @@ export const addUser = (data) => {
 };
 
 export const putUser = (data) => {
+  if (data?.roleIds && data?.roleIds.length > 0) {
+    data.roleIds = data.roleIds?.toString();
+  }
+  if (data?.groupId && data?.groupId.length > 0) {
+    data.groupId = data.groupId[data?.groupId.length - 1];
+  }
   return httpPut("/user", data);
 };
 

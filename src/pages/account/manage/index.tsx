@@ -153,7 +153,6 @@ function UserManage() {
   };
 
 
-
   const selectItem: Array<SearchItem> = [
     {
       name: t["userTable.columns.id"],
@@ -188,31 +187,24 @@ function UserManage() {
       />
 
       {/*用户角色*/}
-      {/*<DynamicModal*/}
-      {/*  title={t["userTable.columns.operations.edit"]}*/}
-      {/*  visible={visible}*/}
-      {/*  footer={null}*/}
-      {/*  confirmLoading={confirmLoading}*/}
-      {/*  onCancel={() => {*/}
-      {/*    setVisible(false);*/}
-      {/*    setConfirmLoading(false);*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <DynamicForm*/}
-      {/*    title={t["userTable.columns.operations.edit"]}*/}
-      {/*    data={userInfo}*/}
-      {/*    formItem={createUserItem}*/}
-      {/*    onSubmit={async (value) => {*/}
-      {/*      await putUser(value).then((res) => {*/}
-      {/*        if (res.data.success === true) {*/}
-      {/*          Message.success(t["userTable.columns.user.operation.success"]);*/}
-      {/*          setVisible(false);*/}
-      {/*          setConfirmLoading(false);*/}
-      {/*        }*/}
-      {/*      });*/}
-      {/*    }}*/}
-      {/*  />*/}
-      {/*</DynamicModal>*/}
+      <DynamicModal
+        title={t["userTable.columns.operations.edit"]}
+        visible={visible}
+        footer={null}
+        confirmLoading={confirmLoading}
+        onCancel={() => {
+          setVisible(false);
+          setConfirmLoading(false);
+        }}
+      >
+        {CreateUserHOC({
+          data: { ...userInfo },
+          confirmCallback: () => {
+            setVisible(false);
+            setConfirmLoading(false);
+          }
+        })}
+      </DynamicModal>
 
       {/*密码修改*/}
       <DynamicModal

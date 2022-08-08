@@ -11,6 +11,7 @@ export type ReadonlyRecordable<T = any> = Readonly<Record<string, T>>;
 export interface CallBackHandle {
   confirmCallback?: () => void;
   cancelCallback?: () => void;
+  data?: any;
 }
 
 export interface FormItemProps {
