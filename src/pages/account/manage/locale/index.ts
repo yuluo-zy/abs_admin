@@ -3,10 +3,13 @@ const i18n = {
 
   "zh-CN": {
     "manage.list.name": "用户查询",
-    "userTable.columns.id": "用户ID",
+    "userTable.columns.id": "ID",
     "userTable.columns.name": "用户名",
+    "userTable.columns.group": "组",
+    "userTable.columns.group.type": "类型",
     "userTable.columns.roleList": "角色列表",
     "userTable.columns.lock": "锁定状态",
+    "userTable.columns.approval": "审批",
     "userTable.columns.locked": "已锁定",
     "userTable.columns.unlock": "正常",
     "userTable.columns.operations.view": "查看",

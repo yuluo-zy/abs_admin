@@ -6,7 +6,6 @@ import { addUser, getUserList, putUser, putUserLock, putUserPassword, removeUser
 import styles from "./style/index.module.less";
 import { Badge, Button, Dropdown, Menu, Message, Typography } from "@arco-design/web-react";
 import { CallBackHandle, FormItemProps, SearchItem } from "@/components/type";
-import { IconUser } from "@arco-design/web-react/icon";
 import DynamicForm from "@/components/Dynamic/Form";
 import DynamicModal from "@/components/Dynamic/Modal";
 import RoleTag from "@/pages/account/manage/tag";
@@ -100,19 +99,26 @@ function UserManage() {
       {
         title: t["userTable.columns.id"],
         dataIndex: "id",
-        render: (value) => <Text>{value}</Text>,
-        width: 70
+        width: 50
       },
       {
         title: t["userTable.columns.name"],
         dataIndex: "username",
-        render: (value) => <Text copyable>{value}</Text>,
-        width: 200
+        width: 190
+      },
+      {
+        title: t["userTable.columns.group"],
+        dataIndex: "groupNames",
+        width: 120
+      },
+      {
+        title: t["userTable.columns.group.type"],
+        dataIndex: "groupTypeNames",
+        width: 70
       },
       {
         title: t["userTable.columns.roleList"],
         dataIndex: "roleNames",
-        width: 220,
         render: (_, record) => (
           <div className={styles["content-type"]}>
             <RoleTag roleName={record?.roleNames} roleId={record?.roleIds} />
@@ -137,14 +143,15 @@ function UserManage() {
       {
         title: t["searchTable.columns.operations"],
         dataIndex: "operations",
-        width: 100,
         headerCellStyle: { paddingLeft: "15px" },
         render: (_, record) => (
           <>
             {record?.approvalStatus === 0 && <PermissionWrapper
               requiredPermissions={[{ resource: "user:approval" }]}
             >
-              <Button size={"small"}>删除</Button>
+              <div className={styles["group-button"]}>
+                <Button size={"small"}>{t["userTable.columns.approval"]}</Button>
+              </div>
             </PermissionWrapper>}
             <Dropdown.Button size={"small"} droplist={
               <Menu>
@@ -181,7 +188,7 @@ function UserManage() {
               });
               setVisible(!visible);
             }}>
-              <IconUser /> Edit
+              Edit
             </Dropdown.Button>
           </>
         )
