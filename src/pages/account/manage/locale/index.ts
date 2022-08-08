@@ -24,13 +24,15 @@ const i18n = {
     "userTable.columns.user.password.error": "密码为必填项, 且密码长度应大于8",
     "userTable.columns.user.password.again.error": "两次密码不一致",
     "userTable.columns.user.role": "用户角色",
+    "userTable.columns.user.group": "组织类型",
     "userTable.columns.user.role.error": "用户角色必须添加",
     "userTable.columns.user.operation.submit": "提交",
     "userTable.columns.user.operation.reset": "重置",
     "userTable.columns.user.operation.error": "校验失败，请检查字段！",
     "userTable.columns.user.operation.success": "操作成功",
     "userTable.columns.user.operation.lock": "确定要改变本用户锁定嘛?",
-    "userTable.columns.user.operation.delete": "确定要将本用户删除嘛?"
+    "userTable.columns.user.operation.delete": "确定要将本用户删除嘛?",
+    "userTable.columns.user.org.length": "请将用户组织设定完全"
   }
 };
 

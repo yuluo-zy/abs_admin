@@ -1,4 +1,5 @@
 import { Tag } from "@arco-design/web-react";
+import React from "react";
 
 const COLORS = [
   "red",

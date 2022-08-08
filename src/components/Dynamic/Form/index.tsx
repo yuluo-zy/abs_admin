@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Button, DatePicker, Form, Grid, Input, InputNumber, Select } from "@arco-design/web-react";
+import { Button, Cascader, DatePicker, Form, Grid, Input, InputNumber, Select } from "@arco-design/web-react";
 import useLocale from "@/utils/useHook/useLocale";
 import styles from "./style/index.module.less";
 import { FormItemProps, FormList, FormProps, Recordable } from "@/components/type";
@@ -114,7 +114,24 @@ function DynamicForm(props: FormProps) {
           rules={item.rules}
           style={item.style}
         >
-          <Select options={item.options} mode={"multiple"} allowClear placeholder={item.placeholder} />
+          <Select options={item.options} loading={item?.loading} mode={"multiple"} allowClear
+                  placeholder={item.placeholder} />
+        </FormItem>
+      );
+    }
+    if (item.type === "cascader") {
+      return (
+        <FormItem
+          key={index}
+          labelCol={item.labelCol as Recordable}
+          required={item.required}
+          label={item.label}
+          field={item.field}
+          rules={item.rules}
+          style={item.style}
+        >
+          <Cascader options={item.options} changeOnSelect renderFormat={(valueShow) => `${valueShow.join(" > ")}`}
+                    allowClear placeholder={item.placeholder} />
         </FormItem>
       );
     }

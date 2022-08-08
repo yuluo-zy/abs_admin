@@ -8,6 +8,7 @@ function DynamicModal(props: ModeProps) {
       title={props.title}
       visible={props.visible}
       footer={null}
+      unmountOnExit={true}
       confirmLoading={props.confirmLoading}
       onCancel={() => {
         props.onCancel?.();

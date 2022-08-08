@@ -13,7 +13,12 @@ export const getUserList = (data) => {
 };
 
 export const addUser = (data) => {
-  data.roleIds = data.roleIdList?.toString();
+  if (data?.roleIds && data?.roleIds.length > 0) {
+    data.roleIds = data.roleIds?.toString();
+  }
+  if (data?.groupId && data?.groupId.length > 0) {
+    data.groupId = data.groupId[data?.groupId.length - 1];
+  }
   return httpPost("/user", data);
 };
 
@@ -33,6 +38,6 @@ export const putUserLock = (id: number, data) => {
   return httpPut("/user/" + id + "/lock", data);
 };
 
-export const getSimpleInfo = (id: number) => {
-  return httpGet("/user/simple/" + id);
-};
+
+// 请求用户可以创建的 组织类型 类型
+

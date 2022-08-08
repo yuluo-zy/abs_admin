@@ -16,3 +16,12 @@ export const deleteRole = (id) => {
   return httpDelete("/role/" + id);
 };
 
+// 请求用户能够创建的角色类型
+
+export const addableRole = () => {
+  return httpGet("/role/addable");
+};
+
+export const addableOrg = () => {
+  return httpGet("/role/tree");
+};

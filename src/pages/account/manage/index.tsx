@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale";
 import SearchList from "@/components/Dynamic/List";
-import { addUser, getUserList, putUser, putUserLock, putUserPassword, removeUser } from "@/api/user";
+import { getUserList, putUserLock, putUserPassword, removeUser } from "@/api/user";
 import styles from "./style/index.module.less";
-import { Badge, Button, Dropdown, Menu, Message, Typography } from "@arco-design/web-react";
-import { CallBackHandle, FormItemProps, SearchItem } from "@/components/type";
+import { Badge, Button, Dropdown, Menu, Message } from "@arco-design/web-react";
+import { FormItemProps, SearchItem } from "@/components/type";
 import DynamicForm from "@/components/Dynamic/Form";
 import DynamicModal from "@/components/Dynamic/Modal";
 import RoleTag from "@/pages/account/manage/tag";
 import PermissionWrapper from "@/components/PermissionWrapper";
-
-const { Text } = Typography;
+import CreateUserHOC from "./addableUser";
 
 function UserManage() {
   const t = useLocale(locale);
@@ -21,49 +20,6 @@ function UserManage() {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
 
-  // 用来创建 增加 用户的表单
-  const createUserItem: Array<FormItemProps> = [
-    {
-      label: t["userTable.columns.user.name"],
-      type: "input",
-      field: "username",
-      required: true,
-      rules: [
-        {
-          required: true,
-          message: t["userTable.columns.user.name.error"],
-          minLength: 2
-        }
-      ]
-    },
-    {
-      label: t["userTable.columns.user.password"],
-      field: "password",
-      type: "password",
-      required: true,
-      rules: [
-        {
-          required: true,
-          message: t["userTable.columns.user.password.error"],
-          minLength: 8
-        }
-      ]
-    },
-    {
-      label: t["userTable.columns.user.role"],
-      field: "roleIdList",
-      type: "multiple",
-      rules: [
-        {
-          type: "array",
-          minLength: 1,
-          message: t["userTable.columns.user.role.error"]
-        }
-      ],
-      required: true,
-      options: ["1", "2", "3", "4", "5"]
-    }
-  ];
 
   const postUserPassword: Array<FormItemProps> = [
     {
@@ -196,22 +152,7 @@ function UserManage() {
     ];
   };
 
-  const createUser = (props: CallBackHandle) => {
-    return (
-      <DynamicForm
-        title={t["userTable.columns.operations.add"]}
-        formItem={createUserItem}
-        onSubmit={async (value) => {
-          await addUser(value).then((res) => {
-            if (res.data.success === true) {
-              Message.success(t["userTable.columns.user.operation.success"]);
-              props.confirmCallback();
-            }
-          });
-        }}
-      />
-    );
-  };
+
 
   const selectItem: Array<SearchItem> = [
     {
@@ -236,7 +177,7 @@ function UserManage() {
     <div>
       <SearchList
         name={t["manage.list.name"]}
-        add={createUser}
+        add={CreateUserHOC}
         addName={t["userTable.columns.operations.add"]}
         download={false}
         upload={false}
@@ -247,31 +188,31 @@ function UserManage() {
       />
 
       {/*用户角色*/}
-      <DynamicModal
-        title={t["userTable.columns.operations.edit"]}
-        visible={visible}
-        footer={null}
-        confirmLoading={confirmLoading}
-        onCancel={() => {
-          setVisible(false);
-          setConfirmLoading(false);
-        }}
-      >
-        <DynamicForm
-          title={t["userTable.columns.operations.edit"]}
-          data={userInfo}
-          formItem={createUserItem}
-          onSubmit={async (value) => {
-            await putUser(value).then((res) => {
-              if (res.data.success === true) {
-                Message.success(t["userTable.columns.user.operation.success"]);
-                setVisible(false);
-                setConfirmLoading(false);
-              }
-            });
-          }}
-        />
-      </DynamicModal>
+      {/*<DynamicModal*/}
+      {/*  title={t["userTable.columns.operations.edit"]}*/}
+      {/*  visible={visible}*/}
+      {/*  footer={null}*/}
+      {/*  confirmLoading={confirmLoading}*/}
+      {/*  onCancel={() => {*/}
+      {/*    setVisible(false);*/}
+      {/*    setConfirmLoading(false);*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  <DynamicForm*/}
+      {/*    title={t["userTable.columns.operations.edit"]}*/}
+      {/*    data={userInfo}*/}
+      {/*    formItem={createUserItem}*/}
+      {/*    onSubmit={async (value) => {*/}
+      {/*      await putUser(value).then((res) => {*/}
+      {/*        if (res.data.success === true) {*/}
+      {/*          Message.success(t["userTable.columns.user.operation.success"]);*/}
+      {/*          setVisible(false);*/}
+      {/*          setConfirmLoading(false);*/}
+      {/*        }*/}
+      {/*      });*/}
+      {/*    }}*/}
+      {/*  />*/}
+      {/*</DynamicModal>*/}
 
       {/*密码修改*/}
       <DynamicModal

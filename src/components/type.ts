@@ -25,7 +25,9 @@ export interface FormItemProps {
     | "number"
     | "text"
     | "tree"
-    | "upload" | "self";
+    | "cascader"
+    | "upload"
+    | "self";
   onChange?: () => void;
   field: string;
   options?: any;
@@ -36,6 +38,7 @@ export interface FormItemProps {
   node?: any;
   limit?: number;
   header?: string;
+  loading?: boolean;
   style?: any;
 }
 
