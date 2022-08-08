@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale";
 import SearchList from "@/components/Dynamic/List";
@@ -172,6 +172,8 @@ function UserManage() {
     }
   ];
 
+  const searchListRef = useRef();
+
   return (
     <div>
       <SearchList
@@ -180,6 +182,7 @@ function UserManage() {
         addName={t["userTable.columns.operations.add"]}
         download={false}
         upload={false}
+        ref={searchListRef}
         fetchRemoteData={getUserList}
         getColumns={getColumns}
         select={true}
@@ -201,6 +204,8 @@ function UserManage() {
           data: { ...userInfo },
           confirmCallback: () => {
             setVisible(false);
+            // @ts-ignore
+            searchListRef.current.callBack();
             setConfirmLoading(false);
           }
         })}

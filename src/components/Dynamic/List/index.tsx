@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { Button, PaginationProps, Space, Table } from "@arco-design/web-react";
 import { IconDownload, IconPlus } from "@arco-design/web-react/icon";
 import useLocale from "@/utils/useHook/useLocale";
@@ -9,9 +9,15 @@ import DynamicCard from "@/components/Dynamic/Card";
 import { ListProps } from "@/components/type";
 import DynamicModal from "@/components/Dynamic/Modal";
 
-export default function SearchList(props: ListProps) {
+const SearchList = React.forwardRef((props: ListProps, ref) => {
   const t = useLocale(locale);
   const [called, setCalled] = useState(true);
+
+  useImperativeHandle(ref, () => ({
+    callBack: () => {
+      tableCallback();
+    }
+  }));
 
   const tableCallback = async () => {
     setCalled(!called);
@@ -162,4 +168,6 @@ export default function SearchList(props: ListProps) {
       </DynamicCard>
     </div>
   );
-}
+})
+
+export default SearchList;
