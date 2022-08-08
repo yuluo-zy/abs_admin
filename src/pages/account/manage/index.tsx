@@ -141,11 +141,11 @@ function UserManage() {
         headerCellStyle: { paddingLeft: "15px" },
         render: (_, record) => (
           <>
-            <PermissionWrapper
+            {record?.approvalStatus === 0 && <PermissionWrapper
               requiredPermissions={[{ resource: "user:approval" }]}
             >
-              <Button>删除</Button>
-            </PermissionWrapper>
+              <Button size={"small"}>删除</Button>
+            </PermissionWrapper>}
             <Dropdown.Button size={"small"} droplist={
               <Menu>
                 <Menu.Item key="1" onClick={() => {

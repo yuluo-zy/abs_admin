@@ -26,7 +26,7 @@ const judge = (actions: string[], perm: string[]) => {
   return actions.every((action) => perm.includes(action));
 };
 
-const auth = (params: Auth, userPermission: UserPermission) => {
+const auth = (params: Auth, userPermission: Array<string>) => {
   const { resource, actions = [] } = params;
   if (resource instanceof RegExp) {
     const permKeys = Object.keys(userPermission);
@@ -37,12 +37,15 @@ const auth = (params: Auth, userPermission: UserPermission) => {
       return judge(actions, perm);
     });
   }
+  if (resource && userPermission && typeof resource === "string" && actions.length === 0) {
+    return userPermission.indexOf(resource) !== -1;
+  }
 
   const perm = userPermission[resource];
   return judge(actions, perm);
 };
 
-export default (params: AuthParams, userPermission: UserPermission) => {
+export default (params: AuthParams, userPermission) => {
   const { requiredPermissions, oneOfPerm } = params;
   if (Array.isArray(requiredPermissions) && requiredPermissions.length) {
     let count = 0;
