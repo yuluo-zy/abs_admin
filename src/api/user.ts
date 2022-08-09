@@ -1,4 +1,5 @@
 import { httpDelete, httpGet, httpPost, httpPut } from "@/utils/httpRequest";
+import { encodeSearchParams } from "@/utils/getUrlParams";
 
 export const userInfo = () => {
   return httpGet("/user/info");
@@ -45,5 +46,8 @@ export const putUserLock = (id: number, data) => {
 };
 
 
-// 请求用户可以创建的 组织类型 类型
+// 查询客户列表
+export const getCustomer = (data) => {
+  return httpGet("/user/customer?" + encodeSearchParams(data));
+};
 

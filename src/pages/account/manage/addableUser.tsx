@@ -37,7 +37,6 @@ const CreateUserHOC = (props: CallBackHandle) => {
 
   const [roleList, setRoleList] = useState([]);
   const [orgTree, setOrgTree] = useState([]);
-  const [userInfo, setUserInfo] = useState(props.data);
 
   // 获取用户可以创建的角色列表
   const getRoleAndOrg = () => {

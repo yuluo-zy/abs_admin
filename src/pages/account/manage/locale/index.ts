@@ -14,6 +14,7 @@ const i18n = {
     "userTable.columns.unlock": "正常",
     "userTable.columns.operations.view": "查看",
     "userTable.columns.operations.add": "新增用户",
+    "userTable.columns.operations.customer.edit": "编辑客户信息",
     "userTable.columns.operations.edit": "编辑用户信息",
     "userTable.columns.user.name": "用户名",
     "userTable.columns.user.name.error": "用户名 为 必填项",

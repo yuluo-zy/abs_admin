@@ -11,11 +11,13 @@ import DynamicModal from "@/components/Dynamic/Modal";
 import RoleTag from "@/pages/account/manage/tag";
 import PermissionWrapper from "@/components/PermissionWrapper";
 import CreateUserHOC from "./addableUser";
+import Customer from "@/pages/account/manage/customer";
 
 function UserManage() {
   const t = useLocale(locale);
 
   const [visible, setVisible] = useState(false);
+  const [customer, setCustomer] = useState(true);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
@@ -175,7 +177,7 @@ function UserManage() {
   const searchListRef = useRef();
 
   return (
-    <div>
+    <>
       <SearchList
         name={t["manage.list.name"]}
         add={CreateUserHOC}
@@ -248,7 +250,22 @@ function UserManage() {
           }}
         />
       </DynamicModal>
-    </div>
+
+      <DynamicModal
+        title={t["userTable.columns.operations.customer.edit"]}
+        visible={customer}
+        footer={null}
+        confirmLoading={confirmLoading}
+        onCancel={() => {
+          setCustomer(false);
+          setConfirmLoading(false);
+        }}
+      >
+        {Customer({
+          businessId: userInfo?.id
+        })}
+      </DynamicModal>
+    </>
   );
 }
 
