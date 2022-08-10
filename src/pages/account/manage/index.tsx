@@ -13,7 +13,7 @@ import PermissionWrapper from "@/components/PermissionWrapper";
 import CreateUserHOC from "./addableUser";
 import Customer from "@/pages/account/manage/customer";
 import useDeleteRelations from "@/pages/account/manage/deletec-ustomer-relations";
-import { IconCloseCircle, IconEdit } from "@arco-design/web-react/icon";
+import { IconCloseCircle, IconEdit, IconStamp } from "@arco-design/web-react/icon";
 
 const BS_USER_ROLE = 7;
 const CUSTOM_USER_ROLE = 15;
@@ -123,14 +123,6 @@ function UserManage() {
         headerCellStyle: { paddingLeft: "15px" },
         render: (_, record) => (
           <>
-            {record?.approvalStatus === 0 && <PermissionWrapper
-              requiredPermissions={[{ resource: "user:approval" }]}
-            >
-              <div className={styles["group-button"]}>
-                <Button size={"small"}>{t["userTable.columns.approval"]}</Button>
-              </div>
-            </PermissionWrapper>}
-
             <Dropdown.Button size={"small"} droplist={
               <Menu>
                 <Menu.Item key="1" onClick={() => {
@@ -170,6 +162,15 @@ function UserManage() {
                 <IconEdit />
               </Tooltip>
             </Dropdown.Button>
+            {record?.approvalStatus === 0 && <PermissionWrapper
+              requiredPermissions={[{ resource: "user:approval" }]}
+            >
+              <div className={styles["group-button"]}>
+                <Tooltip content={t["userTable.columns.approval"]}>
+                  <Button size={"small"} icon={<IconStamp />}></Button>
+                </Tooltip>
+              </div>
+            </PermissionWrapper>}
             {record?.roleIds.includes(CUSTOM_USER_ROLE) && <PermissionWrapper
               requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
             >
