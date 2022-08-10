@@ -8,7 +8,6 @@ import { Badge } from "@arco-design/web-react";
 const Customer = (props: { businessId }) => {
   const searchRef = useRef(null);
   const t = useLocale(locale);
-  console.log(props);
 
   const getCustomerData = (data) => {
     return getCustomer({

@@ -4,7 +4,7 @@ import locale from "./locale";
 import SearchList from "@/components/Dynamic/List";
 import { getUserList, putUserLock, putUserPassword, removeUser } from "@/api/user";
 import styles from "./style/index.module.less";
-import { Badge, Button, Drawer, Dropdown, Menu, Message, Typography } from "@arco-design/web-react";
+import { Badge, Button, Drawer, Dropdown, Menu, Message, Tooltip, Typography } from "@arco-design/web-react";
 import { FormItemProps, SearchItem } from "@/components/type";
 import DynamicForm from "@/components/Dynamic/Form";
 import DynamicModal from "@/components/Dynamic/Modal";
@@ -12,8 +12,11 @@ import RoleTag from "@/pages/account/manage/tag";
 import PermissionWrapper from "@/components/PermissionWrapper";
 import CreateUserHOC from "./addableUser";
 import Customer from "@/pages/account/manage/customer";
+import useDeleteRelations from "@/pages/account/manage/deletec-ustomer-relations";
+import { IconCloseCircle, IconEdit } from "@arco-design/web-react/icon";
 
 const BS_USER_ROLE = 7;
+const CUSTOM_USER_ROLE = 15;
 const { Text } = Typography;
 
 function UserManage() {
@@ -127,6 +130,7 @@ function UserManage() {
                 <Button size={"small"}>{t["userTable.columns.approval"]}</Button>
               </div>
             </PermissionWrapper>}
+
             <Dropdown.Button size={"small"} droplist={
               <Menu>
                 <Menu.Item key="1" onClick={() => {
@@ -162,8 +166,23 @@ function UserManage() {
               });
               setVisible(!visible);
             }}>
-              Edit
+              <Tooltip content={"Edit"}>
+                <IconEdit />
+              </Tooltip>
             </Dropdown.Button>
+            {record?.roleIds.includes(CUSTOM_USER_ROLE) && <PermissionWrapper
+              requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
+            >
+              <div className={styles["group-button"]}>
+                <Tooltip content={t["userTable.columns.custom.approval.delete"]}>
+                  <Button size={"small"}
+                          icon={<IconCloseCircle />}
+                          onClick={() => {
+                            useDeleteRelations({ customerIds: [record.id], t });
+                          }}></Button>
+                </Tooltip>
+              </div>
+            </PermissionWrapper>}
           </>
         )
       }
@@ -191,8 +210,6 @@ function UserManage() {
   ];
 
   const searchListRef = useRef();
-
-  const refWrapper = useRef(null);
 
   return (
     <>

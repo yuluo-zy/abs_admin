@@ -51,3 +51,7 @@ export const getCustomer = (data) => {
   return httpGet("/user/customer?" + encodeSearchParams(data));
 };
 
+// 删除关联客户
+export const deleteCustomRelations = (data) => {
+  return httpPost("/user/businessCustomer/delete", data);
+};

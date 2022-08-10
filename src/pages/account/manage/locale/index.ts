@@ -11,6 +11,7 @@ const i18n = {
     "userTable.columns.roleList": "角色列表",
     "userTable.columns.lock": "锁定状态",
     "userTable.columns.approval": "审批",
+    "userTable.columns.custom.approval.delete": "删除关联",
     "userTable.columns.locked": "已锁定",
     "userTable.columns.unlock": "正常",
     "userTable.columns.operations.view": "查看",
@@ -34,7 +35,10 @@ const i18n = {
     "userTable.columns.user.operation.success": "操作成功",
     "userTable.columns.user.operation.lock": "确定要改变本用户锁定嘛?",
     "userTable.columns.user.operation.delete": "确定要将本用户删除嘛?",
-    "userTable.columns.user.org.length": "请将用户组织设定完全"
+    "userTable.columns.user.org.length": "请将用户组织设定完全",
+    "userTable.columns.user.custom.delete": "客户关联删除",
+    "userTable.columns.user.custom.delete.info": "确认删除本账户下关联的客户信息嘛 >_<!?",
+    "userTable.columns.user.custom.delete.success": "客户删除成功"
   }
 };
 
