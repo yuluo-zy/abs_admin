@@ -269,21 +269,6 @@ function UserManage() {
         />
       </DynamicModal>
 
-      {/*<DynamicModal*/}
-      {/*  title={t["userTable.columns.operations.customer.edit"]}*/}
-      {/*  visible={customer}*/}
-      {/*  footer={null}*/}
-      {/*  confirmLoading={confirmLoading}*/}
-      {/*  onCancel={() => {*/}
-      {/*    setCustomer(false);*/}
-      {/*    setConfirmLoading(false);*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  {Customer({*/}
-      {/*    businessId: userInfo?.id*/}
-      {/*  })}*/}
-      {/*</DynamicModal>*/}
-
       <Drawer
         title={t["custom.list.name"]}
         visible={customer}

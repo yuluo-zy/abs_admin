@@ -3,7 +3,7 @@ const i18n = {
 
   "zh-CN": {
     "manage.list.name": "用户查询",
-    "custom.list.name": "用户查询",
+    "custom.list.name": "客户关系",
     "userTable.columns.id": "ID",
     "userTable.columns.name": "用户名",
     "userTable.columns.group": "组",
