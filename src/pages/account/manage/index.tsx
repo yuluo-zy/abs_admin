@@ -12,8 +12,9 @@ import RoleTag from "@/pages/account/manage/tag";
 import PermissionWrapper from "@/components/PermissionWrapper";
 import CreateUserHOC from "./addableUser";
 import Customer from "@/pages/account/manage/customer";
+import { IconCloseCircle, IconEdit, IconStamp, IconUserAdd } from "@arco-design/web-react/icon";
+import useAddRelations from "@/pages/account/manage/add-customer-relations";
 import useDeleteRelations from "@/pages/account/manage/deletec-ustomer-relations";
-import { IconCloseCircle, IconEdit, IconStamp } from "@arco-design/web-react/icon";
 
 const BS_USER_ROLE = 7;
 const CUSTOM_USER_ROLE = 15;
@@ -27,6 +28,8 @@ function UserManage() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const [addExecute] = useAddRelations();
+  const [deleteExecute] = useDeleteRelations();
 
 
   const postUserPassword: Array<FormItemProps> = [
@@ -70,6 +73,7 @@ function UserManage() {
         dataIndex: "username",
         width: 190,
         render: (col, record, index) => {
+          // todo 权限判断 添加 relBusinessCustomer:view 权限
           // 判断是否是 bs, 如果是bs, 则允许查看对应的客户
           if (record?.roleIds && record?.roleIds.includes(BS_USER_ROLE)) {
             return <Button onClick={() => {
@@ -179,7 +183,23 @@ function UserManage() {
                   <Button size={"small"}
                           icon={<IconCloseCircle />}
                           onClick={() => {
-                            useDeleteRelations({ customerIds: [record.id], t });
+                            deleteExecute({ destBusinessId: null, customerIds: [record.id] });
+                          }}></Button>
+                </Tooltip>
+              </div>
+            </PermissionWrapper>}
+            {record?.roleIds.includes(CUSTOM_USER_ROLE) && <PermissionWrapper
+              requiredPermissions={[
+                { resource: "relBusinessCustomer:transform" },
+                { resource: "relBusinessCustomer:impart" }
+              ]}
+            >
+              <div className={styles["group-button"]}>
+                <Tooltip content={t["userTable.columns.user.custom.add"]}>
+                  <Button size={"small"}
+                          icon={<IconUserAdd />}
+                          onClick={() => {
+                            addExecute({ customerIds: [record.id] });
                           }}></Button>
                 </Tooltip>
               </div>
@@ -242,6 +262,7 @@ function UserManage() {
           data: { ...userInfo },
           confirmCallback: () => {
             setVisible(false);
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             searchListRef.current.callBack();
             setConfirmLoading(false);

@@ -1,9 +1,11 @@
 import { Message, Modal } from "@arco-design/web-react";
-import React from "react";
+import React, { useMemo } from "react";
 import { deleteCustomRelations } from "@/api/user";
+import useLocale from "@/utils/useHook/useLocale";
+import locale from "@/pages/account/manage/locale";
 
-const useDeleteRelations = (props: { destBusinessId?: number, customerIds?: Array<number>, t: any }) => {
-  const { destBusinessId, customerIds, t } = props;
+const useDeleteRelations = () => {
+  const t = useLocale(locale);
   const deleteRelation = (destBusinessId?: number, customerIds?: Array<number>) => {
     deleteCustomRelations({
       destBusinessId,
@@ -14,16 +16,23 @@ const useDeleteRelations = (props: { destBusinessId?: number, customerIds?: Arra
       }
     });
   };
-  Modal.confirm({
-    title: t["userTable.columns.user.custom.delete"],
-    content: t["userTable.columns.user.custom.delete.info"],
-    okButtonProps: {
-      status: "danger"
-    },
-    onOk: () => {
-      deleteRelation(destBusinessId, customerIds);
-    }
-  });
+  const execute = useMemo(() => {
+    const handler = ({ destBusinessId, customerIds }) => {
+      Modal.confirm({
+        title: t["userTable.columns.user.custom.delete"],
+        content: t["userTable.columns.user.custom.delete.info"],
+        okButtonProps: {
+          status: "danger"
+        },
+        onOk: () => {
+          deleteRelation(destBusinessId, customerIds);
+        }
+      });
+    };
+    return [handler];
+  }, []);
+
+  return [...execute];
 };
 
 export default useDeleteRelations;

@@ -55,3 +55,17 @@ export const getCustomer = (data) => {
 export const deleteCustomRelations = (data) => {
   return httpPost("/user/businessCustomer/delete", data);
 };
+
+// 查询商务人员列表
+export const getBusiness = () => {
+  return httpGet("/user/business");
+};
+
+// 授权 将一个客户授权给某个bs
+export const impartBusiness = (data) => {
+  return httpPost("/user/businessCustomer/impart", data);
+};
+// 转移 将一个客户转移给某个bs
+export const transformBusiness = (data) => {
+  return httpPost("/user/businessCustomer/transform", data);
+};

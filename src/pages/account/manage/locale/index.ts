@@ -38,7 +38,12 @@ const i18n = {
     "userTable.columns.user.org.length": "请将用户组织设定完全",
     "userTable.columns.user.custom.delete": "客户关联删除",
     "userTable.columns.user.custom.delete.info": "确认删除本账户下关联的客户信息嘛 >_<!?",
-    "userTable.columns.user.custom.delete.success": "客户删除成功"
+    "userTable.columns.user.custom.delete.success": "客户删除成功",
+    "userTable.columns.user.custom.add": "客户关系添加",
+    "userTable.columns.user.custom.add.to": "将客户关系添加或指派到:",
+    "userTable.columns.user.custom.business.user": "相关商务人员",
+    "userTable.columns.user.custom.add.success": "客户关系添加成功",
+    "userTable.columns.user.custom.business.transform": "开启转移客户关系模式:"
   }
 };
 
