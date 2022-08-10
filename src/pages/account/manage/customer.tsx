@@ -3,11 +3,19 @@ import SearchList from "@/components/Dynamic/List";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "@/pages/account/manage/locale";
 import { getCustomer } from "@/api/user";
-import { Badge } from "@arco-design/web-react";
+import { Badge, Button, Tooltip } from "@arco-design/web-react";
+import { CUSTOM_USER_ROLE } from "@/utils/staticVariable";
+import PermissionWrapper from "@/components/PermissionWrapper";
+import styles from "@/pages/account/manage/style/index.module.less";
+import { IconCloseCircle, IconUserAdd } from "@arco-design/web-react/icon";
+import useAddRelations from "@/pages/account/manage/add-customer-relations";
+import useDeleteRelations from "@/pages/account/manage/deletec-ustomer-relations";
 
 const Customer = (props: { businessId }) => {
   const searchRef = useRef(null);
   const t = useLocale(locale);
+  const [addExecute] = useAddRelations();
+  const [deleteExecute] = useDeleteRelations();
 
   const getCustomerData = (data) => {
     return getCustomer({
@@ -53,13 +61,41 @@ const Customer = (props: { businessId }) => {
         headerCellStyle: { paddingLeft: "15px" },
         render: (_, record) => (
           <>
+            {record?.roleIds.includes(CUSTOM_USER_ROLE) && <PermissionWrapper
+              requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
+            >
+              <div className={styles["group-button"]}>
+                <Tooltip content={t["userTable.columns.custom.approval.delete"]}>
+                  <Button size={"small"}
+                          icon={<IconCloseCircle />}
+                          onClick={() => {
+                            deleteExecute({ destBusinessId: props.businessId, customerIds: [record.id] });
+                          }}></Button>
+                </Tooltip>
+              </div>
+            </PermissionWrapper>}
+            {record?.roleIds.includes(CUSTOM_USER_ROLE) && <PermissionWrapper
+              requiredPermissions={[
+                { resource: "relBusinessCustomer:transform" },
+                { resource: "relBusinessCustomer:impart" }
+              ]}
+            >
+              <div className={styles["group-button"]}>
+                <Tooltip content={t["userTable.columns.user.custom.add"]}>
+                  <Button size={"small"}
+                          icon={<IconUserAdd />}
+                          onClick={() => {
+                            addExecute({ originBusiness: props.businessId, customerIds: [record.id] });
+                          }}></Button>
+                </Tooltip>
+              </div>
+            </PermissionWrapper>}
           </>
         )
       }
     ];
   };
   return <SearchList
-    // name={t["manage.list.name"]}
     download={false}
     upload={false}
     ref={searchRef}

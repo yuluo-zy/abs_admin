@@ -15,9 +15,9 @@ import Customer from "@/pages/account/manage/customer";
 import { IconCloseCircle, IconEdit, IconStamp, IconUserAdd } from "@arco-design/web-react/icon";
 import useAddRelations from "@/pages/account/manage/add-customer-relations";
 import useDeleteRelations from "@/pages/account/manage/deletec-ustomer-relations";
+import { BS_USER_ROLE, CUSTOM_USER_ROLE } from "@/utils/staticVariable";
 
-const BS_USER_ROLE = 7;
-const CUSTOM_USER_ROLE = 15;
+
 const { Text } = Typography;
 
 function UserManage() {
@@ -199,7 +199,7 @@ function UserManage() {
                   <Button size={"small"}
                           icon={<IconUserAdd />}
                           onClick={() => {
-                            addExecute({ customerIds: [record.id] });
+                            addExecute({ originBusiness: null, customerIds: [record.id] });
                           }}></Button>
                 </Tooltip>
               </div>
