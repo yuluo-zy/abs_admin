@@ -7,6 +7,7 @@ import { getCustomer } from "@/api/user";
 const Customer = (props: { businessId }) => {
   const searchRef = useRef(null);
   const t = useLocale(locale);
+  console.log(props);
 
   const getCustomerData = (data) => {
     return getCustomer({
@@ -101,10 +102,8 @@ const Customer = (props: { businessId }) => {
       // }
     ];
   };
-
-
   return <SearchList
-    name={t["manage.list.name"]}
+    // name={t["manage.list.name"]}
     download={false}
     upload={false}
     ref={searchRef}

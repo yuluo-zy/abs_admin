@@ -4,7 +4,7 @@ import locale from "./locale";
 import SearchList from "@/components/Dynamic/List";
 import { getUserList, putUserLock, putUserPassword, removeUser } from "@/api/user";
 import styles from "./style/index.module.less";
-import { Badge, Button, Dropdown, Menu, Message } from "@arco-design/web-react";
+import { Badge, Button, Drawer, Dropdown, Menu, Message, Typography } from "@arco-design/web-react";
 import { FormItemProps, SearchItem } from "@/components/type";
 import DynamicForm from "@/components/Dynamic/Form";
 import DynamicModal from "@/components/Dynamic/Modal";
@@ -13,11 +13,14 @@ import PermissionWrapper from "@/components/PermissionWrapper";
 import CreateUserHOC from "./addableUser";
 import Customer from "@/pages/account/manage/customer";
 
+const BS_USER_ROLE = 7;
+const { Text } = Typography;
+
 function UserManage() {
   const t = useLocale(locale);
 
   const [visible, setVisible] = useState(false);
-  const [customer, setCustomer] = useState(true);
+  const [customer, setCustomer] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
@@ -62,7 +65,20 @@ function UserManage() {
       {
         title: t["userTable.columns.name"],
         dataIndex: "username",
-        width: 190
+        width: 190,
+        render: (col, record, index) => {
+          // 判断是否是 bs, 如果是bs, 则允许查看对应的客户
+          if (record?.roleIds && record?.roleIds.includes(BS_USER_ROLE)) {
+            return <Button onClick={() => {
+              setUserInfo({
+                ...record
+              });
+              setCustomer(!customer);
+            }
+            }>{record?.username}</Button>;
+          }
+          return <Text>{record?.username}</Text>;
+        }
       },
       {
         title: t["userTable.columns.group"],
@@ -176,6 +192,8 @@ function UserManage() {
 
   const searchListRef = useRef();
 
+  const refWrapper = useRef(null);
+
   return (
     <>
       <SearchList
@@ -251,11 +269,36 @@ function UserManage() {
         />
       </DynamicModal>
 
-      <DynamicModal
-        title={t["userTable.columns.operations.customer.edit"]}
+      {/*<DynamicModal*/}
+      {/*  title={t["userTable.columns.operations.customer.edit"]}*/}
+      {/*  visible={customer}*/}
+      {/*  footer={null}*/}
+      {/*  confirmLoading={confirmLoading}*/}
+      {/*  onCancel={() => {*/}
+      {/*    setCustomer(false);*/}
+      {/*    setConfirmLoading(false);*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  {Customer({*/}
+      {/*    businessId: userInfo?.id*/}
+      {/*  })}*/}
+      {/*</DynamicModal>*/}
+
+      <Drawer
+        title={t["custom.list.name"]}
         visible={customer}
-        footer={null}
         confirmLoading={confirmLoading}
+        footer={null}
+        mask
+        maskClosable
+        mountOnEnter
+        unmountOnExit
+        placement={"bottom"}
+        height={650}
+        onOk={() => {
+          setCustomer(false);
+          setConfirmLoading(false);
+        }}
         onCancel={() => {
           setCustomer(false);
           setConfirmLoading(false);
@@ -264,7 +307,7 @@ function UserManage() {
         {Customer({
           businessId: userInfo?.id
         })}
-      </DynamicModal>
+      </Drawer>
     </>
   );
 }

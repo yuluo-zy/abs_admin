@@ -22,7 +22,7 @@ function DynamicCard(props: DynamicCardProps) {
   return (
     <Card title={
       <Space size={4}>
-        <b> {title}</b>
+        <b> {title && title.length > 0 && title}</b>
         {props.help && <div onClick={() => {
           setOpen(!open);
         }}><IconBulb style={{ fontSize: 20, color: "#FADC19" }} /></div>}

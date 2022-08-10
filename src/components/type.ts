@@ -16,7 +16,7 @@ export interface CallBackHandle {
 
 export interface FormItemProps {
   label?: string;
-  type:
+  type?:
     | "input"
     | "select"
     | "date"
@@ -40,6 +40,7 @@ export interface FormItemProps {
   limit?: number;
   header?: string;
   loading?: boolean;
+  render?: any;
   style?: any;
 }
 
