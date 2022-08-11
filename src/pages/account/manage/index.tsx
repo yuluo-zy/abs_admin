@@ -183,7 +183,7 @@ function UserManage() {
                   <Button size={"small"}
                           icon={<IconCloseCircle />}
                           onClick={() => {
-                            deleteExecute({ destBusinessId: null, customerIds: [record.id] });
+                            deleteExecute({ destBusinessId: null, customerIds: [record.id], callback });
                           }}></Button>
                 </Tooltip>
               </div>
@@ -199,7 +199,7 @@ function UserManage() {
                   <Button size={"small"}
                           icon={<IconUserAdd />}
                           onClick={() => {
-                            addExecute({ originBusiness: null, customerIds: [record.id] });
+                            addExecute({ originBusiness: null, customerIds: [record.id], callback });
                           }}></Button>
                 </Tooltip>
               </div>
@@ -328,9 +328,10 @@ function UserManage() {
           setConfirmLoading(false);
         }}
       >
-        {Customer({
-          businessId: userInfo?.id
-        })}
+        {/*{Customer({*/}
+        {/*  businessId: userInfo?.id*/}
+        {/*})}*/}
+        <Customer businessId={userInfo?.id} />
       </Drawer>
     </>
   );

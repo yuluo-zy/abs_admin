@@ -4,7 +4,6 @@ import useLocale from "@/utils/useHook/useLocale";
 import locale from "@/pages/account/manage/locale";
 import { getCustomer } from "@/api/user";
 import { Badge, Button, Tooltip } from "@arco-design/web-react";
-import { CUSTOM_USER_ROLE } from "@/utils/staticVariable";
 import PermissionWrapper from "@/components/PermissionWrapper";
 import styles from "@/pages/account/manage/style/index.module.less";
 import { IconCloseCircle, IconUserAdd } from "@arco-design/web-react/icon";
@@ -61,7 +60,7 @@ const Customer = (props: { businessId }) => {
         headerCellStyle: { paddingLeft: "15px" },
         render: (_, record) => (
           <>
-            {record?.roleIds.includes(CUSTOM_USER_ROLE) && <PermissionWrapper
+            {<PermissionWrapper
               requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
             >
               <div className={styles["group-button"]}>
@@ -69,12 +68,12 @@ const Customer = (props: { businessId }) => {
                   <Button size={"small"}
                           icon={<IconCloseCircle />}
                           onClick={() => {
-                            deleteExecute({ destBusinessId: props.businessId, customerIds: [record.id] });
+                            deleteExecute({ destBusinessId: props.businessId, customerIds: [record.id], callback });
                           }}></Button>
                 </Tooltip>
               </div>
             </PermissionWrapper>}
-            {record?.roleIds.includes(CUSTOM_USER_ROLE) && <PermissionWrapper
+            {<PermissionWrapper
               requiredPermissions={[
                 { resource: "relBusinessCustomer:transform" },
                 { resource: "relBusinessCustomer:impart" }
@@ -85,7 +84,7 @@ const Customer = (props: { businessId }) => {
                   <Button size={"small"}
                           icon={<IconUserAdd />}
                           onClick={() => {
-                            addExecute({ originBusiness: props.businessId, customerIds: [record.id] });
+                            addExecute({ originBusiness: props.businessId, customerIds: [record.id], callback });
                           }}></Button>
                 </Tooltip>
               </div>

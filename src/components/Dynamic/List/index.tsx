@@ -51,9 +51,9 @@ const SearchList = React.forwardRef((props: ListProps, ref) => {
   const [loading, setLoading] = useState(true);
   const [formParams, setFormParams] = useState({});
 
-  useEffect(() => {
-    fetchData();
-  }, [props.onChange]);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
     fetchData();
@@ -61,6 +61,7 @@ const SearchList = React.forwardRef((props: ListProps, ref) => {
     pagination.current,
     pagination.pageSize,
     called,
+    props.onChange,
     JSON.stringify(formParams)
   ]);
 
@@ -72,7 +73,7 @@ const SearchList = React.forwardRef((props: ListProps, ref) => {
       pageSize,
       ...formParams
     }).then((res) => {
-      setData(res.data.result.data);
+      setData(res.data.result.data || res.data.result);
       if (res.data.result.totalCount) {
         setPatination({
           ...pagination,

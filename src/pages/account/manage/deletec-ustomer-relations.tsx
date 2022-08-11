@@ -17,7 +17,7 @@ const useDeleteRelations = () => {
     });
   };
   const execute = useMemo(() => {
-    const handler = ({ destBusinessId, customerIds }) => {
+    const handler = ({ destBusinessId, customerIds, callback }) => {
       Modal.confirm({
         title: t["userTable.columns.user.custom.delete"],
         content: t["userTable.columns.user.custom.delete.info"],
@@ -26,6 +26,9 @@ const useDeleteRelations = () => {
         },
         onOk: () => {
           deleteRelation(destBusinessId, customerIds);
+          if (callback) {
+            callback();
+          }
         }
       });
     };

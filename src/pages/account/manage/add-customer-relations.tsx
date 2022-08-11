@@ -33,7 +33,7 @@ const useAddRelations = () => {
   };
   const execute = useMemo(() => {
 
-    const handler = ({ originBusiness, customerIds }) => {
+    const handler = ({ originBusiness, customerIds, callback }) => {
       // 设置对应的起始账户
       originBusinessRef.current = originBusiness;
       Modal.info({
@@ -66,6 +66,9 @@ const useAddRelations = () => {
         </>,
         onOk: () => {
           addCustomerRelations(customerIds);
+          if (callback) {
+            callback();
+          }
         }
       });
     };
