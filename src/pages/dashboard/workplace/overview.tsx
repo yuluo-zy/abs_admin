@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Card, Carousel, Divider, Grid, Tag, Typography } from "@arco-design/web-react";
 import { useSelector } from "react-redux";
 import locale from "./locale";
@@ -25,7 +25,7 @@ function StatisticItem(props) {
     }
   }, [props.index]);
   return useMemo(() => {
-    let cssList = [styles.icon];
+    const cssList = [styles.icon];
     if (hover) {
       cssList.push(styles.iconhover);
     }
@@ -43,17 +43,18 @@ function StatisticItem(props) {
 }
 
 const iconList = [
-  <IconTag />,
-  <IconMac />,
-  <IconInfo />,
-  <IconFirmWare />,
-  <IconConfigure />
+  <IconTag key={"IconTag"} />,
+  <IconMac key={"IconMac"} />,
+  <IconInfo key={"IconInfo"} />,
+  <IconFirmWare key={"IconFirmWare"} />,
+  <IconConfigure key={"IconConfigure"} />
 ];
 
 function Overview() {
   const t = useLocale(locale);
   const userInfo = useSelector((state: any) => state.userInfo || {});
   const [indexNode, setIndexNode] = useState(0);
+  const carouselRef = useRef(null);
   const titleList = [
     t["workplace.step.label"],
     t["workplace.step.mac"],
@@ -82,7 +83,15 @@ function Overview() {
         {
           React.Children.toArray(iconList.map((item, index) => {
             return <>
-              <Col flex={1}>
+              <Col flex={1} onMouseEnter={() => {
+                if (carouselRef.current) {
+                  carouselRef.current.goto({
+                    index: index,
+                    resetAutoPlayInterval: true
+                  });
+                }
+              }
+              }>
                 <StatisticItem
                   index={indexNode}
                   item={index}
@@ -100,6 +109,7 @@ function Overview() {
         autoPlay
         animation="card"
         showArrow="never"
+        carousel={carouselRef}
         indicatorType={"line"}
         indicatorPosition={"top"}
         className={styles["carousel"]}
