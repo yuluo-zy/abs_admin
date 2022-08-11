@@ -19,7 +19,7 @@ const useAddRelations = () => {
   const originBusinessRef = useRef(null);
   const destBusiness = useRef(null);
   const transform = useRef(false);
-  const addCustomerRelations = (customerIds?: Array<number>) => {
+  const addCustomerRelations = (customerIds?: Array<number>, callBack?: any) => {
     const postData = transform.current ? transformBusiness : impartBusiness;
     postData({
       originBusinessId: originBusinessRef.current,
@@ -27,6 +27,9 @@ const useAddRelations = () => {
       customerIds
     }).then(res => {
       if (res.data.success) {
+        if (callBack) {
+          callBack();
+        }
         Message.success(t["userTable.columns.user.custom.add.success"]);
       }
     });
@@ -65,10 +68,7 @@ const useAddRelations = () => {
           </Space>
         </>,
         onOk: () => {
-          addCustomerRelations(customerIds);
-          if (callback) {
-            callback();
-          }
+          addCustomerRelations(customerIds, callback);
         }
       });
     };

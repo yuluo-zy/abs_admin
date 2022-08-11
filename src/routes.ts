@@ -28,10 +28,6 @@ export const routes: Route[] = [
     key: "user",
     children: [
       {
-        name: "menu.user.info",
-        key: "user/info"
-      },
-      {
         name: "menu.user.setting",
         key: "user/setting"
       }
