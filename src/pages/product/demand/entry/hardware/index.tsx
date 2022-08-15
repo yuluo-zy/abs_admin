@@ -330,7 +330,7 @@ export default function HardwareSelection() {
 
   const getSelectItem = (value: ProductSelectItem) => {
     // 获取 查询选项
-    let res = [];
+    const res = [];
     for (const element of value.select) {
       res.push({
         label: element, value: element
@@ -360,7 +360,6 @@ export default function HardwareSelection() {
 
   const postHardWare = (moduleInfo, demandId) => {
     if (Object.keys(moduleInfo).length <= 0 || moduleInfo.id === undefined) {
-      console.log(moduleInfo);
       Notification.error({ title: "error", content: t["hardware.production.info.select.model.error"] });
       return;
     }
@@ -386,6 +385,21 @@ export default function HardwareSelection() {
     });
   };
 
+  // const tableRef = useRef(null)
+
+  const [tableNode, setTableNode] = useState(null);
+
+  useEffect(() => {
+    if (tableNode) {
+      const node = tableNode.getElementsByClassName("arco-table-tr arco-table-row-checked");
+      if (node && node.length > 0) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        node[0].scrollIntoView();
+      }
+    }
+    return null;
+  }, [tableNode]);
 
   return (
     <div>
@@ -459,6 +473,12 @@ export default function HardwareSelection() {
           <Table
             scroll={{ x: true, y: 450 }}
             border
+            ref={value => {
+              if (value) {
+                const { getRootDomElement } = value;
+                setTableNode(getRootDomElement());
+              }
+            }}
             borderCell
             rowKey="id"
             components={components}
