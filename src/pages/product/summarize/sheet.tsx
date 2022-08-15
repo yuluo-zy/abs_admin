@@ -421,7 +421,8 @@ export default function Sheet() {
       title="Modal Title"
       visible={open}
       autoFocus
-      alignCenter
+      alignCenter={false}
+      style={{ top: "20%" }}
       closable
       footer={null}
       escToExit
