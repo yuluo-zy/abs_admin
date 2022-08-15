@@ -46,6 +46,7 @@ export default function Sheet() {
 
   const [serviceType, setServiceType] = ProductStore(state => [state.serviceType, state.setServiceType], shallow);
   const [serviceId, setServiceId] = ProductStore(state => [state.serviceId, state.setServiceId], shallow);
+  const [open, setOpen] = useState(false);
 
 
   // 设置硬件选型
@@ -204,7 +205,8 @@ export default function Sheet() {
       });
       return;
     }
-    history.push(`/product/demand/hardware`);
+    // history.push(`/product/demand/hardware`);
+    setOpen(true);
   };
 
 
@@ -276,7 +278,7 @@ export default function Sheet() {
         {/*第二行*/}
         <tr>
           <td rowSpan={8}>2</td>
-          <td rowSpan={8}>Coustome Firmware</td>
+          <td rowSpan={8}>Customer Firmware</td>
           <td rowSpan={2}>Firmware Version Number</td>
           <td rowSpan={2} colSpan={2}>{info?.firmwareVersion}</td>
           <td>Flash Encryption</td>
@@ -402,6 +404,12 @@ export default function Sheet() {
     } />;
   };
 
+  // 针对再修改的跳转
+  const Goto = () => {
+
+  };
+
+
   return <DynamicOuterCard title={t["summarize.sheet.title"]}>
     <Button className={styles["edit"]} onClick={toEdit}>{t["summarize.sheet.edit"]}</Button>
     <Spin loading={loading} style={{ width: "100%" }}>
@@ -409,5 +417,21 @@ export default function Sheet() {
         <TableNode />
       </DynamicSkeleton>
     </Spin>
+    <Modal
+      title="Modal Title"
+      visible={open}
+      autoFocus
+      alignCenter
+      closable
+      footer={null}
+      escToExit
+      maskClosable
+      mountOnEnter
+      simple
+      unmountOnExit
+      onCancel={() => setOpen(false)}
+      focusLock={true}>
+      <div>jjjj</div>
+    </Modal>
   </DynamicOuterCard>;
 }
