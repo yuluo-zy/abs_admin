@@ -2,6 +2,7 @@ const i18n = {
   "en-US": {},
   "zh-CN": {
     "summarize.sheet.title": "需求总览",
+    "summarize.sheet.get.info.error": "内容请求失败, 无法进行再编辑",
     "summarize.history.title": "历史记录",
     "summarize.history.comment": "评论",
     "summarize.history.comment.add": "添加",
@@ -12,6 +13,7 @@ const i18n = {
     "firmware.burn.flash.planB.NO_NVS": "提供待烧录数据清单, 由乐鑫生成Bin文件后烧录 ( 非 NVS 数据 )",
     "firmware.burn.flash.planC": "提供烧录脚本",
     "label.img.open": "图片预览"
+
   }
 };
 

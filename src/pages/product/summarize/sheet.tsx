@@ -6,7 +6,7 @@ import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import { getDemandDetails } from "@/api/demand";
 import { getProductionInfo } from "@/api/production";
-import { Button, Modal, Spin } from "@arco-design/web-react";
+import { Button, Modal, Notification, Spin } from "@arco-design/web-react";
 import { useHistory } from "react-router";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import DynamicTag from "@/components/Dynamic/tag";
@@ -105,9 +105,6 @@ export default function Sheet() {
     };
     setCheckData(temp);
   };
-  const toEdit = () => {
-    history.push(`/product/demand/hardware`);
-  };
 
   const options = [
     t["firmware.burn.flash.planA"],
@@ -198,6 +195,18 @@ export default function Sheet() {
 
   const [loading, setLoading] = useState(false);
   const [is_error, setError] = useState(false);
+
+  const toEdit = () => {
+    // 跳转拦截 , 如果请求后端数据产生错误, 本页面进行跳转拦截不允许进行再编辑
+    if (is_error === true) {
+      Notification.error({
+        title: "Error",
+        content: t["summarize.sheet.get.info.error"]
+      });
+      return;
+    }
+    history.push(`/product/demand/hardware`);
+  };
 
 
   useEffect(() => {
