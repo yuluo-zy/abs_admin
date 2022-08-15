@@ -1,15 +1,5 @@
 import React, { useContext } from "react";
-import {
-  Avatar,
-  Button,
-  Divider,
-  Dropdown,
-  Menu,
-  Message,
-  Notification,
-  Select,
-  Tooltip
-} from "@arco-design/web-react";
+import { Avatar, Divider, Dropdown, Menu, Message, Notification, Select, Tooltip } from "@arco-design/web-react";
 import {
   IconLanguage,
   IconMoonFill,
@@ -24,7 +14,6 @@ import { GlobalContext } from "@/context";
 import useLocale from "@/utils/useHook/useLocale";
 import Logo from "@/assets/logo.svg";
 import IconButton from "./IconButton";
-import Settings from "../Settings";
 import styles from "./style/index.module.less";
 import defaultLocale from "@/locale";
 import useStorage from "@/utils/useHook/useStorage";
@@ -65,19 +54,6 @@ function Navbar({ show }: { show: boolean }) {
     } else {
       Message.info(`You clicked ${key}`);
     }
-  }
-
-
-  if (!show) {
-    return (
-      <div className={styles["fixed-settings"]}>
-        <Settings
-          trigger={
-            <Button icon={<IconSettings />} type="primary" size="large" />
-          }
-        />
-      </div>
-    );
   }
 
 
@@ -159,7 +135,6 @@ function Navbar({ show }: { show: boolean }) {
             />
           </Tooltip>
         </li>
-        <Settings />
         {userInfo && (
           <li>
             <Dropdown droplist={droplist} position="br">
