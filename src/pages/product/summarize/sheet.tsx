@@ -164,8 +164,8 @@ export default function Sheet() {
       {keyType}
     </>;
   };
-// secrue 设置
-  const getSecrue = (data) => {
+// secure 设置
+  const getSecure = (data) => {
     let keyType = null;
     if (data && data === 0) {
       keyType = "V1";
@@ -288,7 +288,7 @@ export default function Sheet() {
           <tr>
             <td>Secure Boot</td>
             <td>{getFirmware("secure", info?.firmwareType) ? <IconCheck /> : <IconClose />}</td>
-            <td>{getSecrue(info?.secureBoot)}</td>
+            <td>{getSecure(info?.secureBoot)}</td>
           </tr>
           <tr>
             <td rowSpan={2}>Bin Files</td>
@@ -399,7 +399,7 @@ export default function Sheet() {
         </table>
       </DynamicSkeleton>;
     }
-    return <Exception500 style={{ height: 300 }} on_call_back={() => {
+    return <Exception500 style={{ height: 400 }} on_call_back={() => {
       history.push(`/product`);
     }
     } />;
