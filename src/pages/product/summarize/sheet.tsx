@@ -413,7 +413,7 @@ export default function Sheet() {
       </DynamicSkeleton>
     </Spin>
     <Modal
-      title="Modal Title"
+      title={t["summarize.sheet.goto"]}
       visible={open}
       autoFocus
       alignCenter={false}

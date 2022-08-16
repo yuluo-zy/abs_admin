@@ -73,6 +73,7 @@ export const GotoMenu: React.FC<GotoMenuProps> = (props: GotoMenuProps) => {
     return menu;
   };
   return <List
+    hoverable={true}
     dataSource={renderMenu(dataSource)}
     render={render.bind(null, [])}
   />;
