@@ -16,6 +16,7 @@ import BinFile from "@/pages/product/summarize/bin-file";
 import EFuseBit from "@/pages/product/summarize/eFuse-bit";
 import SerialPort from "@/pages/product/summarize/serial-port";
 import Exception500 from "@/components/Exception/500";
+import { GotoMenu } from "@/pages/product/summarize/goto-menu";
 
 export default function Sheet() {
   const t = useLocale();
@@ -205,7 +206,6 @@ export default function Sheet() {
       });
       return;
     }
-    // history.push(`/product/demand/hardware`);
     setOpen(true);
   };
 
@@ -404,11 +404,6 @@ export default function Sheet() {
     } />;
   };
 
-  // 针对再修改的跳转
-  const Goto = () => {
-
-  };
-
 
   return <DynamicOuterCard title={t["summarize.sheet.title"]}>
     <Button className={styles["edit"]} onClick={toEdit}>{t["summarize.sheet.edit"]}</Button>
@@ -432,7 +427,7 @@ export default function Sheet() {
       unmountOnExit
       onCancel={() => setOpen(false)}
       focusLock={true}>
-      <div>jjjj</div>
+      <GotoMenu dataSource={serviceType} />
     </Modal>
   </DynamicOuterCard>;
 }

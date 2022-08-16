@@ -82,9 +82,9 @@ export default function ProductMenu(props) {
 
   // 设置 窗口监测 如果小于 1200px, 设置收起
   const { width } = useWindowSize();
-  const [, cancel] = useDebounce(
+  const [_, cancel] = useDebounce(
     () => {
-      if (width < 1300) {
+      if (width < 1500) {
         setCollapse(true);
       }
     },

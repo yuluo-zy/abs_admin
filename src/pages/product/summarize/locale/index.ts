@@ -12,7 +12,17 @@ const i18n = {
     "firmware.burn.flash.planB.NVS": "提供待烧录数据清单, 由乐鑫生成Bin文件后烧录 ( NVS DATA )",
     "firmware.burn.flash.planB.NO_NVS": "提供待烧录数据清单, 由乐鑫生成Bin文件后烧录 ( 非 NVS 数据 )",
     "firmware.burn.flash.planC": "提供烧录脚本",
-    "label.img.open": "图片预览"
+    "label.img.open": "图片预览",
+    "goto.firmware.title": "定制固件",
+    "goto.mac.title": "定制MAC",
+    "goto.content.title": "定制烧录内容",
+    "goto.label.title": "定制标签",
+    "goto.pre-fit.title": "预适配",
+    "goto.pre-fit.description": "预适配",
+    "goto.firmware.description": "定制固件",
+    "goto.mac.description": "定制MAC",
+    "goto.content.description": "定制烧录内容",
+    "goto.label.description": "定制标签"
   }
 };
 

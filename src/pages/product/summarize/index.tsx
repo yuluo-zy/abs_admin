@@ -17,13 +17,12 @@ const bodyStyle = {
 };
 export default function Summarize() {
   const t = useLocale();
-  const [riceText, setRiceText] = useState();
+  const [riceText, setRiceText] = useState<Record<string, any>>();
 
   const [demandId] = ProductStore(state =>
     [state.demandId], shallow);
 
   function handleOnClick() {
-    // @ts-ignore
     const data = JSON.stringify(riceText.toJSON());
     if (demandId && demandId > 0) {
       postDemandComment({
