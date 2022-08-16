@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router";
-import { Button, List } from "@arco-design/web-react";
+import { Button, List, Tag } from "@arco-design/web-react";
 import useLocale from "@/pages/product/summarize/locale/useLocale";
 import styles from "./style/goto.menu.module.less";
 
@@ -23,8 +23,8 @@ export const GotoMenu: React.FC<GotoMenuProps> = (props: GotoMenuProps) => {
     <List.Item key={index} actions={actions}>
       <div className={styles["list"]}>
         <List.Item.Meta
-          title={item.title}
-          description={item.description}
+          title={<Tag color="blue" size={"medium"} className={styles["tag"]}>{item.title}</Tag>}
+          description={<p>{item.description}</p>}
         />
         <Button className="list-demo-actions-button" onClick={() => goto(item.url)}>Goto</Button>
       </div>
