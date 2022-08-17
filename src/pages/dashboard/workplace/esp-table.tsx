@@ -180,7 +180,7 @@ function EspTable() {
       "32": "√"
     }
   ];
-  return <DynamicCard title={t["workplace.table.info.title"]}>
+  return <DynamicCard title={t["workplace.table.info.title"]} bodyStyle={{ paddingTop: 0 }}>
     <Tabs defaultActiveTab="1">
       <TabPane
         key="1"
