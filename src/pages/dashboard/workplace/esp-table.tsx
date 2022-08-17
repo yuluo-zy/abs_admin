@@ -3,8 +3,11 @@ import DynamicCard from "@/components/Dynamic/Card";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "@/pages/dashboard/workplace/locale";
 import styles from "./style/table.module.less";
-import { Table } from "@arco-design/web-react";
+import { Table, Tabs } from "@arco-design/web-react";
+import IconModel from "./assets/model.svg";
+import IconChip from "./assets/chip.svg";
 
+const TabPane = Tabs.TabPane;
 
 function EspTable() {
   const t = useLocale(locale);
@@ -178,19 +181,55 @@ function EspTable() {
     }
   ];
   return <DynamicCard title={t["workplace.table.info.title"]}>
-    <Table
-      size={"mini"}
-      borderCell={true}
-      columns={columns}
-      data={data}
-      border={{
-        headerCell: true,
-        bodyCell: false
-      }}
-      className={styles["esp-table"]}
-      stripe={true}
-      pagination={false}
-    />
+    <Tabs defaultActiveTab="1">
+      <TabPane
+        key="1"
+        title={
+          <span>
+            <IconModel className={styles["icon"]} />
+            {t["workplace.table.info.model"]}
+          </span>
+        }
+      >
+        <Table
+          size={"mini"}
+          borderCell={true}
+          columns={columns}
+          data={data}
+          border={{
+            headerCell: true,
+            bodyCell: false
+          }}
+          className={styles["esp-table"]}
+          stripe={true}
+          pagination={false}
+        />
+      </TabPane>
+      <TabPane
+        key="2"
+        title={
+          <span>
+            <IconChip className={styles["icon"]} />
+            {t["workplace.table.info.chip"]}
+          </span>
+        }
+      >
+        <Table
+          size={"mini"}
+          borderCell={true}
+          columns={columns}
+          data={data}
+          border={{
+            headerCell: true,
+            bodyCell: false
+          }}
+          className={styles["esp-table"]}
+          stripe={true}
+          pagination={false}
+        />
+      </TabPane>
+    </Tabs>
+
   </DynamicCard>;
 }
 
