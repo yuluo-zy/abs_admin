@@ -11,7 +11,7 @@ const TabPane = Tabs.TabPane;
 
 function EspTable() {
   const t = useLocale(locale);
-  const columns = [
+  const chipColumns = [
     {
       title: t["workplace.table.info.type"],
       dataIndex: "type",
@@ -64,6 +64,40 @@ function EspTable() {
           dataIndex: "8266"
         }
       ]
+    }
+  ];
+  const modelColumns = [
+    {
+      title: t["workplace.table.info.type"],
+      dataIndex: "type",
+      render: (col, item, index) => {
+        const obj = {
+          children: col,
+          props: { rowSpan: 0 }
+        };
+
+        if (index === 0) {
+          obj.props.rowSpan = 1;
+        }
+        if (index === 1) {
+          obj.props.rowSpan = 2;
+        }
+        if (index === 3) {
+          obj.props.rowSpan = 3;
+        }
+        if (index === 6) {
+          obj.props.rowSpan = 2;
+        }
+        if (index === 8) {
+          obj.props.rowSpan = 1;
+        }
+
+        return obj;
+      }
+    },
+    {
+      title: t["workplace.table.info.sub.type"],
+      dataIndex: "subtype"
     },
     {
       title: t["workplace.table.info.chip"],
@@ -91,7 +125,6 @@ function EspTable() {
       ]
     }
   ];
-
   const data = [
     {
       key: "1",
@@ -194,7 +227,7 @@ function EspTable() {
         <Table
           size={"mini"}
           borderCell={true}
-          columns={columns}
+          columns={chipColumns}
           data={data}
           border={{
             headerCell: true,
@@ -217,7 +250,7 @@ function EspTable() {
         <Table
           size={"mini"}
           borderCell={true}
-          columns={columns}
+          columns={modelColumns}
           data={data}
           border={{
             headerCell: true,
