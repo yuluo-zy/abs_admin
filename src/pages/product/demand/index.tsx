@@ -157,10 +157,11 @@ export default function ProductDemand(props) {
               );
             })}
             <Route exact path={"/product/demand"}>
-              <div>todo 添加导入过程声明和足以事项</div>
+
               <div>
                 <Button type="primary" onClick={nextStep}>
                   {t["index.start"]}
+
                 </Button>
               </div>
             </Route>

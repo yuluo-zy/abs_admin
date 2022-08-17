@@ -62,7 +62,7 @@ export default function FirmwareCustomization() {
       Message.error("Verification Failed");
       return;
     }
-    let temp = {
+    const temp = {
       ...info,
       ...infos.forms["firmware.serial.check.title"]?.getFieldsValue(),
       ...infos.forms["firmware.information.flash.title"]?.getFieldsValue(),
@@ -70,7 +70,7 @@ export default function FirmwareCustomization() {
         ...infos.forms["firmware.information.efuse.title"]?.getFieldsValue()
       }
     };
-    let fileList = [];
+    const fileList = [];
     for (const item in infos.forms) {
       if (item.indexOf("firmware.information.title-") != -1) {
         fileList.push(infos.forms[item]?.getFieldsValue());
@@ -87,7 +87,7 @@ export default function FirmwareCustomization() {
 
     // 转换 自定义efuse otherCustom
     if (temp?.efuseConfig?.otherCustom && temp?.efuseConfig?.otherCustom.length > 0) {
-      let otherCustom = {};
+      const otherCustom = {};
       for (const item of temp?.efuseConfig?.otherCustom) {
         // @ts-ignore
         otherCustom[item?.key || "defines"] = item?.data;
