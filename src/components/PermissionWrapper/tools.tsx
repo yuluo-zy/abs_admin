@@ -15,9 +15,8 @@ export const usePermissionWrapper = (
   const { is_role, requiredPermissions, oneOfPerm } = props;
   const userInfo = useSelector((state: GlobalState) => state.userInfo);
 
-  const execute = useMemo(() => {
-
-    const handler = () => {
+  return useMemo(() => {
+    return () => {
       if (!!is_role) {
         // todo 根据角色信息进行内容判断
       }
@@ -27,9 +26,7 @@ export const usePermissionWrapper = (
         userInfo.permissions
       );
     };
-    return [handler];
-  }, [requiredPermissions, oneOfPerm, is_role, userInfo.permissions]);
-  return [...execute];
+  }, [userInfo.permissions]);
 
 };
 

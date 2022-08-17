@@ -11,6 +11,8 @@ import lazyload from "@/utils/lazyload";
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import styles from "./style/index.module.less";
+import { usePermissionWrapper } from "@/components/PermissionWrapper/tools";
+import { CUSTOM_CODE_PERMISSION, CUSTOM_NAME_PERMISSION, CUSTOM_PROJECT_PERMISSION } from "@/utils/staticVariable";
 
 const { Text } = Typography;
 
@@ -63,102 +65,133 @@ export default function DemandManage() {
       type: "input"
     }
   ];
+
+  // 定义权限判断函数
+  const namePermission = usePermissionWrapper({ requiredPermissions: [{ resource: CUSTOM_NAME_PERMISSION }] });
+  const codePermission = usePermissionWrapper({ requiredPermissions: [{ resource: CUSTOM_CODE_PERMISSION }] });
+  const projectPermission = usePermissionWrapper({ requiredPermissions: [{ resource: CUSTOM_PROJECT_PERMISSION }] });
   const getColumns = () => {
-    return [
+    const temp = [
       {
         title: t["product.manage.table.fwpn"],
         dataIndex: "fwPn",
         width: 150,
+        fixed: "left",
         render: (col, record, index) => <div onClick={() => {
           toRequirementsOverview(record?.id);
         }}><Link className={styles["link"]}> {record?.fwPn} </Link></div>
       },
-      {
-        title: t["product.manage.table.client.name"],
-        dataIndex: "customerName",
-        render: (value) => <Text>{value}</Text>
-      },
-      {
-        title: t["roduct.manage.table.client.code"],
-        dataIndex: "customerCode",
-        render: (value) => <Text>{value}</Text>
-      },
-      {
-        title: t["product.manage.table.client.project"],
-        dataIndex: "customerProject",
-        render: (value) => <Text>{value}</Text>
-      },
+
       {
         title: t["product.manage.table.client.model"],
         dataIndex: "adaptModuleType",
-        render: (value) => <Text>{value}</Text>
+        render: (value) => <Text>{value}</Text>,
+        width: 200
       },
       {
         title: t["product.manage.table.client.firmware"],
         dataIndex: "customFirmware",
-        render: (value) => <DynamicTag value={value} />
+        render: (value) => <DynamicTag value={value} />,
+        width: 100
       },
       {
         title: t["product.manage.table.client.firmware.type"],
         dataIndex: "firmwareType",
-        render: (value) => <DynamicTag value={value} />
+        render: (value) => <DynamicTag value={value} />,
+        width: 100
       },
       {
         title: t["product.manage.table.client.mac"],
         dataIndex: "customMac",
-        render: (value) => <DynamicTag value={value} />
+        render: (value) => <DynamicTag value={value} />,
+        width: 100
       },
       {
         title: t["product.manage.table.client.firmware.context"],
         dataIndex: "customContentBurn",
-        render: (value) => <DynamicTag value={value} />
+        render: (value) => <DynamicTag value={value} />,
+        width: 100
       },
       {
         title: t["product.manage.table.client.efuse"],
         dataIndex: "customEfuse",
-        render: (value) => <DynamicTag value={value} />
+        render: (value) => <DynamicTag value={value} />,
+        width: 100
       },
       {
         title: t["product.manage.table.client.label"],
         dataIndex: "customLabel",
-        render: (value) => <DynamicTag value={value} />
+        render: (value) => <DynamicTag value={value} />,
+        width: 100
       },
       {
         title: t["product.manage.table.client.history.fwpn"],
         dataIndex: "historyFwPn",
-        render: (value) => <Text>{value}</Text>
+        render: (value) => <Text>{value}</Text>,
+        width: 150
       },
       {
         title: t["product.manage.table.client.change.project"],
         dataIndex: "changeProject",
-        render: (value) => <Text>{value}</Text>
+        render: (value) => <Text>{value}</Text>,
+        width: 150
       },
       {
         title: t["product.manage.table.client.principal"],
         dataIndex: "bsHead",
-        render: (value) => <Text>{value}</Text>
+        render: (value) => <Text>{value}</Text>,
+        width: 100
       },
       {
         title: t["product.manage.table.client.status"],
         dataIndex: "status",
-        render: (value) => <Text>{value}</Text>
+        render: (value) => <Text>{value}</Text>,
+        width: 100
       },
       {
         title: t["product.manage.table.client.status.principal"],
         dataIndex: "handler",
-        render: (value) => <Text>{value}</Text>
-      },
-      {
-        title: t["product.manage.table.client.node"],
-        dataIndex: "",
-        render: (value) => <Text>{value}</Text>
-      },
-      {
-        title: t["product.manage.table.client.status.history"],
-        dataIndex: "",
-        render: (value) => <Text>{value}</Text>
+        render: (value) => <Text>{value}</Text>,
+        width: 100
       }
+      // {
+      //   title: t["product.manage.table.client.node"],
+      //   dataIndex: "",
+      //   render: (value) => <Text>{value}</Text>,
+      //   width: 200,
+      // },
+      // {
+      //   title: t["product.manage.table.client.status.history"],
+      //   dataIndex: "",
+      //   render: (value) => <Text>{value}</Text>,
+      //   width: 200,
+      // }
     ];
+    if (projectPermission()) {
+      temp.splice(1, 0, {
+        title: t["product.manage.table.client.project"],
+        dataIndex: "customerProject",
+        render: (value) => <Text>{value}</Text>,
+        width: 150
+      });
+    }
+    if (codePermission()) {
+      temp.splice(1, 0, {
+        title: t["product.manage.table.client.code"],
+        dataIndex: "customerCode",
+        render: (value) => <Text>{value}</Text>,
+        width: 100
+      });
+    }
+    if (namePermission()) {
+      temp.splice(1, 0, {
+        title: t["product.manage.table.client.name"],
+        dataIndex: "customerName",
+        render: (value) => <Text>{value}</Text>,
+        width: 150
+      });
+    }
+    return temp;
   };
 
   function addDemandConfirm() {
@@ -195,7 +228,8 @@ export default function DemandManage() {
           fetchRemoteData={getProductionDemand}
           getColumns={getColumns}
           select={true}
-          size={"mini"}
+          // size={"mini"}
+          // tableClassName={styles['table']}
           selectItem={selectItem}
           rowSelection={{
             type: "checkbox",

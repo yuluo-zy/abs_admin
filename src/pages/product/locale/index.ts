@@ -11,7 +11,7 @@ const i18n = {
     "product.manage.table.client.firmware.type": "固件类型",
     "product.manage.table.client.mac": "定制MAC",
     "product.manage.table.client.firmware.context": "烧录内容",
-    "product.manage.table.client.efuse": "定制 efuse",
+    "product.manage.table.client.efuse": "预适配",
     "product.manage.table.client.label": "定制标签",
     "product.manage.table.client.history.fwpn": "历史 FWPN",
     "product.manage.table.client.change.project": "变更项目",

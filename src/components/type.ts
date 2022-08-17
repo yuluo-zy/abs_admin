@@ -116,6 +116,7 @@ export interface ListProps {
   size?: "mini" | "small" | "default" | "middle";
   rowSelection?: any;
   tools?: any;
+  tableClassName?: any;
 }
 
 export interface MenuItemProps {

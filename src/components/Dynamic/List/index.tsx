@@ -34,7 +34,8 @@ const SearchList = React.forwardRef((props: ListProps, ref) => {
     select,
     selectItem,
     rowSelection,
-    tools
+    tools,
+    tableClassName
   } = props;
 
   const [data, setData] = useState([]);
@@ -158,12 +159,14 @@ const SearchList = React.forwardRef((props: ListProps, ref) => {
         </div>
         <Table
           rowKey="id"
+          scroll={{ x: true }}
           loading={loading}
           onChange={onChangeTable}
           pagination={pagination}
           columns={columns}
           data={data}
           size={size}
+          className={tableClassName}
           rowSelection={rowSelection}
         />
       </DynamicCard>
