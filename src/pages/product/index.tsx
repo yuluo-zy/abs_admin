@@ -1,10 +1,10 @@
 import useLocale from "@/pages/product/locale/useLocale";
 import SearchList from "@/components/Dynamic/List";
 import React, { useState } from "react";
-import { Link, Message, Modal, Typography } from "@arco-design/web-react";
-import { getProductionDemand, postProductionDemand } from "@/api/demand";
+import { Link, Typography } from "@arco-design/web-react";
+import { getProductionDemand } from "@/api/demand";
 import DynamicTag from "@/components/Dynamic/tag";
-import { ManageMenuProps, SearchItem } from "@/components/type";
+import { SearchItem } from "@/components/type";
 import DemandManageMenu from "@/pages/product/menu";
 import { Route, Switch, useHistory } from "react-router";
 import lazyload from "@/utils/lazyload";
@@ -27,21 +27,6 @@ export default function DemandManage() {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [setDemandId, reset] = ProductStore(state => [state.setDemandId, state.reset], shallow);
 
-  const menu: Array<ManageMenuProps> = [
-    {
-      name: t["product.manage.operate.select"], onChange: item => {
-      }
-    },
-    {
-      name: t["product.manage.operate.not.select"], onChange: item => {
-      }
-    },
-    {
-      name: t["product.manage.tools.add"], onChange: () => {
-        addDemandConfirm();
-      }
-    }
-  ];
   const toRequirementsOverview = (demandId) => {
     reset();
     ProductStore.persist.clearStorage();
@@ -147,13 +132,13 @@ export default function DemandManage() {
         dataIndex: "status",
         render: (value) => <Text>{value}</Text>,
         width: 100
-      },
-      {
-        title: t["product.manage.table.client.status.principal"],
-        dataIndex: "handler",
-        render: (value) => <Text>{value}</Text>,
-        width: 100
       }
+      // {
+      //   title: t["product.manage.table.client.status.principal"],
+      //   dataIndex: "handler",
+      //   render: (value) => <Text>{value}</Text>,
+      //   width: 100
+      // }
       // {
       //   title: t["product.manage.table.client.node"],
       //   dataIndex: "",
@@ -194,27 +179,6 @@ export default function DemandManage() {
     return temp;
   };
 
-  function addDemandConfirm() {
-    Modal.confirm({
-      title: "Tips",
-      content: t["product.manage.tools.add.message"],
-      okButtonProps: { status: "danger" },
-      onOk: () => {
-        // 清空
-        reset();
-        ProductStore.persist.clearStorage();
-        postProductionDemand().then(res => {
-            Message.success(t["product.manage.tools.add.message.ok"]);
-            setDemandId(res.data.result);
-            history.push(`/product/demand`);
-          }
-        ).catch(err =>
-          Message.error(err)
-        );
-      }
-    });
-  }
-
   return (
     <Switch>
       <Route path={`/product/demand`} component={productDemand} />
@@ -224,12 +188,10 @@ export default function DemandManage() {
           name={t["product.manage.title"]}
           download={false}
           upload={false}
-          tools={<DemandManageMenu menu={menu} />}
+          tools={<DemandManageMenu />}
           fetchRemoteData={getProductionDemand}
           getColumns={getColumns}
           select={true}
-          // size={"mini"}
-          // tableClassName={styles['table']}
           selectItem={selectItem}
           rowSelection={{
             type: "checkbox",
