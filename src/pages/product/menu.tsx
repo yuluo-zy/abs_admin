@@ -6,6 +6,7 @@ import { postProductionDemand } from "@/api/demand";
 import shallow from "zustand/shallow";
 import { useHistory } from "react-router";
 import PermissionWrapper from "@/components/PermissionWrapper";
+import { CustomWithdrawDemand } from "@/pages/product/menu-model/custom-withdraw-demand";
 
 export default function DemandManageMenu() {
   const t = useLocale();
@@ -51,9 +52,7 @@ export default function DemandManageMenu() {
     <PermissionWrapper
       requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
     >
-      <Button type="primary" onClick={() => {
-        addDemandConfirm();
-      }}>{t["product.manage.tools.withdraw"]}</Button>
+      <CustomWithdrawDemand />
     </PermissionWrapper>
     <PermissionWrapper
       requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
@@ -75,6 +74,13 @@ export default function DemandManageMenu() {
       <Button type="primary" onClick={() => {
         addDemandConfirm();
       }}>{t["product.manage.tools.copy"]}</Button>
+    </PermissionWrapper>
+    <PermissionWrapper
+      requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
+    >
+      <Button type="primary" onClick={() => {
+        addDemandConfirm();
+      }}>{t["product.manage.tools.firmware"]}</Button>
     </PermissionWrapper>
     <PermissionWrapper
       requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}

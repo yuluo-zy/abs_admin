@@ -48,7 +48,7 @@ const CreateUserHOC = (props: CallBackHandle) => {
         setRoleList(getRoleList([...role?.data.result]));
       }
       if (org?.data && org?.data.success) {
-        let temp = [...org?.data.result];
+        const temp = [...org?.data.result];
         getTreeDate(temp, 0);
         setOrgTree(temp);
       }

@@ -89,7 +89,6 @@ export interface ModeProps {
   onCancel?: () => void;
   onOk?: () => void;
   footer?: boolean;
-  children: any;
 }
 
 export interface DynamicCardProps {

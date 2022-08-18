@@ -211,3 +211,12 @@ export const ProductMenuInfo = create(() => ({
 }));
 
 export const setMenu = (menu) => ProductMenuInfo.setState({ menu });
+
+export const ProductDemandDescriptions = create(() => ({
+  demandId: -1,
+  data: []
+}));
+export const setDemandDescriptions = (demandId, data) => ProductDemandDescriptions.setState({
+  demandId,
+  data
+});
