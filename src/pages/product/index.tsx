@@ -1,6 +1,6 @@
 import useLocale from "@/pages/product/locale/useLocale";
 import SearchList from "@/components/Dynamic/List";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link, Typography } from "@arco-design/web-react";
 import { getProductionDemand } from "@/api/demand";
 import DynamicTag from "@/components/Dynamic/tag";
@@ -24,7 +24,6 @@ export default function DemandManage() {
   );
   const productSummarize = lazyload(mod["./summarize/index.tsx"]);
   const history = useHistory();
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [setDemandId, reset] = ProductStore(state => [state.setDemandId, state.reset], shallow);
 
   const demandId = ProductDemandDescriptions(state => state.demandId);
@@ -32,8 +31,7 @@ export default function DemandManage() {
 
   useEffect(() => {
     // 进行需求变更之后, 重新请求数据的回调函数
-    if (demandId === -1 && selectedRowKeys.length > 0) {
-      setSelectedRowKeys([]);
+    if (demandId === -1) {
       if (searchRef.current) {
         searchRef.current.callBack();
       }
@@ -213,13 +211,9 @@ export default function DemandManage() {
           rowSelection={{
             type: "radio",
             checkAll: true,
-            selectedRowKeys,
-            // onChange: (selectedRowKeys, selectedRows) => {
-            //   setSelectedRowKeys(selectedRowKeys);
-            // },
-            onSelect: (selected, record, selectedRows) => {
+            demandId,
+            onSelect: (selected, record) => {
               setDemandDescriptions(record?.id, record);
-              setSelectedRowKeys([selectedRows?.[0].id]);
             }
           }}
         />
