@@ -1,6 +1,6 @@
 import useLocale from "@/pages/product/locale/useLocale";
 import SearchList from "@/components/Dynamic/List";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, Typography } from "@arco-design/web-react";
 import { getProductionDemand } from "@/api/demand";
 import DynamicTag from "@/components/Dynamic/tag";
@@ -8,7 +8,7 @@ import { SearchItem } from "@/components/type";
 import DemandManageMenu from "@/pages/product/menu";
 import { Route, Switch, useHistory } from "react-router";
 import lazyload from "@/utils/lazyload";
-import { ProductStore, setDemandDescriptions } from "@/store/product";
+import { ProductDemandDescriptions, ProductStore, setDemandDescriptions } from "@/store/product";
 import shallow from "zustand/shallow";
 import styles from "./style/index.module.less";
 import { usePermissionWrapper } from "@/components/PermissionWrapper/tools";
@@ -27,6 +27,18 @@ export default function DemandManage() {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [setDemandId, reset] = ProductStore(state => [state.setDemandId, state.reset], shallow);
 
+  const demandId = ProductDemandDescriptions(state => state.demandId);
+  const searchRef = useRef(null);
+
+  useEffect(() => {
+    // 进行需求变更之后, 重新请求数据的回调函数
+    if (demandId === -1 && selectedRowKeys.length > 0) {
+      setSelectedRowKeys([]);
+      if (searchRef.current) {
+        searchRef.current.callBack();
+      }
+    }
+  }, [demandId, searchRef]);
 
   const toRequirementsOverview = (demandId) => {
     reset();
@@ -180,6 +192,7 @@ export default function DemandManage() {
     return temp;
   };
 
+
   return (
     <Switch>
       <Route path={`/product/demand`} component={productDemand} />
@@ -189,6 +202,7 @@ export default function DemandManage() {
           name={t["product.manage.title"]}
           download={false}
           upload={false}
+          ref={searchRef}
           tools={<DemandManageMenu />}
           fetchRemoteData={getProductionDemand}
           getColumns={getColumns}

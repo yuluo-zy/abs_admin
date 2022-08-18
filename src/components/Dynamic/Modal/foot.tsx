@@ -18,6 +18,7 @@ function DynamicFootModal(props: React.PropsWithChildren<ModeProps>) {
       onCancel={() => {
         props.onCancel?.();
       }}
+      onOk={props.onOk}
     >
       {props.children}
     </Modal>

@@ -26,6 +26,7 @@ const i18n = {
     "product.manage.tools.overview": "需求总览",
     "product.manage.tools.withdraw": "撤回需求",
     "product.manage.tools.withdraw.info": "确认撤回该需求?",
+    "product.manage.tools.withdraw.success": "撤销需求成功",
     "product.manage.tools.cancel": "取消需求",
     "product.manage.tools.update": "变更需求",
     "product.manage.tools.copy": "复制",

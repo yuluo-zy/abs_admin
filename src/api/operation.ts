@@ -8,3 +8,7 @@ import { httpPost } from "@/utils/httpRequest";
 export const bsReceive = (data) => {
   return httpPost("/demand/operation/bs/receive", data);
 };
+
+export const customWithdraw = (id) => {
+  return httpPost(`/demand/operation/customer/withdraw/${id}`);
+};
