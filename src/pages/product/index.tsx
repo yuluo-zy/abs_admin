@@ -8,7 +8,7 @@ import { SearchItem } from "@/components/type";
 import DemandManageMenu from "@/pages/product/menu";
 import { Route, Switch, useHistory } from "react-router";
 import lazyload from "@/utils/lazyload";
-import { ProductStore } from "@/store/product";
+import { ProductStore, setDemandDescriptions } from "@/store/product";
 import shallow from "zustand/shallow";
 import styles from "./style/index.module.less";
 import { usePermissionWrapper } from "@/components/PermissionWrapper/tools";
@@ -26,6 +26,7 @@ export default function DemandManage() {
   const history = useHistory();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [setDemandId, reset] = ProductStore(state => [state.setDemandId, state.reset], shallow);
+
 
   const toRequirementsOverview = (demandId) => {
     reset();
@@ -194,11 +195,15 @@ export default function DemandManage() {
           select={true}
           selectItem={selectItem}
           rowSelection={{
-            type: "checkbox",
+            type: "radio",
             checkAll: true,
             selectedRowKeys,
-            onChange: (selectedRowKeys, selectedRows) => {
-              setSelectedRowKeys(selectedRowKeys);
+            // onChange: (selectedRowKeys, selectedRows) => {
+            //   setSelectedRowKeys(selectedRowKeys);
+            // },
+            onSelect: (selected, record, selectedRows) => {
+              setDemandDescriptions(record?.id, record);
+              setSelectedRowKeys([selectedRows?.[0].id]);
             }
           }}
         />

@@ -3,7 +3,6 @@ import React from "react";
 import { ModeProps } from "@/components/type";
 
 function DynamicFootModal(props: React.PropsWithChildren<ModeProps>) {
-  console.log("渲染");
   return (
     <Modal
       title={props.title}

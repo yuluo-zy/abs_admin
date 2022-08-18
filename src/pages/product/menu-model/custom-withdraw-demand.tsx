@@ -9,7 +9,7 @@ export const CustomWithdrawDemand: React.FC = () => {
   const t = useLocale();
   const [open, setOpen] = useState<boolean>(false);
   const demandId = ProductDemandDescriptions(state => state.demandId);
-  const data = ProductDemandDescriptions(state => state.data);
+
   const call_back = useCallback(() => {
     setOpen(open => !open);
   }, [demandId]);
@@ -25,8 +25,8 @@ export const CustomWithdrawDemand: React.FC = () => {
       onCancel={open_back}
       onOk={call_back}
     >
+      <DemandDescriptions />
       <p>{t["product.manage.tools.withdraw.info"]}</p>
-      <DemandDescriptions data={data} />
     </DynamicFootModal>
   </>;
 };
