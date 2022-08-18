@@ -87,6 +87,12 @@ export default function DemandManage() {
         width: 200
       },
       {
+        title: t["product.manage.table.client.status"],
+        dataIndex: "status",
+        render: (value) => <Text>{value}</Text>,
+        width: 100
+      },
+      {
         title: t["product.manage.table.client.firmware"],
         dataIndex: "customFirmware",
         render: (value) => <DynamicTag value={value} />,
@@ -98,6 +104,7 @@ export default function DemandManage() {
         render: (value) => <DynamicTag value={value} />,
         width: 100
       },
+
       {
         title: t["product.manage.table.client.mac"],
         dataIndex: "customMac",
@@ -140,12 +147,7 @@ export default function DemandManage() {
         render: (value) => <Text>{value}</Text>,
         width: 100
       },
-      {
-        title: t["product.manage.table.client.status"],
-        dataIndex: "status",
-        render: (value) => <Text>{value}</Text>,
-        width: 100
-      }
+
       // {
       //   title: t["product.manage.table.client.status.principal"],
       //   dataIndex: "handler",
