@@ -19,8 +19,11 @@ export const customCopy = (id) => {
   return httpPost(`/demand/operation/customer/copy/${id}`);
 };
 // 客户正式发起
-export const customCommit = (data) => {
-  return httpPost(`/demand/operation/customer/commit`, data);
+export const customCommit = (demandId) => {
+
+  return httpPost(`/demand/operation/customer/commit`, {
+    demandId
+  });
 };
 // 客户撤回
 export const customCancel = (id) => {

@@ -4,19 +4,26 @@ import useLocale from "@/pages/product/locale/useLocale";
 import DynamicFootModal from "@/components/Dynamic/Modal/foot";
 import DemandDescriptions from "@/pages/product/menu-model/descriptions";
 import { ProductDemandDescriptions, setDemandDescriptions } from "@/store/product";
-import { customWithdraw } from "@/api/operation";
 
-export const CustomWithdrawDemand: React.FC = () => {
+interface CustomProps {
+  context: string,
+  custom: any
+}
+
+export const CustomOperationDemand: React.FC<CustomProps> = (
+  props: CustomProps
+) => {
   const t = useLocale();
+  const { context, custom } = props;
   const [open, setOpen] = useState<boolean>(false);
   const demandId = ProductDemandDescriptions(state => state.demandId);
   const [loading, setLoading] = useState(false);
   // 设置 按钮回调
   const call_back = useCallback(() => {
     setLoading(value => !value);
-    customWithdraw(demandId).then(res => {
+    custom(demandId).then(res => {
       if (res.data.success) {
-        Message.success(t["product.manage.tools.withdraw.success"]);
+        Message.success(t[context + ".success"]);
         setDemandDescriptions(-1, {});
         setOpen(open => !open);
       }
@@ -33,17 +40,18 @@ export const CustomWithdrawDemand: React.FC = () => {
   const is_disabled = () => {
     return demandId === -1;
   };
+
   return <>
-    <Button onClick={open_back} disabled={is_disabled()}>{t["product.manage.tools.withdraw"]}</Button>
+    <Button onClick={open_back} disabled={is_disabled()}>{t[context]}</Button>
     <DynamicFootModal
-      title={t["product.manage.tools.withdraw"]}
+      title={t[context]}
       visible={open}
       onCancel={open_back}
       onOk={call_back}
       confirmLoading={loading}
     >
       <DemandDescriptions />
-      <p>{t["product.manage.tools.withdraw.info"]}</p>
+      <p>{t[context + ".info"]}</p>
     </DynamicFootModal>
   </>;
 };
