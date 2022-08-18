@@ -13,11 +13,7 @@ const SearchList = React.forwardRef((props: ListProps, ref) => {
   const t = useLocale(locale);
   const [called, setCalled] = useState(true);
 
-  useImperativeHandle(ref, () => ({
-    callBack: () => {
-      tableCallback();
-    }
-  }));
+
 
   const tableCallback = async () => {
     setCalled(!called);
@@ -98,6 +94,15 @@ const SearchList = React.forwardRef((props: ListProps, ref) => {
 
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
+
+  useImperativeHandle(ref, () => ({
+    callBack: () => {
+      tableCallback().catch(error => {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      });
+    }
+  }));
 
   return (
     <div>

@@ -9,6 +9,20 @@ export const bsReceive = (data) => {
   return httpPost("/demand/operation/bs/receive", data);
 };
 
+// 客户取消
 export const customWithdraw = (id) => {
   return httpPost(`/demand/operation/customer/withdraw/${id}`);
+};
+
+// 客户复制
+export const customCopy = (id) => {
+  return httpPost(`/demand/operation/customer/copy/${id}`);
+};
+// 客户正式发起
+export const customCommit = (data) => {
+  return httpPost(`/demand/operation/customer/commit`, data);
+};
+// 客户撤回
+export const customCancel = (id) => {
+  return httpPost(`/demand/operation/customer/cancel/${id}`);
 };
