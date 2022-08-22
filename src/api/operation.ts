@@ -1,4 +1,4 @@
-import { httpPost } from "@/utils/httpRequest";
+import { httpGet, httpPost } from "@/utils/httpRequest";
 
 /**
  * 针对需求订单进行相关设定
@@ -28,4 +28,14 @@ export const customCommit = (demandId) => {
 // 客户撤回
 export const customCancel = (id) => {
   return httpPost(`/demand/operation/customer/cancel/${id}`);
+};
+
+// 增加项目相关人员
+export const demandAddable = () => {
+  return httpGet(`/demand/addable`);
+};
+
+// 查询项目相关人员列表
+export const demandRelatable = (data) => {
+  return httpGet(`/demand/addable`, data);
 };

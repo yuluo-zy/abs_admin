@@ -44,7 +44,11 @@ const i18n = {
     "product.manage.tools.mass.production.optionA": "生成 测试 TestFlow",
     "product.manage.tools.mass.production.optionB": "生成 确认 TestFlow",
     "product.manage.tools.add.message": "是否创建新的需求, 并分配专员负责",
-    "product.manage.tools.add.message.ok": "新需求创建成功, 请开始填写详细信息"
+    "product.manage.tools.add.message.ok": "新需求创建成功, 请开始填写详细信息",
+    "product.manage.tools.related.personnel.ok": "需求相关人员创建成功",
+    "product.manage.tools.related.personnel": "需求人员添加",
+    "product.manage.tools.related.personnel.list": "需求相关人员",
+    "product.manage.tools.related.personnel.context": "相关人员添加"
   }
 };
 

@@ -2,7 +2,7 @@ import { Modal } from "@arco-design/web-react";
 import React from "react";
 import { ModeProps } from "@/components/type";
 
-function DynamicModal(props: ModeProps) {
+function DynamicModal(props: React.PropsWithChildren<ModeProps>) {
   return (
     <Modal
       title={props.title}

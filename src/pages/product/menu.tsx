@@ -8,6 +8,7 @@ import { useHistory } from "react-router";
 import PermissionWrapper from "@/components/PermissionWrapper";
 import { CustomOperationDemand } from "@/pages/product/menu-model/custom-operation-demand";
 import { customCancel, customCommit, customCopy, customWithdraw } from "@/api/operation";
+import { RelatedPersonnelDemand } from "@/pages/product/menu-model/related-personnel-demand";
 
 export default function DemandManageMenu() {
   const t = useLocale();
@@ -56,19 +57,17 @@ export default function DemandManageMenu() {
     <PermissionWrapper
       requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
     >
-      <Button type="primary" onClick={() => {
-        addDemandConfirm();
-      }}>{t["product.manage.tools.update"]}</Button>
-    </PermissionWrapper>
-    <PermissionWrapper
-      requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
-    >
       <CustomOperationDemand context={"product.manage.tools.cancel"} custom={customCancel} />
     </PermissionWrapper>
     <PermissionWrapper
       requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
     >
       <CustomOperationDemand context={"product.manage.tools.copy"} custom={customCopy} />
+    </PermissionWrapper>
+    <PermissionWrapper
+      requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
+    >
+      <RelatedPersonnelDemand />
     </PermissionWrapper>
   </Space>;
 }
