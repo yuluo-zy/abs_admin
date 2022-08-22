@@ -6,7 +6,15 @@ import { httpGet, httpPost } from "@/utils/httpRequest";
 
 // 商务进行需求接收
 export const bsReceive = (data) => {
-  return httpPost("/demand/operation/bs/receive", data);
+  return httpPost("/demand/operation/bs/receive", {
+    demandId: data
+  });
+};
+// 商务进行需求驳回
+export const bsReject = (data) => {
+  return httpPost("/demand/operation/bs/reject", {
+    demandId: data
+  });
 };
 
 // 客户取消
@@ -37,5 +45,5 @@ export const demandAddable = () => {
 
 // 查询项目相关人员列表
 export const demandRelatable = (data) => {
-  return httpGet(`/demand/addable`, data);
+  return httpGet(`/demand/relatable`, data);
 };

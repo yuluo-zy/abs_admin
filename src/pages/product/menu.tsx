@@ -7,7 +7,7 @@ import shallow from "zustand/shallow";
 import { useHistory } from "react-router";
 import PermissionWrapper from "@/components/PermissionWrapper";
 import { CustomOperationDemand } from "@/pages/product/menu-model/custom-operation-demand";
-import { customCancel, customCommit, customCopy, customWithdraw } from "@/api/operation";
+import { bsReceive, bsReject, customCancel, customCommit, customCopy, customWithdraw } from "@/api/operation";
 import { RelatedPersonnelDemand } from "@/pages/product/menu-model/related-personnel-demand";
 
 export default function DemandManageMenu() {
@@ -68,6 +68,16 @@ export default function DemandManageMenu() {
       requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
     >
       <RelatedPersonnelDemand />
+    </PermissionWrapper>
+    <PermissionWrapper
+      requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
+    >
+      <CustomOperationDemand context={"product.manage.tools.receive"} custom={bsReceive} />
+    </PermissionWrapper>
+    <PermissionWrapper
+      requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
+    >
+      <CustomOperationDemand context={"product.manage.tools.reject"} custom={bsReject} />
     </PermissionWrapper>
   </Space>;
 }
