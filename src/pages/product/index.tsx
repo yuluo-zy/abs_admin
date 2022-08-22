@@ -1,6 +1,6 @@
 import useLocale from "@/pages/product/locale/useLocale";
 import SearchList from "@/components/Dynamic/List";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { Link, Typography } from "@arco-design/web-react";
 import { getProductionDemand } from "@/api/demand";
 import DynamicTag from "@/components/Dynamic/tag";
@@ -13,6 +13,7 @@ import shallow from "zustand/shallow";
 import styles from "./style/index.module.less";
 import { usePermissionWrapper } from "@/components/PermissionWrapper/tools";
 import { CUSTOM_CODE_PERMISSION, CUSTOM_NAME_PERMISSION, CUSTOM_PROJECT_PERMISSION } from "@/utils/staticVariable";
+import { useUpdateEffect } from "react-use";
 
 const { Text } = Typography;
 
@@ -27,16 +28,16 @@ export default function DemandManage() {
   const [setDemandId, reset] = ProductStore(state => [state.setDemandId, state.reset], shallow);
 
   const demandId = ProductDemandDescriptions(state => state.demandId);
+  const demandUpdate = ProductDemandDescriptions(state => state.update);
   const searchRef = useRef(null);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 进行需求变更之后, 重新请求数据的回调函数
-    if (demandId.includes(-1)) {
-      if (searchRef.current) {
-        searchRef.current.callBack();
-      }
+
+    if (searchRef.current) {
+      searchRef.current.callBack();
     }
-  }, [demandId, searchRef]);
+  }, [demandUpdate, searchRef]);
 
   const toRequirementsOverview = (demandId) => {
     reset();

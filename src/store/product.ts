@@ -214,9 +214,13 @@ export const setMenu = (menu) => ProductMenuInfo.setState({ menu });
 
 export const ProductDemandDescriptions = create(devtools(() => ({
   demandId: [-1],
-  data: []
+  data: [],
+  update: false
 })));
 export const setDemandDescriptions = (demandId, data) => ProductDemandDescriptions.setState({
   demandId,
   data
 });
+export const setDemandUpdate = () => ProductDemandDescriptions.setState((state) => ({
+  update: !state.update
+}));

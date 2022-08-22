@@ -3,7 +3,7 @@ import React, { useCallback, useState } from "react";
 import useLocale from "@/pages/product/locale/useLocale";
 import DynamicFootModal from "@/components/Dynamic/Modal/foot";
 import DemandDescriptions from "@/pages/product/menu-model/descriptions";
-import { ProductDemandDescriptions, setDemandDescriptions } from "@/store/product";
+import { ProductDemandDescriptions, setDemandDescriptions, setDemandUpdate } from "@/store/product";
 
 interface CustomProps {
   context: string,
@@ -24,8 +24,9 @@ export const CustomOperationDemand: React.FC<CustomProps> = (
     custom(demandId?.[0]).then(res => {
       if (res.data.success) {
         Message.success(t[context + ".success"]);
-        setDemandDescriptions(-1, {});
+        setDemandDescriptions([-1], {});
         setOpen(open => !open);
+        setDemandUpdate();
       }
     }).finally(() =>
       setLoading(value => !value)
