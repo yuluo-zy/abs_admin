@@ -32,7 +32,7 @@ export const RelatedPersonnelDemand: React.FC = () => {
   }, []);
   // 按钮是否显示
   const is_disabled = () => {
-    return demandId === -1;
+    return demandId.includes(-1);
   };
   // 进行 相关人员查询
   useEffect(() => {

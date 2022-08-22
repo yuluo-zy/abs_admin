@@ -38,7 +38,7 @@ export const CustomOperationDemand: React.FC<CustomProps> = (
   }, []);
   // 按钮是否显示
   const is_disabled = () => {
-    return demandId === -1;
+    return demandId.includes(-1);
   };
 
   return <>
