@@ -47,3 +47,33 @@ export const demandAddable = () => {
 export const demandRelatable = (data) => {
   return httpGet(`/demand/relatable`, data);
 };
+
+// 工程师 发起需求
+export const customEngineerCommit = (data) => {
+  return httpPost(`/demand/operation/engineer/commit`, data);
+};
+// 工程师 取消需求
+export const customEngineerCancel = (data) => {
+  return httpPost(`/demand/operation/engineer/cancel/${data}`, data);
+};
+// 工程师 复制需求
+export const customEngineerCopy = (data) => {
+  return httpPost(`/demand/operation/engineer/copy/${data}`, data);
+};
+// 工程师 派发需求
+export const customEngineerDistribute = (data) => {
+  return httpPost(`/demand/operation/engineer/distribute`, data);
+};
+// 工程师 接收验证需求
+export const customEngineerReceive = (data) => {
+  return httpPost(`/demand/operation/engineer/receive`, data);
+};
+// 工程师 驳回需求
+export const customEngineerReject = (data) => {
+  return httpPost(`/demand/operation/engineer/reject`, data);
+};
+// 工程师 撤回需求
+export const customEngineer = (demandId) => {
+  return httpPost(`/demand/operation/engineer/withdraw/${demandId}`);
+};
+
