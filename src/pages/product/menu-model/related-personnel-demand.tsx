@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Message } from "@arco-design/web-react";
+import { Button, Message, Spin } from "@arco-design/web-react";
 import useLocale from "@/pages/product/locale/useLocale";
 import { ProductDemandDescriptions, setDemandDescriptions } from "@/store/product";
 import DemandDescriptions from "@/pages/product/menu-model/descriptions";
@@ -36,14 +36,19 @@ export const RelatedPersonnelDemand: React.FC = () => {
   };
   // 进行 相关人员查询
   useEffect(() => {
-    if (!is_disabled()) {
-      demandRelatable(demandId).then(res => {
+    if (!is_disabled() && open) {
+      setLoading(value => !value);
+      demandRelatable({
+        demandId: demandId
+      }).then(res => {
         if (res.data.success) {
           setPersonList(res.data.result);
         }
+      }).finally(() => {
+        setLoading(value => !value);
       });
     }
-  }, [demandId]);
+  }, [demandId, open]);
 
   return <>
     <Button onClick={open_back} disabled={is_disabled()}>{t["product.manage.tools.related.personnel"]}</Button>
@@ -54,9 +59,11 @@ export const RelatedPersonnelDemand: React.FC = () => {
       onOk={call_back}
       confirmLoading={loading}
     >
-      <DemandDescriptions />
-      <Person userList={personList} />
-      <p>{t["product.manage.tools.related.personnel.context"]}</p>
+      <Spin loading={loading} style={{ width: "100%" }}>
+        <DemandDescriptions />
+        <Person userList={personList} />
+        <p>{t["product.manage.tools.related.personnel.context"]}</p>
+      </Spin>
     </DynamicModal>
   </>;
 };
