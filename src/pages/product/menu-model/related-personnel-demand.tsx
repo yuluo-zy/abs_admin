@@ -30,7 +30,7 @@ export const RelatedPersonnelDemand: React.FC = () => {
   };
   // 进行 相关人员查询
   useEffect(() => {
-    if (!is_disabled() && open) {
+    if (!is_disabled() && open && select === false) {
       setLoading(value => !value);
       axios.all([
         demandRelatable({
@@ -113,7 +113,6 @@ export const RelatedPersonnelDemand: React.FC = () => {
           >{t["product.manage.tools.related.personnel.button"]}</Button>
         }
         <Person userList={personList} />
-        <p>{t["product.manage.tools.related.personnel.context"]}</p>
       </Spin>
     </DynamicModal>
   </>;
