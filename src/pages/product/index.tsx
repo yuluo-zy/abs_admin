@@ -31,7 +31,7 @@ export default function DemandManage() {
 
   useEffect(() => {
     // 进行需求变更之后, 重新请求数据的回调函数
-    if (demandId === -1) {
+    if (demandId.includes(-1)) {
       if (searchRef.current) {
         searchRef.current.callBack();
       }
@@ -211,9 +211,13 @@ export default function DemandManage() {
           rowSelection={{
             type: "radio",
             checkAll: true,
+            checkCrossPage: true,
+            preserveSelectedRowKeys: false,
             demandId,
-            onSelect: (selected, record) => {
-              setDemandDescriptions(record?.id, record);
+            onChange: (selectedRowKeys, selectedRows) => {
+              setDemandDescriptions(selectedRowKeys, selectedRows?.[0]);
+              // console.log(selectedRowKeys)
+              // console.log(selectedRows)
             }
           }}
         />
