@@ -39,8 +39,8 @@ export const customCancel = (id) => {
 };
 
 // 增加项目相关人员
-export const demandAddable = () => {
-  return httpGet(`/demand/addable`);
+export const demandAddable = (data) => {
+  return httpGet(`/demand/addable`, data);
 };
 
 // 查询项目相关人员列表

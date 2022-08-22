@@ -54,7 +54,10 @@ const i18n = {
     "product.manage.tools.related.personnel.ok": "需求相关人员创建成功",
     "product.manage.tools.related.personnel": "需求人员添加",
     "product.manage.tools.related.personnel.list": "需求相关人员",
-    "product.manage.tools.related.personnel.context": "相关人员添加"
+    "product.manage.tools.related.personnel.context": "相关人员添加",
+    "product.manage.tools.related.personnel.button": "添加需求相关人员",
+    "product.manage.tools.related.personnel.success": "添加需求相关人员成功",
+    "product.manage.tools.related.personnel.error": "请首先选择添加人员"
   }
 };
 

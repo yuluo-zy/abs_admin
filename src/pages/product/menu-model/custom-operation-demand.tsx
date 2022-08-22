@@ -21,7 +21,7 @@ export const CustomOperationDemand: React.FC<CustomProps> = (
   // 设置 按钮回调
   const call_back = useCallback(() => {
     setLoading(value => !value);
-    custom(demandId).then(res => {
+    custom(demandId?.[0]).then(res => {
       if (res.data.success) {
         Message.success(t[context + ".success"]);
         setDemandDescriptions(-1, {});

@@ -51,3 +51,8 @@ export const getDemandDetails = (demandId) => {
 export const getMpnList = () => {
   return httpGet("/demand/MPN");
 };
+
+// 添加对应的需求相关人员
+export const postDemandRelPerson = (data) => {
+  return httpPost("/demand/relPerson", data);
+};

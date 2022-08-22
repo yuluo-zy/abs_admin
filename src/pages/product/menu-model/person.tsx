@@ -1,9 +1,9 @@
 import React from "react";
-import { List } from "@arco-design/web-react";
 import useLocale from "@/pages/product/locale/useLocale";
+import { List } from "@arco-design/web-react";
 
 interface Person {
-  userList: Array<string>;
+  userList: Array<Record<string, string>>;
 }
 
 export const DemandPerson: React.FC<Person> = (props: Person) => {
@@ -12,9 +12,16 @@ export const DemandPerson: React.FC<Person> = (props: Person) => {
   return (
     <List
       header={t["product.manage.tools.related.personnel.list"]}
-      size="small"
+      // size="small"
+      hoverable={true}
+      bordered={true}
       dataSource={userList}
-      render={(item, index) => <List.Item key={index}>{item}</List.Item>}
+      render={(item, index) => <List.Item key={index}>
+        <List.Item.Meta
+          title={item?.username}
+          description={item?.email}
+        />
+      </List.Item>}
     />
   );
 };

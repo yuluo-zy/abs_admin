@@ -145,25 +145,6 @@ export default function DemandManage() {
         render: (value) => <Text>{value}</Text>,
         width: 100
       },
-
-      // {
-      //   title: t["product.manage.table.client.status.principal"],
-      //   dataIndex: "handler",
-      //   render: (value) => <Text>{value}</Text>,
-      //   width: 100
-      // }
-      // {
-      //   title: t["product.manage.table.client.node"],
-      //   dataIndex: "",
-      //   render: (value) => <Text>{value}</Text>,
-      //   width: 200,
-      // },
-      // {
-      //   title: t["product.manage.table.client.status.history"],
-      //   dataIndex: "",
-      //   render: (value) => <Text>{value}</Text>,
-      //   width: 200,
-      // }
     ];
     if (projectPermission()) {
       temp.splice(1, 0, {
@@ -216,8 +197,6 @@ export default function DemandManage() {
             demandId,
             onChange: (selectedRowKeys, selectedRows) => {
               setDemandDescriptions(selectedRowKeys, selectedRows?.[0]);
-              // console.log(selectedRowKeys)
-              // console.log(selectedRows)
             }
           }}
         />
