@@ -91,4 +91,9 @@ export const factoryReject = (data) => {
   return httpPost("/demand/operation/factory/reject", data);
 };
 
+// 查询可以指派的人员信息
+export const demandAssignable = (data) => {
+  return httpGet("/demand/assignable", data);
+};
+
 

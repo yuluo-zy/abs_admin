@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Message, Select, Space, Spin } from "@arco-design/web-react";
 import useLocale from "@/pages/product/locale/useLocale";
-import { ProductDemandDescriptions } from "@/store/product";
+import { ProductDemandDescriptions, setDemandUpdate } from "@/store/product";
 import DemandDescriptions from "@/pages/product/menu-model/descriptions";
 import { demandAddable, demandRelatable } from "@/api/operation";
 import DynamicModal from "@/components/Dynamic/Modal";
@@ -66,6 +66,7 @@ export const RelatedPersonnelDemand: React.FC = () => {
       if (res.data.success) {
         Message.success(t["product.manage.tools.related.personnel.success"]);
         setOpen(value => !value);
+        setDemandUpdate();
       }
     });
   };

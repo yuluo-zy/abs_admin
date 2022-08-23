@@ -1,5 +1,5 @@
 import { Button, Message } from "@arco-design/web-react";
-import React, { useCallback, useState } from "react";
+import React, { PropsWithChildren, useCallback, useState } from "react";
 import useLocale from "@/pages/product/locale/useLocale";
 import DynamicFootModal from "@/components/Dynamic/Modal/foot";
 import DemandDescriptions from "@/pages/product/menu-model/descriptions";
@@ -11,7 +11,7 @@ interface CustomProps {
 }
 
 export const CustomOperationDemand: React.FC<CustomProps> = (
-  props: CustomProps
+  props: PropsWithChildren<CustomProps>
 ) => {
   const t = useLocale();
   const { context, custom } = props;
