@@ -7,7 +7,15 @@ import shallow from "zustand/shallow";
 import { useHistory } from "react-router";
 import PermissionWrapper from "@/components/PermissionWrapper";
 import { CustomOperationDemand } from "@/pages/product/menu-model/custom-operation-demand";
-import { bsReject, customCancel, customCommit, customCopy, customWithdraw } from "@/api/operation";
+import {
+  bsReject,
+  customCancel,
+  customCommit,
+  customCopy,
+  customWithdraw,
+  factoryComplete,
+  factoryReject
+} from "@/api/operation";
 import { RelatedPersonnelDemand } from "@/pages/product/menu-model/related-personnel-demand";
 import { DesignatedPersonDemand } from "@/pages/product/menu-model/designated-person-demand";
 
@@ -80,6 +88,17 @@ export default function DemandManageMenu() {
       requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
     >
       <CustomOperationDemand context={"product.manage.tools.reject"} custom={bsReject} />
+    </PermissionWrapper>
+    {/*添加工厂功能*/}
+    <PermissionWrapper
+      requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
+    >
+      <CustomOperationDemand context={"product.manage.tools.reject"} custom={factoryReject} />
+    </PermissionWrapper>
+    <PermissionWrapper
+      requiredPermissions={[{ resource: "relBusinessCustomer:delete" }]}
+    >
+      <CustomOperationDemand context={"product.manage.tools.complete"} custom={factoryComplete} />
     </PermissionWrapper>
   </Space>;
 }

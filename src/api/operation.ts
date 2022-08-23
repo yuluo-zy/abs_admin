@@ -80,15 +80,15 @@ export const customEngineer = (demandId) => {
 
 // 工厂 完成验证测试
 export const factoryComplete = (data) => {
-  return httpPost("/demand/operation/factory/complete", data);
-};
-// 工厂 接收验证测试
-export const factoryReceive = (data) => {
-  return httpPost("/demand/operation/factory/receive", data);
+  return httpPost("/demand/operation/factory/complete", {
+    demandId: data
+  });
 };
 // 工厂 驳回需求
 export const factoryReject = (data) => {
-  return httpPost("/demand/operation/factory/reject", data);
+  return httpPost("/demand/operation/factory/reject", {
+    demandId: data
+  });
 };
 
 // 查询可以指派的人员信息
