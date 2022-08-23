@@ -50,7 +50,9 @@ export const demandRelatable = (data) => {
 
 // 工程师 发起需求
 export const customEngineerCommit = (data) => {
-  return httpPost(`/demand/operation/engineer/commit`, data);
+  return httpPost(`/demand/operation/engineer/commit`, {
+    demandId: data
+  });
 };
 // 工程师 取消需求
 export const customEngineerCancel = (data) => {
@@ -66,14 +68,18 @@ export const customEngineerDistribute = (data) => {
 };
 // 工程师 接收验证需求
 export const customEngineerReceive = (data) => {
-  return httpPost(`/demand/operation/engineer/receive`, data);
+  return httpPost(`/demand/operation/engineer/receive`, {
+    demandId: data
+  });
 };
 // 工程师 驳回需求
 export const customEngineerReject = (data) => {
-  return httpPost(`/demand/operation/engineer/reject`, data);
+  return httpPost(`/demand/operation/engineer/reject`, {
+    demandId: data
+  });
 };
 // 工程师 撤回需求
-export const customEngineer = (demandId) => {
+export const customEngineerWithdraw = (demandId) => {
   return httpPost(`/demand/operation/engineer/withdraw/${demandId}`);
 };
 
