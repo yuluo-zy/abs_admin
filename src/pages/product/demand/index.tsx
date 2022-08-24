@@ -6,7 +6,7 @@ import styles from "./style/index.module.less";
 import { useHistory } from "react-router-dom";
 import { isArray } from "@/utils/is";
 import { MenuItemProps } from "@/components/type";
-import { IconCalendar, IconMindMapping, IconSubscribed } from "@arco-design/web-react/icon";
+import { IconArrowRight, IconCalendar, IconMindMapping, IconSubscribed } from "@arco-design/web-react/icon";
 import NProgress from "nprogress";
 import lazyload from "@/utils/lazyload";
 import { Route, Switch } from "react-router";
@@ -16,8 +16,10 @@ import { Button, Form, Input, Message, Select, Spin } from "@arco-design/web-rea
 import DynamicRadioGroup from "@/components/Dynamic/Radio";
 import axios from "axios";
 import { getProjectList } from "@/api/project";
-import { getMpnList } from "@/api/demand";
+import { getMpnList, postFWPNsave } from "@/api/demand";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
+import style from "@/pages/product/demand/entry/service/label/style/index.module.less";
+import DynamicDivider from "@/components/Dynamic/Divider";
 
 function getFlattenRoutes(routes) {
   const res = [];
@@ -119,7 +121,7 @@ export default function ProductDemand() {
   const [setStepRouter, setCollapse] = ProductStore(state => [state.setStepRouter, state.setCollapse, state.setStepList], shallow);
   const [project, setProject] = useState([]);
   const [mpnList, setMpnList] = useState([]);
-  const [info, setInfo] = ProductStore(state => [state.projectData, state.setProjectInfo], shallow);
+  const [info, setInfo, demandId] = ProductStore(state => [state.projectData, state.setProjectInfo, state.demandId], shallow);
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
   useEffect(() => {
@@ -170,6 +172,33 @@ export default function ProductDemand() {
     paddingBottom: "0.5rem",
     transition: " 0.5s all ease-in-out"
   };
+
+  const postData = () => {
+    try {
+      form.validate();
+    } catch (error) {
+      return;
+    }
+    const temp = {
+      ...info,
+      ...form.getFieldsValue()
+    };
+    setInfo({
+      ...temp
+    });
+    postFWPNsave({
+      ...temp,
+      demandId: demandId
+    }).then(res => {
+      if (res.data.success) {
+        setInfo({
+          id: res.data.result
+        });
+        nextStep();
+        Message.success(t["submit.hardware.success"]);
+      }
+    });
+  };
   return (
 
     <div style={bodyStyle}>
@@ -195,6 +224,7 @@ export default function ProductDemand() {
                     form={form}
                     scrollToFirstError
                     labelAlign="left"
+                    onSubmit={postData}
                     initialValues={info}
                     labelCol={{ span: 4, offset: 0 }}
                   >
@@ -208,10 +238,6 @@ export default function ProductDemand() {
                         style={{ width: 300 }}
                         allowClear
                         size={"large"}
-                        // onChange={value => setInfo({
-                        //   firmwareVersion: value
-                        // })}
-                        // defaultValue={info?.firmwareVersion}
                         placeholder={t["firmware.customization.info.version.hint"]}
                       />
 
@@ -226,10 +252,6 @@ export default function ProductDemand() {
                         size={"large"}
                         placeholder={t["firmware.customization.info.project.hint"]}
                         style={{ width: 300 }}
-                        // defaultValue={info?.firmwareProject}
-                        // onChange={(value) => setInfo({
-                        //   firmwareProject: value
-                        // })}
                       >
                         {project.map((option) => (
                           <Option key={option.id} value={option.name}>
@@ -251,14 +273,15 @@ export default function ProductDemand() {
                           { label: t["firmware.customization.info.project.history.first"], value: 1 },
                           { label: t["firmware.customization.info.project.history.next"], value: 0 }
                         ]}
-                        //   onChange={(value) => {
-                        //   setInfo({ firstImport: value });
-                        // }}
+                        onChange={(value) => {
+                          form.setFieldValue("firstImport", value);
+                          setInfo({ firstImport: value });
+                        }}
                       />
                     </Form.Item>
                     {
-                      info?.firstImport === 0 &&
-                      <Form.Item field="firstImport" label={t["firmware.customization.info.project.history.old"]}
+                      info?.firstImport === 0 && mpnList.length > 0 &&
+                      <Form.Item field="lastMpn" label={t["firmware.customization.info.project.history.old"]}
 
                                  required={true} rules={[{
                         required: true,
@@ -268,10 +291,10 @@ export default function ProductDemand() {
                           size={"large"}
                           style={{ width: 300 }}
                           placeholder={t["firmware.customization.info.project.hint"]}
-                          defaultValue={
-                            info?.lastMpn
-                          }
-                          onChange={(value) => setInfo({ lastMpn: value })}
+                          onChange={(value) => {
+                            setInfo({ lastMpn: value });
+                            form.setFieldValue("lastMpn", value);
+                          }}
                         >
                           {mpnList.map((option, index) => (
                             <Option key={index} value={option?.id}>
@@ -279,13 +302,20 @@ export default function ProductDemand() {
                             </Option>
                           ))}
                         </Select>
-
                       </Form.Item>
                     }
+                    <DynamicDivider />
+                    <div className={style["context-next"]}>
+                      <Button type="primary"
+                              size={"large"}
+                              htmlType="submit"
+                              icon={<IconArrowRight />}
+                      >
+                        {t["hardware.production.info.next"]}
+                      </Button>
+                    </div>
                   </Form>
-                  <Button type="primary" onClick={nextStep}>
-                    {t["index.start"]}
-                  </Button>
+
                 </DynamicOuterCard>
               </Spin>
             </Route>

@@ -218,11 +218,11 @@ const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
   }
 });
 
-export const ProductStore = create(persist(createRootSlice,
+export const ProductStore = create(devtools(persist(createRootSlice,
   {
     name: "product-storage",
     getStorage: () => sessionStorage
-  }));
+  })));
 
 
 export const ProductMenuInfo = create(() => ({

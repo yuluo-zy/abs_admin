@@ -17,6 +17,10 @@ export const getProductionCustomDemand = () => {
   return httpGet("/demand/custom/serve");
 };
 
+export const postFWPNsave = (data) => {
+  return httpPost("/demand/fwpn/save", data);
+};
+
 export const postProductionCustomDemand = (data) => {
   return httpPost("/demand/custom/serve/save", data);
 };
