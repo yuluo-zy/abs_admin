@@ -42,7 +42,6 @@ export default function CustomMac() {
     form.setFieldValue("macStart", temp);
   };
   const getMacEndInfo = (value) => {
-    console.log(value);
     const temp = getMac(value, macData?.macEnd || "");
     setMacData({
       macEnd: temp
@@ -71,7 +70,7 @@ export default function CustomMac() {
     } catch (error) {
       return;
     }
-    let temp = {
+    const temp = {
       ...macData,
       ...form.getFieldsValue()
     };
@@ -93,7 +92,7 @@ export default function CustomMac() {
 
   // 获取mac服务支持的写入位置服务
   const getMacService = () => {
-    let temp = [];
+    const temp = [];
     if (serviceData?.burnMacToFlash === 1) {
       temp.push({ label: "Flash", value: "FLASH" });
     }
@@ -169,26 +168,6 @@ export default function CustomMac() {
             </FormItem>
           }
         </div>
-        <Divider style={{ borderBottomStyle: "dashed" }} />
-        <FormItem label={t["firmware.mac.partitions.flash.write.area.mac"]}
-                  labelCol={{ span: 7 }}
-                  wrapperCol={{ span: 5 }}
-                  labelAlign={"left"}
-                  field={"macNumPerProduction"}
-                  rules={[{ required: true, type: "number", min: 1, max: 4 }]}>
-          <InputNumber
-            mode="button"
-            style={{ width: "10rem" }}
-            min={1}
-            max={4}
-            onChange={(value) => {
-              form.setFieldValue("macNumPerProduction", value);
-              setMacData({
-                macNumPerProduction: value
-              });
-            }}
-          />
-        </FormItem>
         <DynamicDivider />
         <FormItem label={t["firmware.mac.partitions.flash.write.area.serial.port"]}
                   labelAlign={"left"}
@@ -197,13 +176,6 @@ export default function CustomMac() {
                     required: true,
                     message: t["firmware.mac.partitions.flash.write.area.serial.port.error"]
                   }]}>
-          {/*<Input*/}
-          {/*  style={{ width: "20rem" }}*/}
-          {/*  value={macData?.serialPort}*/}
-          {/*  onChange={(value) => {*/}
-          {/*    form.setFieldValue("serialPort", value);*/}
-          {/*  }}*/}
-          {/*/>*/}
           <Input
             style={{ width: 270 }}
             maxLength={20}
@@ -214,6 +186,26 @@ export default function CustomMac() {
           <Typography.Title heading={5} type="primary">
             {t["firmware.mac.partitions.flash.write.area.title"]}
           </Typography.Title>
+          <FormItem label={t["firmware.mac.partitions.flash.write.area.mac"]}
+                    labelCol={{ span: 5 }}
+                    wrapperCol={{ span: 7 }}
+                    labelAlign={"left"}
+                    field={"macNumPerProduction"}
+                    rules={[{ required: true, type: "number", min: 1, max: 4 }]}>
+            <InputNumber
+              mode="button"
+              // style={{ width: "10rem" }}
+              min={1}
+              max={4}
+              style={{ maxWidth: "20rem" }}
+              onChange={(value) => {
+                form.setFieldValue("macNumPerProduction", value);
+                setMacData({
+                  macNumPerProduction: value
+                });
+              }}
+            />
+          </FormItem>
           <FormItem label={t["firmware.mac.partitions.start"]}
                     field={"macStart"}
                     labelCol={{ span: 5 }}
