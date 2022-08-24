@@ -3,6 +3,12 @@ import { Recordable } from "@/components/type";
 import { devtools, persist } from "zustand/middleware";
 import { StoreSlice } from "@/store/type";
 
+// 项目信息设置
+interface ProjectInfo {
+  projectData: Recordable;
+  setProjectInfo: any;
+}
+
 // 相关步骤设定
 export interface StepSetting {
   stepKey: string;
@@ -56,6 +62,16 @@ export interface PreFitDemand {
 export interface CheckDemand {
   checkData: Recordable;
 }
+
+const createProjectInfo: StoreSlice<ProjectInfo> = (set, get) => ({
+  setProjectInfo: value => set((state) => ({
+    projectData: {
+      ...state.projectData,
+      ...value
+    }
+  })),
+  projectData: {}
+});
 
 const createBearSlice: StoreSlice<StepSetting> = (set, get) => ({
   stepKey: "",
@@ -178,8 +194,10 @@ const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
   ...createPreFitDemand(set, get),
   ...createCheckDemand(set, get),
   ...createServiceDemand(set, get),
+  ...createProjectInfo(set, get),
   reset: () => {
     set({
+      projectData: null,
       fitData: null,
       burnData: null,
       labelData: null,
