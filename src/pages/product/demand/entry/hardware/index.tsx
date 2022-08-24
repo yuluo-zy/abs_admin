@@ -11,6 +11,7 @@ import {
   Radio,
   Space,
   Table,
+  Tag,
   Typography
 } from "@arco-design/web-react";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
@@ -154,22 +155,6 @@ export default function HardwareSelection() {
   const t = useLocale();
   const socSelect: ProductSelectItem[] = [
     {
-      name: t["hardware.production.info.soc"],
-      type: "core",
-      select: ["SINGLE", "DUAL"]
-    },
-    {
-      name: t["hardware.production.info.soc.antenna"],
-      type: "antenna",
-      select: ["N/A", "PCB", "IPEX"]
-    },
-    {
-      name: t["hardware.production.info.soc.package"],
-      type: "dimensions",
-      select: ["QFN56(7*7)", "QFN48(5*5)", "QFN48(6*6)",
-        "LGA48(7*7)", "QFN32(5*5)", "QFN28(4*4)"]
-    },
-    {
       name: t["hardware.production.info.soc.model"],
       type: "series",
       select: ["ESP8685", "ESP32-S3", "ESP32-C3(含ESP8685)", "ESP32-S2", "ESP32", "ESP8266"]
@@ -214,14 +199,14 @@ export default function HardwareSelection() {
   ];
   const product = [
     {
-      name: t["hardware.production.info.chip"],
-      type: "SoC",
-      description: t["hardware.production.info.chip.description"]
-    },
-    {
       name: t["hardware.production.info.modules"],
       type: "Module",
       description: t["hardware.production.info.modules.description"]
+    },
+    {
+      name: t["hardware.production.info.chip"],
+      type: "SoC",
+      description: t["hardware.production.info.chip.description"]
     }
   ];
 
@@ -345,6 +330,7 @@ export default function HardwareSelection() {
     for (const key in item) {
       for (const info of originColumns) {
         if (info.dataIndex === key) {
+          if (info.dataIndex === "mpn") continue;
           res.push(
             {
               label: info.title,
@@ -465,7 +451,9 @@ export default function HardwareSelection() {
             {
               moduleInfo.mpn &&
               <div className={style["product-info"]}>
-                <p>{t["hardware.production.info.select.model"] + moduleInfo.mpn}</p>
+                <p>{t["hardware.production.info.select.model"]}
+                  <Tag color={"purple"} size="large" style={{ margin: "1px 5px 1px" }}> {moduleInfo.mpn}</Tag>
+                </p>
               </div>
             }
           </div>
@@ -515,7 +503,9 @@ export default function HardwareSelection() {
           autoFocus={false}
           focusLock={true}
         >
-          <p>{t["hardware.production.info.select.model"]} <b>{moduleInfo.mpn}</b></p>
+          <p>{t["hardware.production.info.select.model"]}<Tag color={"purple"} size="large"
+                                                              style={{ margin: "1px 5px 1px" }}>{moduleInfo.mpn}</Tag>
+          </p>
           <Descriptions
             column={2}
             border
