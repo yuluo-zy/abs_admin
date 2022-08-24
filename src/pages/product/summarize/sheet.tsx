@@ -22,7 +22,7 @@ export default function Sheet() {
   const t = useLocale();
   const history = useHistory();
   // 获取用来存储数据的所有对象
-  const [checkData, moduleInfo, demandId, info, macData, labelData, burnData, fitData] =
+  const [checkData, moduleInfo, demandId, info, macData, labelData, burnData, fitData, projectData] =
     ProductStore(state =>
       [state.checkData,
         state.moduleInfo,
@@ -31,9 +31,10 @@ export default function Sheet() {
         state.macData,
         state.labelData,
         state.burnData,
-        state.fitData
+        state.fitData,
+        state.projectData
       ], shallow);
-  const [setModuleInfo, setInfo, setMacData, setBurnData, setLabelDate, setServiceData, setFitData, setCheckData] =
+  const [setModuleInfo, setInfo, setMacData, setBurnData, setLabelDate, setServiceData, setFitData, setCheckData, setProjectData] =
     ProductStore(state => [
       state.setModuleInfo,
       state.setInfo,
@@ -42,7 +43,8 @@ export default function Sheet() {
       state.setLabelData,
       state.setServiceData,
       state.setFitData,
-      state.setCheckData
+      state.setCheckData,
+      state.setProjectInfo
     ], shallow);
 
   const [serviceType, setServiceType] = ProductStore(state => [state.serviceType, state.setServiceType], shallow);
@@ -193,6 +195,11 @@ export default function Sheet() {
     }
     return "";
   };
+  const setSelDemandFwpn = (data) => {
+    if (data) {
+      setProjectData(data);
+    }
+  };
 
   const [loading, setLoading] = useState(false);
   const [is_error, setError] = useState(false);
@@ -214,6 +221,10 @@ export default function Sheet() {
     setLoading(true);
     getDemandDetails(demandId).then(res => {
       if (res.data.success && res.data.result) {
+        // 设置 相关的自定义项目信息
+        if (res.data.result?.selDemandFwpn) {
+          setSelDemandFwpn(res.data.result?.selDemandFwpn);
+        }
         if (res.data.result?.selDemandProduction) {
           setSelDemandProduction(res.data.result?.selDemandProduction);
         }
@@ -266,7 +277,7 @@ export default function Sheet() {
         <tr>
           <th className={styles["mini"]}>IDs</th>
           <th className={styles["medium"]}>Project Name:</th>
-          <th colSpan={6}>{info?.firmwareProject}</th>
+          <th colSpan={6}>{projectData?.firmwareProject}</th>
         </tr>
         <tr>
           <td>1</td>
@@ -280,7 +291,7 @@ export default function Sheet() {
           <td rowSpan={8}>2</td>
           <td rowSpan={8}>Customer Firmware</td>
           <td rowSpan={2}>Firmware Version Number</td>
-          <td rowSpan={2} colSpan={2}>{info?.firmwareVersion}</td>
+          <td rowSpan={2} colSpan={2}>{projectData?.firmwareVersion}</td>
           <td>Flash Encryption</td>
           <td colSpan={1}>{getFirmware("flash", info?.firmwareType) ? <IconCheck /> : <IconClose />}</td>
           <td colSpan={1}>{getFlash(info?.keyType)}</td>
