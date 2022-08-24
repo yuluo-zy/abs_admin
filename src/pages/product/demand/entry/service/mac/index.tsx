@@ -101,7 +101,11 @@ export default function CustomMac() {
     }
     return temp;
   };
-
+  // useEffect(() => {console.log(macData);
+  //   if(macData?.macStart) {
+  //   console.log(macData?.macStart?.length);
+  // }
+  // },[macData])
   return (<DynamicOuterCard title={t["firmware.mac.title"]}>
     <DynamicSkeleton animation text={{ rows: 10, width: ["100%", 600, 400] }}>
       <Form
@@ -215,7 +219,11 @@ export default function CustomMac() {
                       {
                         required: true,
                         message: t["firmware.mac.partitions.start.error"],
-                        minLength: 17
+                        validator: (_, callback) => {
+                          if (macData?.macStart && macData?.macStart.length !== 17) {
+                            callback(t["firmware.mac.partitions.start.error"]);
+                          }
+                        }
                       }
                     ]}>
             <Input value={macData?.macStart} onChange={getMacStartInfo} style={{ maxWidth: "20rem" }} />
@@ -229,7 +237,11 @@ export default function CustomMac() {
             {
               required: true,
               message: t["firmware.mac.partitions.end.error"],
-              minLength: 17
+              validator: (_, callback) => {
+                if (macData?.macEnd && macData?.macEnd.length !== 17) {
+                  callback(t["firmware.mac.partitions.end.error"]);
+                }
+              }
             }
           ]}
           >
