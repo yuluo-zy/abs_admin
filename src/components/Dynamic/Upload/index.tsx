@@ -11,7 +11,6 @@ function DownLoad({ src }) {
   const downFile = (event) => {
     event.stopPropagation();
     if (src) {
-      console.log(src);
       getFile(src[0]?.response || src[0]?.uid).then(res => {
         if (res.status === 200) {
           const url = URL.createObjectURL(new Blob([res.data]));
@@ -36,6 +35,7 @@ function DownLoad({ src }) {
 function DynamicUpload(props) {
   const t = useLocale(locale);
   const { limit, onChange, listType, onPreview, fileList, title, customRequest } = props;
+  //todo 添加 文件大小限制和 文件种类限制
   const [defaultList, setDefaultList] = useState([]);
 
   const initDate = (value) => {
@@ -72,7 +72,7 @@ function DynamicUpload(props) {
 
   const uploadData = (option) => {
     const { onProgress, file, onSuccess, onError } = option;
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append("file", file);
     const source = axios.CancelToken.source();
     const onprogress = progressEvent => {
@@ -85,7 +85,7 @@ function DynamicUpload(props) {
         Message.success(t["message.ok"]);
         onSuccess(result);
       }
-    }).catch(error => {
+    }).catch(() => {
       Message.error(t["message.error"]);
       onError(t["message.error"]);
     });

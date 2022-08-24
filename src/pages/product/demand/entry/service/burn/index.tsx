@@ -37,9 +37,9 @@ export default function ServicePreselection() {
         case 0:
           return <FlashBin initialValues={burnData} />;
         case 1:
-          return <FlashNvs initialValues={burnData} />;
-        case 2:
           return <FlashNvsNot initialValues={burnData} />;
+        case 2:
+          return <FlashNvs initialValues={burnData} />;
         case 3:
           return <FlashScript initialValues={burnData} />;
       }
@@ -56,7 +56,7 @@ export default function ServicePreselection() {
       Message.error("校验失败");
       return;
     }
-    let temp = {
+    const temp = {
       ...burnData,
       ...info.forms["firmware.burn.flash.title"]?.getFieldsValue(),
       ...info.forms["firmware.burn.efuse.title"]?.getFieldsValue()
