@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import useLocale from "@/pages/product/demand/locale/useLocale";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
 import {
@@ -6,13 +6,11 @@ import {
   Checkbox,
   Divider,
   Form,
-  Input,
   InputNumber,
   Link,
   Message,
   Modal,
   Notification,
-  Select,
   Space,
   Tooltip,
   Typography
@@ -20,7 +18,7 @@ import {
 import FirmwareInformation from "@/pages/product/demand/entry/service/firmware/firmware-information";
 import SerialCheck from "@/pages/product/demand/entry/service/firmware/serial-check";
 import DynamicRadioGroup from "@/components/Dynamic/Radio";
-import { IconArrowRight, IconLaunch, IconTags } from "@arco-design/web-react/icon";
+import { IconArrowRight, IconLaunch } from "@arco-design/web-react/icon";
 import FirmwareFlash from "@/pages/product/demand/entry/service/firmware/firmware-flash";
 import FirmwareEfuse from "@/pages/product/demand/entry/service/firmware/frimware-efuse";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
@@ -30,23 +28,17 @@ import style from "./style/index.module.less";
 import { sum } from "@/utils/listTools";
 import { getNextRouter } from "@/utils/getNext";
 import { useHistory } from "react-router";
-import { getMpnList, postFirmwareCustomDemand } from "@/api/demand";
-import { getProjectList } from "@/api/project";
-import axios from "axios";
+import { postFirmwareCustomDemand } from "@/api/demand";
 
 const CheckboxGroup = Checkbox.Group;
 
 export default function FirmwareCustomization() {
   const t = useLocale();
   const history = useHistory();
-  const Option = Select.Option;
-
   const [demandId, serviceType, serviceData, modelInfo] =
     ProductStore(state => [state.demandId, state.serviceType, state.serviceData, state.moduleInfo], shallow);
   const [info, setInfo] = ProductStore(state => [state.info, state.setInfo], shallow);
   const [visible, setVisible] = useState(false);
-  const [project, setProject] = useState([]);
-  const [mpnList, setMpnList] = useState([]);
 
   // 提交数据
   const postForm = async (name, values, infos) => {
@@ -89,7 +81,6 @@ export default function FirmwareCustomization() {
     if (temp?.efuseConfig?.otherCustom && temp?.efuseConfig?.otherCustom.length > 0) {
       const otherCustom = {};
       for (const item of temp?.efuseConfig?.otherCustom) {
-        // @ts-ignore
         otherCustom[item?.key || "defines"] = item?.data;
       }
       temp.efuseConfig.otherCustom = otherCustom;
@@ -124,24 +115,6 @@ export default function FirmwareCustomization() {
     }
   };
 
-  useEffect(() => {
-    // 用来获取相关的固件项目信息
-    axios.all([
-      getProjectList(),
-      getMpnList()
-    ]).then(axios.spread((projectList, mpnList) => {
-      if (projectList.data.success) {
-        setProject(projectList.data.result);
-      }
-      if (mpnList.data.success) {
-        setMpnList(mpnList.data.result);
-      }
-    }))
-      .catch(error => {
-          Message.error(t["message.service.notfound"]);
-        }
-      );
-  }, []);
 
   // 获取加密和非加密的选项内容
   const getCustomMade = () => {
@@ -216,79 +189,6 @@ export default function FirmwareCustomization() {
 
   return (<DynamicOuterCard title={t["firmware.customization.title"]}>
     <DynamicSkeleton animation text={{ rows: 10, width: ["100%", 600, 400] }}>
-      <Space size={30} direction="vertical">
-        <Space size={60} split={<Divider type="vertical" />}>
-          <Space size={20}>
-            <Typography.Text>{t["firmware.customization.info.version"]}</Typography.Text>
-            <Input
-              style={{ width: 300 }}
-              allowClear
-              size={"large"}
-              onChange={value => setInfo({
-                firmwareVersion: value
-              })}
-              defaultValue={info?.firmwareVersion}
-              placeholder={t["firmware.customization.info.version.hint"]}
-            />
-          </Space>
-          <Space size={20}>
-            <Typography.Text>{t["firmware.customization.info.project"]}</Typography.Text>
-            <Select
-              size={"large"}
-              placeholder={t["firmware.customization.info.project.hint"]}
-              style={{ width: 300 }}
-              defaultValue={info?.firmwareProject}
-              onChange={(value) => setInfo({
-                firmwareProject: value
-              })}
-            >
-              {project.map((option) => (
-                <Option key={option.id} value={option.name}>
-                  {option.name}
-                </Option>
-              ))}
-            </Select>
-          </Space>
-        </Space>
-
-        <Space size={10} direction={"vertical"}>
-          <Typography.Text>{t["firmware.customization.info.project.history"]}</Typography.Text>
-          <DynamicRadioGroup
-            direction="vertical"
-            defaultValue={info?.firstImport}
-            options={[
-              { label: t["firmware.customization.info.project.history.first"], value: 1 },
-              { label: t["firmware.customization.info.project.history.next"], value: 0 }
-            ]} onChange={(value) => {
-            setInfo({ firstImport: value });
-          }} />
-          {
-            info?.firstImport === 0 && <Space size={12}>
-              <IconTags style={
-                { color: "#00B42A", fontSize: 20 }
-              } />
-              <Typography.Text>{t["firmware.customization.info.project.history.old"]}</Typography.Text>
-              <Select
-                size={"large"}
-                style={{ width: 300 }}
-                placeholder={t["firmware.customization.info.project.hint"]}
-                defaultValue={
-                  info?.lastMpn
-                }
-                onChange={(value) => setInfo({ lastMpn: value })}
-              >
-                {mpnList.map((option, index) => (
-                  <Option key={index} value={option?.id}>
-                    {option?.fwPn}
-                  </Option>
-                ))}
-              </Select>
-            </Space>
-          }
-        </Space>
-
-      </Space>
-
       <Divider style={{ borderBottomStyle: "dashed" }} />
       <Space size={10} direction="vertical">
         <Typography.Text>{t["firmware.customization.info.encryption"]}</Typography.Text>

@@ -37,6 +37,7 @@ export interface ProductDemand {
 
 export interface FirmwareDemand {
   info: Recordable;
+  setInfo: (value) => void;
 }
 
 export interface MacDemand {
