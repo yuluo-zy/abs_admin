@@ -1,7 +1,6 @@
 import React from "react";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
 import {
-  Alert,
   Button,
   Divider,
   Form,
@@ -224,29 +223,24 @@ export default function PreFit() {
                         }
                       }]}>
 
-              <DynamicRadioGroup direction="vertical"
-                                 defaultValue={fitData?.transmissionMethod}
-                                 options={[{
-                                   label: "PGP",
-                                   value: "PGP"
-                                 }, {
-                                   label: "YUBIKEY",
-                                   value: "YUBIKEY"
-                                 }]}
-                                 onChange={(value) => {
-                                   setValue("transmissionMethod", value);
-                                 }}
-              />
+              <RadioGroup direction="vertical"
+                          defaultValue={fitData?.transmissionMethod}
+                          onChange={(value) => {
+                            setValue("transmissionMethod", value);
+                          }}
+              >
+                <Tooltip color={"#1380ea"} position={"top"}
+                         defaultPopupVisible
+                         content={t["firmware.pre.ca.setting.config.type.no.custom.info.PGP"]}>
+                  <Radio value={"PGP"}>{"PGP"}</Radio>
+                </Tooltip>
+                <Tooltip color={"#1380ea"} position={"bottom"}
+                         defaultPopupVisible
+                         content={t["firmware.pre.ca.setting.config.type.no.custom.info.YUBIKEY"]}>
+                  <Radio value={"YUBIKEY"}>{"YUBIKEY"}</Radio>
+                </Tooltip>
+              </RadioGroup>
             </FormItem>}
-          {/*{fitData?.isAdapt === 0 && <Alert className={style["ca-text"]}*/}
-          {/*                                  content={t["firmware.pre.ca.setting.config.type.no.custom.info"]}*/}
-          {/*                                  closeElement="Close" />}*/}
-          {fitData?.transmissionMethod === "PGP" && <Alert className={style["ca-text"]}
-                                                           content={t["firmware.pre.ca.setting.config.type.no.custom.info.PGP"]}
-                                                           closeElement="Close" />}
-          {fitData?.transmissionMethod === "YUBIKEY" && <Alert className={style["ca-text"]}
-                                                               content={t["firmware.pre.ca.setting.config.type.no.custom.info.YUBIKEY"]}
-                                                               closeElement="Close" />}
         </div>
 
         <Divider style={{ borderBottomStyle: "dashed" }} />
