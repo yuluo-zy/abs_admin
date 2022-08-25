@@ -45,23 +45,31 @@ function EspTable() {
       dataIndex: "subtype"
     },
     {
-      title: t["workplace.table.info.model"],
+      title: t["workplace.table.info.chip"],
       children: [
         {
-          title: "ESP32-C3",
-          dataIndex: "c3"
-        },
-        {
-          title: "ESP32-S2",
-          dataIndex: "s2"
+          title: "ESP8285",
+          dataIndex: "c8285"
         },
         {
           title: "ESP32",
-          dataIndex: "32"
+          dataIndex: "c32"
         },
         {
-          title: "ESP8266 & ESP8285",
-          dataIndex: "8266"
+          title: "ESP32-S2",
+          dataIndex: "cs2"
+        },
+        {
+          title: "ESP32-C3(and ESP8685)",
+          dataIndex: "cc3"
+        },
+        {
+          title: "ESP32-S3",
+          dataIndex: "cs3"
+        },
+        {
+          title: "ESP32-C2(and ESP8684)",
+          dataIndex: "cc2"
         }
       ]
     }
@@ -100,27 +108,31 @@ function EspTable() {
       dataIndex: "subtype"
     },
     {
-      title: t["workplace.table.info.chip"],
+      title: t["workplace.table.info.model"],
       children: [
         {
-          title: "ESP8285",
+          title: "ESP8266 & ESP8285",
           dataIndex: "8285"
         },
         {
-          title: "ESP32-U4WDH",
-          dataIndex: "u4wdh"
+          title: "ESP32",
+          dataIndex: "esp32"
         },
         {
-          title: "ESP32-D2WD",
-          dataIndex: "d2wd"
+          title: "ESP32-S2",
+          dataIndex: "s2"
         },
         {
-          title: "ESP32-PICO-D4",
-          dataIndex: "d4"
+          title: "ESP32-C3(and ESP8685)",
+          dataIndex: "c3"
         },
         {
-          title: "ESP32-PICO-v3",
-          dataIndex: "v3"
+          title: "ESP32-S3",
+          dataIndex: "s3"
+        },
+        {
+          title: "ESP32-C2(and ESP8684)",
+          dataIndex: "c2"
         }
       ]
     }
@@ -130,87 +142,90 @@ function EspTable() {
       key: "1",
       "type": t["workplace.table.info.tip"],
       "subtype": "NA",
-      "c3": "√",
+      "8285": "√",
+      "esp32": "√",
       "s2": "√",
-      "32": "√",
-      "8266": "√"
+      "c3": "√",
+      "s3": "√"
     },
     {
       key: "2",
       "type": t["workplace.table.info.mac"],
       "subtype": t["workplace.table.info.mac.flash"],
-      "c3": "√",
+      "8285": "√",
+      "esp32": "√",
       "s2": "√",
-      "32": "√",
-      "8266": "√"
+      "c3": "√",
+      "s3": "√"
     },
     {
       key: "3",
       "type": t["workplace.table.info.mac"],
       "subtype": t["workplace.table.info.mac.efuse"],
-      "c3": "√",
+      "esp32": "√",
       "s2": "√",
-      "32": "√"
+      "c3": "√",
+      "s3": "√"
     },
     {
       key: "4",
       "type": t["workplace.table.info.firmware"],
       "subtype": t["workplace.table.info.firmware.not"],
-      "c3": "√",
-      "s2": "√",
-      "32": "√",
-      "8266": "√",
       "8285": "√",
-      "u4wdh": "√",
-      "d2wd": "√",
-      "d4": "√",
-      "v3": "√"
+      "esp32": "√",
+      "s2": "√",
+      "c3": "√",
+      "s3": "√",
+      "c8285": "√",
+      "c32": "√",
+      "cs2": "√",
+      "cc3": "√"
     },
     {
       key: "5",
       "type": t["workplace.table.info.tip"],
       "subtype": t["workplace.table.info.firmware.flash"],
-      "c3": "√",
+      "esp32": "√",
       "s2": "√",
-      "32": "√"
+      "c3": "√",
+      "s3": "√"
 
     },
     {
       key: "6",
       "type": t["workplace.table.info.tip"],
       "subtype": t["workplace.table.info.firmware.secure"],
-      "c3": "√",
+      "esp32": "√",
       "s2": "√",
-      "32": "√",
-      "u4wdh": "√",
-      "d2wd": "√",
-      "d4": "√",
-      "v3": "√"
+      "c3": "√",
+      "s3": "√"
     },
     {
       key: "7",
-      "type": t["workplace.table.info.other"],
+      "type": t["workplace.table.info.context"],
       "subtype": t["workplace.table.info.other.flash"],
-      "c3": "√",
+      "8285": "√",
+      "esp32": "√",
       "s2": "√",
-      "32": "√",
-      "8286": "√"
+      "c3": "√",
+      "s3": "√"
     },
     {
       key: "8",
       "type": t["workplace.table.info.other"],
       "subtype": t["workplace.table.info.other.eFuse"],
-      "c3": "√",
+      "esp32": "√",
       "s2": "√",
-      "32": "√"
+      "c3": "√",
+      "s3": "√"
     },
     {
       key: "9",
-      "type": t["workplace.table.info.other"],
+      "type": t["workplace.table.info.pre.fit"],
       "subtype": "NA",
+      "esp32": "√",
       "c3": "√",
-      "s2": "√",
-      "32": "√"
+      "s3": "√"
     }
   ];
   return <DynamicCard title={t["workplace.table.info.title"]} bodyStyle={{ paddingTop: 0 }}>
@@ -227,7 +242,7 @@ function EspTable() {
         <Table
           size={"mini"}
           borderCell={true}
-          columns={chipColumns}
+          columns={modelColumns}
           data={data}
           border={{
             headerCell: true,
@@ -250,7 +265,7 @@ function EspTable() {
         <Table
           size={"mini"}
           borderCell={true}
-          columns={modelColumns}
+          columns={chipColumns}
           data={data}
           border={{
             headerCell: true,
