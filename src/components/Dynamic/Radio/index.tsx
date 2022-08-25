@@ -6,14 +6,14 @@ import { useUpdateEffect } from "react-use";
 const RadioGroup = Radio.Group;
 
 export default function DynamicRadioGroup(props) {
-  const { options, onChange, defaultValue } = props;
+  const { options, onChange, defaultValue, children } = props;
   const [myValue, setMyValue] = useState(defaultValue);
   useUpdateEffect(() => {
     onChange(myValue);
   }, [myValue]);
   return <RadioGroup value={myValue} direction={props.direction}>
     {options && isArray(options)
-      && options.map((option, index) => {
+      ? options.map((option, index) => {
         if (isObject(option)) {
           return (
             <Radio
@@ -34,6 +34,6 @@ export default function DynamicRadioGroup(props) {
           );
         }
       })
-    }
+      : children}
   </RadioGroup>;
 }

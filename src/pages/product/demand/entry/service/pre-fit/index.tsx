@@ -8,10 +8,12 @@ import {
   Input,
   InputNumber,
   Message,
+  Radio,
   Select,
   Space,
   Table,
   Tag,
+  Tooltip,
   Typography
 } from "@arco-design/web-react";
 import useLocale from "@/pages/product/demand/locale/useLocale";
@@ -28,6 +30,7 @@ import { useHistory } from "react-router";
 
 const Option = Select.Option;
 const FormItem = Form.Item;
+const RadioGroup = Radio.Group;
 const bodyStyle = {
   padding: "3rem"
 };
@@ -175,20 +178,34 @@ export default function PreFit() {
                     className={style["ca-way"]}
                     rules={[{ required: true, message: t["firmware.pre.ca.setting.config.type.error"] }]}>
 
-            <DynamicRadioGroup direction="vertical"
-                               defaultValue={fitData?.isAdapt}
-                               options={[{
-                                 label: t["firmware.pre.ca.setting.config.type.custom"],
-                                 value: 1
-                               }, {
-                                 label: t["firmware.pre.ca.setting.config.type.no.custom"],
-                                 value: 0
-                               }]}
-                               onChange={(value) => {
-                                 setValue("isAdapt", value);
-                                 setValue("transmissionMethod", undefined);
-                               }}
-            />
+            {/*<DynamicRadioGroup direction="vertical"*/}
+            {/*                   defaultValue={fitData?.isAdapt}*/}
+            {/*                   options={[{*/}
+            {/*                     label: t["firmware.pre.ca.setting.config.type.custom"],*/}
+            {/*                     value: 1*/}
+            {/*                   }, {*/}
+            {/*                     label: t["firmware.pre.ca.setting.config.type.no.custom"],*/}
+            {/*                     value: 0*/}
+            {/*                   }]}*/}
+            {/*                   onChange={(value) => {*/}
+            {/*                     setValue("isAdapt", value);*/}
+            {/*                     setValue("transmissionMethod", undefined);*/}
+            {/*                   }}*/}
+            {/*/>*/}
+            <RadioGroup direction="vertical"
+                        defaultValue={fitData?.isAdapt}
+                        onChange={(value) => {
+                          setValue("isAdapt", value);
+                          setValue("transmissionMethod", undefined);
+                        }}
+            >
+              <Radio value={1}>{t["firmware.pre.ca.setting.config.type.custom"]}</Radio>
+              <Tooltip color={"#1380ea"} position={"bottom"}
+                       defaultPopupVisible
+                       content={t["firmware.pre.ca.setting.config.type.no.custom.info"]}>
+                <Radio value={0}>{t["firmware.pre.ca.setting.config.type.no.custom"]}</Radio>
+              </Tooltip>
+            </RadioGroup>
           </FormItem>
           {fitData?.isAdapt === 1 &&
             <FormItem label={t["firmware.pre.ca.setting.config.type.transmission.method"]}
@@ -221,9 +238,9 @@ export default function PreFit() {
                                  }}
               />
             </FormItem>}
-          {fitData?.isAdapt === 0 && <Alert className={style["ca-text"]}
-                                            content={t["firmware.pre.ca.setting.config.type.no.custom.info"]}
-                                            closeElement="Close" />}
+          {/*{fitData?.isAdapt === 0 && <Alert className={style["ca-text"]}*/}
+          {/*                                  content={t["firmware.pre.ca.setting.config.type.no.custom.info"]}*/}
+          {/*                                  closeElement="Close" />}*/}
           {fitData?.transmissionMethod === "PGP" && <Alert className={style["ca-text"]}
                                                            content={t["firmware.pre.ca.setting.config.type.no.custom.info.PGP"]}
                                                            closeElement="Close" />}
