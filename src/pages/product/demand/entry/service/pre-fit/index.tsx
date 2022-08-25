@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
 import {
   Button,
@@ -20,11 +20,12 @@ import style from "./style/index.module.less";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
-import { IconArrowRight } from "@arco-design/web-react/icon";
+import { IconArrowRight, IconShareInternal } from "@arco-design/web-react/icon";
 import { postAdaptCustomDemand } from "@/api/demand";
 import { getNextRouter } from "@/utils/getNext";
 import { useHistory } from "react-router";
 import cs from "classnames";
+import DynamicModal from "@/components/Dynamic/Modal";
 
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -56,9 +57,13 @@ export default function PreFit() {
   const [demandId, serviceType, serviceData] = ProductStore(state =>
     [state.demandId, state.serviceType, state.serviceData], shallow);
 
+  const goto_server = () => {
+    history.push("/product/demand/service/preselection");
+  };
+
   const postFitCustom = () => {
     try {
-       form.validate();
+      form.validate();
     } catch (error) {
       return;
     }
@@ -150,6 +155,8 @@ export default function PreFit() {
       });
     }
   }, []);
+
+  const [open, setOpen] = useState(false);
 
   return (<DynamicOuterCard title={t["firmware.pre.title"]} bodyStyle={bodyStyle}>
     <DynamicSkeleton animation text={{ rows: 10, width: ["100%", 600, 400] }}>
@@ -383,7 +390,7 @@ export default function PreFit() {
               setValue("espFlash", value);
             }}
           >
-            <Radio key={1} value={1}>
+            <Radio key={1} value={1} onClick={() => setOpen(true)}>
               {({ checked }) => {
                 return (
                   <Space
@@ -443,5 +450,12 @@ export default function PreFit() {
         </div>
       </Form>
     </DynamicSkeleton>
+    <DynamicModal title={t["help"]} visible={open} onCancel={() => setOpen(false)}>
+      <p>{t["firmware.pre.ca.setting.config.flashing.plan.info.1"]}
+        <Button type="secondary" icon={<IconShareInternal />} size={"mini"}
+                onClick={goto_server}>{t["firmware.pre.ca.setting.config.flashing.plan.info.2"]}</Button>
+        {t["firmware.pre.ca.setting.config.flashing.plan.info.3"]}
+      </p>
+    </DynamicModal>
   </DynamicOuterCard>);
 }
