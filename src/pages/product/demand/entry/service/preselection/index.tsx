@@ -28,44 +28,7 @@ export default function ServicePreselection() {
   const history = useHistory();
   const [service, setService] = useState([]);
   const [visible, setVisible] = useState(false);
-  useEffect(() => {
 
-    if (moduleInfo.mpn == null) {
-      Modal.confirm({
-        title: "ERROR",
-        content: t["message.hardware.notfound"],
-        okButtonProps: { status: "danger" },
-        mask: true,
-        maskClosable: false,
-        cancelButtonProps: { disabled: true },
-        onOk: () => {
-          history.push(`/product/demand/hardware`);
-        }
-      });
-    }
-    // 并发请求 获取所有的服务 并 匹配 本款物料 提供的服务
-    axios.all([
-      getProductionCustomDemand(),
-      getProductionServe({
-        mpn: moduleInfo.mpn
-      })
-    ]).then(axios.spread((productionDemand, productionServe) => {
-      if (productionDemand.data.success && productionServe.data.success) {
-        if (productionServe.data.result.length > 0) {
-          setServiceData(productionServe.data.result[0]);
-          setService([...getCustomService(productionDemand.data.result, productionServe.data.result[0])]);
-        }
-      }
-    }))
-      .catch(error => {
-          Message.error(t["message.service.notfound"]);
-        }
-      );
-    setCollapse(false);
-    return () => {
-      setService([]);
-    };
-  }, []);
 
   const isCheck = (value) => {
     if (serviceType) {
@@ -80,7 +43,7 @@ export default function ServicePreselection() {
     // * 2 定制内容烧录
     // * 3 预适配
     // * 4 定制标签
-    let data: Array<Recordable> = [];
+    const data: Array<Recordable> = [];
     for (const datum of item) {
       switch (datum.type) {
         case 0:
@@ -126,18 +89,18 @@ export default function ServicePreselection() {
     // * 4 定制标签
     switch (item) {
       case 1:
-        useMacHint();
+        macHint();
         break;
       case 2:
-        useBurnHint();
+        burnHint();
         break;
       case 4:
-        useLabelHint();
+        labelHint();
         break;
     }
   };
 
-  function useMacHint() {
+  function macHint() {
     Modal.info({
       title: t["preselection.hint.mac.title"],
       okText: "got it",
@@ -154,7 +117,7 @@ export default function ServicePreselection() {
     });
   }
 
-  function useBurnHint() {
+  function burnHint() {
     Modal.info({
       title: t["preselection.hint.burn.title"],
       okText: "got it",
@@ -179,7 +142,7 @@ export default function ServicePreselection() {
     });
   }
 
-  function useLabelHint() {
+  function labelHint() {
     Modal.info({
       title: t["preselection.hint.burn.title"],
       okText: "got it",
@@ -196,15 +159,16 @@ export default function ServicePreselection() {
     });
   }
 
+
   const render = (item, index) => (
     <List.Item key={index} actions={
-      [<span style={{ paddingLeft: 5 }}>
+      [<span key={1} style={{ paddingLeft: 5 }}>
                  <Switch
                    checkedText={t["service.preselection.model.info.title.switch.open"]}
                    uncheckedText={t["service.preselection.model.info.title.switch.close"]}
                    checked={isCheck(item.type)}
                    onChange={(value: boolean) => {
-                     let copy = new Set([...serviceType]);
+                     const copy = new Set([...serviceType]);
                      if (value) {
                        getServicesHint(item.type);
                        copy.add(item.type);
@@ -219,7 +183,7 @@ export default function ServicePreselection() {
           </span>]
     }>
       <List.Item.Meta
-        title={item.typeName}
+        title={<h4>{item.typeName}</h4>}
         description={item.content}
       />
 
@@ -254,10 +218,49 @@ export default function ServicePreselection() {
         // 根据选择的服务项目进行下一步导航
         history.push(getNextRouter(-1, serviceType));
       }
-    }).catch(error => {
+    }).catch(() => {
       Message.error(t["submit.hardware.error"]);
     });
   };
+
+  useEffect(() => {
+
+    if (moduleInfo.mpn == null) {
+      Modal.confirm({
+        title: "ERROR",
+        content: t["message.hardware.notfound"],
+        okButtonProps: { status: "danger" },
+        mask: true,
+        maskClosable: false,
+        cancelButtonProps: { disabled: true },
+        onOk: () => {
+          history.push(`/product/demand/hardware`);
+        }
+      });
+    }
+    // 并发请求 获取所有的服务 并 匹配 本款物料 提供的服务
+    axios.all([
+      getProductionCustomDemand(),
+      getProductionServe({
+        mpn: moduleInfo.mpn
+      })
+    ]).then(axios.spread((productionDemand, productionServe) => {
+      if (productionDemand.data.success && productionServe.data.success) {
+        if (productionServe.data.result.length > 0) {
+          setServiceData(productionServe.data.result[0]);
+          setService([...getCustomService(productionDemand.data.result, productionServe.data.result[0])]);
+        }
+      }
+    }))
+      .catch(error => {
+          Message.error(t["message.service.notfound"]);
+        }
+      );
+    setCollapse(false);
+    return () => {
+      setService([]);
+    };
+  }, []);
 
   return (<div className={style["model"]}>
     <DynamicOuterCard title={t["service.preselection.model.info.title"]}>
