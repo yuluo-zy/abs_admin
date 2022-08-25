@@ -120,8 +120,11 @@ export default function ServicePreselection() {
         {
           burnData?.flashType !== -1 && <div>
             <DynamicDivider />
-            <Space size={15}>
-              {t["firmware.burn.flash.title"]}
+            <div style={{ marginBottom: "1rem" }}>
+              <h2>{t["firmware.burn.flash.title"]}</h2>
+            </div>
+            <Space size={15} style={{ marginLeft: "1rem" }}>
+              {t["firmware.burn.flash.plan"]}
               <Tooltip color={"#1380ea"} position={"rt"}
                        defaultPopupVisible
                        content={t["firmware.burn.hint"]}>
@@ -146,7 +149,8 @@ export default function ServicePreselection() {
 
         {/*获取flash 烧录方案*/}
         {(burnData?.flashType != undefined && burnData?.flashType > -1) && <div className={style["card"]}>
-          <div className={style["title"]}><b>{options[burnData?.flashType]}</b></div>
+
+          {/*<div className={style["title"]}><b>{options[burnData?.flashType]}</b></div>*/}
           {getFormList(burnData?.flashType)}
         </div>}
 
@@ -154,9 +158,9 @@ export default function ServicePreselection() {
         < DynamicDivider />
         {
           burnData?.efuseType === 0 && <div style={{ width: "100%" }}>
-            <Space>
-              <b>{t["firmware.burn.efuse.title"]}</b>
-            </Space>
+            <div style={{ marginBottom: "1rem" }}>
+              <h2>{t["firmware.burn.efuse.title"]}</h2>
+            </div>
             <div className={style["card"]}>
               <EFuseData initialValues={burnData} />
             </div>

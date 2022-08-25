@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, InputNumber, Tooltip } from "@arco-design/web-react";
+import { Form, Input, Tooltip } from "@arco-design/web-react";
 import useLocale from "@/pages/product/demand/locale/useLocale";
 import style from "./style/index.module.less";
 import DynamicUpload from "@/components/Dynamic/Upload";
@@ -30,7 +30,7 @@ export default function FlashNvsNot(props: { initialValues }) {
           }
         ]}
       >
-        <InputNumber className={style["efuse_data_input"]} placeholder={t["firmware.burn.flash.plan.data"]} />
+        <Input maxLength={20} className={style["efuse_data_input"]} placeholder={t["firmware.burn.flash.plan.data"]} />
       </FormItem>
       <FormItem
         labelAlign={"left"}
@@ -56,7 +56,8 @@ export default function FlashNvsNot(props: { initialValues }) {
           }
         ]}
       >
-        <Input className={style["efuse_data_input"]} allowClear placeholder={t["firmware.burn.flash.plan.output"]} />
+        <Input maxLength={20} className={style["efuse_data_input"]} allowClear
+               placeholder={t["firmware.burn.flash.plan.output"]} />
       </FormItem>
     </div>
     <div className={style["efuse_data_upload"]}>
