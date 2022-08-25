@@ -298,7 +298,7 @@ export default function PreFit() {
         <b>{t["firmware.pre.ca.setting.config.device.certificates"]}</b>
         <br />
         <br />
-        <FormItem label={"subject"}
+        <FormItem label={"subject:"}
                   field={"subject"}
                   labelAlign={"left"}
                   extra={"Defaults: C=CN,ST=SH,O=Espressif"}
@@ -368,7 +368,7 @@ export default function PreFit() {
         <FormItem label={t["firmware.pre.ca.setting.config.flashing.scheme.options.espressif"]}
                   field={"espFlash"}
                   labelAlign={"left"}
-
+                  className={style["formCentral"]}
                   rules={[
                     {
                       required: true,
@@ -397,7 +397,8 @@ export default function PreFit() {
                     </div>
                     <div>
                       <div className={style["custom-radio-card-title"]}>Yes</div>
-                      <Typography.Text type="secondary">{2}</Typography.Text>
+                      <Typography.Text
+                        type="secondary">{t["firmware.pre.ca.setting.config.flashing.provided.yes"]}</Typography.Text>
                       <Table pagination={false} size={"mini"} columns={columns} data={data.slice(0, 1)} />
                     </div>
                   </Space>
@@ -418,7 +419,8 @@ export default function PreFit() {
                     </div>
                     <div>
                       <div className={style["custom-radio-card-title"]}>No</div>
-                      <Typography.Text type="secondary">{2}</Typography.Text>
+                      <Typography.Text
+                        type="secondary">{t["firmware.pre.ca.setting.config.flashing.provided.no"]}</Typography.Text>
                       <Table pagination={false} size={"mini"} columns={columns} data={data.slice(1, 3)} />
                     </div>
                   </Space>
@@ -427,9 +429,7 @@ export default function PreFit() {
             </Radio>
           </RadioGroup>
         </FormItem>
-
         <br />
-        {/*<Table columns={columns} data={data} />*/}
         <Divider style={{ borderBottomStyle: "dashed" }} />
         <div className={style["context-next"]}>
           <Button type="primary"
