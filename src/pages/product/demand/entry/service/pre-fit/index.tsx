@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
 import {
   Button,
@@ -21,7 +21,6 @@ import style from "./style/index.module.less";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
-import { getMac } from "@/utils/stringTools";
 import { IconArrowRight } from "@arco-design/web-react/icon";
 import { postAdaptCustomDemand } from "@/api/demand";
 import { getNextRouter } from "@/utils/getNext";
@@ -105,18 +104,21 @@ export default function PreFit() {
   ];
   const data = [
     {
+      key: "1",
       type: t["firmware.pre.ca.setting.config.flashing.provided.recommend"],
       bootloader: t["firmware.pre.ca.setting.config.flashing.provided.required"],
       user: t["firmware.pre.ca.setting.config.flashing.provided.required"],
       example: t["firmware.pre.ca.setting.config.flashing.provided.optional"]
     },
     {
+      key: "2",
       type: "ESP32-C3 & S3",
       bootloader: t["firmware.pre.ca.setting.config.flashing.provided.optional"],
       user: t["firmware.pre.ca.setting.config.flashing.provided.no.need"],
       example: t["firmware.pre.ca.setting.config.flashing.provided.optional"]
     },
     {
+      key: "3",
       type: "ESP32",
       bootloader: t["firmware.pre.ca.setting.config.flashing.provided.required"],
       user: t["firmware.pre.ca.setting.config.flashing.provided.optional"],
@@ -124,18 +126,30 @@ export default function PreFit() {
     }
   ];
 
-
-  const getMacStartInfo = (value) => {
-    const temp = getMac(value, fitData?.commonName || "");
-    setValue("commonName", temp);
-  };
-
   const getDay = (day) => {
     if (day !== undefined) {
       return day * 365;
     }
     return 0;
   };
+
+  useEffect(() => {
+    if (!fitData?.commonName) {
+      setFitData({
+        commonName: "AABBCC112233"
+      });
+    }
+    if (!fitData?.subject) {
+      setFitData({
+        subject: "C=CN,ST=SH,O=Espressif"
+      });
+    }
+    if (!fitData?.validityDate) {
+      setFitData({
+        validityDate: 15
+      });
+    }
+  }, []);
 
   return (<DynamicOuterCard title={t["firmware.pre.title"]} bodyStyle={bodyStyle}>
     <DynamicSkeleton animation text={{ rows: 10, width: ["100%", 600, 400] }}>
@@ -309,11 +323,12 @@ export default function PreFit() {
                       message: "subject value cannot be empty"
                     }
                   ]}>
-          <Input value={fitData?.subject} onChange={
-            (value) => {
-              setValue("subject", value);
-            }
-          } style={{ maxWidth: "20rem", margin: "1rem", marginLeft: 0 }} />
+          <Input value={fitData?.subject}
+                 onChange={
+                   (value) => {
+                     setValue("subject", value);
+                   }
+                 } style={{ maxWidth: "20rem", margin: "1rem", marginLeft: 0 }} />
         </FormItem>
         <FormItem label={"commonName: "}
                   field={"commonName"}
@@ -325,8 +340,14 @@ export default function PreFit() {
                       message: "Common Name value cannot be empty"
                     }
                   ]}>
-          <Input value={fitData?.commonName} onChange={getMacStartInfo}
-                 style={{ maxWidth: "20rem", margin: "1rem", marginLeft: 0 }} />
+          <Input
+            // defaultValue={"AABBCC112233"}
+            value={fitData?.commonName} maxLength={64}
+            onChange={
+              (value) => {
+                setValue("commonName", value);
+              }}
+            style={{ maxWidth: "20rem", margin: "1rem", marginLeft: 0 }} />
         </FormItem>
 
         <FormItem label={"validityDate: "}
