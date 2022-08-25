@@ -503,8 +503,11 @@ export default function HardwareSelection() {
           autoFocus={false}
           focusLock={true}
         >
-          <p>{t["hardware.production.info.select.model"]}<Tag color={"purple"} size="large"
-                                                              style={{ margin: "1px 5px 1px" }}>{moduleInfo.mpn}</Tag>
+          <p>
+            {t["hardware.production.info.select.model"]}
+            <Tag color={"purple"} size="large"
+                 style={{ margin: "1px 5px 1px" }}>{moduleInfo.mpn}
+            </Tag>
           </p>
           <Descriptions
             column={2}

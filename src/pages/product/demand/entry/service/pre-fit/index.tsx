@@ -16,7 +16,6 @@ import {
   Typography
 } from "@arco-design/web-react";
 import useLocale from "@/pages/product/demand/locale/useLocale";
-import DynamicRadioGroup from "@/components/Dynamic/Radio";
 import style from "./style/index.module.less";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import { ProductStore } from "@/store/product";
@@ -25,6 +24,7 @@ import { IconArrowRight } from "@arco-design/web-react/icon";
 import { postAdaptCustomDemand } from "@/api/demand";
 import { getNextRouter } from "@/utils/getNext";
 import { useHistory } from "react-router";
+import cs from "classnames";
 
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -90,7 +90,7 @@ export default function PreFit() {
       dataIndex: "type"
     },
     {
-      title: "Cust_bootloader.bin",
+      title: "cust_bootloader.bin",
       dataIndex: "bootloader"
     },
     {
@@ -98,7 +98,7 @@ export default function PreFit() {
       dataIndex: "user"
     },
     {
-      title: "Example_cust_partition.bin  and example_cust_partition.bin",
+      title: "example_cust_partition.bin  and example_cust_partition.bin",
       dataIndex: "example"
     }
   ];
@@ -190,21 +190,6 @@ export default function PreFit() {
                     wrapperCol={{ span: 17 }}
                     className={style["ca-way"]}
                     rules={[{ required: true, message: t["firmware.pre.ca.setting.config.type.error"] }]}>
-
-            {/*<DynamicRadioGroup direction="vertical"*/}
-            {/*                   defaultValue={fitData?.isAdapt}*/}
-            {/*                   options={[{*/}
-            {/*                     label: t["firmware.pre.ca.setting.config.type.custom"],*/}
-            {/*                     value: 1*/}
-            {/*                   }, {*/}
-            {/*                     label: t["firmware.pre.ca.setting.config.type.no.custom"],*/}
-            {/*                     value: 0*/}
-            {/*                   }]}*/}
-            {/*                   onChange={(value) => {*/}
-            {/*                     setValue("isAdapt", value);*/}
-            {/*                     setValue("transmissionMethod", undefined);*/}
-            {/*                   }}*/}
-            {/*/>*/}
             <RadioGroup direction="vertical"
                         defaultValue={fitData?.isAdapt}
                         onChange={(value) => {
@@ -342,7 +327,6 @@ export default function PreFit() {
                     }
                   ]}>
           <Input
-            // defaultValue={"AABBCC112233"}
             value={fitData?.commonName} maxLength={64}
             onChange={
               (value) => {
@@ -377,36 +361,75 @@ export default function PreFit() {
         </FormItem>
 
         <Divider style={{ borderBottomStyle: "dashed" }} />
-        <b>{t["firmware.pre.ca.setting.config.device.certificates"]}</b>
+        <b>{t["firmware.pre.ca.setting.config.flashing.scheme.options"]}</b>
         <br />
         <br />
 
         <FormItem label={t["firmware.pre.ca.setting.config.flashing.scheme.options.espressif"]}
                   field={"espFlash"}
                   labelAlign={"left"}
+
                   rules={[
                     {
                       required: true,
                       message: t["firmware.pre.ca.setting.config.type.transmission.EFUSE_KEY_BLOCKx.error"]
                     }
                   ]}>
-          <DynamicRadioGroup direction="vertical"
-                             defaultValue={fitData?.espFlash}
-                             options={[{
-                               label: "Yes",
-                               value: 1
-                             }, {
-                               label: "No",
-                               value: 0
-                             }]}
-                             onChange={(value) => {
-                               setValue("espFlash", value);
-                             }}
-          />
+
+          <RadioGroup
+            direction="vertical"
+            defaultValue={fitData?.espFlash}
+            onChange={(value) => {
+              setValue("espFlash", value);
+            }}
+          >
+            <Radio key={1} value={1}>
+              {({ checked }) => {
+                return (
+                  <Space
+                    align="center"
+                    className={cs(style["custom-radio-card"], {
+                      [style["custom-radio-card-checked"]]: checked
+                    })}
+                  >
+                    <div className={style["custom-radio-card-mask"]}>
+                      <div className={style["custom-radio-card-mask-dot"]} />
+                    </div>
+                    <div>
+                      <div className={style["custom-radio-card-title"]}>Yes</div>
+                      <Typography.Text type="secondary">{2}</Typography.Text>
+                      <Table pagination={false} size={"mini"} columns={columns} data={data.slice(0, 1)} />
+                    </div>
+                  </Space>
+                );
+              }}
+            </Radio>
+            <Radio key={0} value={0}>
+              {({ checked }) => {
+                return (
+                  <Space
+                    align="center"
+                    className={cs(style["custom-radio-card"], {
+                      [style["custom-radio-card-checked"]]: checked
+                    })}
+                  >
+                    <div className={style["custom-radio-card-mask"]}>
+                      <div className={style["custom-radio-card-mask-dot"]} />
+                    </div>
+                    <div>
+                      <div className={style["custom-radio-card-title"]}>No</div>
+                      <Typography.Text type="secondary">{2}</Typography.Text>
+                      <Table pagination={false} size={"mini"} columns={columns} data={data.slice(1, 3)} />
+                    </div>
+                  </Space>
+                );
+              }}
+            </Radio>
+          </RadioGroup>
         </FormItem>
 
         <br />
-        <Table columns={columns} data={data} />
+        {/*<Table columns={columns} data={data} />*/}
         <Divider style={{ borderBottomStyle: "dashed" }} />
         <div className={style["context-next"]}>
           <Button type="primary"
