@@ -58,7 +58,7 @@ export default function PreFit() {
 
   const postFitCustom = () => {
     try {
-      form.validate();
+       form.validate();
     } catch (error) {
       return;
     }
@@ -276,7 +276,7 @@ export default function PreFit() {
                 onChange={(value) => setValue("leaveBlock", value)}
               >
                 {options.map((option, index) => (
-                  <Option key={option} value={option}>
+                  <Option key={index} value={option}>
                     {option}
                   </Option>
                 ))}
@@ -299,7 +299,7 @@ export default function PreFit() {
                 onChange={(value) => setValue("certificatiesPlace", value)}
               >
                 {certificaties.map((option, index) => (
-                  <Option key={option} value={option}>
+                  <Option key={index} value={option}>
                     {option}
                   </Option>
                 ))}
@@ -324,6 +324,7 @@ export default function PreFit() {
                     }
                   ]}>
           <Input value={fitData?.subject}
+                 maxLength={50}
                  onChange={
                    (value) => {
                      setValue("subject", value);
@@ -399,7 +400,7 @@ export default function PreFit() {
                                value: 0
                              }]}
                              onChange={(value) => {
-                               setValue("isAdapt", value);
+                               setValue("espFlash", value);
                              }}
           />
         </FormItem>
