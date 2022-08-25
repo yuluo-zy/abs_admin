@@ -34,7 +34,7 @@ export default function CustomLabel() {
     } catch (error) {
       return;
     }
-    let temp = {
+    const temp = {
       ...labelData,
       ...form.getFieldsValue()
     };

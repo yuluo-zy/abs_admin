@@ -21,8 +21,8 @@ function DownLoad({ src }) {
           link.setAttribute("download", name);
           document.body.appendChild(link);
           link.click();
-            document.body.removeChild(link);
-          }
+          document.body.removeChild(link);
+        }
         }
       );
     }
@@ -32,22 +32,34 @@ function DownLoad({ src }) {
   </Button>;
 }
 
+const FileType = [
+  "image/png",
+  "image/jpeg",
+  "image/svg+xml",
+  "text/plain",
+  "application/json",
+  "text/csv",
+  "application/octet-stream"
+];
+
+const FileSize = 1024 * 1024 * 20; // 20M 默认值
+
 function DynamicUpload(props) {
   const t = useLocale(locale);
-  const { limit, onChange, listType, onPreview, fileList, title, customRequest } = props;
-  //todo 添加 文件大小限制和 文件种类限制
-  const [defaultList, setDefaultList] = useState([]);
 
+  const { limit, onChange, listType, onPreview, fileList, title, customRequest, customBeforeUpload, fileType } = props;
+  const [defaultList, setDefaultList] = useState([]);
+  const file_type = fileType || FileType;
   const initDate = (value) => {
     if (listType === "picture-card") {
       if (value !== undefined) {
         getFile(value).then(res => {
-            if (res.status === 200) {
-              setDefaultList([{
-                uid: value,
-                originFile: res.data
-              }]);
-            }
+          if (res.status === 200) {
+            setDefaultList([{
+              uid: value,
+              originFile: res.data
+            }]);
+          }
           }
         );
         return;
@@ -96,6 +108,18 @@ function DynamicUpload(props) {
     };
   };
 
+  const beforeUpload = (file) => {
+    if (file?.size && file?.size > FileSize) {
+      Message.error(t["message.size.error"]);
+      return false;
+    }
+    if (file?.type && !file_type.includes(file?.type)) {
+      Message.error(t["message.type.error"]);
+      return false;
+    }
+    return true;
+  };
+
 
   return <div style={{ marginTop: title ? "1rem" : "" }}>
     <Trigger
@@ -130,12 +154,13 @@ function DynamicUpload(props) {
         }}
         onPreview={onPreview}
         fileList={defaultList}
+        beforeUpload={customBeforeUpload || beforeUpload}
         customRequest={customRequest || uploadData}
         limit={limit}
       />
       {title && <p style={{ position: "absolute", top: "-1.8rem" }}>{title}</p>}
     </Trigger>
-  </div>;
+  </div>
 }
 
 export default DynamicUpload;
