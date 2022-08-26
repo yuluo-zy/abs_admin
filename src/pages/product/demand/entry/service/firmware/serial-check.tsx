@@ -76,14 +76,16 @@ export default function SerialCheck(props: { initialValues? }) {
                       <Grid.Row gutter={8}>
                         <Grid.Col span={12}>
                           <Form.Item field="customSerialTx"
-                                     rules={[{ required: true, message: "TX: GPIO() is required" }]}>
-                            <InputNumber min={0} placeholder="TX: GPIO()" />
+                                     label={"TX: GPIO"}
+                                     rules={[{ required: true, message: "GPIO is required" }]}>
+                            <InputNumber min={0} placeholder="TX: GPIO()" style={{ width: "100" }} />
                           </Form.Item>
                         </Grid.Col>
                         <Grid.Col span={12}>
                           <Form.Item field="customSerialRx"
-                                     rules={[{ required: true, message: "RX: GPIO() is required" }]}>
-                            <InputNumber min={0} placeholder="RX: GPIO()" />
+                                     label={"RX: GPIO"}
+                                     rules={[{ required: true, message: "GPIO is required" }]}>
+                            <InputNumber min={0} placeholder="RX: GPIO()" style={{ width: "100" }} />
                           </Form.Item>
                         </Grid.Col>
                       </Grid.Row>

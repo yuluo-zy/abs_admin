@@ -224,8 +224,8 @@ function CustomEfuseConfig(props) {
   };
   useEffect(() => {
     if (initialValue) {
-      let temp = [];
-      let efuseTemp = {};
+      const temp = [];
+      const efuseTemp = {};
       for (const item in initialValue) {
         temp.push(item);
         efuseTemp[item] = initialValue[item];
@@ -237,18 +237,18 @@ function CustomEfuseConfig(props) {
 
   const setCheckboxEffect = (checked, key) => {
     if (checked) {
-      let temp = new Set(efuseList);
+      const temp = new Set(efuseList);
       temp.add(key);
       // 检查是否已经有这个属性
       if (key in efuse) {
-        let efuseTemp = { ...efuse };
+        const efuseTemp = { ...efuse };
         efuseTemp[key] = {
           ...efuseTemp[key],
           validity: true
         };
         setEfuse(efuseTemp);
       } else {
-        let efuseTemp = { ...efuse };
+        const efuseTemp = { ...efuse };
         efuseTemp[key] = {
           data: "0",
           validity: true
@@ -257,9 +257,9 @@ function CustomEfuseConfig(props) {
       }
       setEfuseList(temp);
     } else {
-      let temp = new Set(efuseList);
+      const temp = new Set(efuseList);
       temp.delete(key);
-      let efuseTemp = { ...efuse };
+      const efuseTemp = { ...efuse };
       delete efuseTemp[key];
       setEfuse(efuseTemp);
       setEfuseList(temp);
@@ -293,7 +293,7 @@ function CustomEfuseConfig(props) {
 }
 
 const getCustomList = (value) => {
-  let customList = [];
+  const customList = [];
   if (value) {
     for (const valueElement in value) {
       customList.push({
@@ -340,7 +340,7 @@ export default function FirmwareEfuse(props: { initialValues, target }) {
         )}
         <br />
         <Form.List field="otherCustom" initialValue={getCustomList(initialValues?.efuseConfig?.otherCustom)}>
-          {(fields, { add, remove, move }) => {
+          {(fields, { add, remove }) => {
             return (
               <div>
                 {fields.map((item, index) => {
