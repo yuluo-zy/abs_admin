@@ -202,11 +202,15 @@ export default function FirmwareCustomization() {
                       } else {
                         if (info?.firmwareType && info?.firmwareType >= 3) {
                           setInfo({
-                            firmwareType: 1
+                            firmwareType: 1,
+                            secureBoot: -1,
+                            partitionNum: undefined
                           });
                         } else {
                           setInfo({
-                            firmwareType: -1
+                            firmwareType: -1,
+                            secureBoot: -1,
+                            partitionNum: undefined
                           });
                         }
                       }
@@ -275,11 +279,15 @@ export default function FirmwareCustomization() {
                       } else {
                         if (info?.firmwareType && info?.firmwareType >= 3) {
                           setInfo({
-                            firmwareType: 2
+                            firmwareType: 2,
+                            keyType: -1,
+                            partitionNum: undefined
                           });
                         } else {
                           setInfo({
-                            firmwareType: -1
+                            firmwareType: -1,
+                            keyType: -1,
+                            partitionNum: undefined
                           });
                         }
                       }
