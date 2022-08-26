@@ -234,6 +234,7 @@ function PageLayout() {
             </div>
           </Sider>
         )}
+        {/*todo 菜单栏收起导致的重复渲染bug*/}
         <Layout className={styles["layout-content"]} style={paddingStyle}>
           <div className={styles["layout-content-wrapper"]}>
             {!!breadcrumb.length && (
