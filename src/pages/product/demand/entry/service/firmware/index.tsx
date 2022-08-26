@@ -9,7 +9,6 @@ import {
   InputNumber,
   Link,
   Message,
-  Modal,
   Notification,
   Space,
   Tooltip,
@@ -24,13 +23,12 @@ import FirmwareEfuse from "@/pages/product/demand/entry/service/firmware/frimwar
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import style from "./style/index.module.less";
-import { sum } from "@/utils/listTools";
 import { getNextRouter } from "@/utils/getNext";
 import { useHistory } from "react-router";
 import { postFirmwareCustomDemand } from "@/api/demand";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
-
-const CheckboxGroup = Checkbox.Group;
+import DynamicDivider from "@/components/Dynamic/Divider";
+import DynamicModal from "@/components/Dynamic/Modal";
 
 export default function FirmwareCustomization() {
   const t = useLocale();
@@ -101,20 +99,13 @@ export default function FirmwareCustomization() {
       }
     });
   };
-// 生成flsh等加密方式
-  const getFirmwareType = (number) => {
-    switch (number) {
-      case 1:
-        return [1];
-      case 2:
-        return [2];
-      case 3:
-        return [1, 2];
-      default:
-        return [];
-    }
-  };
 
+  const getSecureCheck = (value) => {
+    return value >= 2;
+  };
+  const getFlashCheck = (value) => {
+    return value === 1 || value === 3;
+  };
 
   // 获取加密和非加密的选项内容
   const getCustomMade = () => {
@@ -126,19 +117,6 @@ export default function FirmwareCustomization() {
       + serviceData?.secureBootV1
       + serviceData?.secureBootV2) {
       temp.push({ label: t["firmware.customization.info.encryption.firmware"], value: true });
-    }
-    return temp;
-  };
-
-  // 获取flash 和 secure 选项
-  const getEncryption = () => {
-    const temp = [];
-    if (serviceData?.flashEncrypt === 1) {
-      temp.push({ label: t["firmware.customization.info.encryption.firmware.flash"], value: 1 });
-    }
-    if (serviceData?.secureBootV1
-      + serviceData?.secureBootV2) {
-      temp.push({ label: t["firmware.customization.info.encryption.firmware.secure.boot"], value: 2 });
     }
     return temp;
   };
@@ -190,43 +168,54 @@ export default function FirmwareCustomization() {
   return (<DynamicOuterCard title={t["firmware.customization.title"]}>
     <DynamicSkeleton animation={true} text={{ rows: 10, width: ["100%", 600, 400] }}>
       <br />
-      <Space size={10} direction="vertical">
-        <Typography.Text>{t["firmware.customization.info.encryption"]}</Typography.Text>
-        <div className={style["encryption"]}>
-          <DynamicRadioGroup direction="vertical"
-                             defaultValue={info?.encryption}
-                             options={getCustomMade()} onChange={(value) => {
-            setInfo({
-              encryption: value,
-              firmwareType: -1,
-              keyType: -1,
-              secureBoot: -1,
-              partitionNum: undefined
-            });
-          }} />
-          {/*选择 flash 和 boot*/}
-          {info?.encryption && <div className={style["encryption-group"]}>
-            <Space size={40} direction={"horizontal"}>
-              <CheckboxGroup
-                options={getEncryption()}
-                defaultValue={getFirmwareType(info?.firmwareType)}
-                style={{ display: "block", marginBottom: 16 }}
-                onChange={(value) => {
-                  setInfo({
-                    firmwareType: sum(value)
-                  });
-                }}
-              />
-            </Space>
-          </div>}
-        </div>
-      </Space>
+      {/*<Space size={10} direction="vertical">*/}
+      <Typography.Title heading={6}>{t["firmware.customization.info.encryption"]}</Typography.Title>
+      <div className={style["encryption"]}>
+        <DynamicRadioGroup direction="vertical"
+                           defaultValue={info?.encryption}
+                           options={getCustomMade()} onChange={(value) => {
+          setInfo({
+            encryption: value,
+            firmwareType: -1,
+            keyType: -1,
+            secureBoot: -1,
+            partitionNum: undefined
+          });
+        }} />
+      </div>
       <Divider style={{ borderBottomStyle: "dashed" }} />
       {/*配置安全启动种类*/}
-      {(info?.firmwareType === 2 || info?.firmwareType === 3) &&
-        <div className={style["encryption"]}>
-          <Space size={10} direction="vertical">
-            <Typography.Text>
+      {info?.encryption && (serviceData?.secureBootV1 || serviceData?.secureBootV2) &&
+        <>
+          <Checkbox defaultChecked={getSecureCheck(info?.firmwareType)}
+                    onChange={(checked: boolean) => {
+                      if (checked) {
+                        if (info?.firmwareType && info?.firmwareType >= 1) {
+                          setInfo({
+                            firmwareType: 3
+                          });
+                        } else {
+                          setInfo({
+                            firmwareType: 2
+                          });
+                        }
+                      } else {
+                        if (info?.firmwareType && info?.firmwareType >= 3) {
+                          setInfo({
+                            firmwareType: 1
+                          });
+                        } else {
+                          setInfo({
+                            firmwareType: -1
+                          });
+                        }
+                      }
+                    }}
+          >
+            {t["firmware.customization.info.encryption.firmware.secure.boot"]}
+          </Checkbox>
+          {(info?.firmwareType === 2 || info?.firmwareType === 3) && <div className={style["encryption"]}>
+            <Typography.Title heading={6}>
               {t["firmware.customization.info.encryption.firmware.secure.info"]}
               <Tooltip color={"#0E42D2"} position={"rt"}
                        defaultPopupVisible
@@ -238,7 +227,7 @@ export default function FirmwareCustomization() {
                   } />
                 </Link>
               </Tooltip>
-            </Typography.Text>
+            </Typography.Title>
 
             <DynamicRadioGroup direction="vertical"
                                defaultValue={info?.secureBoot}
@@ -264,96 +253,124 @@ export default function FirmwareCustomization() {
               />
             </div>
             }
-          </Space>
-
-          <Divider style={{ borderBottomStyle: "dashed" }} />
-        </div>
+          </div>}
+          <DynamicDivider />
+        </>
       }
       {/*配置 flash 加密种类*/}
-      {(info?.firmwareType === 1 || info?.firmwareType === 3) &&
-        <Space size={10} direction="vertical">
-          <Typography.Text>
-            {t["firmware.customization.info.encryption.firmware.flash.info"]}
-            <Tooltip color={"#0E42D2"} position={"rt"}
-                     defaultPopupVisible
-                     content={t["firmware.customization.info.encryption.firmware.flash.info.link"]}>
-              <Link target={"_blank"}
-                    href="https://docs.espressif.com/projects/esp-idf/en/stable/esp32/security/secure-boot-v1.html#secure-boot-and-flash-encr">
-                <IconLaunch style={
-                  { color: "#0E42D2", fontSize: 15 }
-                } />
-              </Link>
-            </Tooltip>
-          </Typography.Text>
-
-          <DynamicRadioGroup direction="vertical"
-                             defaultValue={info?.keyType}
-                             options={[{
-                               label: t["firmware.customization.info.encryption.firmware.flash.only"],
-                               value: 0
-                             }, {
-                               label: t["firmware.customization.info.encryption.firmware.flash.random"],
-                               value: 1
-                             }]}
-                             onChange={(value) => {
-                               setInfo({
-                                 keyType: value
-                               });
-                               if (value === 0) {
-                                 setVisible(true);
-                               }
-                             }}
-          />
-          <Modal
-            title="Titles"
-            visible={visible}
-            onOk={() => setVisible(false)}
-            onCancel={() => setVisible(false)}
-            autoFocus
-            focusLock
+      {info?.encryption && serviceData?.flashEncrypt &&
+        <>
+          <Checkbox defaultChecked={getFlashCheck(info?.firmwareType)}
+                    onChange={(checked: boolean) => {
+                      if (checked) {
+                        if (info?.firmwareType && info?.firmwareType >= 2) {
+                          setInfo({
+                            firmwareType: 3
+                          });
+                        } else {
+                          setInfo({
+                            firmwareType: 1
+                          });
+                        }
+                      } else {
+                        if (info?.firmwareType && info?.firmwareType >= 3) {
+                          setInfo({
+                            firmwareType: 2
+                          });
+                        } else {
+                          setInfo({
+                            firmwareType: -1
+                          });
+                        }
+                      }
+                    }}
           >
-            <Space size={10} direction="vertical">
-              <Typography.Text>{t["firmware.customization.info.encryption.firmware.flash.only.t1"]}</Typography.Text>
-              <Typography.Text>{t["firmware.customization.info.encryption.firmware.flash.only.t2"]}</Typography.Text>
-              <Typography.Text>{t["firmware.customization.info.encryption.firmware.flash.only.t3"]}</Typography.Text>
-              <div style={{ paddingLeft: "2rem" }}>
+            {t["firmware.customization.info.encryption.firmware.flash"]}
+          </Checkbox>
+          {(info?.firmwareType === 1 || info?.firmwareType === 3) &&
+            <div className={style["encryption"]}>
+              <Typography.Title heading={6}>
+                {t["firmware.customization.info.encryption.firmware.flash.info"]}
+                <Tooltip color={"#0E42D2"} position={"rt"}
+                         defaultPopupVisible
+                         content={t["firmware.customization.info.encryption.firmware.flash.info.link"]}>
+                  <Link target={"_blank"}
+                        href="https://docs.espressif.com/projects/esp-idf/en/stable/esp32/security/secure-boot-v1.html#secure-boot-and-flash-encr">
+                    <IconLaunch style={
+                      { color: "#0E42D2", fontSize: 15 }
+                    } />
+                  </Link>
+                </Tooltip>
+              </Typography.Title>
+
+              <DynamicRadioGroup direction="vertical"
+                                 defaultValue={info?.keyType}
+                                 options={[{
+                                   label: t["firmware.customization.info.encryption.firmware.flash.only"],
+                                   value: 0
+                                 }, {
+                                   label: t["firmware.customization.info.encryption.firmware.flash.random"],
+                                   value: 1
+                                 }]}
+                                 onChange={(value) => {
+                                   setInfo({
+                                     keyType: value
+                                   });
+                                   if (value === 0) {
+                                     setVisible(true);
+                                   }
+                                 }}
+              />
+              <DynamicModal
+                title="info"
+                visible={visible}
+                onCancel={() => setVisible(false)}
+              >
                 <Space size={10} direction="vertical">
-                  <Typography.Text>{t["firmware.customization.info.encryption.firmware.flash.only.t3.t1"]}</Typography.Text>
-                  <Typography.Text>{t["firmware.customization.info.encryption.firmware.flash.only.t3.t2"]}</Typography.Text>
+                  <Typography.Text>{t["firmware.customization.info.encryption.firmware.flash.only.t1"]}</Typography.Text>
+                  <Typography.Text>{t["firmware.customization.info.encryption.firmware.flash.only.t2"]}</Typography.Text>
+                  <Typography.Text>{t["firmware.customization.info.encryption.firmware.flash.only.t3"]}</Typography.Text>
+                  <div style={{ paddingLeft: "2rem" }}>
+                    <Space size={10} direction="vertical">
+                      <Typography.Text>{t["firmware.customization.info.encryption.firmware.flash.only.t3.t1"]}</Typography.Text>
+                      <Typography.Text>{t["firmware.customization.info.encryption.firmware.flash.only.t3.t2"]}</Typography.Text>
+                    </Space>
+                  </div>
                 </Space>
-              </div>
-            </Space>
-          </Modal>
-          {info?.keyType === 1 && <Space size={10} style={{ marginLeft: "2rem" }}>
-            <Typography.Text>
-              {t["firmware.serial.partitions"]}
-              <Tooltip color={"#0E42D2"} position={"top"}
-                       defaultPopupVisible
-                       content={t["firmware.customization.info.encryption.firmware.flash.link"]}>
-                <Link target={"_blank"}
-                      href="https://docs.espressif.com/projects/esp-idf/en/stable/esp32/security/secure-boot-v1.html">
-                  <IconLaunch style={
-                    { color: "#0E42D2", fontSize: 15 }
-                  } />
-                </Link>
-              </Tooltip>
-            </Typography.Text>
-            <InputNumber
-              style={{ width: 300 }}
-              mode="button"
-              min={1}
-              max={8}
-              value={info?.partitionNum}
-              onChange={value => {
-                setInfo({
-                  partitionNum: value
-                });
-              }}
-              placeholder="Please Enter Partitions Numbers"
-            />,
-          </Space>}
-          <Divider style={{ borderBottomStyle: "dashed" }} />
-        </Space>
+              </DynamicModal>
+              {info?.keyType === 1 && <Space size={10} style={{ marginLeft: "2rem" }}>
+                <Typography.Text>
+                  {t["firmware.serial.partitions"]}
+                  <Tooltip color={"#0E42D2"} position={"top"}
+                           defaultPopupVisible
+                           content={t["firmware.customization.info.encryption.firmware.flash.link"]}>
+                    <Link target={"_blank"}
+                          href="https://docs.espressif.com/projects/esp-idf/en/stable/esp32/security/secure-boot-v1.html">
+                      <IconLaunch style={
+                        { color: "#0E42D2", fontSize: 15 }
+                      } />
+                    </Link>
+                  </Tooltip>
+                </Typography.Text>
+                <InputNumber
+                  style={{ width: 300 }}
+                  mode="button"
+                  min={1}
+                  max={8}
+                  value={info?.partitionNum}
+                  onChange={value => {
+                    setInfo({
+                      partitionNum: value
+                    });
+                  }}
+                  placeholder="Please Enter Partitions Numbers"
+                />,
+              </Space>}
+
+            </div>
+          }
+          <DynamicDivider />
+        </>
       }
 
       {/*开始配置表单*/}
