@@ -113,7 +113,22 @@ export default function FirmwareCustomization() {
 
   // 清空表单内容
   const cleanTable = () => {
-    setInfo({});
+    setInfo({
+      serialType: null,
+      generalSerial: null,
+      customSerialTx: null,
+      customSerialRx: null,
+      serialBaud: null,
+      serialCheckStr1: null,
+      serialCheckStr2: null,
+      serialCheckStr3: null,
+      flashFrequency: null,
+      flashMode: null,
+      flashSize: null,
+      efuseConfig: null,
+      partitionNum: null,
+      fileList: null
+    });
   };
 
   // 获取加密和非加密的选项内容
@@ -222,6 +237,7 @@ export default function FirmwareCustomization() {
                             partitionNum: undefined
                           });
                         }
+                        cleanTable();
                       }
                     }}
           >
@@ -299,6 +315,7 @@ export default function FirmwareCustomization() {
                             partitionNum: undefined
                           });
                         }
+                        cleanTable();
                       }
                     }}
           >
@@ -331,7 +348,8 @@ export default function FirmwareCustomization() {
                                  }]}
                                  onChange={(value) => {
                                    setInfo({
-                                     keyType: value
+                                     keyType: value,
+                                     fileList: null
                                    });
                                    if (value === 0) {
                                      setVisible(true);
@@ -395,12 +413,13 @@ export default function FirmwareCustomization() {
         onFormSubmit={postForm}
       >
         {/*非加密固件*/}
-        {(info?.encryption === false || (info?.encryption === true && info?.secureBoot !== -1)) && <div>
-          <FirmwareInformation initialValues={info?.fileList} />
-          <Divider style={{ borderBottomStyle: "dashed" }} />
-          <SerialCheck initialValues={{ ...info }} />
-          <Divider style={{ borderBottomStyle: "dashed" }} />
-        </div>
+        {(info?.encryption === false || (info?.encryption === true && info?.firmwareType === 2 && info?.secureBoot !== -1)) &&
+          <div>
+            <FirmwareInformation initialValues={info?.fileList} />
+            <Divider style={{ borderBottomStyle: "dashed" }} />
+            <SerialCheck initialValues={{ ...info }} />
+            <Divider style={{ borderBottomStyle: "dashed" }} />
+          </div>
         }
         {/*flash 唯一*/}
         {info?.keyType === 0 && <div>
