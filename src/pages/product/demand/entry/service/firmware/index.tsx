@@ -29,6 +29,7 @@ import { postFirmwareCustomDemand } from "@/api/demand";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import DynamicDivider from "@/components/Dynamic/Divider";
 import DynamicModal from "@/components/Dynamic/Modal";
+import FirmwareKey from "@/pages/product/demand/entry/service/firmware/firmware-key";
 
 export default function FirmwareCustomization() {
   const t = useLocale();
@@ -402,6 +403,11 @@ export default function FirmwareCustomization() {
                 />,
               </Space>}
 
+            </div>
+          }
+          {
+            info?.keyType === 0 && <div className={style["encryption"]}>
+              <FirmwareKey initialValues={info?.keyInfo} />
             </div>
           }
           <DynamicDivider />

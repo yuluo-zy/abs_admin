@@ -2,8 +2,10 @@ import React from "react";
 import { FormItemProps } from "@/components/type";
 import useLocale from "@/pages/product/demand/locale/useLocale";
 import style from "./style/index.module.less";
+import DynamicForm from "@/components/Dynamic/Form";
+import { Typography } from "@arco-design/web-react";
 
-export default function FirmwareInformation(props: { initialValues }) {
+export default function FirmwareKey(props: { initialValues }) {
   const t = useLocale();
   const { initialValues } = props;
   const labelCol = {
@@ -11,15 +13,15 @@ export default function FirmwareInformation(props: { initialValues }) {
   };
   const informationProps: Array<FormItemProps> = [
     {
-      label: t["firmware.information.name"],
+      label: t["firmware.information.key.name"],
       type: "input",
-      field: "firmwareName",
+      field: "keyName",
       required: true,
       labelCol: labelCol,
       rules: [
         {
           required: true,
-          message: t["firmware.information.name.error"],
+          message: t["firmware.information.key.name.error"],
           minLength: 2
         }
       ],
@@ -28,15 +30,15 @@ export default function FirmwareInformation(props: { initialValues }) {
       }
     },
     {
-      label: t["firmware.information.MD5"],
+      label: t["firmware.information.key.md5"],
       type: "input",
-      field: "fileMd5",
+      field: "keyMd5",
       required: true,
       labelCol: labelCol,
       rules: [
         {
           required: true,
-          message: t["firmware.information.MD5.error"],
+          message: t["firmware.information.key.md5.error"],
           minLength: 2
         }
       ],
@@ -45,16 +47,16 @@ export default function FirmwareInformation(props: { initialValues }) {
       }
     },
     {
-      label: t["firmware.information.upLoad"],
+      label: t["firmware.information.key.file"],
       type: "upload",
-      field: "fileId",
+      field: "keyId",
       labelCol: labelCol,
       required: true,
       limit: 1,
       rules: [
         {
           required: true,
-          message: t["firmware.information.upLoad.error"]
+          message: t["firmware.information.key.file.error"]
         }
       ],
       style: {
@@ -63,20 +65,14 @@ export default function FirmwareInformation(props: { initialValues }) {
     }
   ];
 
-  return <div className={style["button_group_delete"]}>
-    {/*<DynamicForm title={`firmware.information.title-${item}`}*/}
-    {/*             col={3}*/}
-    {/*             key={item}*/}
-    {/*             style={{ "float": (item === number.length) && deleteItem ? "left" : "" }}*/}
-    {/*             className={style["button_group_delete-form"]}*/}
-    {/*             data={initialValues?.[index]}*/}
-    {/*             formItem={informationProps} />*/}
-    {/*{(item === number.length) && deleteItem && <Button*/}
-    {/*  className={style["button_group_delete-button"]}*/}
-    {/*  icon={<IconDelete />}*/}
-    {/*  shape="circle"*/}
-    {/*  status="danger"*/}
-    {/*  onClick={deleteItem}*/}
-    {/*></Button>}*/}
-  </div>;
+  return <>
+    <Typography.Title heading={6}>{t["firmware.information.key"]}</Typography.Title>
+    <div className={style["key"]}>
+
+      <DynamicForm
+        col={3}
+        data={initialValues}
+        formItem={informationProps} title={t["firmware.information.key"]} />
+    </div>
+  </>;
 }
