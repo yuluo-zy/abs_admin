@@ -40,7 +40,11 @@ export default function FirmwareCustomization() {
 
   // 提交数据
   const postForm = async (name, values, infos) => {
-    if (!info?.firmwareVersion === undefined || !info?.firstImport === undefined || info?.encryption === undefined) {
+    if (info?.encryption === undefined || info?.encryption === null) {
+      Message.error(t["firmware.customization.info.project.form.error"]);
+      return;
+    }
+    if (info?.encryption && info?.firmwareType === -1) {
       Message.error(t["firmware.customization.info.project.form.error"]);
       return;
     }
