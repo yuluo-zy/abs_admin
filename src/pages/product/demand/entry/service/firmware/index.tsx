@@ -21,7 +21,6 @@ import DynamicRadioGroup from "@/components/Dynamic/Radio";
 import { IconArrowRight, IconLaunch } from "@arco-design/web-react/icon";
 import FirmwareFlash from "@/pages/product/demand/entry/service/firmware/firmware-flash";
 import FirmwareEfuse from "@/pages/product/demand/entry/service/firmware/frimware-efuse";
-import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import style from "./style/index.module.less";
@@ -29,6 +28,7 @@ import { sum } from "@/utils/listTools";
 import { getNextRouter } from "@/utils/getNext";
 import { useHistory } from "react-router";
 import { postFirmwareCustomDemand } from "@/api/demand";
+import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -188,8 +188,8 @@ export default function FirmwareCustomization() {
   };
 
   return (<DynamicOuterCard title={t["firmware.customization.title"]}>
-    <DynamicSkeleton animation text={{ rows: 10, width: ["100%", 600, 400] }}>
-      <Divider style={{ borderBottomStyle: "dashed" }} />
+    <DynamicSkeleton animation={true} text={{ rows: 10, width: ["100%", 600, 400] }}>
+      <br />
       <Space size={10} direction="vertical">
         <Typography.Text>{t["firmware.customization.info.encryption"]}</Typography.Text>
         <div className={style["encryption"]}>
