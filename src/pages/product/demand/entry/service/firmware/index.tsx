@@ -111,6 +111,11 @@ export default function FirmwareCustomization() {
     return value === 1 || value === 3;
   };
 
+  // 清空表单内容
+  const cleanTable = () => {
+    setInfo({});
+  };
+
   // 获取加密和非加密的选项内容
   const getCustomMade = () => {
     const temp = [];
@@ -390,7 +395,7 @@ export default function FirmwareCustomization() {
         onFormSubmit={postForm}
       >
         {/*非加密固件*/}
-        {info?.encryption === false && <div>
+        {(info?.encryption === false || (info?.encryption === true && info?.secureBoot !== -1)) && <div>
           <FirmwareInformation initialValues={info?.fileList} />
           <Divider style={{ borderBottomStyle: "dashed" }} />
           <SerialCheck initialValues={{ ...info }} />
