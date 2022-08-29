@@ -209,6 +209,7 @@ export default function FirmwareCustomization() {
             secureBoot: -1,
             partitionNum: undefined
           });
+          cleanTable();
         }} />
       </div>
       <Divider style={{ borderBottomStyle: "dashed" }} />

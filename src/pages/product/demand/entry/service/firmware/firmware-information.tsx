@@ -84,7 +84,7 @@ export default function FirmwareInformation(props: { initialValues, addItem?, de
          {info?.keyType === 1 && <> <Space size={10}>
            <Typography.Text>
              {t["firmware.serial.partitions"]}
-             <Tooltip color={"#0E42D2"} position={"top"}
+             <Tooltip color={"#0E42D2"} position={"bottom"}
                       defaultPopupVisible
                       content={t["firmware.customization.info.encryption.firmware.flash.link"]}>
                <Link target={"_blank"}
