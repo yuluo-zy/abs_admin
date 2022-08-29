@@ -76,9 +76,8 @@ export default function FirmwareInformation(props: { initialValues, addItem?, de
 
   return useMemo(() => {
     return (
-      <DynamicCard title={t["firmware.information.title"]}>
+     <>
         <DynamicCard title={t["firmware.information.title"]}>
-
           {number.map((item, index) => {
             return <div key={index} className={style["button_group_delete"]}>
               <DynamicForm title={`firmware.information.title-${item}`}
@@ -101,7 +100,7 @@ export default function FirmwareInformation(props: { initialValues, addItem?, de
           {addItem && <Button type="primary" icon={<IconPlus />}
                               onClick={addItem}>{t["firmware.customization.info.encryption.firmware.add"]}</Button>
           }        </DynamicCard>
-      </DynamicCard>
+     </>
     );
   }, [number]);
 }

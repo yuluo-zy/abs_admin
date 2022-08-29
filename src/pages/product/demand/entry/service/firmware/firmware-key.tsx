@@ -3,7 +3,7 @@ import { FormItemProps } from "@/components/type";
 import useLocale from "@/pages/product/demand/locale/useLocale";
 import style from "./style/index.module.less";
 import DynamicForm from "@/components/Dynamic/Form";
-import { Typography } from "@arco-design/web-react";
+import DynamicCard from "@/components/Dynamic/Card";
 
 export default function FirmwareKey(props: { initialValues }) {
   const t = useLocale();
@@ -65,14 +65,12 @@ export default function FirmwareKey(props: { initialValues }) {
     }
   ];
 
-  return <>
-    <Typography.Title heading={6}>{t["firmware.information.key"]}</Typography.Title>
-    <div className={style["key"]}>
-
-      <DynamicForm
-        col={3}
-        data={initialValues}
-        formItem={informationProps} title={t["firmware.information.key"]} />
-    </div>
-  </>;
+  return <DynamicCard title={t["firmware.information.key"]}>
+    <DynamicForm
+      col={3}
+      title={"firmware.key"}
+      data={initialValues}
+      className={style["key"]}
+      formItem={informationProps} />
+  </DynamicCard>;
 }

@@ -405,11 +405,6 @@ export default function FirmwareCustomization() {
 
             </div>
           }
-          {
-            info?.keyType === 0 && <div className={style["encryption"]}>
-              <FirmwareKey initialValues={info?.keyInfo} />
-            </div>
-          }
           <DynamicDivider />
         </>
       }
@@ -418,23 +413,30 @@ export default function FirmwareCustomization() {
       <Form.Provider
         onFormSubmit={postForm}
       >
+
+        {
+          info?.keyType === 0 && <div>
+            <FirmwareKey initialValues={info?.keyInfo} />
+            <DynamicDivider />
+          </div>
+        }
         {/*非加密固件*/}
         {(info?.encryption === false || (info?.encryption === true && info?.firmwareType === 2 && info?.secureBoot !== -1)) &&
           <div>
             <FirmwareInformation initialValues={info?.fileList} />
-            <Divider style={{ borderBottomStyle: "dashed" }} />
+            <DynamicDivider />
             <SerialCheck initialValues={{ ...info }} />
-            <Divider style={{ borderBottomStyle: "dashed" }} />
+            <DynamicDivider />
           </div>
         }
         {/*flash 唯一*/}
         {info?.keyType === 0 && <div>
           <FirmwareInformation initialValues={info?.fileList} />
-          <Divider style={{ borderBottomStyle: "dashed" }} />
+          <DynamicDivider />
           <FirmwareEfuse initialValues={{ ...info }} target={modelInfo?.series} />
-          <Divider style={{ borderBottomStyle: "dashed" }} />
+          <DynamicDivider />
           <SerialCheck initialValues={{ ...info }} />
-          <Divider style={{ borderBottomStyle: "dashed" }} />
+          <DynamicDivider />
         </div>
         }
 
@@ -442,13 +444,13 @@ export default function FirmwareCustomization() {
           info?.keyType === 1 && <div>
             <FirmwareInformation number={info?.partitionNum} initialValues={info?.fileList} addItem={addItem}
                                  deleteItem={deleteItem} />
-            <Divider style={{ borderBottomStyle: "dashed" }} />
+            <DynamicDivider />
             <FirmwareFlash initialValues={{ ...info }} />
-            <Divider style={{ borderBottomStyle: "dashed" }} />
+            <DynamicDivider />
             <FirmwareEfuse initialValues={{ ...info }} target={modelInfo?.series} />
-            <Divider style={{ borderBottomStyle: "dashed" }} />
+            <DynamicDivider />
             <SerialCheck initialValues={{ ...info }} />
-            <Divider style={{ borderBottomStyle: "dashed" }} />
+            <DynamicDivider />
           </div>
         }
 
