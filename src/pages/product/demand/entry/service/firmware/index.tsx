@@ -374,34 +374,6 @@ export default function FirmwareCustomization() {
                   </div>
                 </Space>
               </DynamicModal>
-              {info?.keyType === 1 && <Space size={10} style={{ marginLeft: "2rem" }}>
-                <Typography.Text>
-                  {t["firmware.serial.partitions"]}
-                  <Tooltip color={"#0E42D2"} position={"top"}
-                           defaultPopupVisible
-                           content={t["firmware.customization.info.encryption.firmware.flash.link"]}>
-                    <Link target={"_blank"}
-                          href="https://docs.espressif.com/projects/esp-idf/en/stable/esp32/security/secure-boot-v1.html">
-                      <IconLaunch style={
-                        { color: "#0E42D2", fontSize: 15 }
-                      } />
-                    </Link>
-                  </Tooltip>
-                </Typography.Text>
-                <InputNumber
-                  style={{ width: 300 }}
-                  mode="button"
-                  min={1}
-                  max={8}
-                  value={info?.partitionNum}
-                  onChange={value => {
-                    setInfo({
-                      partitionNum: value
-                    });
-                  }}
-                  placeholder="Please Enter Partitions Numbers"
-                />,
-              </Space>}
 
             </div>
           }
