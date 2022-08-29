@@ -29,8 +29,6 @@ export default function CheckSelection() {
     ProductStore(state => [state.checkData, state.setCheckData, state.moduleInfo, state.demandId], shallow);
   const [visible, setVisible] = useState(false);
 
-  // const [serialFile, setSerialFile] = useState([]);
-  // const [efuseFile, setEfuseFile] = useState({});
   useEffect(() => {
     if (moduleInfo.mpn == null) {
       Modal.confirm({
@@ -43,6 +41,37 @@ export default function CheckSelection() {
         onOk: () => {
           history.push(`/product/demand/hardware`);
         }
+      });
+    }
+    // 开始对 已提交的数据进行重新验证
+    if (checkData?.efuseFileId) {
+      const formData = new FormData();
+      formData.append("fileId", checkData?.efuseFileId);
+      formData.append("demandId", demandId);
+      postEfuseCheckFile(formData).then(r => {
+        const { success, result } = r.data;
+        if (success) {
+          setCheckData(
+            { "efuseRsp": result?.result }
+          );
+        }
+      }).catch(error => {
+        Message.error(t["self.check.boot.upload.file.error"]);
+      });
+    }
+    if (checkData?.serialFileId) {
+      const formData = new FormData();
+      formData.append("fileId", checkData?.serialFileId);
+      formData.append("demandId", demandId);
+      postSerialCheckFile(formData).then(r => {
+        const { success, result } = r.data;
+        if (success) {
+          setCheckData(
+            { "serialRsp": result?.result }
+          );
+        }
+      }).catch(error => {
+        Message.error(t["self.check.boot.upload.file.error"]);
       });
     }
   }, []);
@@ -72,7 +101,7 @@ export default function CheckSelection() {
 
   const getPassSerialFile = (option) => {
     const { onProgress, file, onSuccess, onError } = option;
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append("file", file);
     formData.append("demandId", demandId);
     const source = axios.CancelToken.source();
@@ -103,7 +132,7 @@ export default function CheckSelection() {
 
   const getPassEfuseFile = (option) => {
     const { onProgress, file, onSuccess, onError } = option;
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append("file", file);
     formData.append("demandId", demandId);
     const source = axios.CancelToken.source();

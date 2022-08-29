@@ -1,11 +1,9 @@
 import React from "react";
 import useLocale from "@/pages/product/demand/locale/useLocale";
-import { Grid, Table, TableColumnProps, Typography } from "@arco-design/web-react";
+import { Table, TableColumnProps, Typography } from "@arco-design/web-react";
 import { IconCheckSquare, IconCloseCircle } from "@arco-design/web-react/icon";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 
-const Row = Grid.Row;
-const Col = Grid.Col;
 
 export default function LogTable(props: { data }) {
   const t = useLocale();
@@ -16,9 +14,9 @@ export default function LogTable(props: { data }) {
       case "定制固件":
         return t["self.check.boot.upload.port.hit.firmware"];
       case "定制内容烧录":
-        return t["self.check.boot.upload.port.hit.mac"];
-      case "定制MAC":
         return t["self.check.boot.upload.port.hit.burn"];
+      case "定制MAC":
+        return t["self.check.boot.upload.port.hit.mac"];
     }
     return "";
   };

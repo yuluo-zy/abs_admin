@@ -30,7 +30,7 @@ export const getFileInfo = (id) => {
   return httpGet(`/file/${id}`);
 };
 
-export const postEfuseCheckFile = (data, onUploadProgress, source) => {
+export const postEfuseCheckFile = (data, onUploadProgress?, source?) => {
   return getAxios().post(
     "/file/efuseCheck/upload",
     data,
@@ -44,7 +44,7 @@ export const postEfuseCheckFile = (data, onUploadProgress, source) => {
   );
 };
 
-export const postSerialCheckFile = (data, onUploadProgress, source) => {
+export const postSerialCheckFile = (data, onUploadProgress?, source?) => {
   return getAxios().post(
     "/file/serialCheck/upload",
     data,
