@@ -9,7 +9,6 @@ import {
   InputNumber,
   Link,
   Message,
-  Notification,
   Space,
   Tooltip,
   Typography
@@ -170,32 +169,6 @@ export default function FirmwareCustomization() {
       });
     }
     return temp;
-  };
-
-  // 新增固件信息条目
-  const addItem = () => {
-    if (info?.partitionNum < 8) {
-      setInfo({
-        partitionNum: info.partitionNum + 1
-      });
-    } else {
-      Notification.warning({
-        content: t["firmware.customization.info.encryption.firmware.max_size"]
-      });
-    }
-  };
-  // 删除固件信息条目
-  const deleteItem = () => {
-    // 先在 form 中删除这里的信息, 然后再数量减一
-    if (info?.partitionNum > 1) {
-      setInfo({
-        partitionNum: info.partitionNum - 1
-      });
-    } else {
-      Notification.warning({
-        content: t["firmware.customization.info.encryption.firmware.min_size"]
-      });
-    }
   };
 
   return (<DynamicOuterCard title={t["firmware.customization.title"]}>
@@ -359,7 +332,8 @@ export default function FirmwareCustomization() {
                                  onChange={(value) => {
                                    setInfo({
                                      keyType: value,
-                                     fileList: null
+                                     fileList: null,
+                                     partitionNum: value === 1 ? 3 : undefined
                                    });
                                    if (value === 0) {
                                      setVisible(true);
@@ -423,8 +397,7 @@ export default function FirmwareCustomization() {
 
         {
           info?.keyType === 1 && <div>
-            <FirmwareInformation number={info?.partitionNum} initialValues={info?.fileList} addItem={addItem}
-                                 deleteItem={deleteItem} />
+            <FirmwareInformation initialValues={info?.fileList} />
             <DynamicDivider />
             <FirmwareFlash initialValues={{ ...info }} />
             <DynamicDivider />

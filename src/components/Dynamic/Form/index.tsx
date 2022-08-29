@@ -54,7 +54,7 @@ function DynamicForm(props: FormProps) {
           rules={item.rules}
           style={item.style}
         >
-          <Input type={"password"} allowClear placeholder={item.placeholder} />
+          <Input type={"password"} maxLength={60} allowClear placeholder={item.placeholder} />
         </FormItem>
       );
     }
