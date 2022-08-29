@@ -7,6 +7,7 @@ const i18n = {
     "product.manage.table.client.code": "客户代码",
     "product.manage.table.client.project": "客户项目",
     "product.manage.table.client.model": "适用模型型号",
+    "product.manage.table.client.created": "创建时间",
     "product.manage.table.client.firmware": "定制固件",
     "product.manage.table.client.firmware.type": "固件类型",
     "product.manage.table.client.mac": "定制MAC",

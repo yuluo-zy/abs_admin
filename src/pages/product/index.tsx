@@ -85,6 +85,7 @@ export default function DemandManage() {
         render: (value) => <Text>{value}</Text>,
         width: 200
       },
+
       {
         title: t["product.manage.table.client.status"],
         dataIndex: "status",
@@ -146,6 +147,12 @@ export default function DemandManage() {
         render: (value) => <Text>{value}</Text>,
         width: 100
       },
+      {
+        title: t["product.manage.table.client.created"],
+        dataIndex: "created",
+        render: (value) => <Text>{value.slice(5, 16)}</Text>,
+        width: 120
+      }
     ];
     if (projectPermission()) {
       temp.splice(1, 0, {
