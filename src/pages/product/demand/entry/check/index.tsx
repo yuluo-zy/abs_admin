@@ -70,7 +70,7 @@ export default function CheckSelection() {
             { "serialRsp": result?.result }
           );
         }
-      }).catch(error => {
+      }).catch(_ => {
         Message.error(t["self.check.boot.upload.file.error"]);
       });
     }

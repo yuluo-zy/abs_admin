@@ -17,7 +17,7 @@ const BinFile = (props) => {
     },
     {
       title: "Flash Offset",
-      dataIndex: "offset",
+      dataIndex: "beginAddr",
       render: (value) => <Text copyable>{value}</Text>
     }
 

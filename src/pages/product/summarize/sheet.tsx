@@ -191,7 +191,7 @@ export default function Sheet() {
   };
   const flashSize = (data) => {
     if (data) {
-      return ["1MB", "2MB", "4MB", "8MB", "16MB"][data];
+      return ["1MB", "2MB", "4MB", "8MB", "16MB"][data - 1];
     }
     return "";
   };
