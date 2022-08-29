@@ -19,7 +19,7 @@ import SerialCheck from "@/pages/product/demand/entry/service/firmware/serial-ch
 import DynamicRadioGroup from "@/components/Dynamic/Radio";
 import { IconArrowRight, IconLaunch } from "@arco-design/web-react/icon";
 import FirmwareFlash from "@/pages/product/demand/entry/service/firmware/firmware-flash";
-import FirmwareEfuse from "@/pages/product/demand/entry/service/firmware/frimware-efuse";
+import FirmwareEfuse from "@/pages/product/demand/entry/service/firmware/firmware-efuse";
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import style from "./style/index.module.less";
@@ -30,6 +30,7 @@ import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import DynamicDivider from "@/components/Dynamic/Divider";
 import DynamicModal from "@/components/Dynamic/Modal";
 import FirmwareKey from "@/pages/product/demand/entry/service/firmware/firmware-key";
+import FirmwareErase from "@/pages/product/demand/entry/service/firmware/firmware-erase";
 
 export default function FirmwareCustomization() {
   const t = useLocale();
@@ -61,6 +62,8 @@ export default function FirmwareCustomization() {
       ...info,
       ...infos.forms["firmware.serial.check.title"]?.getFieldsValue(),
       ...infos.forms["firmware.information.flash.title"]?.getFieldsValue(),
+      ...infos.forms["firmware.key"]?.getFieldsValue(),
+      ...infos.forms["firmware.erase.title"]?.getFieldsValue(),
       efuseConfig: {
         ...infos.forms["firmware.information.efuse.title"]?.getFieldsValue()
       }
@@ -131,7 +134,9 @@ export default function FirmwareCustomization() {
       fileList: null,
       keyName: null,
       keyMd5: null,
-      keyId: null
+      keyId: null,
+      sectorStart: null,
+      sectorEnd: null
     });
   };
 
@@ -429,8 +434,10 @@ export default function FirmwareCustomization() {
             <DynamicDivider />
           </div>
         }
+        {/*擦写测试扇区*/}
 
-
+        <FirmwareErase initialValues={{ ...info }} />
+        <DynamicDivider />
         {/*下一步*/}
 
         <div className={style["model-next"]}>

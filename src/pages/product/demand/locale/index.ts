@@ -264,7 +264,12 @@ const i18n = {
     "self.check.boot.log.expect.name": "校验值",
     "self.check.boot.log.file.name": "日志LOG",
     "self.check.boot.log.check.sum": "文件上传成功, 开始总体检验",
-    "self.check.boot.log.check.file": "校验失败, 无法创建"
+    "self.check.boot.log.check.file": "校验失败, 无法创建",
+    "firmware.erase.title": "擦写测试空闲扇区",
+    "firmware.erase.sector": "空闲sector位置",
+    "firmware.erase.sector.error": "sector位置不能为空",
+    "firmware.erase.sector.help": "请指定flash中一个安全且空闲的sector位置( 大小: 0x1000)"
+
   }
 };
 
