@@ -128,7 +128,10 @@ export default function FirmwareCustomization() {
       flashSize: null,
       efuseConfig: null,
       partitionNum: null,
-      fileList: null
+      fileList: null,
+      keyName: null,
+      keyMd5: null,
+      keyId: null
     });
   };
 

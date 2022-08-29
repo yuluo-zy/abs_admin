@@ -8,6 +8,26 @@ import style from "./style/index.module.less";
 
 const Row = Grid.Row;
 const Col = Grid.Col;
+const options = [
+  "1382400",
+  "921600",
+  "460800",
+  "256000",
+  "230400",
+  "128000",
+  "115200",
+  "76800",
+  "57600",
+  "43000",
+  "38400",
+  "19200",
+  "14400",
+  "9600",
+  "4800",
+  "2400",
+  "1200"
+];
+const Option = Select.Option;
 export default function SerialCheck(props: { initialValues? }) {
   const { initialValues } = props;
   const t = useLocale();
@@ -101,7 +121,13 @@ export default function SerialCheck(props: { initialValues? }) {
                 minLength: 1
               }
             ]}>
-              <Input allowClear />
+              <Select allowClear>
+                {options.map((option, index) => (
+                  <Option key={index} value={option}>
+                    {option}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
             <Form.List field="serial_check_str" initialValue={initialValues?.serial_check_str}>
               {(fields, { add, remove, move }) => {
