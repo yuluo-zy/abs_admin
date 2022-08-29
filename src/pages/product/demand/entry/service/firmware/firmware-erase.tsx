@@ -1,7 +1,7 @@
 import React from "react";
 import useLocale from "@/pages/product/demand/locale/useLocale";
 import DynamicCard from "@/components/Dynamic/Card";
-import { Form, Grid, InputNumber, Tooltip } from "@arco-design/web-react";
+import { Form, Grid, Input, Tooltip } from "@arco-design/web-react";
 
 const Row = Grid.Row;
 const Col = Grid.Col;
@@ -30,14 +30,14 @@ export default function FirmwareErase(props: { initialValues? }) {
                   <Form.Item field="sectorStart"
                              label={"start: "}
                              rules={[{ required: true, message: t["firmware.erase.sector.error"] }]}>
-                    <InputNumber min={0} placeholder="0x" style={{ width: "100" }} />
+                    <Input allowClear placeholder="0x" style={{ width: "100" }} />
                   </Form.Item>
                 </Grid.Col>
                 <Grid.Col span={12}>
                   <Form.Item field="sectorEnd"
                              label={"to: "}
                              rules={[{ required: true, message: t["firmware.erase.sector.error"] }]}>
-                    <InputNumber min={0} placeholder="0x" style={{ width: "100" }} />
+                    <Input allowClear placeholder="0x" style={{ width: "100" }} />
                   </Form.Item>
                 </Grid.Col>
               </Grid.Row>
