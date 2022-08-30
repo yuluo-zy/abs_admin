@@ -45,14 +45,15 @@ export type Resolution = {
   range: Range;
 };
 
+type TriggerFn = (text: string) => QueryMatch | null;
 export const PUNCTUATION =
   "\\.,\\+\\*\\?\\$\\@\\|#{}\\(\\)\\^\\-\\[\\]\\\\/!%'\"~=<>_:;";
 
 export class TypeaheadOption {
-  key: string;
+  key: number;
   ref?: MutableRefObject<HTMLElement | null>;
 
-  constructor(key: string) {
+  constructor(key: number) {
     this.key = key;
     this.ref = { current: null };
     this.setRefElement = this.setRefElement.bind(this);
@@ -123,6 +124,7 @@ function tryToPositionRange(leadOffset: number, range: Range): boolean {
 }
 
 function getQueryTextForSearch(editor: LexicalEditor): string | null {
+  // 获得查询字符串
   let text = null;
   editor.getEditorState().read(() => {
     const selection = $getSelection();
@@ -478,7 +480,6 @@ export function useBasicTypeaheadTriggerMatch(
 }
 
 type TypeaheadMenuPluginArgs<TOption extends TypeaheadOption> = {
-  onQueryChange: (matchingString: string | null) => void;
   onSelectOption: (
     option: TOption,
     textNodeContainingQuery: TextNode | null,
@@ -490,11 +491,8 @@ type TypeaheadMenuPluginArgs<TOption extends TypeaheadOption> = {
   triggerFn: TriggerFn;
 };
 
-type TriggerFn = (text: string) => QueryMatch | null;
-
 export function LexicalTypeaheadMenuPlugin<TOption extends TypeaheadOption>({
                                                                               options,
-                                                                              onQueryChange,
                                                                               onSelectOption,
                                                                               menuRenderFn,
                                                                               triggerFn
@@ -523,10 +521,10 @@ export function LexicalTypeaheadMenuPlugin<TOption extends TypeaheadOption>({
           setResolution(null);
           return;
         }
+        // 设置上一个状态
         previousText = text;
 
         const match = triggerFn(text);
-        onQueryChange(match ? match.matchingString : null);
 
         if (
           match !== null &&
@@ -551,7 +549,7 @@ export function LexicalTypeaheadMenuPlugin<TOption extends TypeaheadOption>({
       activeRange = null;
       removeUpdateListener();
     };
-  }, [editor, triggerFn, onQueryChange, resolution]);
+  }, [editor, triggerFn, resolution]);
 
   const closeTypeahead = useCallback(() => {
     setResolution(null);

@@ -3,7 +3,6 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { Button, Modal, Notification, Tooltip } from "@arco-design/web-react";
-// import { importFile } from "@lexical/file";
 import { IconDelete, IconUpload } from "@arco-design/web-react/icon";
 import DynamicUpload from "@/components/Dynamic/Upload";
 import { UploadItem } from "@arco-design/web-react/es/Upload";
@@ -12,7 +11,6 @@ import { INSERT_FILE_COMMAND } from "./FilePlugin";
 
 export default function ActionsPlugin(): JSX.Element {
   const [editor] = useLexicalComposerContext();
-  const [activeEditor, setActiveEditor] = useState(editor);
   const [isEditorEmpty, setIsEditorEmpty] = useState(true);
   const [visible, setVisible] = useState(false);
   const [file, setFile] = useState(false);

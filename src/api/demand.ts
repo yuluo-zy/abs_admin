@@ -60,3 +60,8 @@ export const getMpnList = () => {
 export const postDemandRelPerson = (data) => {
   return httpPost("/demand/relPerson", data);
 };
+
+// 查询可以@的人员
+export const getRelatable = (data) => {
+  return httpGet("/demand/relatable", data);
+};

@@ -8,7 +8,6 @@ const BinFile = (props) => {
     {
       title: "Firmware bin Name",
       dataIndex: "firmwareName",
-      render: (value) => <Text copyable>{value}</Text>
     },
     {
       title: "Md5 value",

@@ -75,7 +75,7 @@ export default function Editor({ onChange, initValue }: {
         {isMaxLength && <MaxLengthPlugin maxLength={300} />}
         <AutoFocusPlugin />
         <ClearEditorPlugin />
-        <MentionsPlugin />
+        {isRichText && !readOnly && <MentionsPlugin />}
         <HashtagPlugin />
         <KeywordsPlugin />
         <EspAutoLinkPlugin />
