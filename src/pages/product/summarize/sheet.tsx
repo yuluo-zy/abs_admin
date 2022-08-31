@@ -6,7 +6,7 @@ import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import { getDemandDetails } from "@/api/demand";
 import { getProductionInfo } from "@/api/production";
-import { Button, Modal, Notification, Space, Spin } from "@arco-design/web-react";
+import { Button, Modal, Notification, Space, Spin, Typography } from "@arco-design/web-react";
 import { useHistory } from "react-router";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import DynamicTag from "@/components/Dynamic/tag";
@@ -18,6 +18,7 @@ import SerialPort from "@/pages/product/summarize/serial-port";
 import Exception500 from "@/components/Exception/500";
 import { GotoMenu } from "@/pages/product/summarize/goto-menu";
 
+const { Text } = Typography;
 export default function Sheet() {
   const t = useLocale();
   const history = useHistory();
@@ -303,8 +304,8 @@ export default function Sheet() {
         </tr>
         {/*第二行*/}
         <tr>
-          <td rowSpan={8}>2</td>
-          <td rowSpan={8}>Customer Firmware</td>
+          <td rowSpan={9}>2</td>
+          <td rowSpan={9}>Customer Firmware</td>
           <td rowSpan={2}>Firmware Version Number</td>
           <td rowSpan={2} colSpan={2}>{projectData?.firmwareVersion}</td>
           <td>Flash Encryption</td>
@@ -348,6 +349,14 @@ export default function Sheet() {
             info?.serialCheckStr2,
             info?.serialCheckStr3
           ]} /></td>
+        </tr>
+        <tr>
+          <td> Free Sector for Erase Test</td>
+          <td colSpan={5}>
+            <div>
+              Start: ( <Text copyable>  {info?.sectorStart}</Text> ) - End: ( <Text copyable>{info?.sectorEnd} </Text> )
+            </div>
+          </td>
         </tr>
         {/*第三行*/}
         <tr>
