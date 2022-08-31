@@ -293,8 +293,12 @@ export default function Sheet() {
         <tr>
           <td>1</td>
           <td>Module Name:</td>
-          <td colSpan={6}>
+          <td colSpan={2}>
             <div>{moduleInfo?.mpn}</div>
+          </td>
+          <td>FWPN</td>
+          <td colSpan={4}>
+            <div>{projectData?.fwPn}</div>
           </td>
         </tr>
         {/*第二行*/}
