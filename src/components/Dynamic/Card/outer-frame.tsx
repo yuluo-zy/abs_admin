@@ -14,8 +14,6 @@ function DynamicOuterCard(props: DynamicCardProps) {
     ...headerStyle
   };
   const bodySelfStyle = {
-    // paddingLeft: '2rem',
-    // paddingRight: '2rem'
     padding: "1.2rem",
     ...bodyStyle
   };

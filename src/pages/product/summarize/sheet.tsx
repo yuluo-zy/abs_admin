@@ -17,6 +17,7 @@ import EFuseBit from "@/pages/product/summarize/eFuse-bit";
 import SerialPort from "@/pages/product/summarize/serial-port";
 import Exception500 from "@/components/Exception/500";
 import { GotoMenu } from "@/pages/product/summarize/goto-menu";
+import { Product } from "@/pages/product/summarize/product";
 
 const TabPane = Tabs.TabPane;
 const { Text } = Typography;
@@ -455,11 +456,7 @@ export default function Sheet() {
         </Spin>
       </TabPane>
       <TabPane key="2" title={t["summarize.production.title"]}>
-        <Spin loading={loading} style={{ width: "100%" }}>
-          <DynamicSkeleton text={{ rows: 10, width: "90rem" }}>
-            <TableNode />
-          </DynamicSkeleton>
-        </Spin>
+        <Product></Product>
       </TabPane>
       <TabPane key="3" title={t["summarize.file.title"]}>
         <Spin loading={loading} style={{ width: "100%" }}>

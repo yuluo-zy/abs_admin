@@ -29,7 +29,12 @@ const i18n = {
     "goto.label.description": "定制标签",
     "summarize.context.title": "定制内容",
     "summarize.production.title": "产测方案",
-    "summarize.file.title": "文件列表"
+    "summarize.file.title": "文件列表",
+    "product.remark": "备注: ",
+    "product.plan": "方案: ",
+    "product.laser.carving.title": "镭雕",
+    "product.default.title": "参见具体内容"
+
   }
 };
 
