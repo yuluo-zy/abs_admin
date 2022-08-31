@@ -32,9 +32,18 @@ const i18n = {
     "summarize.file.title": "文件列表",
     "product.remark": "备注 : ",
     "product.plan": "方案 : ",
+    "product.options": "选项 : ",
     "product.laser.carving.title": "镭雕",
     "product.default.title": "参见具体内容或型号",
-    "product.performance.monitoring.title": "性能全检方案"
+    "product.performance.monitoring.title": "性能全检方案",
+    "product.mac.title": "定制MAC",
+    "product.firmware.title": "固件烧录",
+    "product.firmware.offline": "离线烧录",
+    "product.firmware.offline.address": "烧录到 0x",
+    "product.firmware.online.tools": "烧录命令",
+    "product.firmware.online": "在线烧录",
+    "product.context.title": "定制内容烧录",
+    "product.efuse.title": "定制eFuse烧录"
   }
 };
 
