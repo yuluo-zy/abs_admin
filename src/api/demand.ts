@@ -65,3 +65,11 @@ export const postDemandRelPerson = (data) => {
 export const getRelatable = (data) => {
   return httpGet("/demand/relatable", data);
 };
+
+// 产测方案
+export const getProductionTest = (demandId) => {
+  return httpGet("/demand/production" + demandId);
+};
+export const postProductionTest = (data) => {
+  return httpPost("/demand/production", data);
+};

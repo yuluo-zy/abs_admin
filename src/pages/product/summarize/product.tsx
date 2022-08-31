@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import useLocale from "@/pages/product/summarize/locale/useLocale";
-import { Button, Radio, Spin, Typography } from "@arco-design/web-react";
+import { Button, Message, Radio, Spin, Typography } from "@arco-design/web-react";
 import styles from "./style/product.module.less";
 import DynamicDivider from "@/components/Dynamic/Divider";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
+import { getProductionTest, postProductionTest } from "@/api/demand";
+import { ProductStore } from "@/store/product";
+import shallow from "zustand/shallow";
 
 const RadioGroup = Radio.Group;
 
@@ -34,6 +37,8 @@ const DynamicOuterCardSlef = (props: React.PropsWithChildren<CardTitle>) => {
 export const Product: React.FC<ProductProps> = (props: React.PropsWithChildren<ProductProps>) => {
   const t = useLocale();
   const [loading, setLoading] = useState(false);
+  const [demandId] = ProductStore(state =>
+    [state.demandId], shallow);
   const [data, setData] = useState(null);
   const setDataSelf = (value) => {
     setData({
@@ -42,11 +47,22 @@ export const Product: React.FC<ProductProps> = (props: React.PropsWithChildren<P
     });
   };
   useEffect(() => {
-    // todo get data
+    setLoading(true);
+    getProductionTest(demandId).then(res => {
+      if (res.data.success) {
+        setData(res.data.result);
+      }
+    }).finally(() => {
+      setLoading(false);
+    });
   }, []);
 
   const postData = () => {
-    // todo 上传数据
+    postProductionTest(data).then(res => {
+      if (res.data.success) {
+        Message.success(t["summarize.history.comment.success"]);
+      }
+    });
   };
   return <div className={styles["card"]}>
     <Spin style={{ width: "100%" }} loading={loading}>
@@ -246,7 +262,7 @@ export const Product: React.FC<ProductProps> = (props: React.PropsWithChildren<P
           </div>
         </div>
       </DynamicOuterCardSlef>
-      <Button type={"primary"} className={styles["button"]}>更新</Button>
+      <Button type={"primary"} className={styles["button"]} onClick={postData}>更新</Button>
     </Spin>
   </div>;
 };
