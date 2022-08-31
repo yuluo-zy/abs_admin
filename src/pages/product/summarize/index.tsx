@@ -4,13 +4,14 @@ import useLocale from "./locale/useLocale";
 import styles from "./style/index.module.less";
 import Sheet from "@/pages/product/summarize/sheet";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
-import { Button, Notification } from "@arco-design/web-react";
+import { Button, Notification, Tabs } from "@arco-design/web-react";
 import CommentList from "@/pages/product/summarize/comment-list";
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import { postDemandComment } from "@/api/comment";
 import RiceText from "@/rice_text";
 
+const TabPane = Tabs.TabPane;
 const bodyStyle = {
   padding: 0,
   transition: " 0.5s all ease-in-out"

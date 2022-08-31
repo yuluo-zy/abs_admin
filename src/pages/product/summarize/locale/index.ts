@@ -26,7 +26,10 @@ const i18n = {
     "goto.firmware.description": "定制固件",
     "goto.mac.description": "定制MAC",
     "goto.content.description": "定制烧录内容",
-    "goto.label.description": "定制标签"
+    "goto.label.description": "定制标签",
+    "summarize.context.title": "定制内容",
+    "summarize.production.title": "产测方案",
+    "summarize.file.title": "文件列表"
   }
 };
 

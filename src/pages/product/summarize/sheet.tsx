@@ -6,7 +6,7 @@ import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import { getDemandDetails } from "@/api/demand";
 import { getProductionInfo } from "@/api/production";
-import { Button, Modal, Notification, Space, Spin, Typography } from "@arco-design/web-react";
+import { Button, Modal, Notification, Space, Spin, Tabs, Typography } from "@arco-design/web-react";
 import { useHistory } from "react-router";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import DynamicTag from "@/components/Dynamic/tag";
@@ -18,6 +18,7 @@ import SerialPort from "@/pages/product/summarize/serial-port";
 import Exception500 from "@/components/Exception/500";
 import { GotoMenu } from "@/pages/product/summarize/goto-menu";
 
+const TabPane = Tabs.TabPane;
 const { Text } = Typography;
 export default function Sheet() {
   const t = useLocale();
@@ -440,17 +441,34 @@ export default function Sheet() {
   };
 
 
-  return <DynamicOuterCard title={t["summarize.sheet.title"]}>
+  return <DynamicOuterCard title={t["summarize.sheet.title"]} bodyStyle={{ padding: "6px 1.5rem 1.5rem " }}>
     <Space className={styles["edit"]} size={"large"}>
       <Button onClick={toCheck}>{t["summarize.sheet.check"]}</Button>
       <Button onClick={toEdit}>{t["summarize.sheet.edit"]}</Button>
     </Space>
-
-    <Spin loading={loading} style={{ width: "100%" }}>
-      <DynamicSkeleton text={{ rows: 10, width: "90rem" }}>
-        <TableNode />
-      </DynamicSkeleton>
-    </Spin>
+    <Tabs defaultActiveTab="1" size={"large"} type={"card-gutter"} animation={true} className={styles["tabs"]}>
+      <TabPane key="1" title={t["summarize.context.title"]}>
+        <Spin loading={loading} style={{ width: "100%" }}>
+          <DynamicSkeleton text={{ rows: 10, width: "90rem" }}>
+            <TableNode />
+          </DynamicSkeleton>
+        </Spin>
+      </TabPane>
+      <TabPane key="2" title={t["summarize.production.title"]}>
+        <Spin loading={loading} style={{ width: "100%" }}>
+          <DynamicSkeleton text={{ rows: 10, width: "90rem" }}>
+            <TableNode />
+          </DynamicSkeleton>
+        </Spin>
+      </TabPane>
+      <TabPane key="3" title={t["summarize.file.title"]}>
+        <Spin loading={loading} style={{ width: "100%" }}>
+          <DynamicSkeleton text={{ rows: 10, width: "90rem" }}>
+            <TableNode />
+          </DynamicSkeleton>
+        </Spin>
+      </TabPane>
+    </Tabs>
     <Modal
       title={t["summarize.sheet.goto"]}
       visible={open}
