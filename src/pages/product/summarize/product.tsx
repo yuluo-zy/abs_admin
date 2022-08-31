@@ -262,7 +262,7 @@ export const Product: React.FC<ProductProps> = (props: React.PropsWithChildren<P
           </div>
         </div>
       </DynamicOuterCardSlef>
-      <Button type={"primary"} className={styles["button"]} onClick={postData}>更新</Button>
+      <Button type={"primary"} className={styles["button"]} size={"large"} onClick={postData}>更新</Button>
     </Spin>
   </div>;
 };
