@@ -16,8 +16,9 @@ interface CardTitle {
 const headerSelfStyle = {
   border: "none",
   height: "auto",
-  paddingTop: "10px",
   padding: "0.5rem",
+  paddingTop: "10px",
+  paddingLeft: "10px",
   paddingBottom: 0
 };
 const bodySelfStyle = {
@@ -49,7 +50,7 @@ export const Product: React.FC<ProductProps> = (props: React.PropsWithChildren<P
     <Spin style={{ width: "100%" }} loading={loading}>
       <DynamicOuterCardSlef title={t["product.laser.carving.title"]}>
         <div className={styles["contexts"]}>
-          <Typography.Text className={styles["title"]}>{t["product.plan"]}</Typography.Text>
+          <Typography.Text className={styles["title"]} mark={{ color: "#C3E7FE" }}>{t["product.plan"]}</Typography.Text>
           <div className={styles["context"]}>
             <Typography.Text editable={{
               onChange: (value) => {
@@ -61,7 +62,8 @@ export const Product: React.FC<ProductProps> = (props: React.PropsWithChildren<P
           </div>
         </div>
         <div className={styles["contexts"]}>
-          <Typography.Text className={styles["title"]}>{t["product.remark"]}</Typography.Text>
+          <Typography.Text className={styles["title"]}
+                           mark={{ color: "#94BFFF" }}>{t["product.remark"]}</Typography.Text>
           <div className={styles["context"]}>
             <Typography.Text editable={{
               onChange: (value) => {
@@ -70,6 +72,34 @@ export const Product: React.FC<ProductProps> = (props: React.PropsWithChildren<P
                 });
               }
             }}>{data?.laserRemark}</Typography.Text>
+          </div>
+        </div>
+      </DynamicOuterCardSlef>
+      <DynamicDivider />
+      <DynamicOuterCardSlef title={t["product.performance.monitoring.title"]}>
+        <div className={styles["contexts"]}>
+          <Typography.Text className={styles["title"]} mark={{ color: "#C3E7FE" }}>{t["product.plan"]}</Typography.Text>
+          <div className={styles["context"]}>
+            <Typography.Text editable={{
+              onChange: (value) => {
+                setDataSelf({
+                  performance: value
+                });
+              }
+            }}>{data?.performance || t["product.default.title"]}</Typography.Text>
+          </div>
+        </div>
+        <div className={styles["contexts"]}>
+          <Typography.Text className={styles["title"]}
+                           mark={{ color: "#94BFFF" }}>{t["product.remark"]}</Typography.Text>
+          <div className={styles["context"]}>
+            <Typography.Text editable={{
+              onChange: (value) => {
+                setDataSelf({
+                  performanceRemark: value
+                });
+              }
+            }}>{data?.performanceRemark}</Typography.Text>
           </div>
         </div>
       </DynamicOuterCardSlef>

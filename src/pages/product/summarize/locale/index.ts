@@ -30,11 +30,11 @@ const i18n = {
     "summarize.context.title": "定制内容",
     "summarize.production.title": "产测方案",
     "summarize.file.title": "文件列表",
-    "product.remark": "备注: ",
-    "product.plan": "方案: ",
+    "product.remark": "备注 : ",
+    "product.plan": "方案 : ",
     "product.laser.carving.title": "镭雕",
-    "product.default.title": "参见具体内容"
-
+    "product.default.title": "参见具体内容或型号",
+    "product.performance.monitoring.title": "性能全检方案"
   }
 };
 
