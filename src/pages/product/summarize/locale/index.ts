@@ -43,7 +43,8 @@ const i18n = {
     "product.firmware.online.tools": "烧录命令",
     "product.firmware.online": "在线烧录",
     "product.context.title": "定制内容烧录",
-    "product.efuse.title": "定制eFuse烧录"
+    "product.efuse.title": "定制eFuse烧录",
+    "product.save": "更新保存"
   }
 };
 

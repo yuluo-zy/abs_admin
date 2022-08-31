@@ -7,6 +7,7 @@ import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
 import { getProductionTest, postProductionTest } from "@/api/demand";
 import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
+import { IconSave } from "@arco-design/web-react/icon";
 
 const RadioGroup = Radio.Group;
 
@@ -262,7 +263,8 @@ export const Product: React.FC<ProductProps> = (props: React.PropsWithChildren<P
           </div>
         </div>
       </DynamicOuterCardSlef>
-      <Button type={"primary"} className={styles["button"]} size={"large"} onClick={postData}>更新</Button>
+      <Button type={"primary"} className={styles["button"]} size={"large"} icon={<IconSave />}
+              onClick={postData}>{t["product.save"]}</Button>
     </Spin>
   </div>;
 };
