@@ -34,6 +34,11 @@ export const GotoMenu: React.FC<GotoMenuProps> = (props: GotoMenuProps) => {
   const renderMenu = (dataSource) => {
     const menu = [];
     if (dataSource) {
+      menu.push({
+        title: t["goto.service.title"],
+        description: t["goto.service.description"],
+        url: "/product/demand/service/preselection"
+      });
       if (dataSource.includes(0)) {
         menu.push({
           title: t["goto.firmware.title"],
