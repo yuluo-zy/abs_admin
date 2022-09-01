@@ -18,7 +18,7 @@ import {
   Upload
 } from "@arco-design/web-react";
 import DynamicDivider from "@/components/Dynamic/Divider";
-import { IconExclamationCircle } from "@arco-design/web-react/icon";
+import { IconArrowRise, IconExclamationCircle } from "@arco-design/web-react/icon";
 
 const FormItem = Form.Item;
 export default function WorkOrderAdd() {
@@ -184,6 +184,14 @@ export default function WorkOrderAdd() {
               <Upload />
             </Form.Item>
           </DynamicCard>
+          <DynamicDivider />
+          <Button type="primary"
+                  size={"large"}
+                  htmlType="submit"
+                  icon={<IconArrowRise />}
+          >
+            {t["workplace.add.custom.upload"]}
+          </Button>
         </Form>
       </DynamicCard>
 
