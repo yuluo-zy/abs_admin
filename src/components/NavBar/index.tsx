@@ -21,7 +21,7 @@ import { loginOut } from "@/api/login";
 import HelpInfo from "@/pages/help";
 import { setHelpKey } from "@/store/help";
 
-function Navbar({ show, isLogIn = true }: { show: boolean, isLogIn?: boolean }) {
+function Navbar({ show, isLogIn = true }: { show?: boolean, isLogIn?: boolean }) {
   const t = useLocale();
   const userInfo = useSelector((state: GlobalState) => state.userInfo);
 
