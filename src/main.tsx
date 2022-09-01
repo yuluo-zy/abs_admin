@@ -15,6 +15,7 @@ import checkLogin from "./utils/checkLogin";
 import changeTheme from "./utils/changeTheme";
 import useStorage from "./utils/useHook/useStorage";
 import { userInfo, userMenu } from "@/api/user";
+import { WorkOrderIndex } from "@/open";
 // todo 去除 redux
 const store = createStore(rootReducer);
 
@@ -52,12 +53,15 @@ function Index() {
   }
 
   useEffect(() => {
+    // todo 首屏响应问题
     if (checkLogin()) {
       Promise.all([fetchUserInfo(), fetchUserMenu()])
         .then();
-    } else if (window.location.pathname.replace(/\//g, "") !== "login") {
-      window.location.pathname = "/login";
     }
+    // todo 先去掉路由跳转
+    // } else if (window.location.pathname.replace(/\//g, "") !== "login") {
+    //   window.location.pathname = "/login";
+    // }
   }, []);
 
   useEffect(() => {
@@ -92,6 +96,7 @@ function Index() {
           <GlobalContext.Provider value={contextValue}>
             <Switch>
               <Route path="/login" component={Login} />
+              <Route path="/open/" component={WorkOrderIndex} />
               <Route path="/" component={PageLayout} />
             </Switch>
           </GlobalContext.Provider>
