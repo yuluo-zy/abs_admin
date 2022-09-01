@@ -201,7 +201,7 @@ export const WorkOrderIndex: React.FC = (props: React.PropsWithChildren<any>) =>
           [styles["layout-navbar-hidden"]]: !showNavbar
         })}
       >
-        <Navbar show={showNavbar} />
+        <Navbar show={showNavbar} isLogIn={false} />
       </div>
       <Layout>
         {showMenu && (

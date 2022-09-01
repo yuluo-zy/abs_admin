@@ -21,7 +21,7 @@ import { loginOut } from "@/api/login";
 import HelpInfo from "@/pages/help";
 import { setHelpKey } from "@/store/help";
 
-function Navbar({ show }: { show: boolean }) {
+function Navbar({ show, isLogIn = true }: { show: boolean, isLogIn?: boolean }) {
   const t = useLocale();
   const userInfo = useSelector((state: GlobalState) => state.userInfo);
 
@@ -109,41 +109,41 @@ function Navbar({ show }: { show: boolean }) {
             }}
           />
         </li>
-        <li>
-          <Tooltip
-            content={
-              "help"
-            }
-          >
-            <IconButton
-              icon={<IconTag />}
-              onClick={() => setHelpKey("1")}
-            />
-          </Tooltip>
-        </li>
-        <li>
-          <Tooltip
-            content={
-              theme === "light"
-                ? t["settings.navbar.theme.toDark"]
-                : t["settings.navbar.theme.toLight"]
-            }
-          >
-            <IconButton
-              icon={theme !== "dark" ? <IconMoonFill /> : <IconSunFill />}
+          {isLogIn && <li>
+            <Tooltip
+              content={
+                "help"
+              }
+            >
+              <IconButton
+                icon={<IconTag />}
+                onClick={() => setHelpKey("1")}
+              />
+            </Tooltip>
+          </li>}
+          <li>
+            <Tooltip
+              content={
+                theme === "light"
+                  ? t["settings.navbar.theme.toDark"]
+                  : t["settings.navbar.theme.toLight"]
+              }
+            >
+              <IconButton
+                icon={theme !== "dark" ? <IconMoonFill /> : <IconSunFill />}
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             />
           </Tooltip>
         </li>
-        {userInfo && (
-          <li>
-            <Dropdown droplist={droplist} position="br">
-              <Avatar size={32} style={{ cursor: "pointer" }}>
-                <img src={get_avatar(userInfo.name)} alt={userInfo.name} />
-              </Avatar>
-            </Dropdown>
-          </li>
-        )}
+          {isLogIn && userInfo && (
+            <li>
+              <Dropdown droplist={droplist} position="br">
+                <Avatar size={32} style={{ cursor: "pointer" }}>
+                  <img src={get_avatar(userInfo.name)} alt={userInfo.name} />
+                </Avatar>
+              </Dropdown>
+            </li>
+          )}
         </ul>
       </div>
       <HelpInfo />
