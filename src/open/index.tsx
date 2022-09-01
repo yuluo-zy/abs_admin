@@ -2,14 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { Breadcrumb, Layout, Menu } from "@arco-design/web-react";
 import cs from "classnames";
-import {
-  IconDashboard,
-  IconMenuFold,
-  IconMenuUnfold,
-  IconNav,
-  IconUser,
-  IconUserGroup
-} from "@arco-design/web-react/icon";
+import { IconMenuFold, IconMenuUnfold, IconStorage } from "@arco-design/web-react/icon";
 import { useSelector } from "react-redux";
 import qs from "query-string";
 import NProgress from "nprogress";
@@ -22,6 +15,7 @@ import lazyload from "@/utils/lazyload";
 import { GlobalState } from "@/store";
 import styles from "./style/layout.module.less";
 import { defaultRoute, routes } from "@/open/routes";
+import Locale from "./locale/index";
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
@@ -31,14 +25,8 @@ const Content = Layout.Content;
 
 function getIconFromKey(key) {
   switch (key) {
-    case "dashboard":
-      return <IconDashboard className={styles.icon} />;
-    case "account":
-      return <IconUserGroup className={styles.icon} />;
-    case "user":
-      return <IconUser className={styles.icon} />;
-    case "product":
-      return <IconNav className={styles.icon} />;
+    case "work_order":
+      return <IconStorage className={styles.icon} />;
     // default:
     //   return <IconTag className={styles.icon} />;
   }
@@ -75,12 +63,12 @@ function getUrlParamsPrefix(url: string): string[] {
   return res;
 }
 
-export const WorkOrderIndex: React.FC = (props: React.PropsWithChildren<any>) => {
+export const Open: React.FC = (props: React.PropsWithChildren<any>) => {
   const urlParams = getUrlParams();
   const history = useHistory();
   const pathname = history.location.pathname;
   const currentComponent = qs.parseUrl(pathname).url.slice(1);
-  const locale = useLocale();
+  const locale = useLocale(Locale);
   const settings = useSelector((state: GlobalState) => state.settings);
 
   const defaultSelectedKeys = [currentComponent || defaultRoute];
@@ -109,7 +97,7 @@ export const WorkOrderIndex: React.FC = (props: React.PropsWithChildren<any>) =>
     NProgress.start();
     preload.then(() => {
       setSelectedKeys([key]);
-      history.push(currentRoute.path ? currentRoute.path : `/${key}`);
+      history.push(currentRoute.path ? currentRoute.path : `/open/${key}`);
       NProgress.done();
     });
   }
@@ -150,7 +138,7 @@ export const WorkOrderIndex: React.FC = (props: React.PropsWithChildren<any>) =>
           }
           nodes.push(
             <MenuItem key={route.key}>
-              <Link to={`/${route.key}`}>{titleDom}</Link>
+              <Link to={`/open/${route.key}`}>{titleDom}</Link>
             </MenuItem>
           );
         }
@@ -258,7 +246,7 @@ export const WorkOrderIndex: React.FC = (props: React.PropsWithChildren<any>) =>
                     />
                   );
                 })}
-                <Route exact path="/open/">
+                <Route exact path="/open">
                   <Redirect to={`/open/${defaultRoute}`} />
                 </Route>
                 <Route

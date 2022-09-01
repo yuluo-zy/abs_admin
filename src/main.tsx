@@ -15,7 +15,7 @@ import checkLogin from "./utils/checkLogin";
 import changeTheme from "./utils/changeTheme";
 import useStorage from "./utils/useHook/useStorage";
 import { userInfo, userMenu } from "@/api/user";
-import { WorkOrderIndex } from "@/open";
+import { Open } from "@/open";
 // todo 去除 redux
 const store = createStore(rootReducer);
 
@@ -96,7 +96,7 @@ function Index() {
           <GlobalContext.Provider value={contextValue}>
             <Switch>
               <Route path="/login" component={Login} />
-              <Route path="/open/" component={WorkOrderIndex} />
+              <Route path="/open" component={Open} />
               <Route path="/" component={PageLayout} />
             </Switch>
           </GlobalContext.Provider>

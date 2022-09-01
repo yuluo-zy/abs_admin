@@ -13,7 +13,7 @@ export const defaultRoute = "work_order";
 
 export const routes: Route[] = [
   {
-    name: "menu.dashboard",
+    name: "work_order",
     key: "work_order"
   }
 ];
