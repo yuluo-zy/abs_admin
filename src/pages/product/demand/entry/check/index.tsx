@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
 import useLocale from "@/pages/product/demand/locale/useLocale";
-import { Button, Message, Modal } from "@arco-design/web-react";
+import { Button, Message, Modal, Tabs } from "@arco-design/web-react";
 import DynamicUpload from "@/components/Dynamic/Upload";
 import { UploadItem } from "@arco-design/web-react/es/Upload";
 import styles from "./style/index.module.less";
@@ -22,6 +22,7 @@ const bodyStyle = {
   transition: " 0.5s all ease-in-out",
   overflow: "auto"
 };
+const TabPane = Tabs.TabPane;
 export default function CheckSelection() {
   const t = useLocale();
   const history = useHistory();
@@ -185,55 +186,161 @@ export default function CheckSelection() {
   };
 
   return <DynamicOuterCard title={t["hardware.production.info.title"]} bodyStyle={bodyStyle}>
-    <table cellPadding="1" cellSpacing="1" className={styles["table-style"]}>
-      <colgroup>
-        <col className={styles["table-style-mini"]} />
-        <col className={styles["table-style-mid"]} />
-        <col className={styles["table-style-last"]} />
-      </colgroup>
-      <tbody>
+    <Tabs defaultActiveTab="1" size={"large"} type={"card-gutter"} animation={true} className={styles["tabs"]}>
+      <TabPane key="1" title={t["self.check.user"]}>
+        <table cellPadding="1" cellSpacing="1" className={styles["table-style"]}>
+          <colgroup>
+            <col className={styles["table-style-mini"]} />
+            <col className={styles["table-style-mid"]} />
+            <col className={styles["table-style-last"]} />
+          </colgroup>
+          <tbody>
 
-      <tr key={0}>
-        <th>Items</th>
-        <th>{t["self.check.boot.upload.file"]}</th>
-        <th>{t["self.check.boot.upload.file.info"]}</th>
-      </tr>
-      <tr key={1}>
-        <td>{t["self.check.boot.log"]}</td>
-        <td>
-          <DynamicUpload limit={1}
-                         fileList={checkData?.serialFileId}
-                         onChange={(fileList: UploadItem[], file: UploadItem) => {
-                           if (fileList.length > 0) {
-                             setCheckData({ "serialFileId": file?.response });
-                           } else {
-                             setCheckData({ "serialFileId": null });
-                           }
-                         }}
-                         customRequest={getPassSerialFile}
-          /></td>
+          <tr key={0}>
+            <th>Items</th>
+            <th>{t["self.check.boot.upload.file"]}</th>
+            <th>{t["self.check.boot.upload.file.info"]}</th>
+          </tr>
+          <tr key={1}>
+            <td>{t["self.check.boot.log"]}</td>
+            <td>
+              <DynamicUpload limit={1}
+                             fileList={checkData?.serialFileId}
+                             onChange={(fileList: UploadItem[], file: UploadItem) => {
+                               if (fileList.length > 0) {
+                                 setCheckData({ "serialFileId": file?.response });
+                               } else {
+                                 setCheckData({ "serialFileId": null });
+                               }
+                             }}
+                             customRequest={getPassSerialFile}
+              /></td>
 
-        <td>{serialFileNode(checkData?.serialRsp)}</td>
-      </tr>
+            <td>{serialFileNode(checkData?.serialRsp)}</td>
+          </tr>
 
-      <tr key={2}>
-        <td>eFuse summary</td>
-        <td>
-          <DynamicUpload limit={1} fileList={checkData?.efuseFileId}
-                         onChange={(fileList: UploadItem[], file: UploadItem) => {
-                           if (fileList.length > 0) {
-                             setCheckData({ "efuseFileId": file?.response });
-                           } else {
-                             setCheckData({ "efuseFileId": null });
-                           }
-                         }}
-                         customRequest={getPassEfuseFile}
-          />
-        </td>
-        <td>{eFuseNode(checkData?.efuseRsp)}</td>
-      </tr>
-      </tbody>
-    </table>
+          <tr key={2}>
+            <td>eFuse summary</td>
+            <td>
+              <DynamicUpload limit={1} fileList={checkData?.efuseFileId}
+                             onChange={(fileList: UploadItem[], file: UploadItem) => {
+                               if (fileList.length > 0) {
+                                 setCheckData({ "efuseFileId": file?.response });
+                               } else {
+                                 setCheckData({ "efuseFileId": null });
+                               }
+                             }}
+                             customRequest={getPassEfuseFile}
+              />
+            </td>
+            <td>{eFuseNode(checkData?.efuseRsp)}</td>
+          </tr>
+          </tbody>
+        </table>
+      </TabPane>
+      <TabPane key="2" title={t["self.check.esp"]}>
+        <table cellPadding="1" cellSpacing="1" className={styles["table-style"]}>
+          <colgroup>
+            <col className={styles["table-style-mini"]} />
+            <col className={styles["table-style-mid"]} />
+            <col className={styles["table-style-last"]} />
+          </colgroup>
+          <tbody>
+
+          <tr key={0}>
+            <th>Items</th>
+            <th>{t["self.check.boot.upload.file"]}</th>
+            <th>{t["self.check.boot.upload.file.info"]}</th>
+          </tr>
+          <tr key={1}>
+            <td>{t["self.check.boot.log"]}</td>
+            <td>
+              <DynamicUpload limit={1}
+                             fileList={checkData?.serialFileId}
+                             onChange={(fileList: UploadItem[], file: UploadItem) => {
+                               if (fileList.length > 0) {
+                                 setCheckData({ "serialFileId": file?.response });
+                               } else {
+                                 setCheckData({ "serialFileId": null });
+                               }
+                             }}
+                             customRequest={getPassSerialFile}
+              /></td>
+
+            <td>{serialFileNode(checkData?.serialRsp)}</td>
+          </tr>
+
+          <tr key={2}>
+            <td>eFuse summary</td>
+            <td>
+              <DynamicUpload limit={1} fileList={checkData?.efuseFileId}
+                             onChange={(fileList: UploadItem[], file: UploadItem) => {
+                               if (fileList.length > 0) {
+                                 setCheckData({ "efuseFileId": file?.response });
+                               } else {
+                                 setCheckData({ "efuseFileId": null });
+                               }
+                             }}
+                             customRequest={getPassEfuseFile}
+              />
+            </td>
+            <td>{eFuseNode(checkData?.efuseRsp)}</td>
+          </tr>
+          </tbody>
+        </table>
+      </TabPane>
+      <TabPane key="3" title={t["self.check.model"]}>
+        <table cellPadding="1" cellSpacing="1" className={styles["table-style"]}>
+          <colgroup>
+            <col className={styles["table-style-mini"]} />
+            <col className={styles["table-style-mid"]} />
+            <col className={styles["table-style-last"]} />
+          </colgroup>
+          <tbody>
+
+          <tr key={0}>
+            <th>Items</th>
+            <th>{t["self.check.boot.upload.file"]}</th>
+            <th>{t["self.check.boot.upload.file.info"]}</th>
+          </tr>
+          <tr key={1}>
+            <td>{t["self.check.boot.log"]}</td>
+            <td>
+              <DynamicUpload limit={1}
+                             fileList={checkData?.serialFileId}
+                             onChange={(fileList: UploadItem[], file: UploadItem) => {
+                               if (fileList.length > 0) {
+                                 setCheckData({ "serialFileId": file?.response });
+                               } else {
+                                 setCheckData({ "serialFileId": null });
+                               }
+                             }}
+                             customRequest={getPassSerialFile}
+              /></td>
+
+            <td>{serialFileNode(checkData?.serialRsp)}</td>
+          </tr>
+
+          <tr key={2}>
+            <td>eFuse summary</td>
+            <td>
+              <DynamicUpload limit={1} fileList={checkData?.efuseFileId}
+                             onChange={(fileList: UploadItem[], file: UploadItem) => {
+                               if (fileList.length > 0) {
+                                 setCheckData({ "efuseFileId": file?.response });
+                               } else {
+                                 setCheckData({ "efuseFileId": null });
+                               }
+                             }}
+                             customRequest={getPassEfuseFile}
+              />
+            </td>
+            <td>{eFuseNode(checkData?.efuseRsp)}</td>
+          </tr>
+          </tbody>
+        </table>
+      </TabPane>
+    </Tabs>
     <br />
     <br />
     <br />

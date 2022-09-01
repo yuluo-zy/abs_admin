@@ -59,7 +59,10 @@ export const Product: React.FC<ProductProps> = (props: React.PropsWithChildren<P
   }, []);
 
   const postData = () => {
-    postProductionTest(data).then(res => {
+    postProductionTest({
+      ...data,
+      demandId: demandId
+    }).then(res => {
       if (res.data.success) {
         Message.success(t["summarize.history.comment.success"]);
       }
