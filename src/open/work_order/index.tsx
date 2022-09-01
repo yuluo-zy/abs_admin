@@ -5,12 +5,15 @@ import Navbar from "@/components/NavBar";
 import { Welcome } from "@/open/work_order/welcome";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
+import { Route } from "react-router";
+import WorkOrderAdd from "@/open/work_order/add";
 
 const Header = Layout.Header;
 const Footer = Layout.Footer;
 const Content = Layout.Content;
 
 function WorkOrder() {
+
   const t = useLocale(locale);
   return <Layout className={styles["layout"]}>
     <Header>
@@ -21,8 +24,13 @@ function WorkOrder() {
       </div>
     </Header>
     <Content className={styles["layout-content"]}>
-      <Welcome />
-      <p>{t[""]}</p>
+      <Route
+        path={`/open/work_order/add`}
+        component={WorkOrderAdd}
+      />
+      <Route exact path={"/open/work_order"}>
+        <Welcome />
+      </Route>
     </Content>
     <Footer>Footer</Footer>
   </Layout>;

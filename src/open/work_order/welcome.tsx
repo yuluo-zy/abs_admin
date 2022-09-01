@@ -6,9 +6,15 @@ import Logo from "./assets/logo.svg";
 import { Button, Input, Select } from "@arco-design/web-react";
 import { IconSubscribeAdd } from "@arco-design/web-react/icon";
 import Solution from "./assets/solution_mindset.svg";
+import { useHistory } from "react-router";
 
 export const Welcome: React.FC = (props: React.PropsWithChildren<any>) => {
   const t = useLocale(locale);
+  const history = useHistory();
+
+  const to_add = () => {
+    history.push("/open/work_order/add");
+  };
   return <>
     <div className={styles["content"]}>
       <div className={styles["content-banner"]}>
@@ -18,7 +24,8 @@ export const Welcome: React.FC = (props: React.PropsWithChildren<any>) => {
 
 
         <p>{t["workplace.content"]}
-          <Button type="outline" icon={<IconSubscribeAdd />}>{t["workplace.content.work_order.add"]}</Button>
+          <Button type="outline" icon={<IconSubscribeAdd />}
+                  onClick={to_add}>{t["workplace.content.work_order.add"]}</Button>
         </p>
         <div>
           <Input.Group compact>
