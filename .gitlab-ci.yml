@@ -45,7 +45,7 @@ npm:
       - .npm/
   before_script:
     # - npm ci --cache .npm --prefer-offline
-    - npm install
+    - npm install --cache .npm
   script:
     - npm run build
   artifacts:
