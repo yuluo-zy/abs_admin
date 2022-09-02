@@ -78,8 +78,6 @@ push-job:
     - docker rmi ${REGISTRY}/${REGISTRY_PATH}/${APP_NAME}/${ENV}:${TAG}
   only:
     - dev
-    - main
-    - master
 
 # dev can cd automatically
 deploy-dev:
@@ -108,24 +106,8 @@ deploy-dev:
 # prod or sit should cd manually
 deploy:
   stage: deploy
-  image: registry-mm.espressif.cn/infra/cnych/kustomize:v1.0
-  before_script:
-    - mkdir /k8s-config
-    - cd /k8s-config
-    - git init
-    - git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@$GIT_URL
-    - git remote add origin https://${GIT_USERNAME}:${GIT_PASSWORD}@$GIT_URL
-    - git config --global user.email "bot@espressif.com"
-    - git config --global user.name "bot"
   script:
-    - git checkout -B master
-    - git pull origin master
-    - cd overlays/${ENV}
-    - kustomize edit set image ${REGISTRY}/${REGISTRY_PATH}/${APP_NAME}/${ENV}:${TAG}
-    - cat kustomization.yaml
-    - git commit -am "${CI_COMMIT_MESSAGE}"
-    - git push origin master
+    - ssh -i .ssh/cqapms.pem ec2-user@ec2-16-162-92-119.ap-east-1.compute.amazonaws.com
+    - docker run hello-world
   only:
-    - qa
-    - master
-  when: manual
+    - main
