@@ -92,7 +92,7 @@ push-job:
 push-job-prod:
   stage: push-prod
   script:
-    - docker login $148622829133.dkr.ecr.ap-east-1.amazonaws.com -uAWS -p$ECR_PASSWORD
+    - docker login 148622829133.dkr.ecr.ap-east-1.amazonaws.com -uAWS -p$ECR_PASSWORD
     - docker push 148622829133.dkr.ecr.ap-east-1.amazonaws.com/esp_custom_frontend/${ENV}:${TAG}
     - docker rmi 148622829133.dkr.ecr.ap-east-1.amazonaws.com/esp_custom_frontend/${ENV}:${TAG}
   only:
