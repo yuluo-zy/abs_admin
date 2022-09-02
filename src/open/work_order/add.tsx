@@ -254,11 +254,7 @@ export default function WorkOrderAdd() {
                              tyepList={FileType}
                              listType={"text"}
                              onChange={(fileList: UploadItem[], file: UploadItem) => {
-                               if (fileList.length > 0) {
                                  form.setFieldValue("fileIds", file.response);
-                               } else {
-                                 form.setFieldValue("fileIds", undefined);
-                               }
                              }} />
             </Form.Item>
           </DynamicCard>
