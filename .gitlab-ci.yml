@@ -113,6 +113,6 @@ deploy:
     - chmod 700 ~/.ssh
     - ssh-keyscan ec2-16-162-92-119.ap-east-1.compute.amazonaws.com >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - ssh ec2-user@ec2-16-162-92-119.ap-east-1.compute.amazonaws.com && sudo docker run hello-world
+    - ssh ec2-user@ec2-16-162-92-119.ap-east-1.compute.amazonaws.com && docker run hello-world
   only:
     - main
