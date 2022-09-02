@@ -8,14 +8,15 @@ const FileType = [
   "image/svg+xml"
 ];
 
-export function DynamicImgUpload(props: { limit, onChange, title?, fileList? }) {
-  const { limit, onChange, title, fileList } = props;
+export function DynamicImgUpload(props: { limit, onChange, title?, fileList?, customRequest? }) {
+  const { limit, onChange, title, fileList, customRequest } = props;
 
 
   return <DynamicUpload
     limit={limit}
     fileList={fileList}
     fileType={FileType}
+    customRequest={customRequest}
     listType="picture-card"
     onPreview={file => {
       Modal.success({

@@ -12,11 +12,9 @@ import {
   Input,
   InputNumber,
   Message,
-  Modal,
   Select,
   Tooltip,
-  Typography,
-  Upload
+  Typography
 } from "@arco-design/web-react";
 import DynamicDivider from "@/components/Dynamic/Divider";
 import { IconArrowRise, IconExclamationCircle } from "@arco-design/web-react/icon";
@@ -24,6 +22,7 @@ import { UploadItem } from "@arco-design/web-react/es/Upload";
 import DynamicUpload from "@/components/Dynamic/Upload";
 import axios from "axios";
 import { postSalesFile } from "@/api/file";
+import { DynamicImgUpload } from "@/components/Dynamic/Upload/img-upload";
 
 const ImgType = [
   "image/png",
@@ -223,30 +222,11 @@ export default function WorkOrderAdd() {
             </Form.Item>
             <Form.Item field="imgIds" triggerPropName="fileList"
                        label={t["workplace.add.custom.product.issue.picture"]}>
-              <Upload
-                multiple
-                action="/"
-                listType="picture-card"
-                onPreview={(file) => {
-                  Modal.info({
-                    title: "preview",
-                    content: (
-                      <div
-                        style={{
-                          textAlign: "center"
-                        }}
-                      >
-                        <img
-                          style={{
-                            maxWidth: "100%"
-                          }}
-                          src={file.url || URL.createObjectURL(file.originFile)}
-                          alt={"preview"} />
-                      </div>
-                    )
-                  });
-                }}
-              />
+              <DynamicImgUpload limit={5}
+                                customRequest={uploadData}
+                                onChange={(fileList: UploadItem[], file: UploadItem) => {
+                                  form.setFieldValue("imgIds", file.response);
+                                }} />
             </Form.Item>
             <Form.Item field="fileIds" label={t["workplace.add.custom.product.issue.appendix"]}>
               <DynamicUpload limit={5}
@@ -254,7 +234,7 @@ export default function WorkOrderAdd() {
                              tyepList={FileType}
                              listType={"text"}
                              onChange={(fileList: UploadItem[], file: UploadItem) => {
-                                 form.setFieldValue("fileIds", file.response);
+                               form.setFieldValue("fileIds", file.response);
                              }} />
             </Form.Item>
           </DynamicCard>
