@@ -53,7 +53,7 @@ npm:
     paths:
       - dist/*
   only:
-    # - main
+    - main
     - dev
 
 # build container image
