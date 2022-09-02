@@ -10,10 +10,10 @@
 image: registry-mm.espressif.cn/infra/docker:19.03.12
 
 stages:
-  # - npm
-  # - build
-  # - push
-  # - deploy-dev
+  - npm
+  - build
+  - push
+  - deploy-dev
   - deploy
 
 # user pipeline id as the version of container image
@@ -52,7 +52,7 @@ npm:
     paths:
       - dist/*
   only:
-    - main
+    # - main
     - dev
 # build container image
 docker_build:
@@ -64,7 +64,7 @@ docker_build:
     - docker build -t ${REGISTRY}/${REGISTRY_PATH}/${APP_NAME}/${ENV}:${TAG} .
   only:
     - dev
-    - main
+    # - main
 
 # tag the image and push it to registry
 push-job:
@@ -75,7 +75,7 @@ push-job:
     - docker rmi ${REGISTRY}/${REGISTRY_PATH}/${APP_NAME}/${ENV}:${TAG}
   only:
     - dev
-    - main
+    # - main
 
 # dev can cd automatically
 deploy-dev:
