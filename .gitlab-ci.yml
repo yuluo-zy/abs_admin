@@ -74,7 +74,7 @@ docker_build_prod:
     - npm
   script:
     - echo $ENV
-    - docker build -t 148622829133.dkr.ecr.ap-east-1.amazonaws.com/esp_custom_frontend/${ENV}:${TAG} .
+    - docker build -t 148622829133.dkr.ecr.ap-east-1.amazonaws.com/esp_custom_frontend:${TAG} .
   only:
     - main
 
