@@ -110,7 +110,6 @@ deploy:
   script:
     - chmod 600 .ssh/cqapms.pem
     - chmod 644 .ssh/known_hosts
-    - ssh -i .ssh/cqapms.pem ec2-user@ec2-16-162-92-119.ap-east-1.compute.amazonaws.com
-    - docker run hello-world
+    - ssh -i .ssh/cqapms.pem ec2-user@ec2-16-162-92-119.ap-east-1.compute.amazonaws.com && docker run hello-world
   only:
     - main
