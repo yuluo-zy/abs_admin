@@ -40,7 +40,8 @@ const i18n = {
     "workplace.announcement": "公告",
     "workplace.seeMore": "更多",
     "message.ok": "提交成功",
-    "message.error": "提交失败"
+    "message.error": "提交失败",
+    "message.post.error": "字段验证失败"
   }
 };
 

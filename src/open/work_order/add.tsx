@@ -23,12 +23,8 @@ import DynamicUpload from "@/components/Dynamic/Upload";
 import axios from "axios";
 import { postSalesFile } from "@/api/file";
 import { DynamicImgUpload } from "@/components/Dynamic/Upload/img-upload";
+import { saveAfterSale } from "@/api/cqapms";
 
-const ImgType = [
-  "image/png",
-  "image/jpeg",
-  "image/svg+xml"
-];
 const FileType = [
   "image/png",
   "image/jpeg",
@@ -98,6 +94,39 @@ export default function WorkOrderAdd() {
       key: 4
     }
   ];
+  const postData = async () => {
+    try {
+      await form.validate();
+    } catch (error) {
+      Message.error(t["message.post.error"]);
+      return;
+    }
+    const temp = {
+      ...form.getFieldsValue()
+    };
+    if (temp?.fileIds) {
+      const fileTemp = [];
+      for (const i of temp?.fileIds) {
+        fileTemp.push(i?.response);
+      }
+      temp.fileIds = fileTemp.toString();
+    }
+    if (temp?.imgIds) {
+      const fileTemp = [];
+      for (const i of temp?.imgIds) {
+        fileTemp.push(i?.response);
+      }
+      temp.imgIds = fileTemp.toString();
+    }
+    saveAfterSale({
+      ...temp
+    }).then(res => {
+      if (res.data.success) {
+        form.setFieldValue("id", res.data.result);
+        Message.success(t["message.ok"]);
+      }
+    });
+  };
   return <div className={styles["main"]}>
     <div>
       <Button onClick={to_return}>{t["workplace.add.return"]}</Button>
@@ -108,7 +137,9 @@ export default function WorkOrderAdd() {
                           className={styles["content-title"]}>{t["workplace.content.work_order.add"]}</Typography.Title>
         <Form autoComplete="off"
               colon={true}
+              form={form}
               size={"large"}
+              onSubmit={postData}
               labelAlign={"right"}
               scrollToFirstError
         >
@@ -225,7 +256,7 @@ export default function WorkOrderAdd() {
               <DynamicImgUpload limit={5}
                                 customRequest={uploadData}
                                 onChange={(fileList: UploadItem[], file: UploadItem) => {
-                                  form.setFieldValue("imgIds", file.response);
+                                  form.setFieldValue("imgIds", fileList);
                                 }} />
             </Form.Item>
             <Form.Item field="fileIds" label={t["workplace.add.custom.product.issue.appendix"]}>
@@ -234,7 +265,7 @@ export default function WorkOrderAdd() {
                              tyepList={FileType}
                              listType={"text"}
                              onChange={(fileList: UploadItem[], file: UploadItem) => {
-                               form.setFieldValue("fileIds", file.response);
+                               form.setFieldValue("fileIds", fileList);
                              }} />
             </Form.Item>
           </DynamicCard>
@@ -248,7 +279,6 @@ export default function WorkOrderAdd() {
           </Button>
         </Form>
       </DynamicCard>
-
     </div>
   </div>;
 }
