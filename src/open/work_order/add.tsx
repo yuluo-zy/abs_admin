@@ -53,17 +53,24 @@ export default function WorkOrderAdd() {
       <DynamicCard title={t["workplace.content.work_order.quality"]}>
         <Typography.Title heading={2}
                           className={styles["content-title"]}>{t["workplace.content.work_order.add"]}</Typography.Title>
-        <Form autoComplete="off" labelAlign={"left"}>
+        <Form autoComplete="off"
+              colon={true}
+              size={"large"}
+              labelAlign={"right"}
+              scrollToFirstError
+        >
           <DynamicCard title={t["workplace.add.custom"]}>
             <FormItem label={t["workplace.add.custom.quality"]} required>
               <Grid.Row gutter={8}>
                 <Grid.Col span={12}>
-                  <Form.Item field="name" label={t["workplace.add.custom.phone"]} rules={[{ required: true }]}>
+                  <Form.Item field="customerQcPhone" label={t["workplace.add.custom.phone"]}
+                             rules={[{ required: true }]}>
                     <Input placeholder="please enter you phone" maxLength={30} style={{ width: 400 }} />
                   </Form.Item>
                 </Grid.Col>
                 <Grid.Col span={12}>
-                  <Form.Item field="age" rules={[{ required: true }]} label={t["workplace.add.custom.email"]}>
+                  <Form.Item field="customerQcEmail" rules={[{ required: true }]}
+                             label={t["workplace.add.custom.email"]}>
                     <Input placeholder="please enter your email" maxLength={30} style={{ width: 400 }} />
                   </Form.Item>
                 </Grid.Col>
@@ -72,12 +79,14 @@ export default function WorkOrderAdd() {
             <FormItem label={t["workplace.add.custom.purchase"]} required>
               <Grid.Row gutter={8}>
                 <Grid.Col span={12}>
-                  <Form.Item field="name" label={t["workplace.add.custom.phone"]} rules={[{ required: true }]}>
+                  <Form.Item field="customerBuyerPhone" label={t["workplace.add.custom.phone"]}
+                             rules={[{ required: true }]}>
                     <Input placeholder="please enter you phone" maxLength={30} style={{ width: 400 }} />
                   </Form.Item>
                 </Grid.Col>
                 <Grid.Col span={12}>
-                  <Form.Item field="age" rules={[{ required: true }]} label={t["workplace.add.custom.email"]}>
+                  <Form.Item field="customerBuyerEmail" rules={[{ required: true }]}
+                             label={t["workplace.add.custom.email"]}>
                     <Input placeholder="please enter your email" maxLength={30} style={{ width: 400 }} />
                   </Form.Item>
                 </Grid.Col>
@@ -86,12 +95,14 @@ export default function WorkOrderAdd() {
             <FormItem label={t["workplace.add.custom.espressif"]} required>
               <Grid.Row gutter={8}>
                 <Grid.Col span={12}>
-                  <Form.Item field="name" label={t["workplace.add.custom.name"]} rules={[{ required: true }]}>
+                  <Form.Item field="espBusinessName" label={t["workplace.add.custom.name"]}
+                             rules={[{ required: true }]}>
                     <Input placeholder="please enter espressif name" maxLength={30} style={{ width: 400 }} />
                   </Form.Item>
                 </Grid.Col>
                 <Grid.Col span={12}>
-                  <Form.Item field="age" rules={[{ required: true }]} label={t["workplace.add.custom.email"]}>
+                  <Form.Item field="espBusinessEmail" rules={[{ required: true }]}
+                             label={t["workplace.add.custom.email"]}>
                     <Input placeholder="please enter espressif email" maxLength={30} style={{ width: 400 }} />
                   </Form.Item>
                 </Grid.Col>
@@ -99,11 +110,13 @@ export default function WorkOrderAdd() {
             </FormItem>
           </DynamicCard>
           <DynamicDivider />
+
+
           <DynamicCard title={t["workplace.add.custom.product"]}>
             <FormItem label={t["workplace.add.custom.module"]} required>
               <Grid.Row align="center">
-                <FormItem field="age" noStyle={{ showErrorTip: true }} rules={[{ required: true }]}>
-                  <Input placeholder="please enter espressif email" maxLength={30} style={{ width: 400 }} />
+                <FormItem field="productType" noStyle={{ showErrorTip: true }} rules={[{ required: true }]}>
+                  <Input placeholder="please enter Product number" maxLength={30} style={{ width: 400 }} />
                 </FormItem>
                 <Tooltip content={t["workplace.add.custom.module.help"]}>
                   <IconExclamationCircle style={{ margin: "0 8px", color: "rgb(var(--arcoblue-6))" }} />
@@ -113,14 +126,14 @@ export default function WorkOrderAdd() {
             <FormItem label={t["workplace.add.custom.product.number"]} required>
               <Grid.Row gutter={8}>
                 <Grid.Col span={12}>
-                  <Form.Item field="name" label={t["workplace.add.custom.product.number.actual"]}
+                  <Form.Item field="productionNum" label={t["workplace.add.custom.product.number.actual"]}
                              rules={[{ required: true }]}>
                     <InputNumber placeholder="please enter espressif name" max={1000000} min={1}
                                  style={{ width: 400 }} />
                   </Form.Item>
                 </Grid.Col>
                 <Grid.Col span={12}>
-                  <Form.Item field="age" rules={[{ required: true }]}
+                  <Form.Item field="failNum" rules={[{ required: true }]}
                              label={t["workplace.add.custom.product.number.defective"]}>
                     <InputNumber placeholder="please enter espressif email" max={100000} min={1}
                                  style={{ width: 400 }} />
@@ -128,10 +141,11 @@ export default function WorkOrderAdd() {
                 </Grid.Col>
               </Grid.Row>
             </FormItem>
-            <Form.Item field="name" label={t["workplace.add.custom.product.date"]} rules={[{ required: true }]}>
+            <Form.Item field="occurDate" label={t["workplace.add.custom.product.date"]} rules={[{ required: true }]}>
               <DatePicker showTime style={{ width: 400 }} />
             </Form.Item>
-            <Form.Item field="name" label={t["workplace.add.custom.product.stage"]} rules={[{ required: true }]}>
+            <Form.Item field="problemStage" label={t["workplace.add.custom.product.stage"]}
+                       rules={[{ required: true }]}>
               <Select
                 style={{ width: 400 }}
                 placeholder="Please select">
@@ -142,16 +156,16 @@ export default function WorkOrderAdd() {
                 ))}
               </Select>
             </Form.Item>
-            <Form.Item field="name" label={t["workplace.add.custom.product.stage"]}>
+            <Form.Item field="productionUsedNote" label={t["workplace.add.custom.product.description"]}>
               <Input.TextArea showWordLimit placeholder={t["workplace.add.custom.product.description.help"]}
-                              minLength={30} maxLength={200} style={{ minHeight: 64, width: 600 }} />
+                              minLength={30} maxLength={200} style={{ minHeight: 128, width: 600 }} />
             </Form.Item>
           </DynamicCard>
           <DynamicDivider />
           <DynamicCard title={t["workplace.add.custom.product.issue"]}>
-            <Form.Item field="name" label={t["workplace.add.custom.product.issue.description"]} required>
+            <Form.Item field="productionFailState" label={t["workplace.add.custom.product.issue.description"]} required>
               <Input.TextArea showWordLimit placeholder={t["workplace.add.custom.product.description.help"]}
-                              minLength={50} maxLength={500} style={{ minHeight: 64, width: 600 }} />
+                              minLength={50} maxLength={500} style={{ minHeight: 128, width: 600 }} />
             </Form.Item>
             <Form.Item field="name" triggerPropName="fileList" label={t["workplace.add.custom.product.issue.picture"]}>
               <Upload
