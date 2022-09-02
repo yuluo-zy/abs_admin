@@ -6,6 +6,7 @@ import styles from "./style/drawer.module.less";
 import DynamicCard from "@/components/Dynamic/Card";
 import DynamicDivider from "@/components/Dynamic/Divider";
 import { OrderStep } from "@/open/work_order/order-step";
+import { OrderDescriptions } from "@/open/work_order/order-descriptions";
 
 interface DrawerProps {
   visible: boolean,
@@ -16,7 +17,7 @@ interface DrawerProps {
 const Step = Steps.Step;
 
 export const OrderDrawer: React.FC<DrawerProps> = (props: React.PropsWithChildren<DrawerProps>) => {
-  const { visible, setVisible } = props;
+  const { visible, setVisible, data } = props;
   const t = useLocale(locale);
   return <Drawer
     placement={"bottom"}
@@ -37,6 +38,9 @@ export const OrderDrawer: React.FC<DrawerProps> = (props: React.PropsWithChildre
       </DynamicCard>
       <DynamicDivider />
       <DynamicCard title={t["workplace.drawer.details"]}>
+        <div style={{ paddingLeft: "3rem", paddingRight: "3rem" }}>
+          <OrderDescriptions descriptionData={data} />
+        </div>
       </DynamicCard>
     </div>
   </Drawer>;
