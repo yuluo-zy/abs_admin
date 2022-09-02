@@ -57,3 +57,17 @@ export const postSerialCheckFile = (data, onUploadProgress?, source?) => {
     }
   );
 };
+// 售后文件内容上传
+export const postSalesFile = (data, onUploadProgress?, source?) => {
+  return getAxios().post(
+    "/file/sales/upload",
+    data,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data;charset=UTF-8"
+      },
+      onUploadProgress: onUploadProgress,
+      cancelToken: source
+    }
+  );
+};

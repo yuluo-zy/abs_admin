@@ -38,7 +38,9 @@ const i18n = {
     "workplace.add.custom.product.issue.appendix": "附件上传",
     "workplace.add.custom.upload": "提交表单",
     "workplace.announcement": "公告",
-    "workplace.seeMore": "更多"
+    "workplace.seeMore": "更多",
+    "message.ok": "提交成功",
+    "message.error": "提交失败"
   }
 };
 

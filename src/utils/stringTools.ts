@@ -1,5 +1,5 @@
 export const setColon = (data, isDelete) => {
-  let temp = [];
+  const temp = [];
 
   for (let i = 0; i < data.length && i < 12; i++) {
     temp.push(data[i]);

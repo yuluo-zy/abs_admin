@@ -35,7 +35,6 @@ axios.interceptors.response.use(res => {
   }
   return res;
 }, err => {
-  console.log(err);
   if (err.response?.status == 504 || err.response?.status == 404) {
     Notification.error({ content: "服务器被吃了⊙﹏⊙∥" });
   } else if (err.response?.status == 403) {
