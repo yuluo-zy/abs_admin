@@ -78,6 +78,7 @@ push-job:
     - docker rmi ${REGISTRY}/${REGISTRY_PATH}/${APP_NAME}/${ENV}:${TAG}
   only:
     - dev
+    - main
 
 # dev can cd automatically
 deploy-dev:
