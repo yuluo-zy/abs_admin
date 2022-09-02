@@ -52,8 +52,10 @@ npm:
     paths:
       - dist/*
   only:
-    # - main
+    - main
     - dev
+    - qa
+    - master
 # build container image
 docker_build:
   stage: build
@@ -64,7 +66,8 @@ docker_build:
     - docker build -t ${REGISTRY}/${REGISTRY_PATH}/${APP_NAME}/${ENV}:${TAG} .
   only:
     - dev
-    # - main
+    - main
+    - master
 
 # tag the image and push it to registry
 push-job:
@@ -75,7 +78,7 @@ push-job:
     - docker rmi ${REGISTRY}/${REGISTRY_PATH}/${APP_NAME}/${ENV}:${TAG}
   only:
     - dev
-    # - main
+    - main
 
 # dev can cd automatically
 deploy-dev:
@@ -105,7 +108,7 @@ deploy-dev:
 deploy:
   stage: deploy
   # image: monachus/hugo:latest
-  script:
+  before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
@@ -113,6 +116,8 @@ deploy:
     - chmod 700 ~/.ssh
     - ssh-keyscan ec2-16-162-92-119.ap-east-1.compute.amazonaws.com >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - ssh ec2-user@ec2-16-162-92-119.ap-east-1.compute.amazonaws.com && docker run hello-world
+    - ssh ec2-user@ec2-16-162-92-119.ap-east-1.compute.amazonaws.com
+  script:
+    - docker run hello-world
   only:
     - main
