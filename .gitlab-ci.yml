@@ -52,10 +52,8 @@ npm:
     paths:
       - dist/*
   only:
-    - main
+    # - main
     - dev
-    - qa
-    - master
 # build container image
 docker_build:
   stage: build
@@ -66,8 +64,7 @@ docker_build:
     - docker build -t ${REGISTRY}/${REGISTRY_PATH}/${APP_NAME}/${ENV}:${TAG} .
   only:
     - dev
-    - main
-    - master
+    # - main
 
 # tag the image and push it to registry
 push-job:
@@ -78,7 +75,7 @@ push-job:
     - docker rmi ${REGISTRY}/${REGISTRY_PATH}/${APP_NAME}/${ENV}:${TAG}
   only:
     - dev
-    - main
+    # - main
 
 # dev can cd automatically
 deploy-dev:
