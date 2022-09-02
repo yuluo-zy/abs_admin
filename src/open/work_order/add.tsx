@@ -111,14 +111,14 @@ export default function WorkOrderAdd() {
     if (temp?.fileIds) {
       const fileTemp = [];
       for (const i of temp?.fileIds) {
-        fileTemp.push(i?.response);
+        fileTemp.push(i?.response?.id);
       }
       temp.fileIds = fileTemp.toString();
     }
     if (temp?.imgIds) {
       const fileTemp = [];
       for (const i of temp?.imgIds) {
-        fileTemp.push(i?.response);
+        fileTemp.push(i?.response?.id);
       }
       temp.imgIds = fileTemp.toString();
     }
