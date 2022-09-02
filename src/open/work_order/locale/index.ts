@@ -5,7 +5,7 @@ const i18n = {
 
   "zh-CN": {
     "workplace.welcomeBack": "Welcome Back,",
-    "workplace.content": "产品质量工单管理",
+    "workplace.content": "欢迎使用本系统, 进行产品质量工单管理",
     "workplace.content.work_order.add": "新建工单",
     "workplace.content.work_order.quality": "质量工单",
     "workplace.content.work_order": "工单编号",
@@ -41,7 +41,10 @@ const i18n = {
     "workplace.seeMore": "更多",
     "message.ok": "提交成功",
     "message.error": "提交失败",
-    "message.post.error": "字段验证失败"
+    "message.post.error": "字段验证失败",
+    "workplace.table.status": "当前状态",
+    "workplace.table.date": "提交时间",
+    "workplace.table.number": "工单号"
   }
 };
 
