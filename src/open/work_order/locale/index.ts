@@ -44,7 +44,15 @@ const i18n = {
     "message.post.error": "字段验证失败",
     "workplace.table.status": "当前状态",
     "workplace.table.date": "提交时间",
-    "workplace.table.number": "工单号"
+    "workplace.table.number": "工单号",
+    "workplace.drawer.details": "工单详情",
+    "workplace.drawer.details.schedule": "工单进度",
+    "workplace.drawer.details.schedule.step1.title": "工单提交",
+    "workplace.drawer.details.schedule.step1.description": "工单已提交, 请耐心等待乐鑫工程师接收",
+    "workplace.drawer.details.schedule.step2.title": "工单处理",
+    "workplace.drawer.details.schedule.step2.description": "乐鑫工程师正在快马加鞭中, 请确保通讯畅通, 以便及时联系",
+    "workplace.drawer.details.schedule.step3.title": "工单结案",
+    "workplace.drawer.details.schedule.step3.description": "相关解决方案已上传, 乐鑫工程师竭诚为您服务"
   }
 };
 
