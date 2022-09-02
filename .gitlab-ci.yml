@@ -10,10 +10,10 @@
 image: registry-mm.espressif.cn/infra/docker:19.03.12
 
 stages:
-  - npm
-  - build
-  - push
-  - deploy-dev
+  # - npm
+  # - build
+  # - push
+  # - deploy-dev
   - deploy
 
 # user pipeline id as the version of container image
