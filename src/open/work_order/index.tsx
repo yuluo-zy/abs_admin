@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Layout, Spin, Table, TableColumnProps } from "@arco-design/web-react";
+import { Button, Grid, Layout, Spin, Table, TableColumnProps } from "@arco-design/web-react";
 import styles from "./style/index.module.less";
 import Navbar from "@/components/NavBar";
 import { Welcome } from "@/open/work_order/welcome";
@@ -11,6 +11,7 @@ import Announcement from "./announcement";
 import { useUpdateEffect } from "react-use";
 import { getAfterSale } from "@/api/cqapms";
 import Footer from "@/components/Footer";
+import { OrderDrawer } from "@/open/work_order/order-drawer";
 
 const Header = Layout.Header;
 const LayoutFooter = Layout.Footer;
@@ -25,6 +26,7 @@ function WorkOrder() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [select, setSelect] = useState(null);
+  const [visible, setVisible] = useState(null);
   useUpdateEffect(() => {
     if (select) {
       setLoading(true);
@@ -42,7 +44,14 @@ function WorkOrder() {
   const columns: TableColumnProps[] = [
     {
       title: t["workplace.table.number"],
-      dataIndex: "afterSaleOrderNo"
+      dataIndex: "afterSaleOrderNo",
+      render: (col) => {
+        return <Button onClick={() => {
+          setVisible(true);
+        }
+        }>{col}</Button>;
+      }
+
     },
     {
       title: t["workplace.add.custom.module"],
@@ -86,6 +95,7 @@ function WorkOrder() {
         </Row>
       </Route>
     </Content>
+    <OrderDrawer visible={visible} setVisible={setVisible} data={data} />
     <LayoutFooter>
       <Footer />
     </LayoutFooter>
