@@ -13,9 +13,7 @@ stages:
   - npm
   - build
   - push
-  - push-prod
-  - deploy-dev
-  - deploy-prod
+  - deploy
 
 # user pipeline id as the version of container image
 variables:
@@ -90,7 +88,7 @@ push-job:
     # - main
 
 push-job-prod:
-  stage: push-prod
+  stage: push
   script:
     - docker login 148622829133.dkr.ecr.ap-east-1.amazonaws.com -uAWS -p$ECR_PASSWORD
     - docker push 148622829133.dkr.ecr.ap-east-1.amazonaws.com/esp_custom_frontend:${TAG}
@@ -100,7 +98,7 @@ push-job-prod:
 
 # dev can cd automatically
 deploy-dev:
-  stage: deploy-dev
+  stage: deploy
   image: registry-mm.espressif.cn/infra/cnych/kustomize:v1.0
   before_script:
     - mkdir /k8s-config
@@ -124,7 +122,7 @@ deploy-dev:
 
 # prod or sit should cd manually
 deploy-prod:
-  stage: deploy-prod
+  stage: deploy
   # image: monachus/hugo:latest
   before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
