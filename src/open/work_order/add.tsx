@@ -5,6 +5,7 @@ import { useHistory } from "react-router";
 import styles from "./style/add.module.less";
 import DynamicCard from "@/components/Dynamic/Card";
 import {
+  Breadcrumb,
   Button,
   DatePicker,
   Form,
@@ -13,18 +14,21 @@ import {
   InputNumber,
   Message,
   Select,
+  Space,
   Tooltip,
   Typography
 } from "@arco-design/web-react";
 import DynamicDivider from "@/components/Dynamic/Divider";
-import { IconArrowRise, IconExclamationCircle } from "@arco-design/web-react/icon";
+import { IconArrowRise, IconExclamationCircle, IconHome } from "@arco-design/web-react/icon";
 import { UploadItem } from "@arco-design/web-react/es/Upload";
 import DynamicUpload from "@/components/Dynamic/Upload";
 import axios from "axios";
 import { postSalesFile } from "@/api/file";
 import { DynamicImgUpload } from "@/components/Dynamic/Upload/img-upload";
 import { saveAfterSale } from "@/api/cqapms";
+import { Link } from "react-router-dom";
 
+const BreadcrumbItem = Breadcrumb.Item;
 const FileType = [
   "image/png",
   "image/jpeg",
@@ -128,8 +132,16 @@ export default function WorkOrderAdd() {
     });
   };
   return <div className={styles["main"]}>
-    <div>
-      <Button onClick={to_return}>{t["workplace.add.return"]}</Button>
+    <div className={styles["breadcrumb"]}>
+      <Space size={40}>
+        <Breadcrumb>
+          <BreadcrumbItem>
+            <Link to={"/open/work_order"}> <IconHome /></Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem>{t["workplace.content.work_order.add"]}</BreadcrumbItem>
+        </Breadcrumb>
+      </Space>
+      <Button onClick={to_return} type={"primary"} size={"large"} shape={"round"}>{t["workplace.add.return"]}</Button>
     </div>
     <div className={styles["content"]}>
       <DynamicCard title={t["workplace.content.work_order.quality"]}>
