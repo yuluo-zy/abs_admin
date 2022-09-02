@@ -106,7 +106,7 @@ deploy-dev:
 # prod or sit should cd manually
 deploy:
   stage: deploy
-  image: monachus/hugo:latest
+  # image: monachus/hugo:latest
   script:
     - chmod 600 .ssh/cqapms.pem
     - chmod 644 .ssh/known_hosts
