@@ -13,8 +13,9 @@ stages:
   - npm
   - build
   - push
+  - push-prod
   - deploy-dev
-  - deploy
+  - deploy-prod
 
 # user pipeline id as the version of container image
 variables:
@@ -30,7 +31,7 @@ workflow:
     - if: $CI_COMMIT_REF_NAME == "qa"
       variables:
         ENV: "qa"
-    - if: $CI_COMMIT_REF_NAME == "master"
+    - if: $CI_COMMIT_REF_NAME == "main"
       variables:
         ENV: "prod"
     - when: always
@@ -54,6 +55,7 @@ npm:
   only:
     # - main
     - dev
+
 # build container image
 docker_build:
   stage: build
@@ -66,6 +68,16 @@ docker_build:
     - dev
     # - main
 
+docker_build_prod:
+  stage: build
+  dependencies:
+    - npm
+  script:
+    - echo $ENV
+    - docker build -t 148622829133.dkr.ecr.ap-east-1.amazonaws.com/esp_custom_frontend/${ENV}:${TAG} .
+  only:
+    - main
+
 # tag the image and push it to registry
 push-job:
   stage: push
@@ -76,6 +88,15 @@ push-job:
   only:
     - dev
     # - main
+
+push-job-prod:
+  stage: push-prod
+  script:
+    - docker login $148622829133.dkr.ecr.ap-east-1.amazonaws.com -uAWS -p$ECR_PASSWORD
+    - docker push 148622829133.dkr.ecr.ap-east-1.amazonaws.com/esp_custom_frontend/${ENV}:${TAG}
+    - docker rmi 148622829133.dkr.ecr.ap-east-1.amazonaws.com/esp_custom_frontend/${ENV}:${TAG}
+  only:
+    - main
 
 # dev can cd automatically
 deploy-dev:
@@ -102,8 +123,8 @@ deploy-dev:
     - dev
 
 # prod or sit should cd manually
-deploy:
-  stage: deploy
+deploy-prod:
+  stage: deploy-prod
   # image: monachus/hugo:latest
   before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
