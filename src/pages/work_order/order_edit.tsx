@@ -85,7 +85,7 @@ export const OrderEdit: React.FC = () => {
                   }
                   }
           >{t["work.order.operate.accept"]}</Button>
-          <OrderDescriptions descriptionData={data} encryption={false} download={true} />
+          <OrderDescriptions descriptionData={data} encryption={false} feedback={false} download={true} />
         </div>
       </DynamicCard>
       <DynamicDivider />
@@ -95,8 +95,6 @@ export const OrderEdit: React.FC = () => {
                                         type={"primary"}
                                         icon={<IconCheck />}
                                         onClick={handleOnClick}>{t["work.order.operate.process.result.operate"]}</Button>}
-        {/*{(data.length > 0 && data?.[0].remarks !== "") ? <RiceText readOnly={true} initValue={data?.[0].remarks} /> :*/}
-        {/*  <RiceText onChange={setRiceText} readOnly={false} />}*/}
         {!data?.[0]?.remarks && <EditText textSet={setRiceText} />}
         {data?.[0]?.remarks && <ViewText data={data?.[0]?.remarks} />}
       </DynamicCard>

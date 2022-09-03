@@ -1,5 +1,5 @@
 import React from "react";
-import { Drawer, Steps } from "@arco-design/web-react";
+import { Drawer } from "@arco-design/web-react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 import styles from "./style/drawer.module.less";
@@ -13,8 +13,6 @@ interface DrawerProps {
   setVisible: any,
   data: Record<string, any>
 }
-
-const Step = Steps.Step;
 
 export const OrderDrawer: React.FC<DrawerProps> = (props: React.PropsWithChildren<DrawerProps>) => {
   const { visible, setVisible, data } = props;
@@ -39,7 +37,8 @@ export const OrderDrawer: React.FC<DrawerProps> = (props: React.PropsWithChildre
       <DynamicDivider />
       <DynamicCard title={t["workplace.drawer.details"]}>
         <div style={{ paddingLeft: "3rem", paddingRight: "3rem" }}>
-          <OrderDescriptions descriptionData={data} encryption={true} download={false} />
+          <OrderDescriptions descriptionData={data} encryption={true} download={false} feedback={true}
+                             style={{ marginBottom: "2rem" }} />
         </div>
       </DynamicCard>
     </div>

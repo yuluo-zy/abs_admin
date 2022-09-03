@@ -14,6 +14,7 @@ interface StepProps {
   style?: CSSProperties;
   encryption: boolean;
   download: boolean;
+  feedback: boolean;
 }
 
 const DownloadButton = (props) => {
@@ -51,7 +52,7 @@ const DownloadButton = (props) => {
   />;
 };
 export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChildren<StepProps>) => {
-  const { descriptionData, encryption, download, style } = props;
+  const { descriptionData, encryption, download, feedback, style } = props;
   const data = descriptionData?.[0] || {};
 
   const t = useLocale(locale);
@@ -188,9 +189,9 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
       data={issueData}
     />
     <DynamicDivider />
-    <DynamicCard title={t["workplace.drawer.details.feedback"]}>
+    {feedback && <DynamicCard title={t["workplace.drawer.details.feedback"]}>
       <RiceText readOnly={true} initValue={data?.remarks} />
-    </DynamicCard>
+    </DynamicCard>}
 
   </div>;
 };
