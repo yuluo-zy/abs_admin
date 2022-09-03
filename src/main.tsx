@@ -14,11 +14,10 @@ import Login from "./pages/login";
 import checkLogin from "./utils/checkLogin";
 import changeTheme from "./utils/changeTheme";
 import useStorage from "./utils/useHook/useStorage";
-import { userInfo, userMenu } from "@/api/user";
 import WorkOrder from "@/open/work_order";
+import { Redirect } from "react-router";
 // todo 去除 redux
 const store = createStore(rootReducer);
-
 function Index() {
   const [lang, setLang] = useStorage("arco-lang", "en-US");
   const [theme, setTheme] = useStorage("arco-theme", "light");
@@ -34,35 +33,13 @@ function Index() {
     }
   }
 
-  function fetchUserInfo() {
-    return userInfo().then((res) => {
-      store.dispatch({
-        type: "update-userInfo",
-        payload: { userInfo: res.data.result }
-      });
-    });
-  }
-
-  function fetchUserMenu() {
-    return userMenu().then((res) => {
-      store.dispatch({
-        type: "update-userMenu",
-        payload: { menu: res.data.result }
-      });
-    });
-  }
-
-  useEffect(() => {
-    // todo 首屏响应问题
+  const toMain = () => {
     if (checkLogin()) {
-      Promise.all([fetchUserInfo(), fetchUserMenu()])
-        .then();
+      return <PageLayout />;
+    } else {
+      return <Redirect to={{ pathname: "/login" }} />;
     }
-    // todo 先去掉路由跳转
-    // } else if (window.location.pathname.replace(/\//g, "") !== "login") {
-    //   window.location.pathname = "/login";
-    // }
-  }, []);
+  };
 
   useEffect(() => {
     changeTheme(theme);
@@ -97,7 +74,7 @@ function Index() {
             <Switch>
               <Route path="/login" component={Login} />
               <Route path="/open/work_order" component={WorkOrder} />
-              <Route path="/" component={PageLayout} />
+              <Route path="/" render={toMain} />
             </Switch>
           </GlobalContext.Provider>
         </Provider>

@@ -10,6 +10,7 @@ import { loginWithUserName } from "@/api/login";
 import { UserToken } from "@/components/type";
 import LoginProtocol from "@/pages/login/protocol";
 import { defaultRoute } from "@/routes";
+import { useHistory } from "react-router";
 
 export default function LoginForm() {
   const formRef = useRef<FormInstance>();
@@ -17,11 +18,11 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [loginParams, setLoginParams, removeLoginParams] =
     useStorage("LoginParams");
+  const history = useHistory();
 
   const t = useLocale(locale);
 
   const [rememberPassword, setRememberPassword] = useState(!!loginParams);
-
   function afterLoginSuccess(result: UserToken) {
     // 记住密码
     if (rememberPassword) {
@@ -33,8 +34,7 @@ export default function LoginForm() {
     sessionStorage.setItem("userStatus", "login");
     localStorage.setItem("userToken", result.token);
     localStorage.setItem("userName", result.username);
-    // 跳转首页
-    window.location.href = defaultRoute;
+    history.replace(defaultRoute);
   }
 
   function login(data) {
