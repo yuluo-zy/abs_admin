@@ -6,10 +6,13 @@ import { SearchItem } from "@/components/type";
 import { getAfterSaleManage, postAfterSaleComplete, postAfterSaleReceive } from "@/api/cqapms";
 import { Button, Message, Popconfirm, Space, Tag, Tooltip } from "@arco-design/web-react";
 import { IconCheck, IconCheckCircle, IconEdit } from "@arco-design/web-react/icon";
+import { Route, Switch, useHistory } from "react-router";
+import { OrderEdit } from "@/pages/work_order/order_edit";
 
 export default function WorkOrderManagement() {
   const t = useLocale(locale);
   const searchListRef = useRef();
+  const history = useHistory();
   const orderStatus = [{
     label: t["work.order.operate.order.a"],
     value: 0
@@ -100,7 +103,9 @@ export default function WorkOrderManagement() {
               <Button icon={<IconCheck />} />
             </Popconfirm>
             <Tooltip content={t["work.order.operate.edit"]}>
-              <Button icon={<IconEdit />} />
+              <Button icon={<IconEdit />} onClick={() => {
+                history.push(`/work_order/${record.id}`);
+              }} />
             </Tooltip>
           </Space>
         )
@@ -118,19 +123,26 @@ export default function WorkOrderManagement() {
       name: t["workplace.table.status"],
       field: "status",
       type: "select",
-      options: [orderStatus]
+      options: orderStatus
     }
   ];
-  return <div>
-    <SearchList
-      name={t["work.order.title"]}
-      download={false}
-      upload={false}
-      ref={searchListRef}
-      fetchRemoteData={getAfterSaleManage}
-      getColumns={getColumns}
-      select={true}
-      selectItem={selectItem}
+  return <Switch>
+    <Route
+      path={`/work_order/:id`}
+      component={OrderEdit}
     />
-  </div>;
+
+    <Route exact path={"/work_order"}>
+      <SearchList
+        name={t["work.order.title"]}
+        download={false}
+        upload={false}
+        ref={searchListRef}
+        fetchRemoteData={getAfterSaleManage}
+        getColumns={getColumns}
+        select={true}
+        selectItem={selectItem}
+      />
+    </Route>
+  </Switch>;
 };
