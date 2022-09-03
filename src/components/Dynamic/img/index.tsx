@@ -17,6 +17,5 @@ export default function DynamicImg(props) {
 
   }, [lang]);
 
-  // @ts-ignore
-  return <img {...props} src={state} />;
+  return <img {...props} src={state} alt={"img"} />;
 }
