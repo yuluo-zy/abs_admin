@@ -122,7 +122,7 @@ const i18n = {
     "product.management": "需求管理",
     "product.management.add": "需求添加",
     "help.info": "使用帮助",
-    "work_order.management": "订单管理"
+    "work_order.management": "工单管理"
   }
 };
 
