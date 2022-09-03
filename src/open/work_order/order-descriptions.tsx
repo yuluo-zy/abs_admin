@@ -1,18 +1,57 @@
-import React, { CSSProperties } from "react";
-import { Descriptions, Image, List, Space, Typography } from "@arco-design/web-react";
+import React, { CSSProperties, useState } from "react";
+import { Button, Descriptions, Image, List, Space, Typography } from "@arco-design/web-react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 import DynamicDivider from "@/components/Dynamic/Divider";
 import DynamicPreviewImg from "@/components/Dynamic/img/preview";
+import { IconCloudDownload } from "@arco-design/web-react/icon";
+import { getSalesInfo } from "@/api/file";
 
 interface StepProps {
   descriptionData: any,
   style?: CSSProperties;
-  encryption?: boolean;
+  encryption: boolean;
+  download: boolean;
 }
 
+const DownloadButton = (props) => {
+  const { id } = props;
+  const [loading, setLoading] = useState(false);
+  const downFile = (event) => {
+    setLoading(true);
+    event.stopPropagation();
+    if (id) {
+      getSalesInfo(id).then(res => {
+          if (res.status === 200) {
+            const url = URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            let name = res.headers["content-disposition"]?.match(/fileName=(.*)/)[1]; // 获取filename的值
+            name = decodeURIComponent(name);
+            link.setAttribute("download", name);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          }
+        }
+      ).finally(() => {
+        setLoading(false);
+      });
+    }
+  };
+  return <Button
+    size={"mini"}
+    icon={<IconCloudDownload />}
+    type="outline"
+    status="success"
+    loading={loading}
+    onClick={downFile}
+  />;
+};
 export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChildren<StepProps>) => {
-  const { descriptionData, encryption, style } = props;
+  const { descriptionData, encryption, download, style } = props;
+  const data = descriptionData?.[0] || {};
+
   const t = useLocale(locale);
   const getStep = (value) => {
     if (value === "1") {
@@ -28,12 +67,6 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
       return t["workplace.add.custom.product.stage.d"];
     }
   };
-  // const getImg = value => {
-  //   if(value && value.length > 0) {
-  //     const imgTemp = value.split(",")
-  //
-  //   }
-  // }
   const getEncryption = (value) => {
     if (encryption) {
       if (value && value.length > 6) {
@@ -45,69 +78,70 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
   const customData = [
     {
       label: t["workplace.add.custom.quality"] + " - " + t["workplace.add.custom.phone"],
-      value: getEncryption(descriptionData?.[0]?.customerQcPhone)
+      value: getEncryption(data?.customerQcPhone)
     },
     {
       label: t["workplace.add.custom.quality"] + " - " + t["workplace.add.custom.email"],
-      value: getEncryption(descriptionData?.[0]?.customerQcEmail)
+      value: getEncryption(data?.customerQcEmail)
     },
     {
       label: t["workplace.add.custom.purchase"] + " - " + t["workplace.add.custom.phone"],
-      value: getEncryption(descriptionData?.[0]?.customerBuyerPhone)
+      value: getEncryption(data?.customerBuyerPhone)
     },
     {
       label: t["workplace.add.custom.purchase"] + " - " + t["workplace.add.custom.email"],
-      value: getEncryption(descriptionData?.[0]?.customerBuyerEmail)
+      value: getEncryption(data?.customerBuyerEmail)
     },
     {
       label: t["workplace.add.custom.espressif"] + " - " + t["workplace.add.custom.name"],
-      value: descriptionData?.[0]?.espBusinessName
+      value: data?.espBusinessName
     },
     {
       label: t["workplace.add.custom.espressif"] + " - " + t["workplace.add.custom.email"],
-      value: descriptionData?.[0]?.espBusinessEmail
+      value: data?.espBusinessEmail
     }
   ];
   const productData = [
     {
       label: t["workplace.add.custom.module"],
-      value: descriptionData?.[0]?.productType
+      value: data?.productType
     },
     {
       label: t["workplace.add.custom.product.number.actual"],
-      value: descriptionData?.[0]?.productionNum
+      value: data?.productionNum
     },
     {
       label: t["workplace.add.custom.product.number.defective"],
-      value: descriptionData?.[0]?.failNum
+      value: data?.failNum
     },
     {
       label: t["workplace.add.custom.product.date"],
-      value: descriptionData?.[0]?.occurDate
+      value: data?.occurDate
     },
     {
       label: t["workplace.add.custom.product.stage"],
-      value: getStep(descriptionData?.[0]?.problemStage)
+      value: getStep(data?.problemStage)
     },
     {
       label: t["workplace.add.custom.product.description"],
       value: <Typography.Paragraph ellipsis={{ showTooltip: true }} style={{ maxWidth: 400 }}>
-        {descriptionData?.[0]?.productionUsedNote}
+        {data?.productionUsedNote}
       </Typography.Paragraph>
     }
   ];
 
+
   const issueData = [
     {
       label: t["workplace.add.custom.product.issue.description"],
-      value: descriptionData?.[0]?.productionFailState
+      value: data?.productionFailState
     },
     {
       label: t["workplace.add.custom.product.issue.picture"],
       value: <Space direction="vertical">
         <Image.PreviewGroup infinite>
           <Space>
-            {descriptionData?.[0]?.imgObjs && descriptionData?.[0]?.imgObjs.map((src, index) => (
+            {data?.imgObjs && data?.imgObjs.map((src, index) => (
               <DynamicPreviewImg data={src} key={index} width={200} height={200} loader={true} />
             ))}
           </Space>
@@ -121,10 +155,13 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
           style={{ margin: "1rem" }}
           size="small"
           header={null}
-          dataSource={[
-            ...descriptionData?.[0]?.fileObjs
-          ]}
-          render={(item, index) => <List.Item key={index}>{item?.fileName}</List.Item>}
+          dataSource={data?.fileObjs}
+          render={(item, index) => <List.Item key={index}>
+            <Space size={"large"}>
+              {item?.fileName}
+              {download && <DownloadButton id={item?.id} />}
+            </Space>
+          </List.Item>}
         />
     }
   ];
