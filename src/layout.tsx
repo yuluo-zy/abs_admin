@@ -3,6 +3,7 @@ import { Link, Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { Breadcrumb, Layout, Menu } from "@arco-design/web-react";
 import cs from "classnames";
 import {
+  IconArchive,
   IconDashboard,
   IconMenuFold,
   IconMenuUnfold,
@@ -40,6 +41,8 @@ function getIconFromKey(key) {
       return <IconUser className={styles.icon} />;
     case "product":
       return <IconNav className={styles.icon} />;
+    case "work_order":
+      return <IconArchive className={styles.icon} />;
     // default:
     //   return <IconTag className={styles.icon} />;
   }

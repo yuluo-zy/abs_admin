@@ -60,6 +60,11 @@ export const routes: Route[] = [
     key: "product",
     permission: "demand:mgr"
   },
+  {
+    name: "work_order.management",
+    key: "work_order"
+    // permission: "work_order:mgr"
+  }
 ];
 
 export const getName = (path: string, routes) => {
