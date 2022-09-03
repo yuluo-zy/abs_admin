@@ -10,6 +10,8 @@ const i18n = {
     "work.order.operate.order.a": "待处理",
     "work.order.operate.order.b": "正在处理",
     "work.order.operate.order.c": "处理完成",
+    "work.order.operate.process.result": "处理结果",
+    "work.order.operate.process.result.operate": "处理结案",
     "workplace.welcomeBack": "Welcome Back,",
     "workplace.content": "欢迎使用本系统, 进行产品质量工单管理",
     "workplace.content.work_order.add": "新建工单",
