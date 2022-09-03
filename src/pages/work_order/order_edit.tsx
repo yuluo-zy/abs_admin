@@ -12,7 +12,14 @@ import styles from "./style/edit.module.less";
 import { IconCheck, IconCheckCircle } from "@arco-design/web-react/icon";
 import RiceText from "@/rice_text";
 
-
+const EditText = (props) => {
+  const { textSet } = props;
+  return <RiceText onChange={textSet} readOnly={false} />;
+};
+const ViewText = (props) => {
+  const { data } = props;
+  return <RiceText readOnly={true} initValue={data} />;
+};
 export const OrderEdit: React.FC = () => {
   const t = useLocale(locale);
   const { id } = useParams();
@@ -21,10 +28,6 @@ export const OrderEdit: React.FC = () => {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [change, setChange] = useState(false);
   const [riceText, setRiceText] = useState<Record<string, any>>();
-  useEffect(() => {
-    console.log(riceText);
-  }, [riceText]);
-
 
   function handleOnClick() {
     const data = JSON.stringify(riceText.toJSON());
@@ -33,6 +36,7 @@ export const OrderEdit: React.FC = () => {
       remarks: data
     }).then(res => {
       if (res.data.success) {
+        setChange(value => !value);
         Message.success("Successful operation");
       }
     });
@@ -49,6 +53,7 @@ export const OrderEdit: React.FC = () => {
         setLoading(false);
       });
   }, [change]);
+
   return <div className={styles["content"]}>
     {/*<DynamicCard title={t['workplace.drawer.details']}>*/}
     <Spin style={{ width: "100%" }} loading={loading}>
@@ -83,12 +88,14 @@ export const OrderEdit: React.FC = () => {
       <DynamicDivider />
       {/*富文本回复内容*/}
       <DynamicCard title={t["work.order.operate.process.result"]}>
-        <Button className={styles["edit-button"]}
-                type={"primary"}
-                icon={<IconCheck />}
-                onClick={handleOnClick}>{t["work.order.operate.process.result.operate"]}</Button>
-        {(data.length > 0 && data?.[0].remarks !== "") ? <RiceText readOnly={true} initValue={data?.[0].remarks} /> :
-          <RiceText onChange={setRiceText} readOnly={false} />}
+        {!data?.[0]?.remarks && <Button className={styles["edit-button"]}
+                                        type={"primary"}
+                                        icon={<IconCheck />}
+                                        onClick={handleOnClick}>{t["work.order.operate.process.result.operate"]}</Button>}
+        {/*{(data.length > 0 && data?.[0].remarks !== "") ? <RiceText readOnly={true} initValue={data?.[0].remarks} /> :*/}
+        {/*  <RiceText onChange={setRiceText} readOnly={false} />}*/}
+        {!data?.[0]?.remarks && <EditText textSet={setRiceText} />}
+        {data?.[0]?.remarks && <ViewText data={data?.[0]?.remarks} />}
       </DynamicCard>
     </Spin>
 
