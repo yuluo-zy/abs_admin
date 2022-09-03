@@ -30,7 +30,10 @@ export const OrderEdit: React.FC = () => {
   const [riceText, setRiceText] = useState<Record<string, any>>();
 
   function handleOnClick() {
-    const data = JSON.stringify(riceText.toJSON());
+    let data = "";
+    if (riceText) {
+      data = JSON.stringify(riceText.toJSON());
+    }
     postAfterSaleComplete({
       id: id,
       remarks: data
