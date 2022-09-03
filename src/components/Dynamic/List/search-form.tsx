@@ -34,8 +34,8 @@ function SearchForm(props: {
         <FormItem label={item.name} field={item.field}>
           <Select
             options={item.options.map((item, index) => ({
-              label: item,
-              value: index
+              label: item?.label || item,
+              value: item?.value || index
             }))}
             allowClear
           />
