@@ -7,11 +7,12 @@ import DynamicPreviewImg from "@/components/Dynamic/img/preview";
 
 interface StepProps {
   descriptionData: any,
-  style?: CSSProperties
+  style?: CSSProperties;
+  encryption?: boolean;
 }
 
 export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChildren<StepProps>) => {
-  const { descriptionData, style } = props;
+  const { descriptionData, encryption, style } = props;
   const t = useLocale(locale);
   const getStep = (value) => {
     if (value === "1") {
@@ -33,22 +34,30 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
   //
   //   }
   // }
+  const getEncryption = (value) => {
+    if (encryption) {
+      if (value && value.length > 6) {
+        return value.substring(0, 3) + "******" + value.substring(value.length - 2);
+      }
+    }
+    return value;
+  };
   const customData = [
     {
       label: t["workplace.add.custom.quality"] + " - " + t["workplace.add.custom.phone"],
-      value: descriptionData?.[0]?.customerQcPhone
+      value: getEncryption(descriptionData?.[0]?.customerQcPhone)
     },
     {
       label: t["workplace.add.custom.quality"] + " - " + t["workplace.add.custom.email"],
-      value: descriptionData?.[0]?.customerQcEmail
+      value: getEncryption(descriptionData?.[0]?.customerQcEmail)
     },
     {
       label: t["workplace.add.custom.purchase"] + " - " + t["workplace.add.custom.phone"],
-      value: descriptionData?.[0]?.customerBuyerPhone
+      value: getEncryption(descriptionData?.[0]?.customerBuyerPhone)
     },
     {
       label: t["workplace.add.custom.purchase"] + " - " + t["workplace.add.custom.email"],
-      value: descriptionData?.[0]?.customerBuyerEmail
+      value: getEncryption(descriptionData?.[0]?.customerBuyerEmail)
     },
     {
       label: t["workplace.add.custom.espressif"] + " - " + t["workplace.add.custom.name"],

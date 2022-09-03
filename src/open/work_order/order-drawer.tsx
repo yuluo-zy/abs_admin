@@ -39,7 +39,7 @@ export const OrderDrawer: React.FC<DrawerProps> = (props: React.PropsWithChildre
       <DynamicDivider />
       <DynamicCard title={t["workplace.drawer.details"]}>
         <div style={{ paddingLeft: "3rem", paddingRight: "3rem" }}>
-          <OrderDescriptions descriptionData={data} />
+          <OrderDescriptions descriptionData={data} encryption={true} />
         </div>
       </DynamicCard>
     </div>
