@@ -6,6 +6,8 @@ import DynamicDivider from "@/components/Dynamic/Divider";
 import DynamicPreviewImg from "@/components/Dynamic/img/preview";
 import { IconCloudDownload } from "@arco-design/web-react/icon";
 import { getSalesInfo } from "@/api/file";
+import RiceText from "@/rice_text";
+import DynamicCard from "@/components/Dynamic/Card";
 
 interface StepProps {
   descriptionData: any,
@@ -186,5 +188,9 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
       data={issueData}
     />
     <DynamicDivider />
+    <DynamicCard title={t["workplace.drawer.details.feedback"]}>
+      <RiceText readOnly={true} initValue={data?.remarks} />
+    </DynamicCard>
+
   </div>;
 };
