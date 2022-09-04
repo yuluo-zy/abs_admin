@@ -1,16 +1,20 @@
 const i18n = {
-  "en-US": {
-    "workplace.welcomeBack": "Welcome Back,"
-  },
+  "en-US": {},
 
   "zh-CN": {
+    "work.order.title": "工单管理",
+    "work.order.operate": "操作",
+    "work.order.operate.accept": "接受工单",
+    "work.order.operate.complete": "完成工单",
+    "work.order.operate.edit": "查看详情",
+    "work.order.operate.order.a": "待处理",
+    "work.order.operate.order.b": "正在处理",
+    "work.order.operate.order.c": "处理完成",
+    "work.order.operate.process.result": "处理结果",
+    "work.order.operate.process.result.operate": "处理结案",
     "workplace.welcomeBack": "Welcome Back,",
     "workplace.content": "欢迎使用本系统, 进行产品质量工单管理",
     "workplace.content.work_order.add": "新建工单",
-    "workplace.content.work_order.success": "创建成功",
-    "workplace.content.work_order.success.content": "您的工单已提交, 乐鑫工程师正在马不停蹄处理, 请保持联系方式畅通, 以便及时沟通",
-    "workplace.content.work_order.success.key": "请您妥善保存本工单的查询秘钥, 以便后续进行工单查询, 下载相关资料",
-    "workplace.content.work_order.success.return": "返回首页",
     "workplace.content.work_order.quality": "质量工单",
     "workplace.content.work_order": "工单编号",
     "workplace.add.return": "返回主页",
@@ -56,11 +60,7 @@ const i18n = {
     "workplace.drawer.details.schedule.step2.title": "工单处理",
     "workplace.drawer.details.schedule.step2.description": "乐鑫工程师正在快马加鞭中, 请确保通讯畅通, 以便及时联系",
     "workplace.drawer.details.schedule.step3.title": "工单结案",
-    "workplace.drawer.details.schedule.step3.description": "相关解决方案已上传, 乐鑫工程师竭诚为您服务",
-    "workplace.drawer.details.feedback": "结果反馈",
-    "work.order.operate.order.a": "待处理",
-    "work.order.operate.order.b": "正在处理",
-    "work.order.operate.order.c": "处理完成"
+    "workplace.drawer.details.schedule.step3.description": "相关解决方案已上传, 乐鑫工程师竭诚为您服务"
   }
 };
 

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Grid, Layout, Spin, Table, TableColumnProps } from "@arco-design/web-react";
+import { Button, Grid, Layout, Spin, Table, TableColumnProps, Tag } from "@arco-design/web-react";
 import styles from "./style/index.module.less";
-import Navbar from "@/components/NavBar";
 import { Welcome } from "@/open/work_order/welcome";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
@@ -11,9 +10,10 @@ import Announcement from "./announcement";
 import { useUpdateEffect } from "react-use";
 import { getAfterSale } from "@/api/cqapms";
 import Footer from "@/components/Footer";
+import { OrderDrawer } from "@/open/work_order/order-drawer";
+import Navbar from "@/components/NavBar";
+import { IconDoubleRight } from "@arco-design/web-react/icon";
 
-const Header = Layout.Header;
-const LayoutFooter = Layout.Footer;
 const Content = Layout.Content;
 
 const { Row, Col } = Grid;
@@ -25,6 +25,7 @@ function WorkOrder() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [select, setSelect] = useState(null);
+  const [visible, setVisible] = useState(null);
   useUpdateEffect(() => {
     if (select) {
       setLoading(true);
@@ -39,10 +40,37 @@ function WorkOrder() {
     }
 
   }, [select]);
+  const orderStatus = [{
+    label: t["work.order.operate.order.a"],
+    value: 0
+  }, {
+    label: t["work.order.operate.order.b"],
+    value: 10
+  }, {
+    label: t["work.order.operate.order.c"],
+    value: 20
+  }];
+  const getOrderStatus = (value) => {
+    switch (value) {
+      case 0:
+        return <Tag color={"red"}>{orderStatus[0].label}</Tag>;
+      case 10:
+        return <Tag color={"green"}>{orderStatus[1].label}</Tag>;
+      case 20:
+        return <Tag color={"gray"}>{orderStatus[2].label}</Tag>;
+    }
+  };
   const columns: TableColumnProps[] = [
     {
       title: t["workplace.table.number"],
-      dataIndex: "afterSaleOrderNo"
+      dataIndex: "afterSaleOrderNo",
+      render: (col) => {
+        return <Button icon={<IconDoubleRight />} type={"outline"} onClick={() => {
+          setVisible(true);
+        }
+        }>{col}</Button>;
+      }
+
     },
     {
       title: t["workplace.add.custom.module"],
@@ -50,21 +78,23 @@ function WorkOrder() {
     },
     {
       title: t["workplace.table.status"],
-      dataIndex: "status"
+      dataIndex: "status",
+      render: (col) => {
+        return getOrderStatus(col);
+      }
     },
     {
       title: t["workplace.table.date"],
       dataIndex: "created"
     }
   ];
+
   return <Layout className={styles["layout"]}>
-    <Header>
       <div
         className={styles["layout-navbar"]}
       >
         <Navbar isLogIn={false} />
       </div>
-    </Header>
     <Content className={styles["layout-content"]}>
       <Route
         path={`/open/work_order/add`}
@@ -85,10 +115,10 @@ function WorkOrder() {
           </Col>
         </Row>
       </Route>
+      <Footer /><OrderDrawer visible={visible} setVisible={setVisible} data={data} />
     </Content>
-    <LayoutFooter>
-      <Footer />
-    </LayoutFooter>
+
+
   </Layout>;
 }
 

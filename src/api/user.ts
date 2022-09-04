@@ -1,11 +1,11 @@
 import { httpDelete, httpGet, httpPost, httpPut } from "@/utils/httpRequest";
 import { encodeSearchParams } from "@/utils/getUrlParams";
 
-export const userInfo = () => {
+export const getUserInfo = () => {
   return httpGet("/user/info");
 };
 
-export const userMenu = () => {
+export const getUserMenu = () => {
   return httpGet("/user/nav");
 };
 

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button, DatePicker, Form, Grid, Input, Select } from "@arco-design/web-react";
+import { Button, DatePicker, Form, Grid, Input, Select, Space } from "@arco-design/web-react";
 import { GlobalContext } from "@/context";
 import locale from "./locale";
 import useLocale from "@/utils/useHook/useLocale";
@@ -7,6 +7,7 @@ import { IconRefresh, IconSearch } from "@arco-design/web-react/icon";
 import styles from "./style/index.module.less";
 import dayjs from "dayjs";
 import { SearchItem } from "@/components/type";
+
 
 const { Row, Col } = Grid;
 
@@ -34,8 +35,8 @@ function SearchForm(props: {
         <FormItem label={item.name} field={item.field}>
           <Select
             options={item.options.map((item, index) => ({
-              label: item,
-              value: index
+              label: item?.label || item,
+              value: item?.value || index
             }))}
             allowClear
           />
@@ -88,26 +89,27 @@ function SearchForm(props: {
         </Row>
       </Form>
       <div className={styles["right-button"]}>
-        <Button
-          type="primary"
-          icon={<IconSearch />}
-          onClick={() => {
-            const values = form.getFieldsValue();
-            props.onSearch(values);
-          }}
-        >
-          {t["searchTable.form.search"]}
-        </Button>
+        <Space direction={"vertical"}>
+          <Button
+            type="primary"
+            icon={<IconSearch />}
+            onClick={() => {
+              const values = form.getFieldsValue();
+              props.onSearch(values);
+            }}
+          >
+            {t["searchTable.form.search"]}
+          </Button>
 
-        <Button
-          icon={<IconRefresh />}
-          onClick={() => {
-            form.resetFields();
-            props.onSearch({});
-          }}
-        >
-          {t["searchTable.form.reset"]}
-        </Button>
+          <Button
+            icon={<IconRefresh />}
+            onClick={() => {
+              form.resetFields();
+              props.onSearch({});
+            }}
+          >
+            {t["searchTable.form.reset"]}
+          </Button></Space>
       </div>
     </div>
   );

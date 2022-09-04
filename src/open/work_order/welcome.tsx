@@ -28,7 +28,7 @@ export const Welcome: React.FC<WelcomeProps> = (props: React.PropsWithChildren<W
         </div>
         <div className={styles["content-banner-content"]}>
           <p>{t["workplace.content"]}
-            <Button type="outline" icon={<IconSubscribeAdd />} className={styles["button"]}
+            <Button type={"primary"} size={"large"} icon={<IconSubscribeAdd />} className={styles["button"]}
                     onClick={to_add}>{t["workplace.content.work_order.add"]}</Button>
           </p>
           <div className={styles["content-banner-group"]}>
@@ -52,7 +52,9 @@ export const Welcome: React.FC<WelcomeProps> = (props: React.PropsWithChildren<W
         </div>
       </div>
       <div className={styles["content-img"]}>
-        <Solution />
+        <div>
+          <Solution />
+        </div>
       </div>
     </div>
 

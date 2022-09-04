@@ -4,10 +4,20 @@ import Logo from "@/assets/logo.svg";
 import LoginForm from "./form";
 import LoginBanner from "./banner";
 import styles from "./style/index.module.less";
+import checkLogin from "@/utils/checkLogin";
+import { useHistory } from "react-router";
+import { defaultRoute } from "@/routes";
+import { Message } from "@arco-design/web-react";
 
 function Login() {
+
+  const history = useHistory();
   useEffect(() => {
     document.body.setAttribute("arco-theme", "light");
+    if (checkLogin()) {
+      Message.info("Successfully Logged In");
+      history.replace(defaultRoute);
+    }
   }, []);
 
   return (

@@ -3,6 +3,7 @@ import { Link, Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { Breadcrumb, Layout, Menu } from "@arco-design/web-react";
 import cs from "classnames";
 import {
+  IconArchive,
   IconDashboard,
   IconMenuFold,
   IconMenuUnfold,
@@ -10,7 +11,7 @@ import {
   IconUser,
   IconUserGroup
 } from "@arco-design/web-react/icon";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import qs from "query-string";
 import NProgress from "nprogress";
 import Navbar from "./components/NavBar";
@@ -22,6 +23,7 @@ import lazyload from "./utils/lazyload";
 import { GlobalState } from "./store";
 import styles from "./style/layout.module.less";
 import { useMenu } from "@/routes";
+import { getUserInfo, getUserMenu } from "@/api/user";
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
@@ -39,6 +41,8 @@ function getIconFromKey(key) {
       return <IconUser className={styles.icon} />;
     case "product":
       return <IconNav className={styles.icon} />;
+    case "work_order":
+      return <IconArchive className={styles.icon} />;
     // default:
     //   return <IconTag className={styles.icon} />;
   }
@@ -81,9 +85,16 @@ function PageLayout() {
   const pathname = history.location.pathname;
   const currentComponent = qs.parseUrl(pathname).url.slice(1);
   const locale = useLocale();
+
+
+  useEffect(() => {
+    Promise.all([fetchUserInfo(), fetchUserMenu()])
+      .then();
+  }, []);
+
   const settings = useSelector((state: GlobalState) => state.settings);
   const userMenu = useSelector((state: GlobalState) => state.menu);
-
+  const dispatch = useDispatch();
   const [routes, defaultRoute] = useMenu(userMenu);
   const defaultSelectedKeys = [currentComponent || defaultRoute];
   const paths = (currentComponent || defaultRoute).split("/");
@@ -101,6 +112,24 @@ function PageLayout() {
   const showNavbar = settings.navbar && urlParams.navbar !== false;
   const showMenu = settings.menu && urlParams.menu !== false;
   const showFooter = settings.footer && urlParams.footer !== false;
+
+  function fetchUserInfo() {
+    return getUserInfo().then((res) => {
+      dispatch({
+        type: "update-userInfo",
+        payload: { userInfo: res.data.result }
+      });
+    });
+  }
+
+  function fetchUserMenu() {
+    return getUserMenu().then((res) => {
+      dispatch({
+        type: "update-userMenu",
+        payload: { menu: res.data.result }
+      });
+    });
+  }
 
   const flattenRoutes = useMemo(() => getFlattenRoutes(routes) || [], [routes]);
 
