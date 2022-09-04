@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Grid, Layout, Spin, Table, TableColumnProps } from "@arco-design/web-react";
 import styles from "./style/index.module.less";
-import Navbar from "@/components/NavBar";
 import { Welcome } from "@/open/work_order/welcome";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
@@ -12,6 +11,7 @@ import { useUpdateEffect } from "react-use";
 import { getAfterSale } from "@/api/cqapms";
 import Footer from "@/components/Footer";
 import { OrderDrawer } from "@/open/work_order/order-drawer";
+import Navbar from "@/components/NavBar";
 
 const Header = Layout.Header;
 const LayoutFooter = Layout.Footer;
@@ -67,13 +67,11 @@ function WorkOrder() {
     }
   ];
   return <Layout className={styles["layout"]}>
-    <Header>
       <div
         className={styles["layout-navbar"]}
       >
         <Navbar isLogIn={false} />
       </div>
-    </Header>
     <Content className={styles["layout-content"]}>
       <Route
         path={`/open/work_order/add`}
@@ -94,11 +92,10 @@ function WorkOrder() {
           </Col>
         </Row>
       </Route>
+      <Footer /><OrderDrawer visible={visible} setVisible={setVisible} data={data} />
     </Content>
-    <OrderDrawer visible={visible} setVisible={setVisible} data={data} />
-    <LayoutFooter>
-      <Footer />
-    </LayoutFooter>
+
+
   </Layout>;
 }
 
