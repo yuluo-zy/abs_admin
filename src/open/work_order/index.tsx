@@ -90,11 +90,11 @@ function WorkOrder() {
   ];
 
   return <Layout className={styles["layout"]}>
-      <div
-        className={styles["layout-navbar"]}
-      >
-        <Navbar isLogIn={false} />
-      </div>
+    <div
+      className={styles["layout-navbar"]}
+    >
+      <Navbar isLogIn={false} />
+    </div>
     <Content className={styles["layout-content"]}>
       <Route
         path={`/open/work_order/add`}

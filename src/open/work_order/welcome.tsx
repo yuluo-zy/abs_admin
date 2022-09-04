@@ -52,9 +52,7 @@ export const Welcome: React.FC<WelcomeProps> = (props: React.PropsWithChildren<W
         </div>
       </div>
       <div className={styles["content-img"]}>
-        <div>
           <Solution />
-        </div>
       </div>
     </div>
 
