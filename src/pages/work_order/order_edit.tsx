@@ -7,7 +7,7 @@ import DynamicCard from "@/components/Dynamic/Card";
 import { OrderStep } from "@/open/work_order/order-step";
 import DynamicDivider from "@/components/Dynamic/Divider";
 import { OrderDescriptions } from "@/open/work_order/order-descriptions";
-import { Button, Message, Spin } from "@arco-design/web-react";
+import { Alert, Button, Message, Spin } from "@arco-design/web-react";
 import styles from "./style/edit.module.less";
 import { IconCheck, IconCheckCircle } from "@arco-design/web-react/icon";
 import RiceText from "@/rice_text";
@@ -91,6 +91,7 @@ export const OrderEdit: React.FC = () => {
       <DynamicDivider />
       {/*富文本回复内容*/}
       <DynamicCard title={t["work.order.operate.process.result"]}>
+        <Alert type="error" content="文件上传和图片上传暂不可用, 预计马上支持" />
         {!data?.[0]?.remarks && <Button className={styles["edit-button"]}
                                         type={"primary"}
                                         icon={<IconCheck />}
