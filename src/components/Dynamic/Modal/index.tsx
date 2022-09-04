@@ -9,6 +9,8 @@ function DynamicModal(props: React.PropsWithChildren<ModeProps>) {
       visible={props.visible}
       footer={null}
       unmountOnExit={true}
+      alignCenter={false}
+      style={{ top: "30%", width: "500px" }}
       confirmLoading={props.confirmLoading}
       onCancel={() => {
         props.onCancel?.();
