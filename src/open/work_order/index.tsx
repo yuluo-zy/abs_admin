@@ -12,9 +12,8 @@ import { getAfterSale } from "@/api/cqapms";
 import Footer from "@/components/Footer";
 import { OrderDrawer } from "@/open/work_order/order-drawer";
 import Navbar from "@/components/NavBar";
+import { IconDoubleRight } from "@arco-design/web-react/icon";
 
-const Header = Layout.Header;
-const LayoutFooter = Layout.Footer;
 const Content = Layout.Content;
 
 const { Row, Col } = Grid;
@@ -46,7 +45,7 @@ function WorkOrder() {
       title: t["workplace.table.number"],
       dataIndex: "afterSaleOrderNo",
       render: (col) => {
-        return <Button onClick={() => {
+        return <Button icon={<IconDoubleRight />} type={"outline"} onClick={() => {
           setVisible(true);
         }
         }>{col}</Button>;

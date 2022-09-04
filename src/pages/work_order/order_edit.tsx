@@ -61,7 +61,7 @@ export const OrderEdit: React.FC = () => {
     {/*<DynamicCard title={t['workplace.drawer.details']}>*/}
     <Spin style={{ width: "100%" }} loading={loading}>
       <DynamicCard title={t["workplace.drawer.details.schedule"]}>
-        <OrderStep stepNumber={1} style={{ maxWidth: 800, margin: "0 auto" }} />
+        <OrderStep stepNumber={data} style={{ maxWidth: 800, margin: "0 auto" }} />
       </DynamicCard>
       <DynamicDivider />
       <DynamicCard title={t["workplace.drawer.details"]}>
