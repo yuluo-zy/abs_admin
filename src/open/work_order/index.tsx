@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Grid, Layout, Spin, Table, TableColumnProps } from "@arco-design/web-react";
+import { Button, Grid, Layout, Spin, Table, TableColumnProps, Tag } from "@arco-design/web-react";
 import styles from "./style/index.module.less";
 import { Welcome } from "@/open/work_order/welcome";
 import useLocale from "@/utils/useHook/useLocale";
@@ -40,6 +40,26 @@ function WorkOrder() {
     }
 
   }, [select]);
+  const orderStatus = [{
+    label: t["work.order.operate.order.a"],
+    value: 0
+  }, {
+    label: t["work.order.operate.order.b"],
+    value: 10
+  }, {
+    label: t["work.order.operate.order.c"],
+    value: 20
+  }];
+  const getOrderStatus = (value) => {
+    switch (value) {
+      case 0:
+        return <Tag color={"red"}>{orderStatus[0].label}</Tag>;
+      case 10:
+        return <Tag color={"green"}>{orderStatus[1].label}</Tag>;
+      case 20:
+        return <Tag color={"gray"}>{orderStatus[2].label}</Tag>;
+    }
+  };
   const columns: TableColumnProps[] = [
     {
       title: t["workplace.table.number"],
@@ -58,13 +78,17 @@ function WorkOrder() {
     },
     {
       title: t["workplace.table.status"],
-      dataIndex: "status"
+      dataIndex: "status",
+      render: (col) => {
+        return getOrderStatus(col);
+      }
     },
     {
       title: t["workplace.table.date"],
       dataIndex: "created"
     }
   ];
+
   return <Layout className={styles["layout"]}>
       <div
         className={styles["layout-navbar"]}
