@@ -13,6 +13,7 @@ import {
   Input,
   InputNumber,
   Message,
+  Modal,
   Select,
   Space,
   Tooltip,
@@ -44,6 +45,7 @@ const FileType = [
   "application/vnd.ms-excel",
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   "application/zip",
+  "application/x-zip-compressed",
   "application/x-7z-compressed",
   "application/octet-stream"
 ];
@@ -53,6 +55,29 @@ export default function WorkOrderAdd() {
   const history = useHistory();
   const to_return = () => {
     history.push("/open/work_order");
+  };
+  const success = (value) => {
+    Modal.success({
+      title: t["workplace.content.work_order.success"],
+      content: (<div>
+        <Typography.Paragraph>{t["workplace.content.work_order.success.content"]}</Typography.Paragraph>
+        <DynamicDivider />
+        <Typography.Paragraph>{t["workplace.content.work_order.success.key"]}</Typography.Paragraph>
+        <DynamicDivider />
+        <div className={styles["copy"]}>
+          <Typography.Paragraph copyable>{value}</Typography.Paragraph>
+        </div>
+
+      </div>),
+      onOk: to_return,
+      maskClosable: false,
+      escToExit: false,
+      focusLock: true,
+      unmountOnExit: false,
+      style: {
+        width: 600
+      }
+    });
   };
   const uploadData = (option) => {
     const { onProgress, file, onSuccess, onError } = option;
@@ -126,8 +151,9 @@ export default function WorkOrderAdd() {
       ...temp
     }).then(res => {
       if (res.data.success) {
-        form.setFieldValue("id", res.data.result);
+        form.setFieldValue("id", res.data.result?.id);
         Message.success(t["message.ok"]);
+        success(res.data.result?.id);
       }
     });
   };
@@ -274,7 +300,7 @@ export default function WorkOrderAdd() {
             <Form.Item field="fileIds" label={t["workplace.add.custom.product.issue.appendix"]}>
               <DynamicUpload limit={5}
                              customRequest={uploadData}
-                             tyepList={FileType}
+                             fileType={FileType}
                              listType={"text"}
                              onChange={(fileList: UploadItem[], file: UploadItem) => {
                                form.setFieldValue("fileIds", fileList);
@@ -292,5 +318,6 @@ export default function WorkOrderAdd() {
         </Form>
       </DynamicCard>
     </div>
+
   </div>;
 }

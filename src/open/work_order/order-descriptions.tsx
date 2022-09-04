@@ -171,12 +171,14 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
 
   return <div style={{ ...style }}>
     <Descriptions
+      colon={" : "}
       title={t["workplace.add.custom"]}
       data={customData}
     />
     <DynamicDivider />
     <Descriptions
       column={2}
+      colon={" : "}
       labelStyle={{ textAlign: "right", paddingRight: 36 }}
       title={t["workplace.add.custom.product"]}
       data={productData}
@@ -184,6 +186,7 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
     <DynamicDivider />
     <Descriptions
       column={1}
+      colon={" : "}
       labelStyle={{ textAlign: "right", paddingRight: 36 }}
       title={t["workplace.add.custom.product.issue"]}
       data={issueData}
@@ -192,6 +195,5 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
     {feedback && <DynamicCard title={t["workplace.drawer.details.feedback"]}>
       <RiceText readOnly={true} initValue={data?.remarks} />
     </DynamicCard>}
-
   </div>;
 };
