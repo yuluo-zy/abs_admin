@@ -193,7 +193,7 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
     />
     <DynamicDivider />
     {feedback && <DynamicCard title={t["workplace.drawer.details.feedback"]}>
-      <RiceText readOnly={true} initValue={data?.remarks} />
+      <RiceText readOnly={true} initValue={data?.remark} />
     </DynamicCard>}
   </div>;
 };

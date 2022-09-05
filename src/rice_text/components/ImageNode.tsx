@@ -32,7 +32,7 @@ import * as React from "react";
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { getFile } from "@/api/file";
 import ImageResizer from "./ui/ImageResizer";
-import { Image, Message } from "@arco-design/web-react";
+import { Message } from "@arco-design/web-react";
 import { useFunctions } from "@/rice_text/context/SettingsContext";
 
 export interface ImagePayload {
@@ -96,22 +96,22 @@ function LazyImage({
   read_only: boolean;
 }): JSX.Element {
   const file = useSuspenseImage(fileId, customRequest || getFile);
-  if (read_only) {
-    return (
-      <Image
-        className={className || undefined}
-        src={URL.createObjectURL(file)}
-        alt={altText}
-        ref={imageRef}
-        style={{
-          height,
-          maxWidth,
-          width
-        }}
-        draggable="false"
-      />
-    );
-  }
+  // if (read_only) {
+  //   return (
+  //     <Image
+  //       className={className || undefined}
+  //       src={URL.createObjectURL(file)}
+  //       alt={altText}
+  //       ref={imageRef}
+  //       style={{
+  //         height,
+  //         maxWidth,
+  //         width
+  //       }}
+  //       draggable="false"
+  //     />
+  //   );
+  // }
   return (
     <img
       className={className || undefined}

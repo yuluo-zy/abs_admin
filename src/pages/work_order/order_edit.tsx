@@ -68,7 +68,7 @@ export const OrderEdit: React.FC = () => {
     }
     postAfterSaleComplete({
       id: id,
-      remarks: data
+      remark: data
     }).then(res => {
       if (res.data.success) {
         setChange(value => !value);
@@ -130,12 +130,12 @@ export const OrderEdit: React.FC = () => {
       <DynamicDivider />
       {/*富文本回复内容*/}
       <DynamicCard title={t["work.order.operate.process.result"]}>
-        {!data?.[0]?.remarks && <Button className={styles["edit-button"]}
-                                        type={"primary"}
-                                        icon={<IconCheck />}
-                                        onClick={handleOnClick}>{t["work.order.operate.process.result.operate"]}</Button>}
-        {!data?.[0]?.remarks && <EditText textSet={setRiceText} />}
-        {data?.[0]?.remarks && <ViewText data={data?.[0]?.remarks} />}
+        {!data?.[0]?.remark && <Button className={styles["edit-button"]}
+                                       type={"primary"}
+                                       icon={<IconCheck />}
+                                       onClick={handleOnClick}>{t["work.order.operate.process.result.operate"]}</Button>}
+        {!data?.[0]?.remark && <EditText textSet={setRiceText} />}
+        {data?.[0]?.remark && <ViewText data={data?.[0]?.remark} />}
       </DynamicCard>
     </Spin>
   </div>;
