@@ -12,7 +12,7 @@ import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
 import { useSharedHistoryContext } from "@/rice_text/context/SharedHistoryContext";
-import { useSettings } from "@/rice_text/context/SettingsContext";
+import { useFunctions, useSettings } from "@/rice_text/context/SettingsContext";
 import Placeholder from "@/rice_text/components/ui/Placeholder";
 import ToolbarPlugin from "@/rice_text/plugins/ToolbarPlugin";
 import { MaxLengthPlugin } from "@/rice_text/plugins/MaxLengthPlugin";
@@ -32,10 +32,10 @@ import KeywordsPlugin from "./plugins/KeywordsPlugin";
 import "./index.less";
 import ImagesPlugin from "./plugins/ImagesPlugin";
 import FilePlugin from "@/rice_text/plugins/FilePlugin";
-import MentionsPlugin from "./plugins/MentionsPlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { CLEAR_HISTORY_COMMAND } from "lexical";
+import MentionsPlugin from "./plugins/MentionsPlugin";
 
 export default function Editor({ onChange, initValue }: {
   initValue?: string
@@ -50,6 +50,11 @@ export default function Editor({ onChange, initValue }: {
       isRichText
     }
   } = useSettings();
+  const {
+    functions: {
+      fileUpload
+    }, setFunction
+  } = useFunctions();
   const text = isRichText
     ? "Enter some rich text..."
     : "Enter some plain text...";

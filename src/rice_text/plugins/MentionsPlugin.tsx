@@ -86,6 +86,7 @@ function MentionsTypeaheadMenuItem({
 }
 
 export default function NewMentionsPlugin(): JSX.Element | null {
+  //todo 修复这个问题
   const [editor] = useLexicalComposerContext();
 
   const results = useMentionLookupService();

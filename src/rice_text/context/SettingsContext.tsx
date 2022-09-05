@@ -1,8 +1,46 @@
 import type { SettingName } from "../appSettings";
-import { DEFAULT_SETTINGS } from "../appSettings";
+import { DEFAULT_FUNCTION, DEFAULT_SETTINGS, FunctionName, Functions } from "../appSettings";
 
 import * as React from "react";
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from "react";
+
+type FunctionContextShape = {
+  setFunction: (name: FunctionName, value: any) => void;
+  functions: Functions;
+};
+const _FunctionsContext: React.Context<FunctionContextShape> = createContext({
+  setFunction: (name: FunctionName, value: any) => {
+  },
+  functions: DEFAULT_FUNCTION
+});
+
+export const FunctionsContext = ({
+                                   children,
+                                   defaultFunction
+                                 }: { children: ReactNode, defaultFunction: Record<string, any> }): JSX.Element => {
+  const [functions, setData] = useState({
+    ...DEFAULT_FUNCTION,
+    ...defaultFunction
+  });
+  const setFunction = useCallback((name: FunctionName, value: any) => {
+    setData((options) => {
+      return {
+        ...options,
+        [name as string]: value
+      };
+    });
+  }, []);
+
+  const contextValue = useMemo(() => {
+    return { setFunction, functions };
+  }, [setFunction, functions]);
+
+  return <_FunctionsContext.Provider value={contextValue}>{children}</_FunctionsContext.Provider>;
+};
+export const useFunctions = (): FunctionContextShape => {
+  // useContext 方法接收一个 context 对象（React.createContext 的返回值）并返回该 context 的当前值
+  return useContext(_FunctionsContext);
+};
 
 type SettingsContextShape = {
   setOption: (name: SettingName, value: boolean) => void;

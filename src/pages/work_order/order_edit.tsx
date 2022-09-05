@@ -11,15 +11,9 @@ import { Alert, Button, Message, Spin } from "@arco-design/web-react";
 import styles from "./style/edit.module.less";
 import { IconCheck, IconCheckCircle } from "@arco-design/web-react/icon";
 import RiceText from "@/rice_text";
+import { postSalesFile } from "@/api/file";
 
-const EditText = (props) => {
-  const { textSet } = props;
-  return <RiceText onChange={textSet} readOnly={false} />;
-};
-const ViewText = (props) => {
-  const { data } = props;
-  return <RiceText readOnly={true} initValue={data} />;
-};
+
 export const OrderEdit: React.FC = () => {
   const t = useLocale(locale);
   const { id } = useParams();
@@ -28,6 +22,15 @@ export const OrderEdit: React.FC = () => {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [change, setChange] = useState(false);
   const [riceText, setRiceText] = useState<Record<string, any>>();
+
+  const EditText = (props) => {
+    const { textSet } = props;
+    return <RiceText onChange={textSet} readOnly={false} fileUpload={postSalesFile} />;
+  };
+  const ViewText = (props) => {
+    const { data } = props;
+    return <RiceText readOnly={true} initValue={data} fileUpload={postSalesFile} />;
+  };
 
   function handleOnClick() {
     let data = "";
@@ -107,6 +110,5 @@ export const OrderEdit: React.FC = () => {
         {data?.[0]?.remarks && <ViewText data={data?.[0]?.remarks} />}
       </DynamicCard>
     </Spin>
-
   </div>;
 };
