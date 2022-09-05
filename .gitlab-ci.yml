@@ -89,7 +89,17 @@ push-job:
 
 push-job-prod:
   stage: push
+  image: 
+    name: amazon/aws-cli
+    entrypoint: [""]
+  services:
+    - docker:dind
+  before_script:
+    - amazon-linux-extras install docker
+    - aws --version
+    - docker --version
   script:
+    - aws ecr get-login-password | docker login --username AWS --password-stdin public.ecr.aws/h5x2h9h1
     # - docker login 148622829133.dkr.ecr.ap-east-1.amazonaws.com -uAWS -p$ECR_PASSWORD
     - docker push public.ecr.aws/h5x2h9h1/esp_custom_frontend:${TAG}
     - docker rmi public.ecr.aws/h5x2h9h1/esp_custom_frontend:${TAG}
