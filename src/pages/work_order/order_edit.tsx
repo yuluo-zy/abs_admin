@@ -48,9 +48,12 @@ const EditText = (props) => {
                    imgDownload={getSalesInfo}
   />;
 };
-const ViewText = (props) => {
+export const ViewText = (props) => {
   const { data } = props;
-  return <RiceText readOnly={true} initValue={data} fileDownload={getSalesInfoByRice} imgDownload={getSalesInfo} />;
+  return <RiceText readOnly={true} initValue={data}
+                   fileDownload={getSalesInfoByRice}
+                   imgUpload={uploadData}
+                   imgDownload={getSalesInfo} />;
 };
 export const OrderEdit: React.FC = () => {
   const t = useLocale(locale);
