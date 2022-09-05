@@ -38,6 +38,7 @@ export const Welcome: React.FC<WelcomeProps> = (props: React.PropsWithChildren<W
               </Select>
               <Input.Search placeholder="Please enter an key"
                             className={styles["input"]}
+                            allowClear
                             onPressEnter={(value) => {
                               if (value?.target?.value) {
                                 setSelect(value?.target?.value);
