@@ -21,6 +21,8 @@ variables:
   ENV: "dev"
   GIT_URL: xsystem.espressif.cn/IT/k8s-custom-frontend.git
   DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
 
 workflow:
   rules:
