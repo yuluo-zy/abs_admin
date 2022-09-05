@@ -94,7 +94,7 @@ function WorkOrder() {
     <div
       className={styles["layout-navbar"]}
     >
-      <Navbar isLogIn={false} />
+      <Navbar isLogIn={false} title={"ESPRESSIF"} />
     </div>
     <Content className={styles["layout-content"]}>
       <Route
