@@ -91,7 +91,7 @@ push-job-prod:
   stage: push
   image: 
     name: amazon/aws-cli
-  entrypoint: [""]
+    entrypoint: [""]
   services:
     - docker:dind
   before_script:
