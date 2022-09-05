@@ -125,7 +125,7 @@ export const OrderEdit: React.FC = () => {
       <DynamicDivider />
       {/*富文本回复内容*/}
       <DynamicCard title={t["work.order.operate.process.result"]}>
-        <Alert type="error" content="文件上传和图片上传暂不可用, 预计马上支持" />
+        <Alert type="error" content="图片上传暂不可用, 预计马上支持" />
         {!data?.[0]?.remarks && <Button className={styles["edit-button"]}
                                         type={"primary"}
                                         icon={<IconCheck />}
