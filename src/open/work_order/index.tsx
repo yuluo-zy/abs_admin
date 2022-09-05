@@ -28,6 +28,7 @@ function WorkOrder() {
   const [visible, setVisible] = useState(null);
   useUpdateEffect(() => {
     if (select) {
+      setData([]);
       setLoading(true);
       getAfterSale(select).then(res => {
         if (res.data.success && res.data.result) {

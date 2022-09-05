@@ -4,7 +4,7 @@ import locale from "./locale/index";
 import styles from "./style/welcome.module.less";
 import Logo from "./assets/logo.svg";
 import { Button, Input, Select } from "@arco-design/web-react";
-import { IconSearch, IconSubscribeAdd } from "@arco-design/web-react/icon";
+import { IconSubscribeAdd } from "@arco-design/web-react/icon";
 import Solution from "./assets/solution_mindset.svg";
 import { useHistory } from "react-router";
 
@@ -36,14 +36,16 @@ export const Welcome: React.FC<WelcomeProps> = (props: React.PropsWithChildren<W
               <Select defaultValue="1" className={styles["select"]}>
                 <Select.Option value="1">{t["workplace.content.work_order"]}</Select.Option>
               </Select>
-              <Input placeholder="Please enter an address"
-                     addAfter={<IconSearch />}
-                     className={styles["input"]}
-                     onPressEnter={(value) => {
-                       if (value?.target?.value) {
-                         setSelect(value?.target?.value);
-                       }
-                     }}
+              <Input.Search placeholder="Please enter an key"
+                            className={styles["input"]}
+                            onPressEnter={(value) => {
+                              if (value?.target?.value) {
+                                setSelect(value?.target?.value);
+                              }
+                            }}
+                            onSearch={(value) => {
+                              setSelect(value);
+                            }}
               />
             </Input.Group>
           </div>
@@ -52,7 +54,7 @@ export const Welcome: React.FC<WelcomeProps> = (props: React.PropsWithChildren<W
         </div>
       </div>
       <div className={styles["content-img"]}>
-          <Solution />
+        <Solution />
       </div>
     </div>
 
