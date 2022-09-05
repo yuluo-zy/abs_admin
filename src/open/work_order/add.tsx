@@ -272,7 +272,7 @@ export default function WorkOrderAdd() {
               </Grid.Row>
             </FormItem>
             <Form.Item field="occurDate" label={t["workplace.add.custom.product.date"]} rules={[{ required: true }]}>
-              <DatePicker showTime style={{ maxWidth: 400 }} />
+              <DatePicker style={{ maxWidth: 400 }} />
             </Form.Item>
             <Form.Item field="problemStage" label={t["workplace.add.custom.product.stage"]}
                        rules={[{ required: true }]}>
