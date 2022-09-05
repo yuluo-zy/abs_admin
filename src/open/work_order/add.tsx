@@ -250,15 +250,23 @@ export default function WorkOrderAdd() {
                 <Grid.Col span={12}>
                   <Form.Item field="productionNum" label={t["workplace.add.custom.product.number.actual"]}
                              rules={[{ required: true }]}>
-                    <InputNumber placeholder="please enter espressif name" max={1000000} min={1}
-                                 style={{ maxWidth: 400 }} />
+                    <InputNumber
+                      precision={0}
+                      step={1}
+                      placeholder="please enter espressif name"
+                      max={10000000}
+                      min={1}
+                      style={{ maxWidth: 400 }} />
                   </Form.Item>
                 </Grid.Col>
                 <Grid.Col span={12}>
                   <Form.Item field="failNum" rules={[{ required: true }]}
                              label={t["workplace.add.custom.product.number.defective"]}>
-                    <InputNumber placeholder="please enter espressif email" max={100000} min={1}
-                                 style={{ maxWidth: 400 }} />
+                    <InputNumber
+                      precision={0}
+                      step={1}
+                      placeholder="please enter espressif email" max={1000000} min={1}
+                      style={{ maxWidth: 400 }} />
                   </Form.Item>
                 </Grid.Col>
               </Grid.Row>
