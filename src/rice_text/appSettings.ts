@@ -21,6 +21,7 @@ export const DEFAULT_SETTINGS: Settings = {
 export type FunctionName =
   "fileUpload"
   | "imgUpload"
+  | "imgDownload"
   | "fileDownload";
 
 export type Functions = Record<FunctionName, any>;
@@ -28,5 +29,6 @@ export type Functions = Record<FunctionName, any>;
 export const DEFAULT_FUNCTION: Functions = {
   fileUpload: null,
   imgUpload: null,
-  fileDownload: null
+  fileDownload: null,
+  imgDownload: null
 };

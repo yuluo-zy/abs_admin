@@ -12,13 +12,17 @@ import { checkIsJSON } from "@/rice_text/utils/nodeUtils";
 export default function RiceText({
                                    readOnly, onChange, initValue,
                                    fileUpload,
-                                   fileDownload
+                                   fileDownload,
+                                   imgDownload,
+                                   imgUpload
                                  }: {
   readOnly: boolean,
   onChange?: any,
   initValue?: string,
   fileUpload?: any,
   fileDownload?: any,
+  imgDownload?: any,
+  imgUpload?: any
 }): JSX.Element {
 
   const {
@@ -49,7 +53,9 @@ export default function RiceText({
     <SettingsContext>
       <FunctionsContext defaultFunction={{
         fileUpload: fileUpload,
-        fileDownload: fileDownload
+        fileDownload: fileDownload,
+        imgDownload: imgDownload,
+        imgUpload: imgUpload
       }}>
         <LexicalComposer initialConfig={initialConfig}>
           <SharedHistoryContext>

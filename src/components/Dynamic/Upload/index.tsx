@@ -64,7 +64,6 @@ function DynamicUpload(props) {
     fileType,
     customDownload
   } = props;
-  console.log(customDownload);
   const [defaultList, setDefaultList] = useState([]);
   const file_type = fileType || FileType;
   const initDate = (value) => {
