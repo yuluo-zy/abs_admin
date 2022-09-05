@@ -26,7 +26,7 @@ const i18n = {
     "workplace.add.custom.module": "产品型号",
     "workplace.add.custom.module.help": "产品型号信息请查看钢印",
     "workplace.add.custom.product.number": "产品用量",
-    "workplace.add.custom.product.number.actual": "实际投产数量",
+    "workplace.add.custom.product.number.actual": "投产数量",
     "workplace.add.custom.product.number.defective": "不良品数量",
     "workplace.add.custom.product.date": "发生时间",
     "workplace.add.custom.product.stage": "问题出现阶段",
