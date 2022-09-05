@@ -72,7 +72,7 @@ docker_build_prod:
     - npm
   script:
     - echo $ENV
-    - docker build -t 148622829133.dkr.ecr.ap-east-1.amazonaws.com/esp_custom_frontend:${TAG} .
+    - docker build -t public.ecr.aws/h5x2h9h1/esp_custom_frontend:${TAG} .
   only:
     - main
 
@@ -91,8 +91,8 @@ push-job-prod:
   stage: push
   script:
     # - docker login 148622829133.dkr.ecr.ap-east-1.amazonaws.com -uAWS -p$ECR_PASSWORD
-    - docker push 148622829133.dkr.ecr.ap-east-1.amazonaws.com/esp_custom_frontend:${TAG}
-    - docker rmi 148622829133.dkr.ecr.ap-east-1.amazonaws.com/esp_custom_frontend:${TAG}
+    - docker push public.ecr.aws/h5x2h9h1/esp_custom_frontend:${TAG}
+    - docker rmi public.ecr.aws/h5x2h9h1/esp_custom_frontend:${TAG}
   only:
     - main
 
@@ -133,6 +133,6 @@ deploy-prod:
     - ssh-keyscan ec2-16-162-92-119.ap-east-1.compute.amazonaws.com >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - ssh ec2-user@ec2-16-162-92-119.ap-east-1.compute.amazonaws.com "(docker login 148622829133.dkr.ecr.ap-east-1.amazonaws.com -uAWS -p$ECR_PASSWORD) && (docker stop custom-nginx) && (docker rm custom-nginx)&&(docker run -itd --name custom-nginx  -p 80:80 148622829133.dkr.ecr.ap-east-1.amazonaws.com/esp_custom_frontend:${TAG} bash)"
+    - ssh ec2-user@ec2-16-162-92-119.ap-east-1.compute.amazonaws.com "(docker stop custom-nginx) && (docker rm custom-nginx)&&(docker run -itd --name custom-nginx  -p 80:80 public.ecr.aws/h5x2h9h1/esp_custom_frontend:${TAG} bash)"
   only:
     - main
