@@ -91,9 +91,6 @@ push-job-prod:
   stage: push
   image: 
     name: amazon/aws-cli
-    entrypoint: [""]
-  services:
-    - docker:dind
   before_script:
     - amazon-linux-extras install docker
     - aws --version
