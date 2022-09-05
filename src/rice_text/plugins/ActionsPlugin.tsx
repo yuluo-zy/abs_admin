@@ -14,7 +14,8 @@ export default function ActionsPlugin(): JSX.Element {
   const [editor] = useLexicalComposerContext();
   const {
     functions: {
-      fileUpload
+      fileUpload,
+      fileDownload
     }
   } = useFunctions();
   const [isEditorEmpty, setIsEditorEmpty] = useState(true);
@@ -97,7 +98,6 @@ export default function ActionsPlugin(): JSX.Element {
         title="Upload Files"
         visible={file}
         onOk={() => {
-          console.log(fileSrc);
           if (fileSrc) {
             editor.dispatchCommand(INSERT_FILE_COMMAND, { ...fileSrc });
             editor.focus();
@@ -120,6 +120,7 @@ export default function ActionsPlugin(): JSX.Element {
         focusLock={true}
       >
         <DynamicUpload limit={1}
+                       customDownload={fileDownload}
                        customRequest={fileUpload}
                        onChange={(fileList: UploadItem[], file: UploadItem) => {
                          if (fileList.length > 0) {

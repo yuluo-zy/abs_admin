@@ -7,11 +7,11 @@ import axios from "axios";
 import { UploadItem } from "@arco-design/web-react/es/Upload";
 import { IconDownload } from "@arco-design/web-react/icon";
 
-function DownLoad({ src }) {
+function DownLoad({ src, customDownload }) {
   const downFile = (event) => {
     event.stopPropagation();
     if (src) {
-      getFile(src[0]?.response || src[0]?.uid).then(res => {
+      customDownload(src[0]?.response || src[0]?.uid).then(res => {
         if (res.status === 200) {
           const url = URL.createObjectURL(new Blob([res.data]));
           const link = document.createElement("a");
@@ -39,6 +39,16 @@ const FileType = [
   "text/plain",
   "application/json",
   "text/csv",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/pdf",
+  "application/x-rar-compressed",
+  "application/x-tar",
+  "application/vnd.ms-excel",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "application/zip",
+  "application/x-zip-compressed",
+  "application/x-7z-compressed",
   "application/octet-stream"
 ];
 
@@ -47,7 +57,14 @@ const FileSize = 1024 * 1024 * 20; // 20M 默认值
 function DynamicUpload(props) {
   const t = useLocale(locale);
 
-  const { limit, onChange, listType, onPreview, fileList, title, customRequest, customBeforeUpload, fileType } = props;
+  const {
+    limit, onChange, listType, onPreview, fileList, title,
+    customRequest,
+    customBeforeUpload,
+    fileType,
+    customDownload
+  } = props;
+  console.log(customDownload);
   const [defaultList, setDefaultList] = useState([]);
   const file_type = fileType || FileType;
   const initDate = (value) => {
@@ -124,8 +141,8 @@ function DynamicUpload(props) {
   return <div style={{ marginTop: title ? "1rem" : "" }}>
     <Trigger
       popup={() => {
-        if (defaultList && defaultList.length > 0) {
-          return <DownLoad src={defaultList} />;
+        if (defaultList && defaultList.length > 0 && limit === 1) {
+          return <DownLoad src={defaultList} customDownload={customDownload || getFile} />;
         }
         return <div></div>;
       }}

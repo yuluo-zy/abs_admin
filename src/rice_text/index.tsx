@@ -9,11 +9,16 @@ import InitTheme from "@/rice_text/themes/InitTheme";
 import { TextNodes } from "@/rice_text/components/Node";
 import { checkIsJSON } from "@/rice_text/utils/nodeUtils";
 
-export default function RiceText({ readOnly, onChange, initValue, fileUpload }: {
+export default function RiceText({
+                                   readOnly, onChange, initValue,
+                                   fileUpload,
+                                   fileDownload
+                                 }: {
   readOnly: boolean,
   onChange?: any,
   initValue?: string,
-  fileUpload?: any
+  fileUpload?: any,
+  fileDownload?: any,
 }): JSX.Element {
 
   const {
@@ -43,7 +48,8 @@ export default function RiceText({ readOnly, onChange, initValue, fileUpload }: 
   return (
     <SettingsContext>
       <FunctionsContext defaultFunction={{
-        fileUpload: fileUpload
+        fileUpload: fileUpload,
+        fileDownload: fileDownload
       }}>
         <LexicalComposer initialConfig={initialConfig}>
           <SharedHistoryContext>

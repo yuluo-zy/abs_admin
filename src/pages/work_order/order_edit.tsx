@@ -11,7 +11,7 @@ import { Alert, Button, Message, Spin } from "@arco-design/web-react";
 import styles from "./style/edit.module.less";
 import { IconCheck, IconCheckCircle } from "@arco-design/web-react/icon";
 import RiceText from "@/rice_text";
-import { postSalesFile } from "@/api/file";
+import { getSalesInfoByRice, postSalesFile } from "@/api/file";
 import axios from "axios";
 
 const uploadData = (option) => {
@@ -41,11 +41,11 @@ const uploadData = (option) => {
 };
 const EditText = (props) => {
   const { textSet } = props;
-  return <RiceText onChange={textSet} readOnly={false} fileUpload={uploadData} />;
+  return <RiceText onChange={textSet} readOnly={false} fileUpload={uploadData} fileDownload={getSalesInfoByRice} />;
 };
 const ViewText = (props) => {
   const { data } = props;
-  return <RiceText readOnly={true} initValue={data} fileUpload={uploadData} />;
+  return <RiceText readOnly={true} initValue={data} fileDownload={getSalesInfoByRice} />;
 };
 export const OrderEdit: React.FC = () => {
   const t = useLocale(locale);

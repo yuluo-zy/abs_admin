@@ -20,11 +20,13 @@ export const DEFAULT_SETTINGS: Settings = {
 };
 export type FunctionName =
   "fileUpload"
-  | "imgUpload";
+  | "imgUpload"
+  | "fileDownload";
 
 export type Functions = Record<FunctionName, any>;
 
 export const DEFAULT_FUNCTION: Functions = {
   fileUpload: null,
-  imgUpload: null
+  imgUpload: null,
+  fileDownload: null
 };

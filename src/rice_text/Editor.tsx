@@ -12,7 +12,7 @@ import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
 import { useSharedHistoryContext } from "@/rice_text/context/SharedHistoryContext";
-import { useFunctions, useSettings } from "@/rice_text/context/SettingsContext";
+import { useSettings } from "@/rice_text/context/SettingsContext";
 import Placeholder from "@/rice_text/components/ui/Placeholder";
 import ToolbarPlugin from "@/rice_text/plugins/ToolbarPlugin";
 import { MaxLengthPlugin } from "@/rice_text/plugins/MaxLengthPlugin";
@@ -50,11 +50,11 @@ export default function Editor({ onChange, initValue }: {
       isRichText
     }
   } = useSettings();
-  const {
-    functions: {
-      fileUpload
-    }, setFunction
-  } = useFunctions();
+  // const {
+  //   functions: {
+  //     fileUpload
+  //   }, setFunction
+  // } = useFunctions();
   const text = isRichText
     ? "Enter some rich text..."
     : "Enter some plain text...";

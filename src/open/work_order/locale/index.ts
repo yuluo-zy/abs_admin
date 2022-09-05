@@ -14,7 +14,7 @@ const i18n = {
     "workplace.content.work_order.quality": "质量工单",
     "workplace.content.work_order": "工单编号",
     "workplace.add.return": "返回主页",
-    "workplace.add.custom": "联系人信息",
+    "workplace.add.custom": "客户信息&相关联系人",
     "workplace.add.custom.phone": "电话",
     "workplace.add.custom.name": "姓名",
     "workplace.add.custom.email": "邮件",
