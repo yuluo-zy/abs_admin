@@ -46,15 +46,22 @@ export const OrderEdit: React.FC = () => {
   }
 
   useEffect(() => {
+    let isUnmount = false;
+    // if(!isUnmount){
     setLoading(true);
-    getAfterSale(id).then(res => {
-      if (res.data.success && res.data.result) {
-        setData([res.data.result]);
-      }
-    })
-      .finally(() => {
+    getAfterSale(id)
+      .then(res => {
+        if (res.data.success && res.data.result && !isUnmount) {
+          setData([res.data.result]);
+        }
+      }).finally(() => {
+      if (!isUnmount) {
         setLoading(false);
-      });
+      }
+    });
+    return () => {
+      isUnmount = true;
+    };
   }, [change]);
 
   return <div className={styles["content"]}>
