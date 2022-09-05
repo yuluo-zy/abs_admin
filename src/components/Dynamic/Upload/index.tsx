@@ -114,8 +114,6 @@ function DynamicUpload(props) {
       return false;
     }
     if (file?.type && !file_type.includes(file?.type)) {
-      console.log(file?.type);
-      console.log(fileType);
       Message.error(t["message.type.error"]);
       return false;
     }

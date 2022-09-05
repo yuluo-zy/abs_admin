@@ -12,8 +12,41 @@ import styles from "./style/edit.module.less";
 import { IconCheck, IconCheckCircle } from "@arco-design/web-react/icon";
 import RiceText from "@/rice_text";
 import { postSalesFile } from "@/api/file";
+import axios from "axios";
 
-
+const uploadData = (option) => {
+  const { onProgress, file, onSuccess, onError } = option;
+  const formData = new FormData();
+  formData.append("file", file);
+  const source = axios.CancelToken.source();
+  const onprogress = progressEvent => {
+    const complete = progressEvent.loaded / progressEvent.total * 100 | 0;
+    onProgress(parseInt(String(complete), 10), progressEvent);
+  };
+  postSalesFile(formData, onprogress, source.token).then(r => {
+    const { success, result } = r.data;
+    if (success) {
+      Message.success("Uploaded successfully");
+      onSuccess(result);
+    }
+  }).catch(() => {
+    Message.error("Uploaded Error");
+    onError("Uploaded Error");
+  });
+  return {
+    abort() {
+      source.cancel("cancel");
+    }
+  };
+};
+const EditText = (props) => {
+  const { textSet } = props;
+  return <RiceText onChange={textSet} readOnly={false} fileUpload={uploadData} />;
+};
+const ViewText = (props) => {
+  const { data } = props;
+  return <RiceText readOnly={true} initValue={data} fileUpload={uploadData} />;
+};
 export const OrderEdit: React.FC = () => {
   const t = useLocale(locale);
   const { id } = useParams();
@@ -22,15 +55,6 @@ export const OrderEdit: React.FC = () => {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [change, setChange] = useState(false);
   const [riceText, setRiceText] = useState<Record<string, any>>();
-
-  const EditText = (props) => {
-    const { textSet } = props;
-    return <RiceText onChange={textSet} readOnly={false} fileUpload={postSalesFile} />;
-  };
-  const ViewText = (props) => {
-    const { data } = props;
-    return <RiceText readOnly={true} initValue={data} fileUpload={postSalesFile} />;
-  };
 
   function handleOnClick() {
     let data = "";
