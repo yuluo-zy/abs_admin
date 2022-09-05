@@ -3,7 +3,7 @@ import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 import styles from "./style/welcome.module.less";
 // import Logo from "../../assets/logo.svg";
-import { Button, Input, Select } from "@arco-design/web-react";
+import { Button, Input, Select, Typography } from "@arco-design/web-react";
 import { IconSubscribeAdd } from "@arco-design/web-react/icon";
 import Solution from "./assets/solution_mindset.svg";
 import { useHistory } from "react-router";
@@ -25,18 +25,23 @@ export const Welcome: React.FC<WelcomeProps> = (props: React.PropsWithChildren<W
       <div className={styles["content-banner"]}>
         <div className={styles["content-banner-logo"]}>
           {/*<Logo />*/}
+          < Typography.Title>Customer Quality Management System</Typography.Title>
         </div>
         <div className={styles["content-banner-content"]}>
           <p>{t["workplace.content"]}
-            <Button type={"primary"} size={"large"} icon={<IconSubscribeAdd />} className={styles["button"]}
+            <Button type={"primary"} size={"large"} shape={"round"} icon={<IconSubscribeAdd />}
+                    className={styles["button"]}
                     onClick={to_add}>{t["workplace.content.work_order.add"]}</Button>
           </p>
+          <p>{t["workplace.content.a"]}</p>
+
+
           <div className={styles["content-banner-group"]}>
             <Input.Group compact>
               <Select defaultValue="1" className={styles["select"]}>
                 <Select.Option value="1">{t["workplace.content.work_order"]}</Select.Option>
               </Select>
-              <Input.Search placeholder="Please enter an key"
+              <Input.Search placeholder="Please enter the key"
                             className={styles["input"]}
                             allowClear
                             onPressEnter={(value) => {

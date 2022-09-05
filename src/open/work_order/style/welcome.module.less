@@ -15,16 +15,19 @@
 
     &-logo {
       position: relative;
-      bottom: -1rem;
+      bottom: -3rem;
       padding: 1rem;
       margin: auto;
-      width: 40%;
+      width: 80%;
       height: 25%;
+      @media (max-width: 1400px) {
+        width: 100%;
+      }
     }
 
     &-content {
       margin: 3rem;
-      margin-left: 35%;
+      margin-left: 20%;
       color: var(--color-text-1);
     }
 

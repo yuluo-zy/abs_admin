@@ -5,14 +5,15 @@ const i18n = {
 
   "zh-CN": {
     "workplace.welcomeBack": "Welcome Back,",
-    "workplace.content": "欢迎使用本系统, 进行产品质量工单管理",
+    "workplace.content": "欢迎来到乐鑫产品质量管理系统 !",
+    "workplace.content.a": "如您在产品使用中遇到任何品质问题, 请在这里提交质量反馈工单, 我们将尽快为您进行处理分析 !",
     "workplace.content.work_order.add": "新建工单",
     "workplace.content.work_order.success": "创建成功",
     "workplace.content.work_order.success.content": "您的工单已提交, 乐鑫工程师正在马不停蹄处理, 请保持联系方式畅通, 以便及时沟通",
     "workplace.content.work_order.success.key": "请您妥善保存本工单的查询秘钥, 以便后续进行工单查询, 下载相关资料",
     "workplace.content.work_order.success.return": "返回首页",
     "workplace.content.work_order.quality": "质量工单",
-    "workplace.content.work_order": "工单编号",
+    "workplace.content.work_order": "工单秘钥",
     "workplace.add.return": "返回主页",
     "workplace.add.custom": "客户信息&相关联系人",
     "workplace.add.custom.phone": "电话",
