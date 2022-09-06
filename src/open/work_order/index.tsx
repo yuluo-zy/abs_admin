@@ -6,7 +6,6 @@ import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 import { Route } from "react-router";
 import WorkOrderAdd from "@/open/work_order/add";
-import Announcement from "./announcement";
 import { useUpdateEffect } from "react-use";
 import { getAfterSale } from "@/api/cqapms";
 import Footer from "@/components/Footer";
@@ -103,18 +102,18 @@ function WorkOrder() {
       />
       <Route exact path={"/open/work_order"}>
         <Welcome setSelect={setSelect} />
-        <Row gutter={24} className={styles["home"]}>
-          <Col span={18}>
-            <div className={styles["table"]}>
-              <Spin loading={loading} style={{ width: "100%" }}>
-                <Table columns={columns} data={data} />
-              </Spin>
-            </div>
-          </Col>
-          <Col span={6}>
-            <Announcement />
-          </Col>
-        </Row>
+        {/*<Row gutter={24} className={styles["home"]}>*/}
+        {/*  <Col span={18}>*/}
+        <div className={styles["table"]}>
+          <Spin loading={loading} style={{ width: "100%" }}>
+            <Table columns={columns} data={data} />
+          </Spin>
+        </div>
+        {/*</Col>*/}
+        {/*<Col span={6}>*/}
+        {/*  <Announcement />*/}
+        {/*</Col>*/}
+        {/*</Row>*/}
       </Route>
       <Footer /><OrderDrawer visible={visible} setVisible={setVisible} data={data} />
     </Content>
