@@ -63,7 +63,7 @@ const i18n = {
     "workplace.add.custom.product.issue": "失效概述",
     "workplace.add.custom.product.issue.description": "失效描述",
     "workplace.add.custom.product.issue.description.info": "请详尽描写相关物料失效重现的步骤或条件",
-    "workplace.add.custom.product.issue.description.error": "失效描述不能为空或少于30字",
+    "workplace.add.custom.product.issue.description.error": "失效描述不能为空或少于20字",
     "workplace.add.custom.product.issue.picture": "失效图片",
     "workplace.add.custom.product.issue.appendix": "附件上传",
     "workplace.add.custom.upload": "提交表单",

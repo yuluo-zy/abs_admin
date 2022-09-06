@@ -383,9 +383,13 @@ export default function WorkOrderAdd() {
             </Form.Item>
             <Form.Item field="productionFailState"
                        label={t["workplace.add.custom.product.issue.description"]}
-                       rules={[{ required: true, message: t["workplace.add.custom.product.issue.description.error"] }]}>
+                       rules={[{
+                         required: true,
+                         minLength: 20,
+                         message: t["workplace.add.custom.product.issue.description.error"]
+                       }]}>
               <Input.TextArea showWordLimit placeholder={t["workplace.add.custom.product.issue.description.info"]}
-                              minLength={10} maxLength={500} style={{ minHeight: 128, maxWidth: 650 }} />
+                              minLength={20} maxLength={500} style={{ minHeight: 128, maxWidth: 650 }} />
             </Form.Item>
             <Form.Item field="imgIds" triggerPropName="fileList"
                        label={t["workplace.add.custom.product.issue.picture"]}>
