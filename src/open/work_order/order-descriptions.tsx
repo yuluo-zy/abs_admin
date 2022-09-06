@@ -196,7 +196,7 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
           <Space>
             {data?.imgObjs && data?.imgObjs.map((src, index) => (
               <DynamicPreviewImg data={{
-                id: src,
+                id: src?.id,
                 orderId: data?.id
               }} key={index} width={200} height={200} loader={true} />
             ))}
