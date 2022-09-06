@@ -41,7 +41,7 @@ export const Welcome: React.FC<WelcomeProps> = (props: React.PropsWithChildren<W
               <Select defaultValue="1" className={styles["select"]}>
                 <Select.Option value="1">{t["workplace.content.work_order"]}</Select.Option>
               </Select>
-              <Input.Search placeholder="Please enter the key"
+              <Input.Search placeholder="Please select by key"
                             className={styles["input"]}
                             allowClear
                             onPressEnter={(value) => {

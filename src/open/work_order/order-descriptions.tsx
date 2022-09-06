@@ -219,6 +219,7 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
   return <div style={{ ...style }}>
     <Descriptions
       colon={" : "}
+      // column={2}
       title={t["workplace.add.custom"]}
       data={customData}
     />
