@@ -141,6 +141,6 @@ deploy-prod:
     - ssh-keyscan ec2-16-162-92-119.ap-east-1.compute.amazonaws.com >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - ssh ec2-user@ec2-16-162-92-119.ap-east-1.compute.amazonaws.com "(aws ecr get-login-password | docker login --username AWS --password-stdin 148622829133.dkr.ecr.ap-east-1.amazonaws.com)&&(docker stop custom-nginx) && (docker rm custom-nginx)&&(docker run -itd --name custom-nginx  -p 443:443 148622829133.dkr.ecr.ap-east-1.amazonaws.com/esp_custom_frontend:${TAG} bash)"
+    - ssh ec2-user@ec2-16-162-92-119.ap-east-1.compute.amazonaws.com "(aws ecr get-login-password | docker login --username AWS --password-stdin 148622829133.dkr.ecr.ap-east-1.amazonaws.com)&&(docker stop custom-nginx) && (docker rm custom-nginx)&&(docker run -itd --name custom-nginx  -p 80:80 148622829133.dkr.ecr.ap-east-1.amazonaws.com/esp_custom_frontend:${TAG} bash)"
   only:
     - main
