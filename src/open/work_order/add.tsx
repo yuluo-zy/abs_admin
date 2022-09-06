@@ -220,7 +220,7 @@ export default function WorkOrderAdd() {
 
             <Form.Item field="productionUsedNote" label={t["workplace.add.custom.product.description"]}>
               <Input.TextArea showWordLimit placeholder={t["workplace.add.custom.product.description.help"]}
-                              minLength={20} maxLength={200} style={{ minHeight: 128, maxWidth: 650 }} />
+                              minLength={10} maxLength={200} style={{ minHeight: 128, maxWidth: 650 }} />
             </Form.Item>
           </DynamicCard>
           <DynamicDivider style={{ margin: "5px 0", borderBottomStyle: "dashed" }} />
@@ -385,7 +385,7 @@ export default function WorkOrderAdd() {
                        label={t["workplace.add.custom.product.issue.description"]}
                        rules={[{ required: true, message: t["workplace.add.custom.product.issue.description.error"] }]}>
               <Input.TextArea showWordLimit placeholder={t["workplace.add.custom.product.issue.description.info"]}
-                              minLength={30} maxLength={500} style={{ minHeight: 128, maxWidth: 650 }} />
+                              minLength={10} maxLength={500} style={{ minHeight: 128, maxWidth: 650 }} />
             </Form.Item>
             <Form.Item field="imgIds" triggerPropName="fileList"
                        label={t["workplace.add.custom.product.issue.picture"]}>
