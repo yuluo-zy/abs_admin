@@ -5,6 +5,7 @@ import { useHistory } from "react-router";
 import styles from "./style/add.module.less";
 import DynamicCard from "@/components/Dynamic/Card";
 import {
+  Alert,
   Breadcrumb,
   Button,
   DatePicker,
@@ -247,7 +248,9 @@ export default function WorkOrderAdd() {
                 ))}
               </Select>
             </Form.Item>
-
+            <div className={styles["alert"]}>
+              <Alert closable content={t["workplace.add.custom.info.help"]} />
+            </div>
             <FormItem label={t["workplace.add.custom.quality"]}>
               <Grid.Row gutter={4}>
                 <Grid.Col span={12}>
@@ -276,6 +279,7 @@ export default function WorkOrderAdd() {
                 </Grid.Col>
               </Grid.Row>
             </FormItem>
+
             <FormItem label={t["workplace.add.custom.purchase"]}>
               <Grid.Row gutter={4}>
                 <Grid.Col span={12}>
@@ -329,10 +333,14 @@ export default function WorkOrderAdd() {
 
           <DynamicDivider style={{ margin: "2px 0", borderBottomStyle: "dashed" }} />
           <DynamicCard bodyStyle={bodyStyle} title={t["workplace.add.custom.product.issue"]}>
+            <div className={styles["alert"]}>
+              <Alert closable content={t["workplace.add.custom.product.help"]} />
+            </div>
             <Form.Item field="occurDate" label={t["workplace.add.custom.product.date"]}
                        rules={[{ required: true, message: t["workplace.add.custom.product.date.error"] }]}>
               <DatePicker style={{ maxWidth: 350 }} />
             </Form.Item>
+
             {/*<FormItem label={t["workplace.add.custom.product.number"]} required>*/}
             {/*  <Grid.Row gutter={8}>*/}
             {/*    <Grid.Col span={12}>*/}

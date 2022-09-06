@@ -28,6 +28,8 @@ const i18n = {
     "workplace.add.custom.custom.company": "客户公司名称",
     "workplace.add.custom.custom.name.error": "客户姓名不能为空",
     "workplace.add.custom.custom.company.error": "客户公司名称不能为空",
+    "workplace.add.custom.info.help": "请填写真实信息, 以便乐鑫工程师直接与您取得联系",
+    "workplace.add.custom.product.help": "请填写详尽产测信息, 以便乐鑫工程师尽快为您展开分析工作",
     "workplace.add.custom.quality": "客户品质窗口",
     "workplace.add.custom.role": "客户角色",
     "workplace.add.custom.role.a": "方案商",
