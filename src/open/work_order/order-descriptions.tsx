@@ -3,7 +3,7 @@ import { Button, Descriptions, Image, List, Space, Typography } from "@arco-desi
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 import DynamicDivider from "@/components/Dynamic/Divider";
-import DynamicPreviewImg from "@/components/Dynamic/img/preview";
+import DynamicPreviewImg from "@/open/work_order/preview";
 import { IconCloudDownload } from "@arco-design/web-react/icon";
 import { getSalesInfo } from "@/api/file";
 import DynamicCard from "@/components/Dynamic/Card";
@@ -18,23 +18,26 @@ interface StepProps {
 }
 
 const DownloadButton = (props) => {
-  const { id } = props;
+  const { id, orderId } = props;
   const [loading, setLoading] = useState(false);
   const downFile = (event) => {
     setLoading(true);
     event.stopPropagation();
     if (id) {
-      getSalesInfo(id).then(res => {
-          if (res.status === 200) {
-            const url = URL.createObjectURL(new Blob([res.data]));
-            const link = document.createElement("a");
-            link.href = url;
-            let name = res.headers["content-disposition"]?.match(/fileName=(.*)/)[1]; // 获取filename的值
-            name = decodeURIComponent(name);
-            link.setAttribute("download", name);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+      getSalesInfo({
+        id: id,
+        orderId: orderId
+      }).then(res => {
+        if (res.status === 200) {
+          const url = URL.createObjectURL(new Blob([res.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          let name = res.headers["content-disposition"]?.match(/fileName=(.*)/)[1]; // 获取filename的值
+          name = decodeURIComponent(name);
+          link.setAttribute("download", name);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
           }
         }
       ).finally(() => {
@@ -192,7 +195,10 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
         <Image.PreviewGroup infinite>
           <Space>
             {data?.imgObjs && data?.imgObjs.map((src, index) => (
-              <DynamicPreviewImg data={src} key={index} width={200} height={200} loader={true} />
+              <DynamicPreviewImg data={{
+                id: src,
+                orderId: data?.id
+              }} key={index} width={200} height={200} loader={true} />
             ))}
           </Space>
         </Image.PreviewGroup>
@@ -209,7 +215,7 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
           render={(item, index) => <List.Item key={index}>
             <Space size={"large"}>
               {item?.fileName}
-              {download && <DownloadButton id={item?.id} />}
+              {download && <DownloadButton id={item?.id} orderId={data?.id} />}
             </Space>
           </List.Item>}
         />
