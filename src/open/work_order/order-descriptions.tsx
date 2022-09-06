@@ -78,7 +78,49 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
     }
     return value;
   };
+  const roleOptions = [
+    {
+      label: t["workplace.add.custom.role.a"],
+      key: "1"
+    },
+    {
+      label: t["workplace.add.custom.role.b"],
+      key: "2"
+    },
+    {
+      label: t["workplace.add.custom.role.c"],
+      key: "3"
+    },
+    {
+      label: t["workplace.add.custom.role.d"],
+      key: "4"
+    }
+  ];
+  const getRoleName = (value) => {
+    for (const i of roleOptions) {
+      if (i.key === value) {
+        return i.label;
+      }
+    }
+    return "other";
+  };
   const customData = [
+    {
+      label: t["workplace.add.custom.custom.name"],
+      value: getEncryption(data?.customerName)
+    },
+    {
+      label: t["workplace.add.custom.custom.company"],
+      value: getEncryption(data?.customerCompanyName)
+    },
+    {
+      label: t["workplace.add.custom.role"],
+      value: getRoleName(data?.customerRole)
+    },
+    {
+      label: t["workplace.add.custom.quality"] + " - " + t["workplace.add.custom.name"],
+      value: getEncryption(data?.customerQcName)
+    },
     {
       label: t["workplace.add.custom.quality"] + " - " + t["workplace.add.custom.phone"],
       value: getEncryption(data?.customerQcPhone)
@@ -86,6 +128,10 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
     {
       label: t["workplace.add.custom.quality"] + " - " + t["workplace.add.custom.email"],
       value: getEncryption(data?.customerQcEmail)
+    },
+    {
+      label: t["workplace.add.custom.purchase"] + " - " + t["workplace.add.custom.name"],
+      value: getEncryption(data?.customerBuyerName)
     },
     {
       label: t["workplace.add.custom.purchase"] + " - " + t["workplace.add.custom.phone"],
@@ -110,6 +156,21 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
       value: data?.productType
     },
     {
+      label: t["workplace.add.custom.product.description"],
+      value: <Typography.Paragraph ellipsis={{ showTooltip: true }} style={{ maxWidth: 400 }}>
+        {data?.productionUsedNote}
+      </Typography.Paragraph>
+    }
+  ];
+
+
+  const issueData = [
+
+    {
+      label: t["workplace.add.custom.product.stage"],
+      value: getStep(data?.problemStage)
+    },
+    {
       label: t["workplace.add.custom.product.number.actual"],
       value: data?.productionNum
     },
@@ -121,20 +182,6 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
       label: t["workplace.add.custom.product.date"],
       value: data?.occurDate
     },
-    {
-      label: t["workplace.add.custom.product.stage"],
-      value: getStep(data?.problemStage)
-    },
-    {
-      label: t["workplace.add.custom.product.description"],
-      value: <Typography.Paragraph ellipsis={{ showTooltip: true }} style={{ maxWidth: 400 }}>
-        {data?.productionUsedNote}
-      </Typography.Paragraph>
-    }
-  ];
-
-
-  const issueData = [
     {
       label: t["workplace.add.custom.product.issue.description"],
       value: data?.productionFailState

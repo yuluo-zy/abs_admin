@@ -132,19 +132,19 @@ export default function WorkOrderAdd() {
   const roleOptions = [
     {
       label: t["workplace.add.custom.role.a"],
-      key: 1
+      key: "1"
     },
     {
       label: t["workplace.add.custom.role.b"],
-      key: 2
+      key: "2"
     },
     {
       label: t["workplace.add.custom.role.c"],
-      key: 3
+      key: "3"
     },
     {
       label: t["workplace.add.custom.role.d"],
-      key: 4
+      key: "4"
     }
   ];
   const postData = async () => {
