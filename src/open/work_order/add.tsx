@@ -194,7 +194,7 @@ export default function WorkOrderAdd() {
       </Space>
       <Button onClick={to_return} type={"primary"} size={"large"} shape={"round"}>{t["workplace.add.return"]}</Button>
     </div>
-    <div className={styles["content"]}>
+    <div className={styles["content"]} id={"custom_back_top"}>
       <DynamicCard title={t["workplace.content.work_order.quality"]}>
         <Form autoComplete="off"
               colon={true}
@@ -249,7 +249,7 @@ export default function WorkOrderAdd() {
             </Form.Item>
 
             <FormItem label={t["workplace.add.custom.quality"]}>
-              <Grid.Row gutter={8}>
+              <Grid.Row gutter={4}>
                 <Grid.Col span={12}>
                   <Form.Item field="customerQcName"
                              layout={"vertical"}
@@ -276,8 +276,8 @@ export default function WorkOrderAdd() {
                 </Grid.Col>
               </Grid.Row>
             </FormItem>
-            <FormItem label={t["workplace.add.custom.purchase"]} required>
-              <Grid.Row gutter={8}>
+            <FormItem label={t["workplace.add.custom.purchase"]}>
+              <Grid.Row gutter={4}>
                 <Grid.Col span={12}>
                   <Form.Item field="customerBuyerName"
                              layout={"vertical"}
@@ -304,8 +304,8 @@ export default function WorkOrderAdd() {
                 </Grid.Col>
               </Grid.Row>
             </FormItem>
-            <FormItem label={t["workplace.add.custom.espressif"]} required>
-              <Grid.Row gutter={8}>
+            <FormItem label={t["workplace.add.custom.espressif"]}>
+              <Grid.Row gutter={4}>
                 <Grid.Col span={12}>
                   <Form.Item field="espBusinessName"
                              layout={"vertical"}
