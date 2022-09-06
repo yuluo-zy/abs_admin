@@ -21,7 +21,7 @@ import { loginOut } from "@/api/login";
 import HelpInfo from "@/pages/help";
 import { setHelpKey } from "@/store/help";
 
-function Navbar({ show, isLogIn = true }: { show?: boolean, isLogIn?: boolean }) {
+function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boolean, title: string }) {
   const t = useLocale();
   const userInfo = useSelector((state: GlobalState) => state.userInfo);
 
@@ -79,7 +79,7 @@ function Navbar({ show, isLogIn = true }: { show?: boolean, isLogIn?: boolean })
           <div className={styles.logo}>
             <Logo />
           </div>
-          <div className={styles["logo-name"]}>ESPRESSIF Custom Manufacturing Service</div>
+          {/*<div className={styles["logo-name"]}>{title || "ESPRESSIF Custom Manufacturing Service"}</div>*/}
         </div>
         <ul className={styles.right}>
           {/*<li>*/}

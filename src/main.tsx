@@ -19,7 +19,7 @@ import { Redirect } from "react-router";
 // todo 去除 redux
 const store = createStore(rootReducer);
 function Index() {
-  const [lang, setLang] = useStorage("arco-lang", "en-US");
+  const [lang, setLang] = useStorage("arco-lang", "zh-CN");
   const [theme, setTheme] = useStorage("arco-theme", "light");
 
   function getArcoLocale() {

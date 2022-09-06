@@ -3,11 +3,11 @@ import { Button, Descriptions, Image, List, Space, Typography } from "@arco-desi
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 import DynamicDivider from "@/components/Dynamic/Divider";
-import DynamicPreviewImg from "@/components/Dynamic/img/preview";
+import DynamicPreviewImg from "@/open/work_order/preview";
 import { IconCloudDownload } from "@arco-design/web-react/icon";
 import { getSalesInfo } from "@/api/file";
-import RiceText from "@/rice_text";
 import DynamicCard from "@/components/Dynamic/Card";
+import RiceText from "@/rice_text";
 
 interface StepProps {
   descriptionData: any,
@@ -15,16 +15,20 @@ interface StepProps {
   encryption: boolean;
   download: boolean;
   feedback: boolean;
+  copy?: boolean;
 }
 
 const DownloadButton = (props) => {
-  const { id } = props;
+  const { id, orderId } = props;
   const [loading, setLoading] = useState(false);
   const downFile = (event) => {
     setLoading(true);
     event.stopPropagation();
     if (id) {
-      getSalesInfo(id).then(res => {
+      getSalesInfo({
+        id: id,
+        orderId: orderId
+      }).then(res => {
           if (res.status === 200) {
             const url = URL.createObjectURL(new Blob([res.data]));
             const link = document.createElement("a");
@@ -52,7 +56,7 @@ const DownloadButton = (props) => {
   />;
 };
 export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChildren<StepProps>) => {
-  const { descriptionData, encryption, download, feedback, style } = props;
+  const { descriptionData, encryption, download, feedback, copy, style } = props;
   const data = descriptionData?.[0] || {};
 
   const t = useLocale(locale);
@@ -72,28 +76,81 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
   };
   const getEncryption = (value) => {
     if (encryption) {
-      if (value && value.length > 6) {
-        return value.substring(0, 3) + "******" + value.substring(value.length - 2);
+      if (value && value.length > 5) {
+        return value.substring(0, 2) + "******" + value.substring(value.length - 2);
       }
+    }
+
+    return value;
+  };
+  const getCopy = (value) => {
+    if (copy) {
+      return <Typography.Paragraph copyable style={{ margin: 2 }}>{value}</Typography.Paragraph>;
     }
     return value;
   };
+  const roleOptions = [
+    {
+      label: t["workplace.add.custom.role.a"],
+      key: "1"
+    },
+    {
+      label: t["workplace.add.custom.role.b"],
+      key: "2"
+    },
+    {
+      label: t["workplace.add.custom.role.c"],
+      key: "3"
+    },
+    {
+      label: t["workplace.add.custom.role.d"],
+      key: "4"
+    }
+  ];
+  const getRoleName = (value) => {
+    for (const i of roleOptions) {
+      if (i.key === value) {
+        return i.label;
+      }
+    }
+    return "other";
+  };
   const customData = [
     {
+      label: t["workplace.add.custom.custom.name"],
+      value: getEncryption(data?.customerName)
+    },
+    {
+      label: t["workplace.add.custom.custom.company"],
+      value: getCopy(getEncryption(data?.customerCompanyName))
+    },
+    {
+      label: t["workplace.add.custom.role"],
+      value: getRoleName(data?.customerRole)
+    },
+    {
+      label: t["workplace.add.custom.quality"] + " - " + t["workplace.add.custom.name"],
+      value: getEncryption(data?.customerQcName)
+    },
+    {
       label: t["workplace.add.custom.quality"] + " - " + t["workplace.add.custom.phone"],
-      value: getEncryption(data?.customerQcPhone)
+      value: getCopy(getEncryption(data?.customerQcPhone))
     },
     {
       label: t["workplace.add.custom.quality"] + " - " + t["workplace.add.custom.email"],
-      value: getEncryption(data?.customerQcEmail)
+      value: getCopy(getEncryption(data?.customerQcEmail))
+    },
+    {
+      label: t["workplace.add.custom.purchase"] + " - " + t["workplace.add.custom.name"],
+      value: getEncryption(data?.customerBuyerName)
     },
     {
       label: t["workplace.add.custom.purchase"] + " - " + t["workplace.add.custom.phone"],
-      value: getEncryption(data?.customerBuyerPhone)
+      value: getCopy(getEncryption(data?.customerBuyerPhone))
     },
     {
       label: t["workplace.add.custom.purchase"] + " - " + t["workplace.add.custom.email"],
-      value: getEncryption(data?.customerBuyerEmail)
+      value: getCopy(getEncryption(data?.customerBuyerEmail))
     },
     {
       label: t["workplace.add.custom.espressif"] + " - " + t["workplace.add.custom.name"],
@@ -101,13 +158,26 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
     },
     {
       label: t["workplace.add.custom.espressif"] + " - " + t["workplace.add.custom.email"],
-      value: data?.espBusinessEmail
+      value: getCopy(data?.espBusinessEmail)
     }
   ];
   const productData = [
     {
       label: t["workplace.add.custom.module"],
       value: data?.productType
+    },
+    {
+      label: t["workplace.add.custom.product.description"],
+      value: data?.productionUsedNote
+    }
+  ];
+
+
+  const issueData = [
+
+    {
+      label: t["workplace.add.custom.product.stage"],
+      value: getStep(data?.problemStage)
     },
     {
       label: t["workplace.add.custom.product.number.actual"],
@@ -122,20 +192,6 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
       value: data?.occurDate
     },
     {
-      label: t["workplace.add.custom.product.stage"],
-      value: getStep(data?.problemStage)
-    },
-    {
-      label: t["workplace.add.custom.product.description"],
-      value: <Typography.Paragraph ellipsis={{ showTooltip: true }} style={{ maxWidth: 400 }}>
-        {data?.productionUsedNote}
-      </Typography.Paragraph>
-    }
-  ];
-
-
-  const issueData = [
-    {
       label: t["workplace.add.custom.product.issue.description"],
       value: data?.productionFailState
     },
@@ -145,7 +201,10 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
         <Image.PreviewGroup infinite>
           <Space>
             {data?.imgObjs && data?.imgObjs.map((src, index) => (
-              <DynamicPreviewImg data={src} key={index} width={200} height={200} loader={true} />
+              <DynamicPreviewImg data={{
+                id: src?.id,
+                orderId: data?.id
+              }} key={index} width={200} height={200} loader={true} />
             ))}
           </Space>
         </Image.PreviewGroup>
@@ -162,22 +221,36 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
           render={(item, index) => <List.Item key={index}>
             <Space size={"large"}>
               {item?.fileName}
-              {download && <DownloadButton id={item?.id} />}
+              {download && <DownloadButton id={item?.id} orderId={data?.id} />}
             </Space>
           </List.Item>}
         />
     }
   ];
 
+  const getSalesInfoById = (value) => {
+    return getSalesInfo({
+      ...value,
+      orderId: data?.id
+    });
+  };
+
+  const getSalesImgById = (value) => {
+    return getSalesInfo({
+      id: value,
+      orderId: data?.id
+    });
+  };
   return <div style={{ ...style }}>
     <Descriptions
       colon={" : "}
+      // column={2}
       title={t["workplace.add.custom"]}
       data={customData}
     />
     <DynamicDivider />
     <Descriptions
-      column={2}
+      column={1}
       colon={" : "}
       labelStyle={{ textAlign: "right", paddingRight: 36 }}
       title={t["workplace.add.custom.product"]}
@@ -193,7 +266,9 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
     />
     <DynamicDivider />
     {feedback && <DynamicCard title={t["workplace.drawer.details.feedback"]}>
-      <RiceText readOnly={true} initValue={data?.remarks} />
+      <RiceText readOnly={true} initValue={data?.remark}
+                fileDownload={getSalesInfoById}
+                imgDownload={getSalesImgById} />
     </DynamicCard>}
   </div>;
 };

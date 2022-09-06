@@ -22,19 +22,24 @@ interface UserInfo {
 }
 
 function useMentionLookupService() {
+  // TODO 人员查询功能
   const [results, setResults] = useState<Array<UserInfo>>([]);
   const [demandId] = ProductStore(state => [state.demandId], shallow);
   // 进行 人员查询
   useEffect(() => {
+    let isUnmount = false;
     if (demandId) {
       getRelatable({
         demandId
       }).then(res => {
-        if (res.data.success) {
+        if (res.data.success && !isUnmount) {
           setResults(res.data.result);
         }
       });
     }
+    return () => {
+      isUnmount = true;
+    };
   }, [demandId]);
   return results;
 }
@@ -81,6 +86,7 @@ function MentionsTypeaheadMenuItem({
 }
 
 export default function NewMentionsPlugin(): JSX.Element | null {
+  //todo 修复这个问题
   const [editor] = useLexicalComposerContext();
 
   const results = useMentionLookupService();

@@ -7,10 +7,17 @@ import { IconDelete, IconUpload } from "@arco-design/web-react/icon";
 import DynamicUpload from "@/components/Dynamic/Upload";
 import { UploadItem } from "@arco-design/web-react/es/Upload";
 import { INSERT_FILE_COMMAND } from "./FilePlugin";
+import { useFunctions } from "@/rice_text/context/SettingsContext";
 
 
 export default function ActionsPlugin(): JSX.Element {
   const [editor] = useLexicalComposerContext();
+  const {
+    functions: {
+      fileUpload,
+      fileDownload
+    }
+  } = useFunctions();
   const [isEditorEmpty, setIsEditorEmpty] = useState(true);
   const [visible, setVisible] = useState(false);
   const [file, setFile] = useState(false);
@@ -34,10 +41,6 @@ export default function ActionsPlugin(): JSX.Element {
       });
     });
   }, [editor]);
-  //
-  // const uploadFile = () => {
-  //   activeEditor.dispatchCommand(INSERT_FILE_COMMAND, { src: "jkjjj", name: "kljlkjlkjjk" });
-  // };
 
 
   return (
@@ -117,6 +120,8 @@ export default function ActionsPlugin(): JSX.Element {
         focusLock={true}
       >
         <DynamicUpload limit={1}
+                       customDownload={fileDownload}
+                       customRequest={fileUpload}
                        onChange={(fileList: UploadItem[], file: UploadItem) => {
                          if (fileList.length > 0) {
                            setFileSrc({
@@ -126,7 +131,6 @@ export default function ActionsPlugin(): JSX.Element {
                          } else {
                            setFileSrc(null);
                          }
-
                        }}
         />
       </Modal>

@@ -18,3 +18,17 @@ export const DEFAULT_SETTINGS: Settings = {
   onlyRead: false,
   isRichText: true
 };
+export type FunctionName =
+  "fileUpload"
+  | "imgUpload"
+  | "imgDownload"
+  | "fileDownload";
+
+export type Functions = Record<FunctionName, any>;
+
+export const DEFAULT_FUNCTION: Functions = {
+  fileUpload: null,
+  imgUpload: null,
+  fileDownload: null,
+  imgDownload: null
+};

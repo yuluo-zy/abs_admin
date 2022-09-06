@@ -30,9 +30,10 @@ import { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection"
 import { mergeRegister } from "@lexical/utils";
 import * as React from "react";
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
-import { useSharedHistoryContext } from "../context/SharedHistoryContext";
 import { getFile } from "@/api/file";
 import ImageResizer from "./ui/ImageResizer";
+import { Message } from "@arco-design/web-react";
+import { useFunctions } from "@/rice_text/context/SettingsContext";
 
 export interface ImagePayload {
   altText: string;
@@ -48,12 +49,14 @@ export interface ImagePayload {
 
 const imageCache = new Map();
 
-function useSuspenseImage(fileId: string): File {
+function useSuspenseImage(fileId: string, download): File {
   if (!imageCache.has(fileId)) {
-    throw getFile(fileId).then(res => {
+    throw download(fileId).then(res => {
       if (res.status === 200) {
         imageCache.set(fileId, res.data);
       }
+    }).finally(() => {
+      return {};
     });
   }
   return imageCache.get(fileId);
@@ -77,7 +80,9 @@ function LazyImage({
                      width,
                      height,
                      maxWidth,
-                     fileId
+                     fileId,
+                     customRequest,
+                     read_only
                    }: {
   altText: string;
   className: string | null;
@@ -86,9 +91,27 @@ function LazyImage({
   maxWidth: number;
   src: string;
   width: "inherit" | number;
-  fileId: string
+  fileId: string;
+  customRequest: any;
+  read_only: boolean;
 }): JSX.Element {
-  const file = useSuspenseImage(fileId);
+  const file = useSuspenseImage(fileId, customRequest || getFile);
+  // if (read_only) {
+  //   return (
+  //     <Image
+  //       className={className || undefined}
+  //       src={URL.createObjectURL(file)}
+  //       alt={altText}
+  //       ref={imageRef}
+  //       style={{
+  //         height,
+  //         maxWidth,
+  //         width
+  //       }}
+  //       draggable="false"
+  //     />
+  //   );
+  // }
   return (
     <img
       className={className || undefined}
@@ -215,7 +238,11 @@ function ImageComponent({
     setIsResizing(true);
   };
 
-  const { historyState } = useSharedHistoryContext();
+  const {
+    functions: {
+      imgDownload
+    }
+  } = useFunctions();
 
   const draggable = isSelected && $isNodeSelection(selection);
   const isFocused = $isNodeSelection(selection) && (isSelected || isResizing);
@@ -232,6 +259,8 @@ function ImageComponent({
             width={width}
             height={height}
             maxWidth={maxWidth}
+            read_only={editor.isReadOnly()}
+            customRequest={imgDownload}
             fileId={fileId} />
         </div>
         {resizable && isFocused && (
@@ -409,15 +438,20 @@ export function $createImageNode({
                                    width,
                                    key
                                  }: ImagePayload): ImageNode {
-  return new ImageNode(
-    src,
-    altText,
-    fileId,
-    maxWidth,
-    width,
-    height,
-    key
-  );
+  try {
+    return new ImageNode(
+      src,
+      altText,
+      fileId,
+      maxWidth,
+      width,
+      height,
+      key
+    );
+  } catch (error) {
+    Message.error("add failed");
+  }
+
 }
 
 export function $isImageNode(

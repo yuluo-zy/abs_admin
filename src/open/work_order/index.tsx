@@ -28,6 +28,7 @@ function WorkOrder() {
   const [visible, setVisible] = useState(null);
   useUpdateEffect(() => {
     if (select) {
+      setData([]);
       setLoading(true);
       getAfterSale(select).then(res => {
         if (res.data.success && res.data.result) {
@@ -90,11 +91,11 @@ function WorkOrder() {
   ];
 
   return <Layout className={styles["layout"]}>
-      <div
-        className={styles["layout-navbar"]}
-      >
-        <Navbar isLogIn={false} />
-      </div>
+    <div
+      className={styles["layout-navbar"]}
+    >
+      <Navbar isLogIn={false} title={"ESPRESSIF"} />
+    </div>
     <Content className={styles["layout-content"]}>
       <Route
         path={`/open/work_order/add`}

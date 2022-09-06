@@ -16,12 +16,13 @@ import {
   RangeSelection,
   SerializedLexicalNode
 } from "lexical";
-import { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { mergeRegister } from "@lexical/utils";
 import "./styles/FileNode.less";
 import { getFile } from "@/api/file";
+import { useFunctions } from "@/rice_text/context/SettingsContext";
 
 export interface FilePayload {
   name: string;
@@ -37,22 +38,21 @@ export type SerializedFileNode = Spread<{
 },
   SerializedLexicalNode>;
 
-function DownLoad({ src }: { src: string }): JSX.Element {
+function DownLoad({ src, fileDownload }: { src: string, fileDownload: any }): JSX.Element {
   const downFile = (event) => {
     event.stopPropagation();
-    // todo 防抖
     if (src) {
-      getFile(src).then(res => {
-          if (res.status === 200) {
-            const url = URL.createObjectURL(new Blob([res.data]));
-            const link = document.createElement("a");
-            link.href = url;
-            let name = res.headers["content-disposition"]?.match(/fileName=(.*)/)[1]; // 获取filename的值
-            name = decodeURIComponent(name);
-            link.setAttribute("download", name);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+      fileDownload(src).then(res => {
+        if (res.status === 200) {
+          const url = URL.createObjectURL(new Blob([res.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          let name = res.headers["content-disposition"]?.match(/fileName=(.*)/)[1]; // 获取filename的值
+          name = decodeURIComponent(name);
+          link.setAttribute("download", name);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
           }
         }
       );
@@ -76,8 +76,6 @@ function FileComponent({ src, name, nodeKey }: {
   const [editor] = useLexicalComposerContext();
   const [selection, setSelection] = useState<RangeSelection | NodeSelection | GridSelection | null>(null);
   const draggable = isSelected && $isNodeSelection(selection);
-  useEffect(() => {
-  }, [isSelected]);
   const isFocused = $isNodeSelection(selection) && isSelected;
 
 
@@ -137,11 +135,16 @@ function FileComponent({ src, name, nodeKey }: {
     onDelete,
     setSelected
   ]);
+  const {
+    functions: {
+      fileDownload
+    }
+  } = useFunctions();
 
 
   return <div draggable={draggable} className={"FileNode_tag"} ref={ref}>
     <Trigger
-      popup={() => <DownLoad src={src} />}
+      popup={() => <DownLoad src={src} fileDownload={fileDownload || getFile} />}
       autoFitPosition
       clickToClose
       blurToHide

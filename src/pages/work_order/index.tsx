@@ -115,6 +115,11 @@ export default function WorkOrderManagement() {
 
   const selectItem: Array<SearchItem> = [
     {
+      name: "id",
+      field: "id",
+      type: "input"
+    },
+    {
       name: t["workplace.table.number"],
       field: "afterSaleOrderNo",
       type: "input"

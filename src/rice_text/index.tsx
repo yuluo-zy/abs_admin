@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./index.less";
-import { SettingsContext, useSettings } from "@/rice_text/context/SettingsContext";
+import { FunctionsContext, SettingsContext, useSettings } from "@/rice_text/context/SettingsContext";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { SharedHistoryContext } from "@/rice_text/context/SharedHistoryContext";
 import { SharedAutocompleteContext } from "@/rice_text/context/SharedAutocompleteContext";
@@ -9,11 +9,22 @@ import InitTheme from "@/rice_text/themes/InitTheme";
 import { TextNodes } from "@/rice_text/components/Node";
 import { checkIsJSON } from "@/rice_text/utils/nodeUtils";
 
-export default function RiceText({ readOnly, onChange, initValue }: {
+export default function RiceText({
+                                   readOnly, onChange, initValue,
+                                   fileUpload,
+                                   fileDownload,
+                                   imgDownload,
+                                   imgUpload
+                                 }: {
   readOnly: boolean,
   onChange?: any,
-  initValue?: string
+  initValue?: string,
+  fileUpload?: any,
+  fileDownload?: any,
+  imgDownload?: any,
+  imgUpload?: any
 }): JSX.Element {
+
   const {
     settings: { emptyEditor }
   } = useSettings();
@@ -40,15 +51,22 @@ export default function RiceText({ readOnly, onChange, initValue }: {
 
   return (
     <SettingsContext>
-      <LexicalComposer initialConfig={initialConfig}>
-        <SharedHistoryContext>
-          <SharedAutocompleteContext>
-            <div className="editor-shell">
-              <Editor onChange={onChange} initValue={initValue} />
-            </div>
-          </SharedAutocompleteContext>
-        </SharedHistoryContext>
-      </LexicalComposer>
+      <FunctionsContext defaultFunction={{
+        fileUpload: fileUpload,
+        fileDownload: fileDownload,
+        imgDownload: imgDownload,
+        imgUpload: imgUpload
+      }}>
+        <LexicalComposer initialConfig={initialConfig}>
+          <SharedHistoryContext>
+            <SharedAutocompleteContext>
+              <div className="editor-shell">
+                <Editor onChange={onChange} initValue={initValue} />
+              </div>
+            </SharedAutocompleteContext>
+          </SharedHistoryContext>
+        </LexicalComposer>
+      </FunctionsContext>
     </SettingsContext>
   );
 }

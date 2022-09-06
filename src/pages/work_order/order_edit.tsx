@@ -11,15 +11,9 @@ import { Button, Message, Spin } from "@arco-design/web-react";
 import styles from "./style/edit.module.less";
 import { IconCheck, IconCheckCircle } from "@arco-design/web-react/icon";
 import RiceText from "@/rice_text";
+import { getSalesInfo, postSalesFile } from "@/api/file";
+import axios from "axios";
 
-const EditText = (props) => {
-  const { textSet } = props;
-  return <RiceText onChange={textSet} readOnly={false} />;
-};
-const ViewText = (props) => {
-  const { data } = props;
-  return <RiceText readOnly={true} initValue={data} />;
-};
 export const OrderEdit: React.FC = () => {
   const t = useLocale(locale);
   const { id } = useParams();
@@ -36,7 +30,7 @@ export const OrderEdit: React.FC = () => {
     }
     postAfterSaleComplete({
       id: id,
-      remarks: data
+      remark: data
     }).then(res => {
       if (res.data.success) {
         setChange(value => !value);
@@ -46,16 +40,64 @@ export const OrderEdit: React.FC = () => {
   }
 
   useEffect(() => {
+    let isUnmount = false;
+    // if(!isUnmount){
     setLoading(true);
-    getAfterSale(id).then(res => {
-      if (res.data.success && res.data.result) {
-        setData([res.data.result]);
-      }
-    })
-      .finally(() => {
+    getAfterSale(id)
+      .then(res => {
+        if (res.data.success && res.data.result && !isUnmount) {
+          setData([res.data.result]);
+        }
+      }).finally(() => {
+      if (!isUnmount) {
         setLoading(false);
-      });
+      }
+    });
+    return () => {
+      isUnmount = true;
+    };
   }, [change]);
+
+  const uploadData = (option) => {
+    const { onProgress, file, onSuccess, onError } = option;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("orderId", id);
+    const source = axios.CancelToken.source();
+    const onprogress = progressEvent => {
+      const complete = progressEvent.loaded / progressEvent.total * 100 | 0;
+      onProgress(parseInt(String(complete), 10), progressEvent);
+    };
+    postSalesFile(formData, onprogress, source.token).then(r => {
+      const { success, result } = r.data;
+      if (success) {
+        Message.success("Uploaded successfully");
+        onSuccess(result);
+      }
+    }).catch(() => {
+      Message.error("Uploaded Error");
+      onError("Uploaded Error");
+    });
+    return {
+      abort() {
+        source.cancel("cancel");
+      }
+    };
+  };
+
+  const getSalesInfoById = (data) => {
+    return getSalesInfo({
+      ...data,
+      orderId: id
+    });
+  };
+
+  const getSalesImgById = (data) => {
+    return getSalesInfo({
+      id: data,
+      orderId: id
+    });
+  };
 
   return <div className={styles["content"]}>
     {/*<DynamicCard title={t['workplace.drawer.details']}>*/}
@@ -85,20 +127,27 @@ export const OrderEdit: React.FC = () => {
                   }
                   }
           >{t["work.order.operate.accept"]}</Button>
-          <OrderDescriptions descriptionData={data} encryption={false} feedback={false} download={true} />
+          <OrderDescriptions descriptionData={data} encryption={false} feedback={false} download={true} copy={true} />
         </div>
       </DynamicCard>
       <DynamicDivider />
       {/*富文本回复内容*/}
       <DynamicCard title={t["work.order.operate.process.result"]}>
-        {!data?.[0]?.remarks && <Button className={styles["edit-button"]}
-                                        type={"primary"}
-                                        icon={<IconCheck />}
-                                        onClick={handleOnClick}>{t["work.order.operate.process.result.operate"]}</Button>}
-        {!data?.[0]?.remarks && <EditText textSet={setRiceText} />}
-        {data?.[0]?.remarks && <ViewText data={data?.[0]?.remarks} />}
+        {!data?.[0]?.remark && <Button className={styles["edit-button"]}
+                                       type={"primary"}
+                                       icon={<IconCheck />}
+                                       onClick={handleOnClick}>{t["work.order.operate.process.result.operate"]}</Button>}
+        {!data?.[0]?.remark && <RiceText onChange={setRiceText} readOnly={false}
+                                         fileUpload={uploadData}
+                                         fileDownload={getSalesInfoById}
+                                         imgUpload={uploadData}
+                                         imgDownload={getSalesImgById}
+        />}
+        {data?.[0]?.remark &&
+          <RiceText readOnly={true} initValue={data?.[0]?.remark}
+                    fileDownload={getSalesInfoById}
+                    imgDownload={getSalesImgById} />}
       </DynamicCard>
     </Spin>
-
   </div>;
 };

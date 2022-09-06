@@ -96,6 +96,7 @@ import { INSERT_HORIZONTAL_RULE_COMMAND } from "@lexical/react/LexicalHorizontal
 import { DynamicImgUpload } from "@/components/Dynamic/Upload/img-upload";
 import { UploadItem } from "@arco-design/web-react/es/Upload";
 import { INSERT_TABLE_COMMAND } from "@lexical/table";
+import { useFunctions } from "@/rice_text/context/SettingsContext";
 
 const blockTypeToBlockName = {
   bullet: "Bulleted List",
@@ -254,6 +255,11 @@ export default function ToolbarPlugin(): JSX.Element {
   const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(
     null
   );
+  const {
+    functions: {
+      imgUpload
+    }
+  } = useFunctions();
   const [fontSize, setFontSize] = useState<string>("15px");
   const [fontColor, setFontColor] = useState<string>("#000");
   const [bgColor, setBgColor] = useState<string>("#fff");
@@ -702,13 +708,14 @@ export default function ToolbarPlugin(): JSX.Element {
         onCancel={() => setImgModal(false)}
       >
         <DynamicImgUpload
+          customRequest={imgUpload}
           onChange={(fileList: UploadItem[], file: UploadItem) => {
             let res = null;
             if (fileList.length > 0) {
               res = file.response;
             }
-            if (res !== null && res > 0) {
-              setImgSrc(res);
+            if (res !== null || res > 0) {
+              setImgSrc(res?.id || res);
             }
           }} limit={1} />
       </Modal>

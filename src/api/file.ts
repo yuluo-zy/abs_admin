@@ -72,9 +72,12 @@ export const postSalesFile = (data, onUploadProgress?, source?) => {
   );
 };
 // 售后文件下载
-export const getSalesInfo = (id) => {
+export const getSalesInfo = (data) => {
+  const { id } = data;
   return getAxios().get(
     "/file/sales/download/" + id,
-    { responseType: "blob" });
-  ;
+    {
+      responseType: "blob",
+      params: data
+    });
 };
