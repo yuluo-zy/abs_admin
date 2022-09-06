@@ -72,18 +72,12 @@ export const postSalesFile = (data, onUploadProgress?, source?) => {
   );
 };
 // 售后文件下载
-export const getSalesInfo = (id) => {
-  return getAxios().get(
-    "/file/sales/download/" + id,
-    { responseType: "blob" });
-};
-// 适配富文本的售后文件下载
-export const getSalesInfoByRice = (data) => {
+export const getSalesInfo = (data) => {
   const { id } = data;
   return getAxios().get(
     "/file/sales/download/" + id,
-    { responseType: "blob" });
+    {
+      responseType: "blob",
+      params: data
+    });
 };
-/**
- * 客户信息 相关联系人
- */

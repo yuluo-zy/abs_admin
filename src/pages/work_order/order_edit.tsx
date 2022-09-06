@@ -11,43 +11,10 @@ import { Button, Message, Spin } from "@arco-design/web-react";
 import styles from "./style/edit.module.less";
 import { IconCheck, IconCheckCircle } from "@arco-design/web-react/icon";
 import RiceText from "@/rice_text";
-import { getSalesInfo, getSalesInfoByRice, postSalesFile } from "@/api/file";
+import { getSalesInfo, postSalesFile } from "@/api/file";
 import axios from "axios";
 
-const uploadData = (option) => {
-  const { onProgress, file, onSuccess, onError } = option;
-  const formData = new FormData();
-  formData.append("file", file);
-  const source = axios.CancelToken.source();
-  const onprogress = progressEvent => {
-    const complete = progressEvent.loaded / progressEvent.total * 100 | 0;
-    onProgress(parseInt(String(complete), 10), progressEvent);
-  };
-  postSalesFile(formData, onprogress, source.token).then(r => {
-    const { success, result } = r.data;
-    if (success) {
-      Message.success("Uploaded successfully");
-      onSuccess(result);
-    }
-  }).catch(() => {
-    Message.error("Uploaded Error");
-    onError("Uploaded Error");
-  });
-  return {
-    abort() {
-      source.cancel("cancel");
-    }
-  };
-};
-const EditText = (props) => {
-  const { textSet } = props;
-  return <RiceText onChange={textSet} readOnly={false}
-                   fileUpload={uploadData}
-                   fileDownload={getSalesInfoByRice}
-                   imgUpload={uploadData}
-                   imgDownload={getSalesInfo}
-  />;
-};
+
 export const ViewText = (props) => {
   const { data } = props;
   return <RiceText readOnly={true} initValue={data}
@@ -99,6 +66,47 @@ export const OrderEdit: React.FC = () => {
     };
   }, [change]);
 
+  const uploadData = (option) => {
+    const { onProgress, file, onSuccess, onError } = option;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("orderId", id);
+    const source = axios.CancelToken.source();
+    const onprogress = progressEvent => {
+      const complete = progressEvent.loaded / progressEvent.total * 100 | 0;
+      onProgress(parseInt(String(complete), 10), progressEvent);
+    };
+    postSalesFile(formData, onprogress, source.token).then(r => {
+      const { success, result } = r.data;
+      if (success) {
+        Message.success("Uploaded successfully");
+        onSuccess(result);
+      }
+    }).catch(() => {
+      Message.error("Uploaded Error");
+      onError("Uploaded Error");
+    });
+    return {
+      abort() {
+        source.cancel("cancel");
+      }
+    };
+  };
+
+  const getSalesInfoById = (data) => {
+    return getSalesInfo({
+      ...data,
+      orderId: id
+    });
+  };
+
+  const getSalesImgById = (data) => {
+    return getSalesInfo({
+      id: data,
+      orderId: id
+    });
+  };
+
   return <div className={styles["content"]}>
     {/*<DynamicCard title={t['workplace.drawer.details']}>*/}
     <Spin style={{ width: "100%" }} loading={loading}>
@@ -137,8 +145,17 @@ export const OrderEdit: React.FC = () => {
                                        type={"primary"}
                                        icon={<IconCheck />}
                                        onClick={handleOnClick}>{t["work.order.operate.process.result.operate"]}</Button>}
-        {!data?.[0]?.remark && <EditText textSet={setRiceText} />}
-        {data?.[0]?.remark && <ViewText data={data?.[0]?.remark} />}
+        {!data?.[0]?.remark && <RiceText onChange={setRiceText} readOnly={false}
+                                         fileUpload={uploadData}
+                                         fileDownload={getSalesInfoById}
+                                         imgUpload={uploadData}
+                                         imgDownload={getSalesImgById}
+        />}
+        {data?.[0]?.remark &&
+          <RiceText readOnly={true} initValue={data?.[0]?.remark}
+                    fileDownload={getSalesInfoById}
+                    imgUpload={uploadData}
+                    imgDownload={getSalesImgById} />}
       </DynamicCard>
     </Spin>
   </div>;
