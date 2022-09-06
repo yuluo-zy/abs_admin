@@ -15,6 +15,7 @@ interface StepProps {
   encryption: boolean;
   download: boolean;
   feedback: boolean;
+  copy?: boolean;
 }
 
 const DownloadButton = (props) => {
@@ -28,16 +29,16 @@ const DownloadButton = (props) => {
         id: id,
         orderId: orderId
       }).then(res => {
-        if (res.status === 200) {
-          const url = URL.createObjectURL(new Blob([res.data]));
-          const link = document.createElement("a");
-          link.href = url;
-          let name = res.headers["content-disposition"]?.match(/fileName=(.*)/)[1]; // 获取filename的值
-          name = decodeURIComponent(name);
-          link.setAttribute("download", name);
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+          if (res.status === 200) {
+            const url = URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            let name = res.headers["content-disposition"]?.match(/fileName=(.*)/)[1]; // 获取filename的值
+            name = decodeURIComponent(name);
+            link.setAttribute("download", name);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
           }
         }
       ).finally(() => {
@@ -55,7 +56,7 @@ const DownloadButton = (props) => {
   />;
 };
 export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChildren<StepProps>) => {
-  const { descriptionData, encryption, download, feedback, style } = props;
+  const { descriptionData, encryption, download, feedback, copy, style } = props;
   const data = descriptionData?.[0] || {};
 
   const t = useLocale(locale);
@@ -75,9 +76,16 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
   };
   const getEncryption = (value) => {
     if (encryption) {
-      if (value && value.length > 6) {
-        return value.substring(0, 3) + "******" + value.substring(value.length - 2);
+      if (value && value.length > 5) {
+        return value.substring(0, 2) + "******" + value.substring(value.length - 2);
       }
+    }
+
+    return value;
+  };
+  const getCopy = (value) => {
+    if (copy) {
+      return <Typography.Paragraph copyable style={{ margin: 2 }}>{value}</Typography.Paragraph>;
     }
     return value;
   };
@@ -114,7 +122,7 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
     },
     {
       label: t["workplace.add.custom.custom.company"],
-      value: getEncryption(data?.customerCompanyName)
+      value: getCopy(getEncryption(data?.customerCompanyName))
     },
     {
       label: t["workplace.add.custom.role"],
@@ -126,11 +134,11 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
     },
     {
       label: t["workplace.add.custom.quality"] + " - " + t["workplace.add.custom.phone"],
-      value: getEncryption(data?.customerQcPhone)
+      value: getCopy(getEncryption(data?.customerQcPhone))
     },
     {
       label: t["workplace.add.custom.quality"] + " - " + t["workplace.add.custom.email"],
-      value: getEncryption(data?.customerQcEmail)
+      value: getCopy(getEncryption(data?.customerQcEmail))
     },
     {
       label: t["workplace.add.custom.purchase"] + " - " + t["workplace.add.custom.name"],
@@ -138,11 +146,11 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
     },
     {
       label: t["workplace.add.custom.purchase"] + " - " + t["workplace.add.custom.phone"],
-      value: getEncryption(data?.customerBuyerPhone)
+      value: getCopy(getEncryption(data?.customerBuyerPhone))
     },
     {
       label: t["workplace.add.custom.purchase"] + " - " + t["workplace.add.custom.email"],
-      value: getEncryption(data?.customerBuyerEmail)
+      value: getCopy(getEncryption(data?.customerBuyerEmail))
     },
     {
       label: t["workplace.add.custom.espressif"] + " - " + t["workplace.add.custom.name"],
@@ -150,7 +158,7 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
     },
     {
       label: t["workplace.add.custom.espressif"] + " - " + t["workplace.add.custom.email"],
-      value: data?.espBusinessEmail
+      value: getCopy(data?.espBusinessEmail)
     }
   ];
   const productData = [
@@ -160,9 +168,7 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
     },
     {
       label: t["workplace.add.custom.product.description"],
-      value: <Typography.Paragraph ellipsis={{ showTooltip: true }} style={{ maxWidth: 400 }}>
-        {data?.productionUsedNote}
-      </Typography.Paragraph>
+      value: data?.productionUsedNote
     }
   ];
 
@@ -244,7 +250,7 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
     />
     <DynamicDivider />
     <Descriptions
-      column={2}
+      column={1}
       colon={" : "}
       labelStyle={{ textAlign: "right", paddingRight: 36 }}
       title={t["workplace.add.custom.product"]}

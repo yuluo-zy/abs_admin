@@ -127,7 +127,7 @@ export const OrderEdit: React.FC = () => {
                   }
                   }
           >{t["work.order.operate.accept"]}</Button>
-          <OrderDescriptions descriptionData={data} encryption={false} feedback={false} download={true} />
+          <OrderDescriptions descriptionData={data} encryption={false} feedback={false} download={true} copy={true} />
         </div>
       </DynamicCard>
       <DynamicDivider />
