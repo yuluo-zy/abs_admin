@@ -14,14 +14,6 @@ import RiceText from "@/rice_text";
 import { getSalesInfo, postSalesFile } from "@/api/file";
 import axios from "axios";
 
-
-export const ViewText = (props) => {
-  const { data } = props;
-  return <RiceText readOnly={true} initValue={data}
-                   fileDownload={getSalesInfoByRice}
-                   imgUpload={uploadData}
-                   imgDownload={getSalesInfo} />;
-};
 export const OrderEdit: React.FC = () => {
   const t = useLocale(locale);
   const { id } = useParams();
@@ -154,7 +146,6 @@ export const OrderEdit: React.FC = () => {
         {data?.[0]?.remark &&
           <RiceText readOnly={true} initValue={data?.[0]?.remark}
                     fileDownload={getSalesInfoById}
-                    imgUpload={uploadData}
                     imgDownload={getSalesImgById} />}
       </DynamicCard>
     </Spin>
