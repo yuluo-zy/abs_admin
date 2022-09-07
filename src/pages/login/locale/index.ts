@@ -1,9 +1,22 @@
 const i18n = {
   "en-US": {
-    "protocol.title": "Profile",
-    "protocol.content": "Profile",
-    "protocol.turn.on": "Profile",
-    "protocol.button": "Profile"
+    "protocol.title": "Agreement header",
+    "protocol.content": "Agreement",
+    "protocol.turn.on": "By registering and logging in, you agree ",
+    "protocol.button": "User Agreement",
+    "login.system.title": "ESPRESSIF Product Customization System",
+    "login.system.subtitle": "Welcome to log in",
+    "login.system.user.name.error": "Username can not be empty",
+    "login.system.user.password.error": "Password cannot be empty and longer than 6",
+    "login.system.user.login.error": "Password cannot be empty and longer than 6",
+    "login.system.login": "Log in",
+    "login.form.userName.errMsg": "Username can not be empty",
+    "login.form.password.errMsg": "Password can not be blank",
+    "login.form.login.errMsg": "Login error, refresh and try again",
+    "login.form.rememberPassword": "Remember password",
+    "login.form.forgetPassword": "Forgot password",
+    "login.form.login": "Log in",
+    "login.form.register": "Register an account"
   },
   "zh-CN": {
     "protocol.title": "协议抬头",

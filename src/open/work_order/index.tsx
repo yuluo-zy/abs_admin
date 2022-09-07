@@ -113,9 +113,7 @@ function WorkOrder() {
             animation={"card"}
             indicatorPosition={"outer"}
             indicatorType="dot"
-            showArrow="hover"
-          >
-
+            showArrow="hover">
             <C2 className={styles["c2-style"]} />
             <C2 className={styles["c2-style"]} />
             <C2 className={styles["c2-style"]} />
