@@ -123,12 +123,23 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
 
     {
       label: t["workplace.add.custom.custom.company"],
-      value: getCopy(getEncryption(data?.customerCompanyName)),
-      span: 2
+      value: getCopy(getEncryption(data?.customerCompanyName))
+
     },
     {
       label: t["workplace.add.custom.role"],
-      value: getRoleName(data?.customerRole)
+      value: getRoleName(data?.customerRole),
+      span: 2
+    },
+
+    {
+      label: t["workplace.add.custom.espressif"] + " - " + t["workplace.add.custom.name"],
+      value: data?.espBusinessName
+    },
+    {
+      label: t["workplace.add.custom.espressif"] + " - " + t["workplace.add.custom.email"],
+      value: getCopy(data?.espBusinessEmail),
+      span: 2
     },
 
     {
@@ -169,14 +180,7 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
       label: t["workplace.add.custom.purchase"] + " - " + t["workplace.add.custom.email"],
       value: getCopy(getEncryption(data?.customerBuyerEmail))
     },
-    {
-      label: t["workplace.add.custom.espressif"] + " - " + t["workplace.add.custom.name"],
-      value: data?.espBusinessName
-    },
-    {
-      label: t["workplace.add.custom.espressif"] + " - " + t["workplace.add.custom.email"],
-      value: getCopy(data?.espBusinessEmail)
-    }
+
   ];
   const productData = [
     {

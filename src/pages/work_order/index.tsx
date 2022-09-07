@@ -115,7 +115,7 @@ export default function WorkOrderManagement() {
 
   const selectItem: Array<SearchItem> = [
     {
-      name: "id",
+      name: "key",
       field: "id",
       type: "input"
     },
