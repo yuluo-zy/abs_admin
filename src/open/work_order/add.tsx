@@ -61,7 +61,7 @@ export default function WorkOrderAdd() {
   const t = useLocale(locale);
   const history = useHistory();
   const to_return = () => {
-    history.push("/open/work_order");
+    history.push("/open/cqms");
   };
   const success = (value) => {
     Modal.success({
@@ -194,7 +194,7 @@ export default function WorkOrderAdd() {
       <Space size={40}>
         <Breadcrumb>
           <BreadcrumbItem>
-            <Link to={"/open/work_order"}> <IconHome /></Link>
+            <Link to={"/open/cqms"}> <IconHome /></Link>
           </BreadcrumbItem>
           <BreadcrumbItem>{t["workplace.content.work_order.add"]}</BreadcrumbItem>
           <BreadcrumbItem>{t["workplace.content.work_order.cq"]}</BreadcrumbItem>

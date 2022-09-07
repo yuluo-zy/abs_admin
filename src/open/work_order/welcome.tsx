@@ -18,7 +18,7 @@ export const Welcome: React.FC<WelcomeProps> = (props: React.PropsWithChildren<W
   const { setSelect } = props;
 
   const to_add = () => {
-    history.push("/open/work_order/add");
+    history.push("/open/cqms/add");
   };
   return <>
     <div className={styles["content"]}>

@@ -9,14 +9,14 @@ import { useHistory } from "react-router";
 import { defaultRoute } from "@/routes";
 import { Message, Select } from "@arco-design/web-react";
 import useLocale from "@/utils/useHook/useLocale";
-import locale from "@/locale/index";
+import locale from "./locale/index";
 import IconButton from "@/components/NavBar/IconButton";
 import { IconLanguage } from "@arco-design/web-react/icon";
 import defaultLocale from "@/locale";
 import { GlobalContext } from "@/context";
 
 function Login() {
-  const { setLang, lang, theme, setTheme } = useContext(GlobalContext);
+  const { setLang, lang } = useContext(GlobalContext);
   const t = useLocale(locale);
   const history = useHistory();
   useEffect(() => {
@@ -63,10 +63,7 @@ function Login() {
           <LoginForm />
         </div>
         <div className={styles.footer}>
-          <Footer />
-          <div>
-            {t["login.form.work.order"]}
-          </div>
+          <Footer isLink={true} />
         </div>
       </div>
     </div>

@@ -16,7 +16,8 @@ const i18n = {
     "login.form.rememberPassword": "Remember password",
     "login.form.forgetPassword": "Forgot password",
     "login.form.login": "Log in",
-    "login.form.register": "Register an account"
+    "login.form.register": "Register an account",
+    "login.form.work.order": "售后工单"
   },
   "zh-CN": {
     "protocol.title": "协议抬头",
