@@ -8,9 +8,11 @@ import checkLogin from "@/utils/checkLogin";
 import { useHistory } from "react-router";
 import { defaultRoute } from "@/routes";
 import { Message } from "@arco-design/web-react";
+import useLocale from "@/utils/useHook/useLocale";
+import locale from "@/locale/index";
 
 function Login() {
-
+  const t = useLocale(locale);
   const history = useHistory();
   useEffect(() => {
     document.body.setAttribute("arco-theme", "light");
@@ -36,6 +38,9 @@ function Login() {
         </div>
         <div className={styles.footer}>
           <Footer />
+          <div>
+            {t["login.form.work.order"]}
+          </div>
         </div>
       </div>
     </div>

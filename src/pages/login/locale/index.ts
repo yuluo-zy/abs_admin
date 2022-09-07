@@ -2,7 +2,7 @@ const i18n = {
   "en-US": {
     "protocol.title": "Agreement header",
     "protocol.content": "Agreement",
-    "protocol.turn.on": "By registering and logging in, you agree ",
+    "protocol.turn.on": "By registering and logging in, you agree",
     "protocol.button": "User Agreement",
     "login.system.title": "ESPRESSIF Product Customization System",
     "login.system.subtitle": "Welcome to log in",
@@ -35,7 +35,8 @@ const i18n = {
     "login.form.rememberPassword": "记住密码",
     "login.form.forgetPassword": "忘记密码",
     "login.form.login": "登录",
-    "login.form.register": "注册账号"
+    "login.form.register": "注册账号",
+    "login.form.work.order": "售后工单"
   }
 };
 

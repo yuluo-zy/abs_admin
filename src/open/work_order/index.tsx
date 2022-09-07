@@ -96,10 +96,10 @@ function WorkOrder() {
     </div>
     <Content className={styles["layout-content"]}>
       <Route
-        path={`/open/work_order/add`}
+        path={`/open/cqms/add`}
         component={WorkOrderAdd}
       />
-      <Route exact path={"/open/work_order"}>
+      <Route exact path={"/open/cqms"}>
         <Welcome setSelect={setSelect} />
         {data && data.length > 0 && <div className={styles["table"]}>
           <Spin loading={loading} style={{ width: "100%" }}>
