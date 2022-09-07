@@ -14,7 +14,7 @@
   "dependencies": {
     "@antv/data-set": "^0.11.8",
     "@arco-design/color": "^0.4.0",
-    "@arco-design/web-react": "^2.39.1",
+    "@arco-design/web-react": ">=2.0.0",
     "@arco-plugins/vite-react": "^1.0.5",
     "@arco-themes/react-arco-pro": "^0.0.7",
     "@babel/runtime-corejs3": "^7.18.0",
@@ -59,6 +59,7 @@
     "react-use": "^17.3.2",
     "redux": "^4.1.2",
     "remark-gfm": "^3.0.1",
+    "svgo": "^2.8.0",
     "zustand": "^3.7.2"
   },
   "devDependencies": {

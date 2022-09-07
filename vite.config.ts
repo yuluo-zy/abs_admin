@@ -22,7 +22,9 @@ export default defineConfig({
   plugins: [
     react(),
     svgrPlugin({
-      svgrOptions: {}
+      svgrOptions: {
+        svgo: true
+      }
     }),
     vitePluginForArco({
       theme: '@arco-themes/react-arco-pro'

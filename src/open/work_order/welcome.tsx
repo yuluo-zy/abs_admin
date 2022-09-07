@@ -60,7 +60,7 @@ export const Welcome: React.FC<WelcomeProps> = (props: React.PropsWithChildren<W
         </div>
       </div>
       <div className={styles["content-img"]}>
-        <Solution />
+        <Solution className={styles["content-img-svg"]} />
       </div>
     </div>
 
