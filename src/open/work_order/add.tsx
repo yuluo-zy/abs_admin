@@ -288,10 +288,10 @@ export default function WorkOrderAdd() {
                 <Form.Item field="customerQcName">
                   <Input placeholder="QC name" maxLength={30} style={{ maxWidth: 200 }} />
                 </Form.Item>
-                <Form.Item field="customerQcPhone">
+                <Form.Item field="customerQcEmail">
                   <Input placeholder="QC email" maxLength={30} style={{ width: 300 }} />
                 </Form.Item>
-                <Form.Item field="customerQcEmail">
+                <Form.Item field="customerQcPhone">
                   <Input placeholder="QC phone" maxLength={30} style={{ maxWidth: 270 }} />
                 </Form.Item>
               </Space>
