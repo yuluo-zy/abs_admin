@@ -3,10 +3,14 @@ import { Button, Result } from "@arco-design/web-react";
 import locale from "./locale";
 import useLocale from "@/utils/useHook/useLocale";
 import styles from "./style/index.module.less";
+import { useHistory } from "react-router";
 
 function Exception404() {
   const t = useLocale(locale);
-
+  const history = useHistory();
+  const to_return = () => {
+    history.replace("/");
+  };
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -15,7 +19,7 @@ function Exception404() {
           status="404"
           subTitle={t["exception.result.404.description"]}
           extra={
-            <Button key="back" type="primary">
+            <Button key="back" type="primary" onClick={to_return}>
               {t["exception.result.404.back"]}
             </Button>
           }

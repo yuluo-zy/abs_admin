@@ -13,6 +13,7 @@ import { OrderDrawer } from "@/open/work_order/order-drawer";
 import Navbar from "@/components/NavBar";
 import { IconDoubleRight } from "@arco-design/web-react/icon";
 import C2 from "./assets/C2.svg";
+import lazyload from "@/utils/lazyload";
 
 const Content = Layout.Content;
 
@@ -118,10 +119,12 @@ function WorkOrder() {
             <C2 className={styles["c2-style"]} />
             <C2 className={styles["c2-style"]} />
           </Carousel>
-
         </div>}
-
       </Route>
+      <Route
+        path="*"
+        component={lazyload(() => import("@/components/Exception/404"))}
+      />
       <Footer /><OrderDrawer visible={visible} setVisible={setVisible} data={data} />
     </Content>
 
