@@ -34,21 +34,21 @@ const BreadcrumbItem = Breadcrumb.Item;
 const FileType = [
   "image/png",
   "image/jpeg",
-  "image/svg+xml",
-  "text/plain",
-  "application/json",
-  "text/csv",
+  // "image/svg+xml",
+  // "text/plain",
+  // "application/json",
+  // "text/csv",
   "application/msword",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   "application/pdf",
   "application/x-rar-compressed",
   "application/x-tar",
-  "application/vnd.ms-excel",
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  // "application/vnd.ms-excel",
+  // "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   "application/zip",
   "application/x-zip-compressed",
-  "application/x-7z-compressed",
-  "application/octet-stream"
+  "application/x-7z-compressed"
+  // "application/octet-stream"
 ];
 const bodyStyle = {
   padding: "1rem",
@@ -131,13 +131,14 @@ export default function WorkOrderAdd() {
     }
   ];
   const roleOptions = [
-    {
-      label: t["workplace.add.custom.role.b"],
-      key: "2"
-    },
+
     {
       label: t["workplace.add.custom.role.a"],
       key: "1"
+    },
+    {
+      label: t["workplace.add.custom.role.b"],
+      key: "2"
     },
 
     {
@@ -145,12 +146,12 @@ export default function WorkOrderAdd() {
       key: "3"
     },
     {
-      label: t["workplace.add.custom.role.e"],
-      key: "5"
-    },
-    {
       label: t["workplace.add.custom.role.d"],
       key: "4"
+    },
+    {
+      label: t["workplace.add.custom.role.e"],
+      key: "5"
     }
 
   ];
@@ -212,6 +213,9 @@ export default function WorkOrderAdd() {
               scrollToFirstError
         >
           <DynamicCard bodyStyle={bodyStyle} title={t["workplace.add.custom.product"]}>
+            <div className={styles["alert"]}>
+              <Alert closable content={t["workplace.add.custom.type.help"]} />
+            </div>
             <FormItem label={t["workplace.add.custom.module"]} required>
               <Grid.Row align="center">
                 <FormItem field="productType" noStyle={{ showErrorTip: true }}
@@ -224,9 +228,6 @@ export default function WorkOrderAdd() {
               </Grid.Row>
             </FormItem>
 
-            <div className={styles["alert"]}>
-              <Alert closable content={t["workplace.add.custom.type.help"]} />
-            </div>
             <Form.Item field="productionUsedNote" label={t["workplace.add.custom.product.description"]}>
               <Input.TextArea showWordLimit placeholder={t["workplace.add.custom.product.description.help"]}
                               minLength={10} maxLength={200} style={{ minHeight: 128, maxWidth: 650 }} />
@@ -240,7 +241,7 @@ export default function WorkOrderAdd() {
                          required: true,
                          message: t["workplace.add.custom.custom.company.error"]
                        }]}>
-              <Input placeholder="please enter your company name" maxLength={30} style={{ maxWidth: 350 }} />
+              <Input placeholder="Please enter your company name" maxLength={30} style={{ maxWidth: 350 }} />
             </Form.Item>
             <Form.Item field="customerRole" label={t["workplace.add.custom.role"]}
                        rules={[{ required: true, message: t["workplace.add.custom.role.error"] }]}>
@@ -254,40 +255,26 @@ export default function WorkOrderAdd() {
                 ))}
               </Select>
             </Form.Item>
+
             <FormItem label={t["workplace.add.custom.custom.order.title"]} required>
-              {/*<Grid.Row gutter={1}>*/}
-              {/*  <Grid.Col span={8}>*/}
               <Space size={"large"}>
                 <Form.Item field="customerName"
-                  // label={t["workplace.add.custom.custom.name"]}
                            rules={[{ required: true, message: t["workplace.add.custom.custom.name.error"] }]}>
-                  <Input placeholder="your name" maxLength={30} style={{ maxWidth: 200 }} />
+                  <Input placeholder="Your name" maxLength={30} />
                 </Form.Item>
-                <Form.Item field="customerQcEmail"
-                           layout={"vertical"}
+                <Form.Item field="customerEmail"
                            rules={[{ required: true, message: t["workplace.add.custom.email.error"] }]}
-                  // label={t["workplace.add.custom.email"]}
                 >
-                  <Input placeholder="your email" maxLength={30} style={{ width: 300 }} />
+                  <Input placeholder="Your email" maxLength={30} style={{ width: 300 }} />
                 </Form.Item>
-                <Form.Item field="customerCompanyName"
-                  // label={t["workplace.add.custom.custom.order"]}
+                <Form.Item field="customerPhone"
                            rules={[{
                              required: true,
                              message: t["workplace.add.custom.custom.order.error"]
                            }]}>
-                  <Input placeholder="your phone number" maxLength={30} style={{ maxWidth: 220 }} />
+                  <Input placeholder="Your phone number" maxLength={30} />
                 </Form.Item>
               </Space>
-
-              {/*</Grid.Col>*/}
-              {/*<Grid.Col span={8}>*/}
-
-              {/*</Grid.Col>*/}
-              {/*<Grid.Col span={8}>*/}
-
-              {/*  </Grid.Col>*/}
-              {/*</Grid.Row>*/}
             </FormItem>
 
 
@@ -298,24 +285,13 @@ export default function WorkOrderAdd() {
 
             <FormItem label={t["workplace.add.custom.quality"]}>
               <Space size={"large"}>
-
-                <Form.Item field="customerQcName"
-                           layout={"vertical"}
-                  // label={t["workplace.add.custom.name"]}
-                >
+                <Form.Item field="customerQcName">
                   <Input placeholder="QC name" maxLength={30} style={{ maxWidth: 200 }} />
                 </Form.Item>
-                <Form.Item field="customerQcPhone"
-                           layout={"vertical"}
-                  // label={t["workplace.add.custom.phone"]}
-                >
+                <Form.Item field="customerQcPhone">
                   <Input placeholder="QC email" maxLength={30} style={{ width: 300 }} />
                 </Form.Item>
-                <Form.Item field="customerQcEmail"
-                           layout={"vertical"}
-                  // rules={[{ required: true, message: t["workplace.add.custom.email.error"] }]}
-                  // label={t["workplace.add.custom.email"]}
-                >
+                <Form.Item field="customerQcEmail">
                   <Input placeholder="QC phone" maxLength={30} style={{ maxWidth: 270 }} />
                 </Form.Item>
               </Space>
@@ -323,26 +299,14 @@ export default function WorkOrderAdd() {
 
             <FormItem label={t["workplace.add.custom.purchase"]}>
               <Space size={"large"}>
-                <Form.Item field="customerBuyerName"
-                           layout={"vertical"}
-                  // label={t["workplace.add.custom.name"]}
-                  //          rules={[{ required: true, message: t["workplace.add.custom.name.error"] }]}
-                >
-                  <Input placeholder="buyer name" maxLength={30} style={{ maxWidth: 200 }} />
+                <Form.Item field="customerBuyerName">
+                  <Input placeholder="Buyer name" maxLength={30} />
                 </Form.Item>
-                <Form.Item field="customerBuyerPhone"
-                  // label={t["workplace.add.custom.phone"]}
-                           layout={"vertical"}
-                  // rules={[{ required: true, message: t["workplace.add.custom.phone.error"] }]}
-                >
-                  <Input placeholder="buyer phone" maxLength={30} style={{ width: 300 }} />
+                <Form.Item field="customerBuyerEmail">
+                  <Input placeholder="Buyer email" maxLength={30} style={{ width: 300 }} />
                 </Form.Item>
-                <Form.Item field="customerBuyerEmail"
-                  // rules={[{ required: true, message: t["workplace.add.custom.email.error"] }]}
-                           layout={"vertical"}
-                  // label={t["workplace.add.custom.email"]}
-                >
-                  <Input placeholder="buyer email" maxLength={30} style={{ maxWidth: 270 }} />
+                <Form.Item field="customerBuyerPhone">
+                  <Input placeholder="Buyer phone" maxLength={30} />
                 </Form.Item>
               </Space>
             </FormItem>
@@ -351,17 +315,14 @@ export default function WorkOrderAdd() {
             <FormItem label={t["workplace.add.custom.espressif"]} required>
               <Space size={"large"}>
                 <Form.Item field="espBusinessName"
-                           layout={"vertical"}
-                  // label={t["workplace.add.custom.name"]}
                            rules={[{ required: true, message: t["workplace.add.custom.espressif.error"] }]}>
-                  <Input placeholder="please enter espressif name" maxLength={30} style={{ maxWidth: 200 }} />
+                  <Input placeholder="Please enter espressif name" maxLength={30} style={{ maxWidth: 200 }} />
                 </Form.Item>
                 <Form.Item field="espBusinessEmail"
                            layout={"vertical"}
                            rules={[{ required: true, message: t["workplace.add.custom.espressif.email.error"] }]}
-                  // label={t["workplace.add.custom.email"]}
                 >
-                  <Input placeholder="please enter espressif email" maxLength={30} style={{ width: 300 }} />
+                  <Input placeholder="Please enter espressif email" maxLength={30} style={{ width: 300 }} />
                 </Form.Item>
               </Space>
             </FormItem>
@@ -375,7 +336,7 @@ export default function WorkOrderAdd() {
             </div>
             <Form.Item field="occurDate" label={t["workplace.add.custom.product.date"]}
                        rules={[{ required: true, message: t["workplace.add.custom.product.date.error"] }]}>
-              <DatePicker style={{ maxWidth: 350 }} />
+              <DatePicker style={{ width: 350 }} />
             </Form.Item>
 
             {/*<FormItem label={t["workplace.add.custom.product.number"]} required>*/}
@@ -387,13 +348,12 @@ export default function WorkOrderAdd() {
                 precision={0}
                 step={1}
                 suffix="pcs"
-                placeholder="please enter production quantity"
+                placeholder="Please enter production quantity"
                 max={10000000}
                 min={1}
                 style={{ maxWidth: 350 }} />
             </Form.Item>
-            {/*</Grid.Col>*/}
-            {/*<Grid.Col span={12}>*/}
+
             <Form.Item field="failNum"
                        rules={[{ required: true, message: "workplace.add.custom.product.number.defective.error" }]}
                        label={t["workplace.add.custom.product.number.defective"]}>
@@ -401,12 +361,10 @@ export default function WorkOrderAdd() {
                 precision={0}
                 step={1}
                 suffix="pcs"
-                placeholder="please enter number of defective products" max={1000000} min={1}
+                placeholder="Please enter number of defective products"
+                max={1000000} min={1}
                 style={{ maxWidth: 350 }} />
             </Form.Item>
-            {/*  </Grid.Col>*/}
-            {/*</Grid.Row>*/}
-            {/*</FormItem>*/}
 
             <Form.Item field="problemStage" label={t["workplace.add.custom.product.stage"]}
                        rules={[{ required: true, message: t["workplace.add.custom.product.stage.error"] }]}>
@@ -430,13 +388,15 @@ export default function WorkOrderAdd() {
               <Input.TextArea showWordLimit placeholder={t["workplace.add.custom.product.issue.description.info"]}
                               minLength={20} maxLength={500} style={{ minHeight: 128, maxWidth: 650 }} />
             </Form.Item>
-            <Form.Item field="productionFailState"
+            <Form.Item field="productionOtherDemands"
                        label={t["workplace.add.custom.product.other.description"]}
             >
               <Input.TextArea showWordLimit placeholder={t["workplace.add.custom.product.other.description.info"]}
                               maxLength={500} style={{ minHeight: 128, maxWidth: 650 }} />
             </Form.Item>
+
             <Form.Item field="imgIds" triggerPropName="fileList"
+                       extra="Only allow upload of .png .jpeg"
                        label={t["workplace.add.custom.product.issue.picture"]}>
               <DynamicImgUpload limit={5}
                                 customRequest={uploadData}
@@ -444,7 +404,9 @@ export default function WorkOrderAdd() {
                                   form.setFieldValue("imgIds", fileList);
                                 }} />
             </Form.Item>
-            <Form.Item field="fileIds" label={t["workplace.add.custom.product.issue.appendix"]}>
+
+            <Form.Item field="fileIds" label={t["workplace.add.custom.product.issue.appendix"]}
+                       extra="Only allow upload of .rar .zip  .pdf .doc. And the maximum upload file is 20M.">
               <DynamicUpload limit={5}
                              customRequest={uploadData}
                              fileType={FileType}

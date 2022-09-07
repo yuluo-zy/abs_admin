@@ -5,7 +5,6 @@ import DynamicUpload from "@/components/Dynamic/Upload/index";
 const FileType = [
   "image/png",
   "image/jpeg",
-  "image/svg+xml"
 ];
 
 export function DynamicImgUpload(props: { limit, onChange, title?, fileList?, customRequest? }) {
