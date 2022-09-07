@@ -48,12 +48,12 @@ export default function WorkOrderManagement() {
         dataIndex: "espBusinessName"
       },
       {
-        title: t["workplace.add.custom.quality"],
-        dataIndex: "customerQcPhone"
+        title: t["workplace.ticket.submitter.name"],
+        dataIndex: "customerName"
       },
       {
-        title: t["workplace.add.custom.purchase"],
-        dataIndex: "customerBuyerPhone"
+        title: t["workplace.ticket.submitter.company"],
+        dataIndex: "customerCompanyName"
       },
       {
         title: t["workplace.table.status"],
