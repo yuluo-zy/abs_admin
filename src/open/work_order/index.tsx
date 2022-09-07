@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Grid, Layout, Spin, Table, TableColumnProps, Tag } from "@arco-design/web-react";
+import { Button, Carousel, Layout, Spin, Table, TableColumnProps, Tag } from "@arco-design/web-react";
 import styles from "./style/index.module.less";
 import { Welcome } from "@/open/work_order/welcome";
 import useLocale from "@/utils/useHook/useLocale";
@@ -12,10 +12,9 @@ import Footer from "@/components/Footer";
 import { OrderDrawer } from "@/open/work_order/order-drawer";
 import Navbar from "@/components/NavBar";
 import { IconDoubleRight } from "@arco-design/web-react/icon";
+import C2 from "./assets/C2.svg";
 
 const Content = Layout.Content;
-
-const { Row, Col } = Grid;
 
 
 function WorkOrder() {
@@ -102,18 +101,28 @@ function WorkOrder() {
       />
       <Route exact path={"/open/work_order"}>
         <Welcome setSelect={setSelect} />
-        {/*<Row gutter={24} className={styles["home"]}>*/}
-        {/*  <Col span={18}>*/}
-        <div className={styles["table"]}>
+        {data && data.length > 0 && <div className={styles["table"]}>
           <Spin loading={loading} style={{ width: "100%" }}>
             <Table columns={columns} data={data} />
           </Spin>
-        </div>
-        {/*</Col>*/}
-        {/*<Col span={6}>*/}
-        {/*  <Announcement />*/}
-        {/*</Col>*/}
-        {/*</Row>*/}
+        </div>}
+        {data.length === 0 && <div className={styles.c2}>
+          <Carousel
+            // style={{ height: '100%' }}
+            autoPlay={true}
+            animation={"card"}
+            indicatorPosition={"outer"}
+            indicatorType="dot"
+            showArrow="hover"
+          >
+
+            <C2 className={styles["c2-style"]} />
+            <C2 className={styles["c2-style"]} />
+            <C2 className={styles["c2-style"]} />
+          </Carousel>
+
+        </div>}
+
       </Route>
       <Footer /><OrderDrawer visible={visible} setVisible={setVisible} data={data} />
     </Content>
