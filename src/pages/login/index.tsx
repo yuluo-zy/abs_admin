@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Footer from "@/components/Footer";
 import Logo from "@/assets/logo.svg";
 import LoginForm from "./form";
@@ -7,11 +7,16 @@ import styles from "./style/index.module.less";
 import checkLogin from "@/utils/checkLogin";
 import { useHistory } from "react-router";
 import { defaultRoute } from "@/routes";
-import { Message } from "@arco-design/web-react";
+import { Message, Select } from "@arco-design/web-react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "@/locale/index";
+import IconButton from "@/components/NavBar/IconButton";
+import { IconLanguage } from "@arco-design/web-react/icon";
+import defaultLocale from "@/locale";
+import { GlobalContext } from "@/context";
 
 function Login() {
+  const { setLang, lang, theme, setTheme } = useContext(GlobalContext);
   const t = useLocale(locale);
   const history = useHistory();
   useEffect(() => {
@@ -33,6 +38,27 @@ function Login() {
         </div>
       </div>
       <div className={styles.content}>
+        <div className={styles.multi}>
+          <Select
+            triggerElement={<IconButton icon={<IconLanguage />} />}
+            options={[
+              { label: "中文", value: "zh-CN" },
+              { label: "English", value: "en-US" }
+            ]}
+            value={lang}
+            triggerProps={{
+              autoAlignPopupWidth: false,
+              autoAlignPopupMinWidth: true,
+              position: "br"
+            }}
+            trigger="hover"
+            onChange={(value) => {
+              setLang(value);
+              const nextLang = defaultLocale[value];
+              Message.info(`${nextLang["message.lang.tips"]}${value}`);
+            }}
+          />
+        </div>
         <div className={styles["content-inner"]}>
           <LoginForm />
         </div>
