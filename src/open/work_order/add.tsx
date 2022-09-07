@@ -53,7 +53,7 @@ const FileType = [
 const bodyStyle = {
   padding: "1rem",
   paddingBottom: 0,
-  paddingTop: 10,
+  paddingTop: 20,
   overflow: "auto"
 };
 const FormItem = Form.Item;
@@ -213,7 +213,7 @@ export default function WorkOrderAdd() {
               scrollToFirstError
         >
           <DynamicCard bodyStyle={bodyStyle} title={t["workplace.add.custom.product"]}>
-            <div className={styles["alert"]}>
+            <div className={styles["alertFrist"]}>
               <Alert closable content={t["workplace.add.custom.type.help"]} />
             </div>
             <FormItem label={t["workplace.add.custom.module"]} required>

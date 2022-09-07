@@ -32,7 +32,7 @@ export const OrderDrawer: React.FC<DrawerProps> = (props: React.PropsWithChildre
   >
     <div>
       <DynamicCard title={t["workplace.drawer.details.schedule"]}>
-        <OrderStep stepNumber={data} style={{ maxWidth: 800, margin: "0 auto" }} />
+        <OrderStep stepNumber={data} style={{ maxWidth: "70%", margin: "0 auto" }} />
       </DynamicCard>
       <DynamicDivider />
       <DynamicCard title={t["workplace.drawer.details"]}>
