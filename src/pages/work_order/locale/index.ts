@@ -60,7 +60,9 @@ const i18n = {
     "workplace.drawer.details.schedule.step2.title": "工单处理",
     "workplace.drawer.details.schedule.step2.description": "乐鑫工程师正在快马加鞭中, 请确保通讯畅通, 以便及时联系",
     "workplace.drawer.details.schedule.step3.title": "工单结案",
-    "workplace.drawer.details.schedule.step3.description": "相关解决方案已上传, 乐鑫工程师竭诚为您服务"
+    "workplace.drawer.details.schedule.step3.description": "相关解决方案已上传, 乐鑫工程师竭诚为您服务",
+    "workplace.ticket.submitter.name": "客户名",
+    "workplace.ticket.submitter.company": "客户公司"
   }
 };
 
