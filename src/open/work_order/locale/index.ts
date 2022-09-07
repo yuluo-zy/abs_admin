@@ -30,6 +30,7 @@ const i18n = {
     "workplace.add.custom.custom.company.error": "客户公司名称不能为空",
     "workplace.add.custom.custom.order.title": "当前工单提交人",
     "workplace.add.custom.custom.order": "工单提交人电话",
+    "workplace.add.custom.custom.order.email": "工单提交人邮箱",
     "workplace.add.custom.custom.order.error": "工单提交人电话不能为空",
     "workplace.add.custom.type.help": "感谢填写您使用的乐鑫产品型号,并说明当前使用产品开发的整机产品状态, 以便于更好的理解您的整机应用, 并快速分析您的问题",
     "workplace.add.custom.info.help": "感谢填写您的准确邮箱和电话,便于乐鑫客户品质团队与您直接联系,乐鑫联系人为当前对接贵司的商务联系人,也请准确填写",
