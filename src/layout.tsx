@@ -293,7 +293,7 @@ function PageLayout() {
                 </Route>
                 <Route
                   path="*"
-                  component={lazyload(() => import("./components/Exception/404"))}
+                  component={lazyload(() => import("@/components/Exception/404"))}
                 />
               </Switch>
             </Content>

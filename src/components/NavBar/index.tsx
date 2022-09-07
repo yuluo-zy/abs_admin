@@ -16,27 +16,31 @@ import Logo from "@/assets/logo.svg";
 import IconButton from "./IconButton";
 import styles from "./style/index.module.less";
 import defaultLocale from "@/locale";
-import useStorage from "@/utils/useHook/useStorage";
+import { useSessionStorage } from "@/utils/useHook/useStorage";
 import { loginOut } from "@/api/login";
 import HelpInfo from "@/pages/help";
 import { setHelpKey } from "@/store/help";
+import { useHistory } from "react-router";
 
 function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boolean, title: string }) {
   const t = useLocale();
   const userInfo = useSelector((state: GlobalState) => state.userInfo);
+  const history = useHistory();
 
-  const [_, setUserStatus] = useStorage("userStatus");
+  const [_, setUserStatus] = useSessionStorage("userStatus");
 
   const get_avatar = (user_name: string): string => {
-    const user_url = encodeURI(user_name);
-    return `https://avatars.dicebear.com/v2/human/${user_url}.svg?options[mood][]=happy`;
+    if (user_name) {
+      const user_url = encodeURI(user_name);
+      return `https://avatars.dicebear.com/v2/human/${user_url}.svg?options[mood][]=happy`;
+    }
+    return "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
   };
 
   const { setLang, lang, theme, setTheme } = useContext(GlobalContext);
 
   function logout() {
     setUserStatus("logout");
-    window.location.href = "/login";
     loginOut().then((r) => {
       const { success } = r.data;
       if (success === true) {
@@ -45,6 +49,7 @@ function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boo
           content: t["menu.user.setting.login.out"]
         });
       }
+      history.replace("/login");
     });
   }
 
@@ -85,30 +90,30 @@ function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boo
           {/*<li>*/}
           {/*  <Input.Search*/}
           {/*    className={styles.round}*/}
-        {/*    placeholder={t["navbar.search.placeholder"]}*/}
-        {/*  />*/}
-        {/*</li>*/}
-        <li>
-          <Select
-            triggerElement={<IconButton icon={<IconLanguage />} />}
-            options={[
-              { label: "中文", value: "zh-CN" },
-              { label: "English", value: "en-US" }
-            ]}
-            value={lang}
-            triggerProps={{
-              autoAlignPopupWidth: false,
-              autoAlignPopupMinWidth: true,
-              position: "br"
-            }}
-            trigger="hover"
-            onChange={(value) => {
-              setLang(value);
-              const nextLang = defaultLocale[value];
-              Message.info(`${nextLang["message.lang.tips"]}${value}`);
-            }}
-          />
-        </li>
+          {/*    placeholder={t["navbar.search.placeholder"]}*/}
+          {/*  />*/}
+          {/*</li>*/}
+          <li>
+            <Select
+              triggerElement={<IconButton icon={<IconLanguage />} />}
+              options={[
+                { label: "中文", value: "zh-CN" },
+                { label: "English", value: "en-US" }
+              ]}
+              value={lang}
+              triggerProps={{
+                autoAlignPopupWidth: false,
+                autoAlignPopupMinWidth: true,
+                position: "br"
+              }}
+              trigger="hover"
+              onChange={(value) => {
+                setLang(value);
+                const nextLang = defaultLocale[value];
+                Message.info(`${nextLang["message.lang.tips"]}${value}`);
+              }}
+            />
+          </li>
           {isLogIn && <li>
             <Tooltip
               content={
@@ -131,10 +136,10 @@ function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boo
             >
               <IconButton
                 icon={theme !== "dark" ? <IconMoonFill /> : <IconSunFill />}
-              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            />
-          </Tooltip>
-        </li>
+                onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              />
+            </Tooltip>
+          </li>
           {isLogIn && userInfo && (
             <li>
               <Dropdown droplist={droplist} position="br">

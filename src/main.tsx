@@ -16,6 +16,7 @@ import changeTheme from "./utils/changeTheme";
 import useStorage from "./utils/useHook/useStorage";
 import WorkOrder from "@/open/work_order";
 import { Redirect } from "react-router";
+import lazyload from "@/utils/lazyload";
 // todo 去除 redux
 const store = createStore(rootReducer);
 function Index() {
@@ -73,8 +74,13 @@ function Index() {
           <GlobalContext.Provider value={contextValue}>
             <Switch>
               <Route path="/login" component={Login} />
-              <Route path="/open/work_order" component={WorkOrder} />
+              <Route path="/open/cqms" component={WorkOrder} />
               <Route path="/" render={toMain} />
+              {/*// 系统默认页*/}
+              <Route
+                path="*"
+                component={lazyload(() => import("@/components/Exception/404"))}
+              />
             </Switch>
           </GlobalContext.Provider>
         </Provider>

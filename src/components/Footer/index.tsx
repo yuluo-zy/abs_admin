@@ -1,14 +1,29 @@
 import React from "react";
-import { Layout } from "@arco-design/web-react";
-import { FooterProps } from "@arco-design/web-react/es/Layout/interface";
+import { Divider, Layout, Space } from "@arco-design/web-react";
 import cs from "classnames";
 import styles from "./style/index.module.less";
+import { Link } from "react-router-dom";
+import { ProductQualityService } from "@/utils/routingTable";
+import useLocale from "@/utils/useHook/useLocale";
+import locale from "./locale/index";
 
-function Footer(props: FooterProps = {}) {
-  const { className, ...restProps } = props;
+function Footer(props) {
+  const { isLink, className, ...restProps } = props;
+  const t = useLocale(locale);
   return (
     <Layout.Footer className={cs(styles.footer, className)} {...restProps}>
-      ESPRESSIF @2022 乐鑫信息科技（上海）股份有限公司
+      <div style={{ marginTop: 5 }}>ESPRESSIF @2022 乐鑫信息科技（上海）股份有限公司</div>
+      {isLink && <div>
+        <Space>
+          Related Links:
+          <Divider type="vertical" />
+          <Link to={ProductQualityService}>{t["product.quality.qervice.work.order"]}</Link>
+          <Divider type="vertical" />
+          {/*<Link to={ProductQualityService}>{t['']}</Link>*/}
+        </Space>
+      </div>}
+
+
     </Layout.Footer>
   );
 }

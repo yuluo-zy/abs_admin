@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Button, Grid, Layout, Spin, Table, TableColumnProps, Tag } from "@arco-design/web-react";
+import { Button, Carousel, Layout, Spin, Table, TableColumnProps, Tag } from "@arco-design/web-react";
 import styles from "./style/index.module.less";
 import { Welcome } from "@/open/work_order/welcome";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
-import { Route } from "react-router";
+import { Route, Switch } from "react-router";
 import WorkOrderAdd from "@/open/work_order/add";
 import { useUpdateEffect } from "react-use";
 import { getAfterSale } from "@/api/cqapms";
@@ -12,10 +12,10 @@ import Footer from "@/components/Footer";
 import { OrderDrawer } from "@/open/work_order/order-drawer";
 import Navbar from "@/components/NavBar";
 import { IconDoubleRight } from "@arco-design/web-react/icon";
+import C2 from "./assets/C2.svg";
+import lazyload from "@/utils/lazyload";
 
 const Content = Layout.Content;
-
-const { Row, Col } = Grid;
 
 
 function WorkOrder() {
@@ -96,25 +96,37 @@ function WorkOrder() {
       <Navbar isLogIn={false} title={"ESPRESSIF"} />
     </div>
     <Content className={styles["layout-content"]}>
-      <Route
-        path={`/open/work_order/add`}
-        component={WorkOrderAdd}
-      />
-      <Route exact path={"/open/work_order"}>
-        <Welcome setSelect={setSelect} />
-        {/*<Row gutter={24} className={styles["home"]}>*/}
-        {/*  <Col span={18}>*/}
-        <div className={styles["table"]}>
-          <Spin loading={loading} style={{ width: "100%" }}>
-            <Table columns={columns} data={data} />
-          </Spin>
-        </div>
-        {/*</Col>*/}
-        {/*<Col span={6}>*/}
-        {/*  <Announcement />*/}
-        {/*</Col>*/}
-        {/*</Row>*/}
-      </Route>
+      <Switch>
+        <Route
+          path={`/open/cqms/add`}
+          component={WorkOrderAdd}
+        />
+        <Route exact path={"/open/cqms"}>
+          <Welcome setSelect={setSelect} />
+          {data && data.length > 0 && <div className={styles["table"]}>
+            <Spin loading={loading} style={{ width: "100%" }}>
+              <Table columns={columns} data={data} />
+            </Spin>
+          </div>}
+          {data.length === 0 && <div className={styles.c2}>
+            <Carousel
+              // style={{ height: '100%' }}
+              autoPlay={true}
+              animation={"card"}
+              indicatorPosition={"outer"}
+              indicatorType="dot"
+              showArrow="hover">
+              <C2 className={styles["c2-style"]} />
+              <C2 className={styles["c2-style"]} />
+              <C2 className={styles["c2-style"]} />
+            </Carousel>
+          </div>}
+        </Route>
+        <Route
+          path="*"
+          component={lazyload(() => import("@/components/Exception/404"))}
+        />
+      </Switch>
       <Footer /><OrderDrawer visible={visible} setVisible={setVisible} data={data} />
     </Content>
 

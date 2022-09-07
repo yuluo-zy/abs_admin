@@ -10,14 +10,18 @@ export default function LoginProtocol() {
 
   return (
     <div className={styles["protocol"]}>
-      <div>{t["protocol.turn.on"]}</div>
-      <a
-        onClick={() => {
-          setVisible(true);
-        }}
-      >
-        {t["protocol.button"]}
-      </a>
+      <div style={{ position: "absolute", display: "flex" }}>
+        <div>{t["protocol.turn.on"]}</div>
+        <a
+          style={{ display: "inline-block" }}
+          onClick={() => {
+            setVisible(true);
+          }}
+        >
+          {t["protocol.button"]}
+        </a>
+      </div>
+
       <Modal
         title={t["protocol.title"]}
         visible={visible}
