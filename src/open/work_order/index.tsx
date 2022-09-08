@@ -14,6 +14,7 @@ import Navbar from "@/components/NavBar";
 import { IconDoubleRight } from "@arco-design/web-react/icon";
 import C2 from "./assets/C2.svg";
 import lazyload from "@/utils/lazyload";
+import { AnyPath, TicketAddPath, TicketPath } from "@/utils/routingTable";
 
 const Content = Layout.Content;
 
@@ -98,10 +99,10 @@ function WorkOrder() {
     <Content className={styles["layout-content"]}>
       <Switch>
         <Route
-          path={`/open/cqms/add`}
+          path={TicketAddPath}
           component={WorkOrderAdd}
         />
-        <Route exact path={"/open/cqms"}>
+        <Route exact path={TicketPath}>
           <Welcome setSelect={setSelect} />
           {data && data.length > 0 && <div className={styles["table"]}>
             <Spin loading={loading} style={{ width: "100%" }}>
@@ -123,7 +124,7 @@ function WorkOrder() {
           </div>}
         </Route>
         <Route
-          path="*"
+          path={AnyPath}
           component={lazyload(() => import("@/components/Exception/404"))}
         />
       </Switch>

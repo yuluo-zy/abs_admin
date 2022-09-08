@@ -8,15 +8,14 @@ import zhCN from "@arco-design/web-react/es/locale/zh-CN";
 import enUS from "@arco-design/web-react/es/locale/en-US";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import rootReducer from "./store";
-import PageLayout from "./layout";
 import { GlobalContext } from "./context";
 import Login from "./pages/login";
 import checkLogin from "./utils/checkLogin";
 import changeTheme from "./utils/changeTheme";
 import useStorage from "./utils/useHook/useStorage";
-import WorkOrder from "@/open/work_order";
 import { Redirect } from "react-router";
 import lazyload from "@/utils/lazyload";
+import { AnyPath, LoginPath, RootPath, TicketPath } from "@/utils/routingTable";
 // todo 去除 redux
 const store = createStore(rootReducer);
 function Index() {
@@ -36,7 +35,7 @@ function Index() {
 
   const toMain = () => {
     if (checkLogin()) {
-      return <PageLayout />;
+      return lazyload(() => import("@/layout"));
     } else {
       return <Redirect to={{ pathname: "/login" }} />;
     }
@@ -73,12 +72,16 @@ function Index() {
         <Provider store={store}>
           <GlobalContext.Provider value={contextValue}>
             <Switch>
-              <Route path="/login" component={Login} />
-              <Route path="/open/cqms" component={WorkOrder} />
-              <Route path="/" render={toMain} />
+              <Route path={LoginPath} component={Login} />
+              <Route path={TicketPath} component={lazyload(() => import("@/open/work_order"))} />
+              {/*<Route path="/manage" render={toMain} />*/}
+              {/*<Route path={Root} component={lazyload(() => import("@/open/work_order/index"))} />*/}
+              <Route path={RootPath}>
+                <Redirect to={{ pathname: TicketPath }} />
+              </Route>
               {/*// 系统默认页*/}
               <Route
-                path="*"
+                path={AnyPath}
                 component={lazyload(() => import("@/components/Exception/404"))}
               />
             </Switch>

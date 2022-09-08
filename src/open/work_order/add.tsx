@@ -29,6 +29,7 @@ import { postSalesFile } from "@/api/file";
 import { DynamicImgUpload } from "@/components/Dynamic/Upload/img-upload";
 import { saveAfterSale } from "@/api/cqapms";
 import { Link } from "react-router-dom";
+import { TicketPath } from "@/utils/routingTable";
 
 const BreadcrumbItem = Breadcrumb.Item;
 const FileType = [
@@ -61,7 +62,7 @@ export default function WorkOrderAdd() {
   const t = useLocale(locale);
   const history = useHistory();
   const to_return = () => {
-    history.push("/open/cqms");
+    history.push(TicketPath);
   };
   const success = (value) => {
     Modal.success({
@@ -194,7 +195,7 @@ export default function WorkOrderAdd() {
       <Space size={40}>
         <Breadcrumb>
           <BreadcrumbItem>
-            <Link to={"/open/cqms"}> <IconHome /></Link>
+            <Link to={TicketPath}> <IconHome /></Link>
           </BreadcrumbItem>
           <BreadcrumbItem>{t["workplace.content.work_order.add"]}</BreadcrumbItem>
           <BreadcrumbItem>{t["workplace.content.work_order.cq"]}</BreadcrumbItem>
