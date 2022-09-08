@@ -21,6 +21,8 @@ const i18n = {
     "userTable.columns.user.name": "用户名",
     "userTable.columns.user.name.error": "用户名 为 必填项",
     "userTable.columns.user.password": "密码",
+    "userTable.columns.user.email": "邮箱",
+    "userTable.columns.user.email.error": "邮箱不能为空",
     "userTable.columns.user.password.new": "新密码",
     "userTable.columns.user.password.again": "重复密码",
     "userTable.columns.user.password.edit": "密码修改",

@@ -130,6 +130,21 @@ export default function WorkOrderManagement() {
       field: "status",
       type: "select",
       options: orderStatus
+    },
+    {
+      name: t["workplace.ticket.submitter.name"],
+      field: "customerName",
+      type: "input"
+    },
+    {
+      name: t["workplace.ticket.submitter.company"],
+      field: "customerCompanyName",
+      type: "input"
+    },
+    {
+      name: t["workplace.ticket.submitter.company"],
+      field: "customerDate",
+      type: "date"
     }
   ];
   return <Switch>

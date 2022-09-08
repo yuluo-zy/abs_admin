@@ -62,7 +62,8 @@ const i18n = {
     "workplace.drawer.details.schedule.step3.title": "工单结案",
     "workplace.drawer.details.schedule.step3.description": "相关解决方案已上传, 乐鑫工程师竭诚为您服务",
     "workplace.ticket.submitter.name": "客户名",
-    "workplace.ticket.submitter.company": "客户公司"
+    "workplace.ticket.submitter.company": "客户公司",
+    "workplace.ticket.submitter.date": "提交日期"
   }
 };
 
