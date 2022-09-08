@@ -89,6 +89,19 @@ const CreateUserHOC = (props: CallBackHandle) => {
         ]
       },
       {
+        label: t["userTable.columns.user.email"],
+        field: "email",
+        type: "input",
+        required: true,
+        rules: [
+          {
+            required: true,
+            message: t["userTable.columns.user.email.error"],
+            minLength: 8
+          }
+        ]
+      },
+      {
         label: t["userTable.columns.user.group"],
         field: "groupId",
         type: "cascader",
