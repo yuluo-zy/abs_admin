@@ -1,26 +1,28 @@
+import { ManagePath, ProductDemandPath, ProductPath } from "@/utils/routingTable";
+
 const router = [
   {
-    path: "/product/demand/service/firmware",
+    path: `${ManagePath}${ProductPath}${ProductDemandPath}/service/firmware`,
     key: 0
   },
   {
-    path: "/product/demand/service/mac",
+    path: `${ManagePath}${ProductPath}${ProductDemandPath}/service/mac`,
     key: 1
   },
   {
-    path: "/product/demand/service/burn",
+    path: `${ManagePath}${ProductPath}${ProductDemandPath}/service/burn`,
     key: 2
   },
   {
-    path: "/product/demand/service/pre-fit",
+    path: `${ManagePath}${ProductPath}${ProductDemandPath}/service/pre-fit`,
     key: 3
   },
   {
-    path: "/product/demand/service/label",
+    path: `${ManagePath}${ProductPath}${ProductDemandPath}/service/label`,
     key: 4
   },
   {
-    path: "/product/demand/check",
+    path: `${ManagePath}${ProductPath}${ProductDemandPath}/check`,
     key: 5
   }
 ];

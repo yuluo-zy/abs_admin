@@ -82,6 +82,7 @@ export default function ProductMenu(props) {
 
   // 设置 窗口监测 如果小于 1200px, 设置收起
   const { width } = useWindowSize();
+  // todo 这里收起的操作需要再次确认
   const [_, cancel] = useDebounce(
     () => {
       if (width < 1500) {

@@ -26,6 +26,7 @@ import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import { postProduction } from "@/api/demand";
 import { useHistory } from "react-router";
+import { ManagePath, ProductDemandPath, ProductPath } from "@/utils/routingTable";
 
 const bodyCellStyle = {};
 const originColumns = [
@@ -364,7 +365,7 @@ export default function HardwareSelection() {
           sid: res.data.result
         });
         setVisible(false);
-        history.push(`/product/demand/service/preselection`);
+        history.push(`${ManagePath}${ProductPath}${ProductDemandPath}/service/preselection`);
       }
     }).catch(error => {
       Message.error(t["submit.hardware.error"]);

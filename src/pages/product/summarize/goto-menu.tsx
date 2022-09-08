@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import { Button, List, Tag } from "@arco-design/web-react";
 import useLocale from "@/pages/product/summarize/locale/useLocale";
 import styles from "./style/goto.menu.module.less";
+import { ManagePath, ProductDemandPath, ProductPath } from "@/utils/routingTable";
 
 interface GotoMenuProps {
   className?: string
@@ -37,41 +38,41 @@ export const GotoMenu: React.FC<GotoMenuProps> = (props: GotoMenuProps) => {
       menu.push({
         title: t["goto.service.title"],
         description: t["goto.service.description"],
-        url: "/product/demand/service/preselection"
+        url: `${ManagePath}${ProductPath}${ProductDemandPath}/service/preselection`
       });
       if (dataSource.includes(0)) {
         menu.push({
           title: t["goto.firmware.title"],
           description: t["goto.firmware.description"],
-          url: "/product/demand/service/firmware"
+          url: `${ManagePath}${ProductPath}${ProductDemandPath}/service/firmware`
         });
       }
       if (dataSource.includes(1)) {
         menu.push({
           title: t["goto.mac.title"],
           description: t["goto.mac.description"],
-          url: "/product/demand/service/mac"
+          url: `${ManagePath}${ProductPath}${ProductDemandPath}/service/mac`
         });
       }
       if (dataSource.includes(2)) {
         menu.push({
           title: t["goto.content.title"],
           description: t["goto.content.description"],
-          url: "/product/demand/service/burn"
+          url: `${ManagePath}${ProductPath}${ProductDemandPath}/service/burn`
         });
       }
       if (dataSource.includes(3)) {
         menu.push({
           title: t["goto.pre-fit.title"],
           description: t["goto.pre-fit.description"],
-          url: "/product/demand/service/pre-fit"
+          url: `${ManagePath}${ProductPath}${ProductDemandPath}/service/pre-fit`
         });
       }
       if (dataSource.includes(4)) {
         menu.push({
           title: t["goto.label.title"],
           description: t["goto.label.description"],
-          url: "/product/demand/service/label"
+          url: `${ManagePath}${ProductPath}${ProductDemandPath}/service/label`
         });
       }
     }

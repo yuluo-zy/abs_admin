@@ -15,9 +15,11 @@ import changeTheme from "./utils/changeTheme";
 import useStorage from "./utils/useHook/useStorage";
 import { Redirect } from "react-router";
 import lazyload from "@/utils/lazyload";
-import { AnyPath, LoginPath, RootPath, TicketPath } from "@/utils/routingTable";
+import { AnyPath, LoginPath, ManagePath, RootPath, TicketPath } from "@/utils/routingTable";
+import PageLayout from "@/layout";
 // todo 去除 redux
 const store = createStore(rootReducer);
+
 function Index() {
   const [lang, setLang] = useStorage("arco-lang", "zh-CN");
   const [theme, setTheme] = useStorage("arco-theme", "light");
@@ -35,7 +37,8 @@ function Index() {
 
   const toMain = () => {
     if (checkLogin()) {
-      return lazyload(() => import("@/layout"));
+      // return lazyload(() => import("@/layout"));
+      return <PageLayout />;
     } else {
       return <Redirect to={{ pathname: "/login" }} />;
     }
@@ -74,12 +77,10 @@ function Index() {
             <Switch>
               <Route path={LoginPath} component={Login} />
               <Route path={TicketPath} component={lazyload(() => import("@/open/work_order"))} />
-              {/*<Route path="/manage" render={toMain} />*/}
-              {/*<Route path={Root} component={lazyload(() => import("@/open/work_order/index"))} />*/}
-              <Route path={RootPath}>
+              <Route path={ManagePath} render={toMain} />
+              <Route path={RootPath} exact>
                 <Redirect to={{ pathname: TicketPath }} />
               </Route>
-              {/*// 系统默认页*/}
               <Route
                 path={AnyPath}
                 component={lazyload(() => import("@/components/Exception/404"))}

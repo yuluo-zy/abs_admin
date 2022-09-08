@@ -21,6 +21,7 @@ import { loginOut } from "@/api/login";
 import HelpInfo from "@/pages/help";
 import { setHelpKey } from "@/store/help";
 import { useHistory } from "react-router";
+import { LoginPath } from "@/utils/routingTable";
 
 function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boolean, title: string }) {
   const t = useLocale();
@@ -49,7 +50,7 @@ function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boo
           content: t["menu.user.setting.login.out"]
         });
       }
-      history.replace("/login");
+      history.replace(LoginPath);
     });
   }
 

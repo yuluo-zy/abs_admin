@@ -11,6 +11,7 @@ import { UserToken } from "@/components/type";
 import LoginProtocol from "@/pages/login/protocol";
 import { defaultRoute } from "@/routes";
 import { useHistory } from "react-router";
+import { ManagePath } from "@/utils/routingTable";
 
 export default function LoginForm() {
   const formRef = useRef<FormInstance>();
@@ -34,7 +35,7 @@ export default function LoginForm() {
     sessionStorage.setItem("userStatus", "login");
     localStorage.setItem("userToken", result.token);
     localStorage.setItem("userName", result.username);
-    history.replace(defaultRoute);
+    history.replace(`${ManagePath}/` + defaultRoute);
   }
 
   function login(data) {

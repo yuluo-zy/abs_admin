@@ -18,6 +18,7 @@ import SerialPort from "@/pages/product/summarize/serial-port";
 import Exception500 from "@/components/Exception/500";
 import { GotoMenu } from "@/pages/product/summarize/goto-menu";
 import { Product } from "@/pages/product/summarize/product";
+import { ManagePath, ProductDemandCheckPath, ProductDemandPath, ProductPath } from "@/utils/routingTable";
 
 const TabPane = Tabs.TabPane;
 const { Text } = Typography;
@@ -227,7 +228,7 @@ export default function Sheet() {
       });
       return;
     }
-    history.push("/product/demand/check");
+    history.push(`${ManagePath}${ProductPath}${ProductDemandPath}${ProductDemandCheckPath}`);
   };
 
 
@@ -436,7 +437,7 @@ export default function Sheet() {
       </table>;
     }
     return <Exception500 style={{ height: 400 }} on_call_back={() => {
-      history.push(`/product`);
+      history.push(`${ManagePath}${ProductPath}`);
     }
     } />;
   };

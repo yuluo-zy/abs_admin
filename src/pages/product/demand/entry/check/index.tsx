@@ -16,6 +16,7 @@ import axios from "axios";
 import { postEfuseCheckFile, postSerialCheckFile } from "@/api/file";
 import LogTable from "@/pages/product/demand/entry/check/log-table";
 import EFuseTable from "@/pages/product/demand/entry/check/eFuse-table";
+import { ManagePath, ProductDemandPath, ProductPath } from "@/utils/routingTable";
 
 const bodyStyle = {
   paddingTop: "0",
@@ -40,7 +41,7 @@ export default function CheckSelection() {
         maskClosable: false,
         cancelButtonProps: { disabled: true },
         onOk: () => {
-          history.push(`/product/demand/hardware`);
+          history.push(`${ManagePath}${ProductPath}${ProductDemandPath}/hardware`);
         }
       });
     }
@@ -164,7 +165,7 @@ export default function CheckSelection() {
 
   const nextStep = () => {
     setVisible(false);
-    history.push(`/product`);
+    history.push(`${ManagePath}${ProductPath}`);
   };
 
   const serialFileNode = (data) => {

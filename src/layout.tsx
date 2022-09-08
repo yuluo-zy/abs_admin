@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Link, Redirect, Route, Switch, useHistory } from "react-router-dom";
+import { Link, Route, Switch, useHistory } from "react-router-dom";
 import { Breadcrumb, Layout, Menu } from "@arco-design/web-react";
 import cs from "classnames";
 import {
@@ -24,6 +24,8 @@ import { GlobalState } from "./store";
 import styles from "./style/layout.module.less";
 import { useMenu } from "@/routes";
 import { getUserInfo, getUserMenu } from "@/api/user";
+import { ManagePath } from "@/utils/routingTable";
+import { Redirect } from "react-router";
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
@@ -140,7 +142,7 @@ function PageLayout() {
     NProgress.start();
     preload.then(() => {
       setSelectedKeys([key]);
-      history.push(currentRoute.path ? currentRoute.path : `/${key}`);
+      history.push(currentRoute.path ? currentRoute.path : `${ManagePath}/${key}`);
       NProgress.done();
     });
   }
@@ -181,7 +183,7 @@ function PageLayout() {
           }
           nodes.push(
             <MenuItem key={route.key}>
-              <Link to={`/${route.key}`}>{titleDom}</Link>
+              <Link to={`${ManagePath}/${route.key}`}>{titleDom}</Link>
             </MenuItem>
           );
         }
@@ -283,13 +285,13 @@ function PageLayout() {
                   return (
                     <Route
                       key={index}
-                      path={`/${route.key}`}
+                      path={`${ManagePath}/${route.key}`}
                       component={route.component}
                     />
                   );
                 })}
-                <Route exact path="/">
-                  <Redirect to={`/${defaultRoute}`} />
+                <Route exact path={ManagePath}>
+                  <Redirect to={`${ManagePath}/${defaultRoute}`} />
                 </Route>
                 <Route
                   path="*"
