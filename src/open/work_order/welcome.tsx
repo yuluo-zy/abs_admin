@@ -24,8 +24,7 @@ export const Welcome: React.FC<WelcomeProps> = (props: React.PropsWithChildren<W
     <div className={styles["content"]}>
       <div className={styles["content-banner"]}>
         <div className={styles["content-banner-logo"]}>
-          {/*<Logo />*/}
-          < Typography.Title>Customer Quality Management System</Typography.Title>
+          < Typography.Title className={styles["font"]}>Customer Quality Management System</Typography.Title>
         </div>
         <div className={styles["content-banner-content"]}>
           <p>{t["workplace.content"]}
@@ -34,8 +33,6 @@ export const Welcome: React.FC<WelcomeProps> = (props: React.PropsWithChildren<W
                     onClick={to_add}>{t["workplace.content.work_order.add"]}</Button>
           </p>
           <p>{t["workplace.content.a"]}</p>
-
-
           <div className={styles["content-banner-group"]}>
             <Input.Group compact>
               <Select defaultValue="1" className={styles["select"]}>
@@ -55,9 +52,8 @@ export const Welcome: React.FC<WelcomeProps> = (props: React.PropsWithChildren<W
               />
             </Input.Group>
           </div>
-
-
         </div>
+
       </div>
       <div className={styles["content-img"]}>
         <Solution className={styles["content-img-svg"]} />
