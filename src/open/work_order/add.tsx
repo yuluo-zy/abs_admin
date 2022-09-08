@@ -316,13 +316,13 @@ export default function WorkOrderAdd() {
               <Space size={"large"}>
                 <Form.Item field="espBusinessName"
                            rules={[{ required: true, message: t["workplace.add.custom.espressif.error"] }]}>
-                  <Input placeholder="Please enter espressif name" maxLength={30} style={{ maxWidth: 200 }} />
+                  <Input placeholder="Espressif business name" maxLength={30} style={{ maxWidth: 200 }} />
                 </Form.Item>
                 <Form.Item field="espBusinessEmail"
                            layout={"vertical"}
                            rules={[{ required: true, message: t["workplace.add.custom.espressif.email.error"] }]}
                 >
-                  <Input placeholder="Please enter espressif email" maxLength={30} style={{ width: 300 }} />
+                  <Input placeholder="Espressif business email" maxLength={30} style={{ width: 300 }} />
                 </Form.Item>
               </Space>
             </FormItem>
@@ -361,7 +361,7 @@ export default function WorkOrderAdd() {
                 precision={0}
                 step={1}
                 suffix="pcs"
-                placeholder="Please enter number of defective products"
+                placeholder="Please enter quantity of defective products"
                 max={1000000} min={1}
                 style={{ maxWidth: 350 }} />
             </Form.Item>
