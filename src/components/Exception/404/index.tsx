@@ -4,12 +4,13 @@ import locale from "./locale";
 import useLocale from "@/utils/useHook/useLocale";
 import styles from "./style/index.module.less";
 import { useHistory } from "react-router";
+import { RootPath } from "@/utils/routingTable";
 
 function Exception404() {
   const t = useLocale(locale);
   const history = useHistory();
   const to_return = () => {
-    history.replace("/");
+    history.replace(RootPath);
   };
   return (
     <div className={styles.container}>

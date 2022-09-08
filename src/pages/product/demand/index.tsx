@@ -20,6 +20,7 @@ import { getMpnList, postFWPNsave } from "@/api/demand";
 import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
 import style from "@/pages/product/demand/entry/service/label/style/index.module.less";
 import DynamicDivider from "@/components/Dynamic/Divider";
+import { ManagePath, ProductDemandPath, ProductPath } from "@/utils/routingTable";
 
 function getFlattenRoutes(routes) {
   const res = [];
@@ -156,13 +157,13 @@ export default function ProductDemand() {
     NProgress.start();
     preload.then(() => {
       setStepRouter(currentRoute.path);
-      history.push(`/product/demand/${currentRoute.path}`);
+      history.push(`${ManagePath}${ProductPath}${ProductDemandPath}/${currentRoute.path}`);
       NProgress.done();
     });
   }
 
   const nextStep = () => {
-    history.push(`/product/demand/hardware`);
+    history.push(`${ManagePath}${ProductPath}${ProductDemandPath}/hardware`);
   };
 
   const bodyStyle = {
@@ -212,12 +213,12 @@ export default function ProductDemand() {
               return (
                 <Route
                   key={index}
-                  path={`/product/demand/${route.path}`}
+                  path={`${ManagePath}${ProductPath}${ProductDemandPath}/${route.path}`}
                   component={route.component}
                 />
               );
             })}
-            <Route exact path={"/product/demand"}>
+            <Route exact path={`${ManagePath}${ProductPath}${ProductDemandPath}`}>
               <Spin style={{ width: "100%" }} loading={loading}>
                 <DynamicOuterCard title={t["menu.title"]}>
                   <Form

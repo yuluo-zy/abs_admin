@@ -16,6 +16,7 @@ import { getProductionServe } from "@/api/production";
 import { Recordable } from "@/components/type";
 import ModelInfoZh from "@/assets/model_info_zh.png";
 import LabelInfoZh from "@/assets/label_info_zh.png";
+import { ManagePath, ProductDemandPath, ProductPath } from "@/utils/routingTable";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -234,7 +235,7 @@ export default function ServicePreselection() {
         maskClosable: false,
         cancelButtonProps: { disabled: true },
         onOk: () => {
-          history.push(`/product/demand/hardware`);
+          history.push(`${ManagePath}${ProductPath}${ProductDemandPath}/hardware`);
         }
       });
     }

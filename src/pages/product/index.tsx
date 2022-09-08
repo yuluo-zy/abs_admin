@@ -14,6 +14,7 @@ import styles from "./style/index.module.less";
 import { usePermissionWrapper } from "@/components/PermissionWrapper/tools";
 import { CUSTOM_CODE_PERMISSION, CUSTOM_NAME_PERMISSION, CUSTOM_PROJECT_PERMISSION } from "@/utils/staticVariable";
 import { useUpdateEffect } from "react-use";
+import { ManagePath, ProductDemandPath, ProductPath, ProductSummarize } from "@/utils/routingTable";
 
 const { Text } = Typography;
 
@@ -43,7 +44,7 @@ export default function DemandManage() {
     reset();
     ProductStore.persist.clearStorage();
     setDemandId(demandId);
-    history.push(`/product/summarize`);
+    history.push(`${ManagePath}${ProductPath}${ProductSummarize}`);
   };
   const selectItem: Array<SearchItem> = [
     {
@@ -184,9 +185,9 @@ export default function DemandManage() {
 
   return (
     <Switch>
-      <Route path={`/product/demand`} component={productDemand} />
-      <Route path={`/product/summarize`} component={productSummarize} />
-      <Route exact path={"/product"}>
+      <Route path={`${ManagePath}${ProductPath}${ProductDemandPath}`} component={productDemand} />
+      <Route path={`${ManagePath}${ProductPath}${ProductSummarize}`} component={productSummarize} />
+      <Route exact path={`${ManagePath}${ProductPath}`}>
         <SearchList
           name={t["product.manage.title"]}
           download={false}

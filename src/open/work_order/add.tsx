@@ -29,6 +29,7 @@ import { postSalesFile } from "@/api/file";
 import { DynamicImgUpload } from "@/components/Dynamic/Upload/img-upload";
 import { saveAfterSale } from "@/api/cqapms";
 import { Link } from "react-router-dom";
+import { TicketPath } from "@/utils/routingTable";
 
 const BreadcrumbItem = Breadcrumb.Item;
 const FileType = [
@@ -61,7 +62,7 @@ export default function WorkOrderAdd() {
   const t = useLocale(locale);
   const history = useHistory();
   const to_return = () => {
-    history.push("/open/cqms");
+    history.push(TicketPath);
   };
   const success = (value) => {
     Modal.success({
@@ -194,7 +195,7 @@ export default function WorkOrderAdd() {
       <Space size={40}>
         <Breadcrumb>
           <BreadcrumbItem>
-            <Link to={"/open/cqms"}> <IconHome /></Link>
+            <Link to={TicketPath}> <IconHome /></Link>
           </BreadcrumbItem>
           <BreadcrumbItem>{t["workplace.content.work_order.add"]}</BreadcrumbItem>
           <BreadcrumbItem>{t["workplace.content.work_order.cq"]}</BreadcrumbItem>
@@ -316,13 +317,13 @@ export default function WorkOrderAdd() {
               <Space size={"large"}>
                 <Form.Item field="espBusinessName"
                            rules={[{ required: true, message: t["workplace.add.custom.espressif.error"] }]}>
-                  <Input placeholder="Please enter espressif name" maxLength={30} style={{ maxWidth: 200 }} />
+                  <Input placeholder="Espressif business name" maxLength={30} style={{ maxWidth: 200 }} />
                 </Form.Item>
                 <Form.Item field="espBusinessEmail"
                            layout={"vertical"}
                            rules={[{ required: true, message: t["workplace.add.custom.espressif.email.error"] }]}
                 >
-                  <Input placeholder="Please enter espressif email" maxLength={30} style={{ width: 300 }} />
+                  <Input placeholder="Espressif business email" maxLength={30} style={{ width: 300 }} />
                 </Form.Item>
               </Space>
             </FormItem>
@@ -361,7 +362,7 @@ export default function WorkOrderAdd() {
                 precision={0}
                 step={1}
                 suffix="pcs"
-                placeholder="Please enter number of defective products"
+                placeholder="Please enter quantity of defective products"
                 max={1000000} min={1}
                 style={{ maxWidth: 350 }} />
             </Form.Item>

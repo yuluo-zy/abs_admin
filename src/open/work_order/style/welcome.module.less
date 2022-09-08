@@ -1,8 +1,8 @@
 .content {
   position: relative;
   width: 100%;
-  height: 30vh;
-  min-height: 380px;
+  height: 40vh;
+  min-height: 350px;
   color: var(--color-black);
   background: var(--color-neutral-2);
   display: flex;
@@ -16,17 +16,12 @@
     &-logo {
       position: relative;
       bottom: -3rem;
-      padding: 1rem;
-      margin: auto;
-      width: 80%;
       height: 25%;
-      @media (max-width: 1400px) {
-        width: 100%;
-      }
+      margin-left: 20%;
     }
 
     &-content {
-      margin: 3rem;
+      margin-top: 4rem;
       margin-left: 20%;
       color: var(--color-text-1);
     }
@@ -59,9 +54,19 @@
     align-items: end;
 
     &-svg {
-      height: 380px;
+      height: 100%;
     }
   }
+}
+
+@font-face {
+  font-family: 'TruenoBd';
+  src: url("../assets/fonts/TruenoBd.otf");
+}
+
+.font {
+  font-size: 35pt;
+  font-family: 'TruenoBd', 'nunito_for_arco', 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
 }
 
 .button {
@@ -98,3 +103,4 @@
     background: var(--color-bg-2) !important;
   }
 }
+

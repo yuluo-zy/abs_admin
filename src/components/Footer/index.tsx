@@ -3,7 +3,7 @@ import { Divider, Layout, Space } from "@arco-design/web-react";
 import cs from "classnames";
 import styles from "./style/index.module.less";
 import { Link } from "react-router-dom";
-import { ProductQualityService } from "@/utils/routingTable";
+import { TicketPath } from "@/utils/routingTable";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 
@@ -17,7 +17,7 @@ function Footer(props) {
         <Space>
           Related Links:
           <Divider type="vertical" />
-          <Link to={ProductQualityService}>{t["product.quality.qervice.work.order"]}</Link>
+          <Link to={TicketPath}>{t["product.quality.qervice.work.order"]}</Link>
           <Divider type="vertical" />
           {/*<Link to={ProductQualityService}>{t['']}</Link>*/}
         </Space>

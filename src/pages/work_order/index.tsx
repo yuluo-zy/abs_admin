@@ -8,6 +8,7 @@ import { Button, Message, Popconfirm, Space, Tag, Tooltip } from "@arco-design/w
 import { IconCheck, IconCheckCircle, IconEdit } from "@arco-design/web-react/icon";
 import { Route, Switch, useHistory } from "react-router";
 import { OrderEdit } from "@/pages/work_order/order_edit";
+import { ManagePath, WorkOrderPath } from "@/utils/routingTable";
 
 export default function WorkOrderManagement() {
   const t = useLocale(locale);
@@ -104,7 +105,7 @@ export default function WorkOrderManagement() {
             </Popconfirm>
             <Tooltip content={t["work.order.operate.edit"]}>
               <Button icon={<IconEdit />} onClick={() => {
-                history.push(`/work_order/${record.id}`);
+                history.push(`${ManagePath}${WorkOrderPath}/${record.id}`);
               }} />
             </Tooltip>
           </Space>
@@ -133,11 +134,11 @@ export default function WorkOrderManagement() {
   ];
   return <Switch>
     <Route
-      path={`/work_order/:id`}
+      path={`${ManagePath}${WorkOrderPath}/:id`}
       component={OrderEdit}
     />
 
-    <Route exact path={"/work_order"}>
+    <Route exact path={`${ManagePath}${WorkOrderPath}`}>
       <SearchList
         name={t["work.order.title"]}
         download={false}

@@ -36,6 +36,7 @@
 
 .layout-content {
   width: 100%;
+  height: 100vh;
   padding-top: @nav-size-height;
 }
 
@@ -44,12 +45,16 @@
 }
 
 .c2 {
-  height: 100%;
   width: 95%;
   margin: 0 auto;
 }
 
 .c2-style {
+  width: 100%;
+  height: calc(60vh - 150px);
   background-color: var(--color-bg-1);
+  @media screen and (max-height: 800px) {
+    height: calc(60vh - 200px);
+  }
 }
 

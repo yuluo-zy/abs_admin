@@ -26,6 +26,7 @@ import {
 } from "@/api/operation";
 import { RelatedPersonnelDemand } from "@/pages/product/menu-model/related-personnel-demand";
 import { DesignatedPersonDemand } from "@/pages/product/menu-model/designated-person-demand";
+import { ManagePath, ProductDemandPath, ProductPath } from "@/utils/routingTable";
 
 export default function DemandManageMenu() {
   const t = useLocale();
@@ -43,8 +44,8 @@ export default function DemandManageMenu() {
         ProductStore.persist.clearStorage();
         postProductionDemand().then(res => {
             Message.success(t["product.manage.tools.add.message.ok"]);
-            setDemandId(res.data.result);
-            history.push(`/product/demand`);
+          setDemandId(res.data.result);
+          history.push(`${ManagePath}${ProductPath}${ProductDemandPath}`);
           }
         ).catch(err =>
           Message.error(err)

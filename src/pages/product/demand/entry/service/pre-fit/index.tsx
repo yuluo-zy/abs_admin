@@ -26,6 +26,7 @@ import { getNextRouter } from "@/utils/getNext";
 import { useHistory } from "react-router";
 import cs from "classnames";
 import DynamicModal from "@/components/Dynamic/Modal";
+import { ManagePath, ProductDemandPath, ProductPath } from "@/utils/routingTable";
 
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -58,7 +59,7 @@ export default function PreFit() {
     [state.demandId, state.serviceType, state.serviceData], shallow);
 
   const goto_server = () => {
-    history.push("/product/demand/service/preselection");
+    history.push(`${ManagePath}${ProductPath}${ProductDemandPath}/service/preselection`);
   };
 
   const postFitCustom = () => {
