@@ -25,7 +25,11 @@ export const Welcome: React.FC<WelcomeProps> = (props: React.PropsWithChildren<W
     <div className={styles["content"]}>
       <div className={styles["content-banner"]}>
         <div className={styles["content-banner-logo"]}>
-          < Typography.Title className={styles["font"]}>Customer Quality Management System</Typography.Title>
+          {/*<Typography.Text className={styles["font"]}>*/}
+          {/*  CQMS*/}
+          {/*</Typography.Text>*/}
+          < Typography style={{ fontSize: 32 }} className={styles["font"]}>Customer Quality Management
+            System</Typography>
         </div>
         <div className={styles["content-banner-content"]}>
           <p>{t["workplace.content"]}

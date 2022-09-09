@@ -96,7 +96,7 @@ const i18n = {
   "zh-CN": {
     "workplace.welcomeBack": "Welcome Back,",
     "workplace.content": "欢迎来到乐鑫产品质量管理系统 !",
-    "workplace.content.a": "如您在产品使用中遇到任何品质问题, 请在这里提交产品质量服务工单, 乐鑫客户品质团队将尽快为您服务 !",
+    "workplace.content.a": "如您在产品使用中遇到任何品质问题, 请提交产品质量服务工单, 乐鑫客户品质团队将尽快为您服务 !",
     "workplace.content.work_order.add": "新建服务工单",
     "workplace.content.work_order.cq": "产品质量服务工单",
     "workplace.content.work_order.success": "创建成功",
