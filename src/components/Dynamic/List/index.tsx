@@ -8,6 +8,7 @@ import styles from "./style/index.module.less";
 import DynamicCard from "@/components/Dynamic/Card";
 import { ListProps } from "@/components/type";
 import DynamicModal from "@/components/Dynamic/Modal";
+import { isArray } from "@/utils/is";
 
 const SearchList = React.forwardRef((props: ListProps, ref) => {
   const t = useLocale(locale);
@@ -62,6 +63,10 @@ const SearchList = React.forwardRef((props: ListProps, ref) => {
     JSON.stringify(formParams)
   ]);
 
+  // const getFetchData = (value) => {
+  //   if()
+  // }
+
   function fetchData() {
     const { current, pageSize } = pagination;
     setLoading(true);
@@ -89,7 +94,15 @@ const SearchList = React.forwardRef((props: ListProps, ref) => {
   }
 
   function handleSearch(params) {
-    setFormParams(params);
+    const temp = {};
+    for (const i in params) {
+      if (isArray(params[i])) {
+        temp[i] = params[i].toString();
+      } else {
+        temp[i] = params[i];
+      }
+    }
+    setFormParams(temp);
   }
 
   const [visible, setVisible] = useState(false);

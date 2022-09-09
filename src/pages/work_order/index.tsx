@@ -142,7 +142,7 @@ export default function WorkOrderManagement() {
       type: "input"
     },
     {
-      name: t["workplace.ticket.submitter.company"],
+      name: t["workplace.ticket.submitter.date"],
       field: "customerDate",
       type: "date"
     }
