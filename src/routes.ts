@@ -62,8 +62,8 @@ export const routes: Route[] = [
   },
   {
     name: "work_order.management",
-    key: "work_order"
-    // permission: "work_order:mgr"
+    key: "work_order",
+    permission: "ticker:view"
   }
 ];
 
