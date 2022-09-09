@@ -38,7 +38,7 @@ export const removeUser = (data) => {
 };
 
 export const putUserPassword = (id: number, data) => {
-  return httpPost("/user/" + id + "/change/password", data);
+  return httpPut("/user/" + id + "/change/password", data);
 };
 
 export const putUserLock = (id: number, data) => {

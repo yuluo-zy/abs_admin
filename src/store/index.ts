@@ -3,6 +3,7 @@ import defaultSettings from "../settings.json";
 export interface GlobalState {
   settings?: typeof defaultSettings;
   userInfo?: {
+    id?: string;
     name?: string;
     avatar?: string;
     job?: string;
