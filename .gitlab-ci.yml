@@ -89,6 +89,8 @@ push-job:
 
 push-job-prod:
   stage: push
+  retry: 2
+  timeout: 8m
   image: 
     name: amazon/aws-cli
     entrypoint: [""]
