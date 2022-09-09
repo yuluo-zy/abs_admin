@@ -69,3 +69,8 @@ export const impartBusiness = (data) => {
 export const transformBusiness = (data) => {
   return httpPost("/user/businessCustomer/transform", data);
 };
+
+// 更新当前用户的密码
+export const updatePassword = (data) => {
+  return httpPut("/user/change/password", data);
+};
