@@ -143,7 +143,15 @@ const i18n = {
     "userSetting.verified.operation.view": "查看",
     "userSetting.verified.operation.revoke": "撤回",
     "userSetting.verified.status.success": "已通过",
-    "userSetting.verified.status.waiting": "审核中"
+    "userSetting.verified.status.waiting": "审核中",
+    "userTable.columns.user.password.again.error": "两次密码不一致",
+    "userTable.columns.user.operation.success": "操作成功",
+    "userTable.columns.user.password.new": "新密码",
+    "userTable.columns.user.password.old": "原密码",
+    "userTable.columns.user.password.old.error": "原密码不能为空",
+    "userTable.columns.user.password.again": "重复密码",
+    "userTable.columns.user.password.edit": "密码修改",
+    "userTable.columns.user.password.error": "密码为必填项, 且密码长度应大于8"
   }
 };
 

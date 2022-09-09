@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import cs from "classnames";
-import { Button, Input, Message, Modal } from "@arco-design/web-react";
+import { Button, Message } from "@arco-design/web-react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale";
 import styles from "./style/index.module.less";
-import { putUserPassword } from "@/api/user";
+import { putUserPassword, updatePassword } from "@/api/user";
+import DynamicModal from "@/components/Dynamic/Modal";
+import DynamicForm from "@/components/Dynamic/Form";
+import { FormItemProps } from "@/components/type";
 
 function Security() {
   const t = useLocale(locale);
@@ -64,8 +67,51 @@ function Security() {
   //   }
   // }
 
+  const postUserPassword: Array<FormItemProps> = [
+    {
+      label: t["userTable.columns.user.password.old"],
+      field: "oldPassword",
+      type: "password",
+      required: true,
+      rules: [
+        {
+          required: true,
+          message: t["userTable.columns.user.password.error"]
+          // minLength: 8
+        }
+      ]
+    },
+    {
+      label: t["userTable.columns.user.password.new"],
+      field: "password1",
+      type: "password",
+      required: true,
+      rules: [
+        {
+          required: true,
+          message: t["userTable.columns.user.password.error"],
+          minLength: 8
+        }
+      ]
+    },
+    {
+      label: t["userTable.columns.user.password.again"],
+      field: "password2",
+      type: "password",
+      required: true,
+      rules: [
+        {
+          required: true,
+          message: t["userTable.columns.user.password.error"],
+          minLength: 8
+        }
+      ]
+    }
+  ];
+
   const [model, setModel] = useState(false);
   const [server, setServer] = useState(null);
+  const [loading, setLoading] = useState(false);
   const postData = () => {
     if (server === "password") {
       putUserPassword(userInfo.id, { password: info }).then(res => {
@@ -103,18 +149,42 @@ function Security() {
           </div>
         </div>
       ))}
-      <Modal visible={model}
-             simple={true}
-             onCancel={() => {
-               setModel(value => !value);
-             }}
-             title={"Update Info"}
-             onOk={postData}
+      <DynamicModal
+        title={"Upload Info"}
+        visible={model}
+        footer={null}
+        confirmLoading={loading}
+        onCancel={() => {
+          setModel(false);
+        }}
       >
-        <Input placeholder="Please enter ..."
-               value={info}
-               onChange={(value) => setInfo(value)} />
-      </Modal>
+        <DynamicForm
+          title={"Update Password"}
+          formItem={postUserPassword}
+          onSubmit={async (value) => {
+            const { password1, password2, oldPassword } = value;
+            if (password1 !== password2) {
+              Message.error({
+                content: t["userTable.columns.user.password.again.error"],
+                duration: 10000
+              });
+              return;
+            }
+            setLoading(true);
+            await updatePassword({ oldPassword: oldPassword, newPassword: password1 }).then(
+              (res) => {
+                if (res.data.success === true) {
+                  Message.success(
+                    t["userTable.columns.user.operation.success"]
+                  );
+                  setLoading(false);
+                  setModel(false);
+                }
+              }
+            );
+          }}
+        />
+      </DynamicModal>
     </div>
   );
 }
