@@ -14,6 +14,7 @@ import RiceText from "@/rice_text";
 import { getSalesInfo, postSalesFile } from "@/api/file";
 import axios from "axios";
 import WorkOrderHistory from "@/pages/work_order/order_history";
+import TicketMark from "@/pages/work_order/ticket_mark";
 
 export const OrderEdit: React.FC = () => {
   const t = useLocale(locale);
@@ -105,6 +106,10 @@ export const OrderEdit: React.FC = () => {
     <Spin style={{ width: "100%" }} loading={loading}>
       <DynamicCard title={t["workplace.drawer.details.schedule"]}>
         <OrderStep stepNumber={data} style={{ maxWidth: 800, margin: "0 auto" }} />
+      </DynamicCard>
+      <DynamicDivider />
+      <DynamicCard title={t["workplace.drawer.ticket.mark"]}>
+        <TicketMark />
       </DynamicCard>
       <DynamicDivider />
       <DynamicCard title={t["workplace.drawer.details"]}>

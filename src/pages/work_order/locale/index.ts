@@ -54,6 +54,7 @@ const i18n = {
     "workplace.table.date": "提交时间",
     "workplace.table.number": "工单号",
     "workplace.drawer.details": "工单详情",
+    "workplace.drawer.ticket.mark": "工单标记",
     "workplace.drawer.details.schedule": "工单进度",
     "workplace.drawer.details.schedule.step1.title": "工单提交",
     "workplace.drawer.details.schedule.step1.description": "工单已提交, 请耐心等待乐鑫工程师接收",
