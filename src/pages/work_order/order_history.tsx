@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Card, List, PaginationProps } from "@arco-design/web-react";
-import { ProductStore } from "@/store/product";
-import shallow from "zustand/shallow";
-import { getDemandComment } from "@/api/comment";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
-import UserInfo from "@/pages/product/summarize/user-info";
 import RiceText from "@/rice_text";
+import { getOrderCommonHistory } from "@/api/cqapms";
 
-export default function CommentList() {
+
+export default function WorkOrderHistory({ order }: { order: string }) {
 
   const [dataSource, setDataSource] = useState();
   const [pagination, setPagination] = useState<PaginationProps>({
@@ -27,21 +25,16 @@ export default function CommentList() {
     });
   }
 
-  const [loading, setLoading] = useState(true);
-
-  const getTheme = (theme) => {
-    return theme === "dark";
-  };
-  const [demandId] = ProductStore(state =>
-    [state.demandId], shallow);
+  const [loading, setLoading] = useState(false);
+  const [orderId, setOrderId] = useState(order);
 
   const fetchData = () => {
     const { current, pageSize } = pagination;
     setLoading(true);
-    getDemandComment({
+    getOrderCommonHistory({
       pageNo: current,
       pageSize: pageSize,
-      demandId: demandId
+      demandId: orderId
     }).then(res => {
         if (res.data.success) {
           setDataSource(res.data.result.data);
@@ -60,7 +53,9 @@ export default function CommentList() {
   };
 
   useEffect(() => {
-    fetchData();
+    if (orderId) {
+      fetchData();
+    }
   }, [
     pagination.current,
     pagination.pageSize
@@ -79,7 +74,7 @@ export default function CommentList() {
             key={index}
             style={{ margin: 10 }}
             hoverable>
-            <UserInfo user={item} />
+            {/*<UserInfo user={item} />*/}
             <RiceText key={item.id} readOnly={true} initValue={item?.remarks} />
           </Card>
         )}

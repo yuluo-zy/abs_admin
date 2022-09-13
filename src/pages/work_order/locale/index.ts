@@ -10,8 +10,8 @@ const i18n = {
     "work.order.operate.order.a": "待处理",
     "work.order.operate.order.b": "正在处理",
     "work.order.operate.order.c": "处理完成",
-    "work.order.operate.process.result": "处理结果",
-    "work.order.operate.process.result.operate": "处理结案",
+    "work.order.operate.process.result": "追加处理",
+    "work.order.operate.process.result.operate": "添加",
     "workplace.welcomeBack": "Welcome Back,",
     "workplace.content": "欢迎使用本系统, 进行产品质量工单管理",
     "workplace.content.work_order.add": "新建工单",
@@ -63,7 +63,14 @@ const i18n = {
     "workplace.drawer.details.schedule.step3.description": "相关解决方案已上传, 乐鑫工程师竭诚为您服务",
     "workplace.ticket.submitter.name": "客户名",
     "workplace.ticket.submitter.company": "客户公司",
-    "workplace.ticket.submitter.date": "提交日期"
+    "workplace.ticket.submitter.date": "提交日期",
+    "work.order.operate.common.add": "追加评论",
+    "work.order.operate.common.customer.visibility": "客户可见性:",
+    "work.order.operate.common.customer.email": "客户邮件通知:",
+    // "work.order.operate.common.customer.email": "客户邮件通知",
+    "work.order.operate.common.step": "阶段:",
+    "work.order.operate.common.internal": "内部可见:",
+    "workplace.drawer.details.schedule.history": "工单处理记录"
   }
 };
 

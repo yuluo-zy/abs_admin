@@ -7,12 +7,13 @@ import DynamicCard from "@/components/Dynamic/Card";
 import { OrderStep } from "@/open/work_order/order-step";
 import DynamicDivider from "@/components/Dynamic/Divider";
 import { OrderDescriptions } from "@/open/work_order/order-descriptions";
-import { Button, Message, Spin } from "@arco-design/web-react";
+import { Button, Divider, Message, Select, Space, Spin, Switch } from "@arco-design/web-react";
 import styles from "./style/edit.module.less";
 import { IconCheck, IconCheckCircle } from "@arco-design/web-react/icon";
 import RiceText from "@/rice_text";
 import { getSalesInfo, postSalesFile } from "@/api/file";
 import axios from "axios";
+import WorkOrderHistory from "@/pages/work_order/order_history";
 
 export const OrderEdit: React.FC = () => {
   const t = useLocale(locale);
@@ -98,7 +99,7 @@ export const OrderEdit: React.FC = () => {
       orderId: id
     });
   };
-
+  const options = ["Beijing", "Shanghai", "Guangzhou", "Disabled"];
   return <div className={styles["content"]}>
     {/*<DynamicCard title={t['workplace.drawer.details']}>*/}
     <Spin style={{ width: "100%" }} loading={loading}>
@@ -133,20 +134,40 @@ export const OrderEdit: React.FC = () => {
       <DynamicDivider />
       {/*富文本回复内容*/}
       <DynamicCard title={t["work.order.operate.process.result"]}>
-        {!data?.[0]?.remark && <Button className={styles["edit-button"]}
-                                       type={"primary"}
-                                       icon={<IconCheck />}
-                                       onClick={handleOnClick}>{t["work.order.operate.process.result.operate"]}</Button>}
-        {!data?.[0]?.remark && <RiceText onChange={setRiceText} readOnly={false}
-                                         fileUpload={uploadData}
-                                         fileDownload={getSalesInfoById}
-                                         imgUpload={uploadData}
-                                         imgDownload={getSalesImgById}
-        />}
-        {data?.[0]?.remark &&
-          <RiceText readOnly={true} initValue={data?.[0]?.remark}
-                    fileDownload={getSalesInfoById}
-                    imgDownload={getSalesImgById} />}
+        <Button className={styles["edit-button"]}
+                type={"primary"}
+                icon={<IconCheck />}
+                onClick={() => {
+                }}>{t["work.order.operate.process.result.operate"]}</Button>
+        <Space>
+          <p style={{ width: 100 }}>{t["work.order.operate.common.customer.visibility"]}</p>
+          <Switch />
+          <Divider type={"vertical"} />
+          <p style={{ width: 100 }}>{t["work.order.operate.common.customer.email"]}</p>
+          <Switch />
+          <Divider type={"vertical"} />
+          <p style={{ width: 100 }}>{t["work.order.operate.common.internal"]}</p>
+          <Switch defaultChecked />
+          <Divider type={"vertical"} />
+          <p style={{ width: 50 }}>{t["work.order.operate.common.step"]}</p>
+          <Select placeholder="Select Step" style={{ width: 150 }} allowClear>
+            {options.map((option, index) => (
+              <Select.Option key={index} value={option}>
+                {option}
+              </Select.Option>
+            ))}
+          </Select>
+          <Divider type={"vertical"} />
+        </Space>
+        <RiceText onChange={setRiceText} readOnly={false}
+                  fileUpload={uploadData}
+                  fileDownload={getSalesInfoById}
+                  imgUpload={uploadData}
+                  imgDownload={getSalesImgById} />
+      </DynamicCard>
+      <DynamicDivider />
+      <DynamicCard title={t["workplace.drawer.details.schedule.history"]}>
+        <WorkOrderHistory order={id} />
       </DynamicCard>
     </Spin>
   </div>;

@@ -21,3 +21,8 @@ export const postAfterSaleReceive = (data) => {
 export const postAfterSaleComplete = (data) => {
   return httpPost("/afterSale/complete", data);
 };
+
+// 查询内部追加记录
+export const getOrderCommonHistory = (data) => {
+  return httpPost("/", data);
+};
