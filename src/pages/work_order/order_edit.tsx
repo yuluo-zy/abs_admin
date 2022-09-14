@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 import { useParams } from "react-router";
-import { addAfterSaleComment, getAfterSale, postAfterSaleReceive } from "@/api/cqapms";
+import { getAfterSale, postAfterSaleReceive } from "@/api/cqapms";
 import DynamicCard from "@/components/Dynamic/Card";
 import { OrderStep } from "@/open/work_order/order-step";
 import DynamicDivider from "@/components/Dynamic/Divider";
@@ -15,6 +15,7 @@ import { getSalesInfo, postSalesFile } from "@/api/file";
 import axios from "axios";
 import WorkOrderHistory from "@/pages/work_order/order_history";
 import { getFileID } from "@/utils/parseJson";
+import TicketMark from "@/pages/work_order/ticket_mark";
 
 export const OrderEdit: React.FC = () => {
   const t = useLocale(locale);
@@ -88,6 +89,8 @@ export const OrderEdit: React.FC = () => {
   const [customerVisibility, setCustomervisibility] = useState(false);
   const [email, setEmail] = useState(false);
 
+  const riceTextRef = useRef();
+
   function handleOnClick() {
     let data = "";
     if (riceText) {
@@ -97,17 +100,21 @@ export const OrderEdit: React.FC = () => {
     if (customerVisibility) {
       fileList = getFileID(riceText.toJSON());
     }
-    addAfterSaleComment({
-      afterSaleOrderId: id,
-      commentText: data,
-      fileUuids: fileList
-    }).then(res => {
-      if (res.data.success) {
-        setChange(value => !value);
-        Message.success("Successful operation");
-      }
-    });
+    // addAfterSaleComment({
+    //   afterSaleOrderId: id,
+    //   commentText: data,
+    //   fileUuids: fileList
+    // }).then(res => {
+    //   if (res.data.success) {
+    //     setChange(value => !value);
+    //     Message.success("Successful operation");
+    //   }
+    // });
+    // setRiceText("")
+    // console.log(data)
+    riceTextRef.current.clear();
   }
+
 
   return <div className={styles["content"]}>
     {/*<DynamicCard title={t['workplace.drawer.details']}>*/}
@@ -116,10 +123,10 @@ export const OrderEdit: React.FC = () => {
         <OrderStep stepNumber={data} style={{ maxWidth: 800, margin: "0 auto" }} />
       </DynamicCard>
       <DynamicDivider />
-      {/*<DynamicCard title={t["workplace.drawer.ticket.mark"]}>*/}
-      {/*  <TicketMark />*/}
-      {/*</DynamicCard>*/}
-      {/*<DynamicDivider />*/}
+      <DynamicCard title={t["workplace.drawer.ticket.mark"]}>
+        <TicketMark />
+      </DynamicCard>
+      <DynamicDivider />
       <DynamicCard title={t["workplace.drawer.details"]}>
         <div style={{ paddingLeft: "3rem", paddingRight: "3rem" }}>
           <Button className={styles["edit-button"]}
@@ -191,6 +198,7 @@ export const OrderEdit: React.FC = () => {
                   fileUpload={uploadData}
                   fileDownload={getSalesInfoById}
                   imgUpload={uploadData}
+                  onRef={riceTextRef}
                   imgDownload={getSalesImgById} />
       </DynamicCard>
       <DynamicDivider />

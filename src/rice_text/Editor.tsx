@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import { AutoScrollPlugin } from "@lexical/react/LexicalAutoScrollPlugin";
 import { CharacterLimitPlugin } from "@lexical/react/LexicalCharacterLimitPlugin";
@@ -34,12 +34,14 @@ import ImagesPlugin from "./plugins/ImagesPlugin";
 import FilePlugin from "@/rice_text/plugins/FilePlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
-import { CLEAR_HISTORY_COMMAND } from "lexical";
+import { CLEAR_EDITOR_COMMAND, CLEAR_HISTORY_COMMAND } from "lexical";
 import MentionsPlugin from "./plugins/MentionsPlugin";
+// import { CLEAR_EDITOR_COMMAND } from "lexical/LexicalCommands";
 
-export default function Editor({ onChange, initValue }: {
+export default function Editor({ onChange, initValue, onRef }: {
   initValue?: string
   onChange: any
+  onRef?: any
 }): JSX.Element {
   const { historyState } = useSharedHistoryContext();
   const {
@@ -62,6 +64,11 @@ export default function Editor({ onChange, initValue }: {
   const scrollRef = useRef(null);
   const [editor] = useLexicalComposerContext();
   const [readOnly, setReadOnly] = useState(true);
+  useImperativeHandle(onRef, () => ({
+    clear: () => {
+      editor.dispatchCommand(CLEAR_EDITOR_COMMAND, null);
+    }
+  }));
 
   useEffect(() => {
     setReadOnly(editor.isReadOnly());

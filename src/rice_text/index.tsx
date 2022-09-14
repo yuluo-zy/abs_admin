@@ -14,7 +14,8 @@ export default function RiceText({
                                    fileUpload,
                                    fileDownload,
                                    imgDownload,
-                                   imgUpload
+                                   imgUpload,
+                                   onRef
                                  }: {
   readOnly: boolean,
   onChange?: any,
@@ -23,6 +24,7 @@ export default function RiceText({
   fileDownload?: any,
   imgDownload?: any,
   imgUpload?: any
+  onRef?: any
 }): JSX.Element {
 
   const {
@@ -61,7 +63,7 @@ export default function RiceText({
           <SharedHistoryContext>
             <SharedAutocompleteContext>
               <div className="editor-shell">
-                <Editor onChange={onChange} initValue={initValue} />
+                <Editor onChange={onChange} initValue={initValue} onRef={onRef} />
               </div>
             </SharedAutocompleteContext>
           </SharedHistoryContext>
