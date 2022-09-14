@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Image } from "@arco-design/web-react";
 import { getSalesInfo } from "@/api/file";
 
@@ -19,5 +19,5 @@ export default function DynamicPreviewImg(props) {
     }
   }, [data]);
 
-  return <Image src={img} {...self_props} />;
+  return useMemo(() => <Image src={img} {...self_props} />, [img]);
 }
