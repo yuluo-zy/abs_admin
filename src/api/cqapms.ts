@@ -24,5 +24,10 @@ export const postAfterSaleComplete = (data) => {
 
 // 查询内部追加记录
 export const getOrderCommonHistory = (data) => {
-  return httpPost("/", data);
+  return httpGet("/afterSale/comment", data);
+};
+
+// 登录之后 添加售后工单信息
+export const addAfterSaleComment = (data) => {
+  return httpPost("/afterSale/comment", data);
 };
