@@ -16,6 +16,7 @@ import axios from "axios";
 import WorkOrderHistory from "@/pages/work_order/order_history";
 import { getFileID } from "@/utils/parseJson";
 import TicketMark from "@/pages/work_order/ticket_mark";
+import { DynamicTooltip } from "@/components/Dynamic/Tooltip";
 
 export const OrderEdit: React.FC = () => {
   const t = useLocale(locale);
@@ -89,7 +90,7 @@ export const OrderEdit: React.FC = () => {
   const [customerVisibility, setCustomervisibility] = useState(false);
   const [email, setEmail] = useState(false);
 
-  const riceTextRef = useRef();
+  const riceTextRef = useRef<any>();
 
   function handleOnClick() {
     let data = "";
@@ -170,13 +171,17 @@ export const OrderEdit: React.FC = () => {
                   }}>{t["work.order.operate.process.result.operate"]}</Button>
         </Popconfirm>
         <Space>
-          <p style={{ width: 100 }}>{t["work.order.operate.common.customer.visibility"]}</p>
+          <DynamicTooltip content={t["work.order.operate.common.customer.visibility.help"]}>
+            <p style={{ width: 100 }}>{t["work.order.operate.common.customer.visibility"]}</p>
+          </DynamicTooltip>
           <Switch checked={customerVisibility} onChange={(value) => {
             setCustomervisibility(value);
           }
           } />
           <Divider type={"vertical"} />
-          <p style={{ width: 100 }}>{t["work.order.operate.common.customer.email"]}</p>
+          <DynamicTooltip content={t["work.order.operate.common.customer.email.help"]}>
+            <p style={{ width: 100 }}>{t["work.order.operate.common.customer.email"]}</p>
+          </DynamicTooltip>
           <Switch checked={email} onChange={(value) => {
             setEmail(value);
           }
