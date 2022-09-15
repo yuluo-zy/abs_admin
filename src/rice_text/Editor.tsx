@@ -49,7 +49,8 @@ export default function Editor({ onChange, initValue, onRef }: {
       isMaxLength,
       isCharLimit,
       isCharLimitUtf8,
-      isRichText
+      isRichText,
+      isMention
     }
   } = useSettings();
   // const {
@@ -87,7 +88,7 @@ export default function Editor({ onChange, initValue, onRef }: {
         {isMaxLength && <MaxLengthPlugin maxLength={300} />}
         <AutoFocusPlugin />
         <ClearEditorPlugin />
-        {isRichText && !readOnly && <MentionsPlugin />}
+        {isRichText && !readOnly && isMention && <MentionsPlugin />}
         <HashtagPlugin />
         <KeywordsPlugin />
         <EspAutoLinkPlugin />

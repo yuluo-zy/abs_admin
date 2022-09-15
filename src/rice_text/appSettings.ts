@@ -5,7 +5,8 @@ export type SettingName =
   | "isMaxLength"
   | "isCharLimitUtf8"
   | "emptyEditor"
-  | "onlyRead";
+  | "onlyRead"
+  | "isMention";
 
 export type Settings = Record<SettingName, boolean>;
 
@@ -16,7 +17,8 @@ export const DEFAULT_SETTINGS: Settings = {
   isCharLimitUtf8: false,
   isMaxLength: true,
   onlyRead: false,
-  isRichText: true
+  isRichText: true,
+  isMention: false
 };
 export type FunctionName =
   "fileUpload"
