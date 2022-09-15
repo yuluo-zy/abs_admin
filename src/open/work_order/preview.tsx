@@ -17,7 +17,9 @@ export default function DynamicPreviewImg(props) {
         }
       });
     }
-  }, [data]);
+  }, [data?.id]);
 
-  return useMemo(() => <Image src={img} {...self_props} />, [img]);
+  return useMemo(() => {
+    return <Image src={img} {...self_props} />;
+  }, [img]);
 }
