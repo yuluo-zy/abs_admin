@@ -21,7 +21,7 @@ const theme: EditorThemeClasses = {
       "PlaygroundEditorTheme__ol5"
     ],
     ul: "PlaygroundEditorTheme__ul"
-  }
+  },
   // characterLimit: 'PlaygroundEditorTheme__characterLimit',
   // code: 'PlaygroundEditorTheme__code',
   // codeHighlight: {
@@ -94,16 +94,16 @@ const theme: EditorThemeClasses = {
   // quote: 'PlaygroundEditorTheme__quote',
   // rtl: 'PlaygroundEditorTheme__rtl',
 
-  // text: {
-  //   bold: 'PlaygroundEditorTheme__textBold',
-  //   code: 'PlaygroundEditorTheme__textCode',
-  //   italic: 'PlaygroundEditorTheme__textItalic',
-  //   strikethrough: 'PlaygroundEditorTheme__textStrikethrough',
-  //   subscript: 'PlaygroundEditorTheme__textSubscript',
-  //   superscript: 'PlaygroundEditorTheme__textSuperscript',
-  //   underline: 'PlaygroundEditorTheme__textUnderline',
-  //   underlineStrikethrough: 'PlaygroundEditorTheme__textUnderlineStrikethrough',
-  // },
+  text: {
+    bold: "PlaygroundEditorTheme__textBold",
+    code: "PlaygroundEditorTheme__textCode",
+    italic: "PlaygroundEditorTheme__textItalic",
+    strikethrough: "PlaygroundEditorTheme__textStrikethrough",
+    subscript: "PlaygroundEditorTheme__textSubscript",
+    superscript: "PlaygroundEditorTheme__textSuperscript",
+    underline: "PlaygroundEditorTheme__textUnderline",
+    underlineStrikethrough: "PlaygroundEditorTheme__textUnderlineStrikethrough"
+  }
 };
 
 export default theme;
