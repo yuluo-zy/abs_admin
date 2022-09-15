@@ -119,9 +119,9 @@ export const OrderEdit: React.FC = () => {
   const to_work_order = () => {
     history.push(`${ManagePath}${WorkOrderPath}`);
   };
-  return <div className={styles["content"]} id={"custom_backTop"}>
+  return <div className={styles["content"]}>
     <div className={styles["edit-tool"]}>
-      <Button type={"primary"} size={"large"} onClick={to_work_order}>Return</Button>
+      <Button type={"outline"} size={"large"} onClick={to_work_order}>Return</Button>
       <Button type="primary" status="danger" size={"large"}>Delete This</Button>
     </div>
     <Spin style={{ width: "100%" }} loading={loading}>
