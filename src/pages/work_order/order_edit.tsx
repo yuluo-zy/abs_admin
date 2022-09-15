@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { addAfterSaleComment, getAfterSale, postAfterSaleReceive } from "@/api/cqapms";
 import DynamicCard from "@/components/Dynamic/Card";
 import { OrderStep } from "@/open/work_order/order-step";
@@ -17,6 +17,7 @@ import WorkOrderHistory from "@/pages/work_order/order_history";
 import { getFileID } from "@/utils/parseJson";
 import TicketMark from "@/pages/work_order/ticket_mark";
 import { DynamicTooltip } from "@/components/Dynamic/Tooltip";
+import { ManagePath, WorkOrderPath } from "@/utils/routingTable";
 
 export const OrderEdit: React.FC = () => {
   const t = useLocale(locale);
@@ -114,9 +115,15 @@ export const OrderEdit: React.FC = () => {
     });
   }
 
-
-  return <div className={styles["content"]}>
-    {/*<DynamicCard title={t['workplace.drawer.details']}>*/}
+  const history = useHistory();
+  const to_work_order = () => {
+    history.push(`${ManagePath}${WorkOrderPath}`);
+  };
+  return <div className={styles["content"]} id={"custom_backTop"}>
+    <div className={styles["edit-tool"]}>
+      <Button type={"primary"} size={"large"} onClick={to_work_order}>Return</Button>
+      <Button type="primary" status="danger" size={"large"}>Delete This</Button>
+    </div>
     <Spin style={{ width: "100%" }} loading={loading}>
       <DynamicCard title={t["workplace.drawer.details.schedule"]}>
         <OrderStep stepNumber={data} style={{ maxWidth: 800, margin: "0 auto" }} />
