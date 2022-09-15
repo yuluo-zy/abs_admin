@@ -34,7 +34,7 @@ export default function WorkOrderHistory({ order }: { order: string }) {
     getOrderCommonHistory({
       pageNo: current,
       pageSize: pageSize,
-      demandId: orderId
+      id: orderId
     }).then(res => {
         if (res.data.success) {
           setDataSource(res.data.result.data);
@@ -47,9 +47,10 @@ export default function WorkOrderHistory({ order }: { order: string }) {
             });
           }
         }
-        setLoading(false);
       }
-    );
+    ).finally(() => {
+      setLoading(false);
+    });
   };
 
   useEffect(() => {

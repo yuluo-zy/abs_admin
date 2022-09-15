@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 import { useParams } from "react-router";
-import { getAfterSale, postAfterSaleReceive } from "@/api/cqapms";
+import { addAfterSaleComment, getAfterSale, postAfterSaleReceive } from "@/api/cqapms";
 import DynamicCard from "@/components/Dynamic/Card";
 import { OrderStep } from "@/open/work_order/order-step";
 import DynamicDivider from "@/components/Dynamic/Divider";
@@ -100,19 +100,17 @@ export const OrderEdit: React.FC = () => {
     if (customerVisibility) {
       fileList = getFileID(riceText.toJSON());
     }
-    // addAfterSaleComment({
-    //   afterSaleOrderId: id,
-    //   commentText: data,
-    //   fileUuids: fileList
-    // }).then(res => {
-    //   if (res.data.success) {
-    //     setChange(value => !value);
-    //     Message.success("Successful operation");
-    //   }
-    // });
-    // setRiceText("")
-    // console.log(data)
-    riceTextRef.current.clear();
+    addAfterSaleComment({
+      afterSaleOrderId: id,
+      commentText: data,
+      fileUuids: fileList
+    }).then(res => {
+      if (res.data.success) {
+        setChange(value => !value);
+        Message.success("Successful operation");
+        riceTextRef.current.clear();
+      }
+    });
   }
 
 
