@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 import { useHistory, useParams } from "react-router";
-import { addAfterSaleComment, getAfterSale, postAfterSaleReceive } from "@/api/cqapms";
+import { addAfterSaleComment, getAfterSale, postAfterSaleComplete, postAfterSaleReceive } from "@/api/cqapms";
 import DynamicCard from "@/components/Dynamic/Card";
 import { OrderStep } from "@/open/work_order/order-step";
 import DynamicDivider from "@/components/Dynamic/Divider";
 import { OrderDescriptions } from "@/open/work_order/order-descriptions";
 import { Button, Divider, Message, Popconfirm, Select, Space, Spin, Switch } from "@arco-design/web-react";
 import styles from "./style/edit.module.less";
-import { IconCheck, IconCheckCircle } from "@arco-design/web-react/icon";
+import { IconCheck, IconCheckCircle, IconExclamation } from "@arco-design/web-react/icon";
 import RiceText from "@/rice_text";
 import { getSalesInfo, postSalesFile } from "@/api/file";
 import axios from "axios";
@@ -94,6 +94,29 @@ export const OrderEdit: React.FC = () => {
 
   const riceTextRef = useRef<any>();
 
+  const endOrder = () => {
+    let data = "";
+    if (riceText) {
+      data = JSON.stringify(riceText.toJSON());
+    }
+    let fileList = "";
+    if (!internal) {
+      fileList = getFileID(riceText.toJSON());
+    }
+    postAfterSaleComplete({
+      id: id,
+      remark: data,
+      fileUuids: fileList
+    }).then(res => {
+      if (res.data.success) {
+        setChange(value => !value);
+        Message.success("Successful operation");
+        riceTextRef.current.clear();
+        orderHistory.current?.update();
+      }
+    });
+  };
+
   function handleOnClick() {
     let data = "";
     if (riceText) {
@@ -165,23 +188,34 @@ export const OrderEdit: React.FC = () => {
       <DynamicDivider />
       {/*富文本回复内容*/}
       <DynamicCard title={t["work.order.operate.process.result"]} bodyStyle={{ paddingTop: 0 }}>
-        <Popconfirm
-          title="确定您已经完成编辑并设置好相关设置了吗?"
-          onOk={() => {
-            handleOnClick();
-          }}
-          onCancel={() => {
-            Message.error({
-              content: "cancel"
-            });
-          }}
-        >
-          <Button className={styles["edit-button"]}
-                  type={"primary"}
-                  icon={<IconCheck />}
-                  onClick={() => {
-                  }}>{t["work.order.operate.process.result.operate"]}</Button>
-        </Popconfirm>
+        <Space className={styles["edit-button"]} size={"large"}>
+          <Popconfirm
+            title="确定您已经完成编辑并设置好相关设置了吗?"
+            onOk={() => {
+              handleOnClick();
+            }}
+          >
+            <Button
+              type={"primary"}
+              icon={<IconCheck />}
+              onClick={() => {
+              }}>{t["work.order.operate.process.result.operate"]}</Button>
+          </Popconfirm>
+          <Popconfirm
+            title="结束工单则本条内容客户可见,并且将邮件通知客户"
+            onOk={() => {
+              endOrder();
+            }}
+          >
+            <Button
+              type={"primary"}
+              status="danger"
+              icon={<IconExclamation />}
+              onClick={() => {
+              }}>{t["work.order.operate.process.result.end"]}</Button>
+          </Popconfirm>
+        </Space>
+
         <Space>
           <DynamicTooltip content={t["work.order.operate.common.customer.visibility.help"]}>
             <p style={{ width: 100 }}>{t["work.order.operate.common.customer.visibility"]}</p>
