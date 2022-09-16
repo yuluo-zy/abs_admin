@@ -31,3 +31,8 @@ export const getOrderCommonHistory = (data) => {
 export const addAfterSaleComment = (data) => {
   return httpPost("/afterSale/comment", data);
 };
+
+// 删除订单
+export const deleteSaleComment = (data) => {
+  return httpPost("/afterSale/delete", data);
+};

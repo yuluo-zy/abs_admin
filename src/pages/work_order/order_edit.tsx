@@ -2,14 +2,27 @@ import React, { useEffect, useRef, useState } from "react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 import { useHistory, useParams } from "react-router";
-import { addAfterSaleComment, getAfterSale, postAfterSaleComplete, postAfterSaleReceive } from "@/api/cqapms";
+import {
+  addAfterSaleComment,
+  deleteSaleComment,
+  getAfterSale,
+  postAfterSaleComplete,
+  postAfterSaleReceive
+} from "@/api/cqapms";
 import DynamicCard from "@/components/Dynamic/Card";
 import { OrderStep } from "@/open/work_order/order-step";
 import DynamicDivider from "@/components/Dynamic/Divider";
 import { OrderDescriptions } from "@/open/work_order/order-descriptions";
 import { Button, Divider, Message, Popconfirm, Select, Space, Spin, Switch } from "@arco-design/web-react";
 import styles from "./style/edit.module.less";
-import { IconCheck, IconCheckCircle, IconExclamation, IconToTop } from "@arco-design/web-react/icon";
+import {
+  IconCheck,
+  IconCheckCircle,
+  IconDelete,
+  IconExclamation,
+  IconLeft,
+  IconToTop
+} from "@arco-design/web-react/icon";
 import RiceText from "@/rice_text";
 import { getSalesInfo, postSalesFile } from "@/api/file";
 import axios from "axios";
@@ -154,10 +167,29 @@ export const OrderEdit: React.FC = () => {
       node.scrollIntoView(false);
     }
   };
+  const deleteOrder = () => {
+    deleteSaleComment({
+      ids: [id]
+    }).then(res => {
+      if (res.data.success) {
+        Message.success("successfully deleted");
+        to_work_order();
+      }
+    });
+  };
   return <div className={styles["content"]}>
     <div className={styles["edit-tool"]} id={"toTop"}>
-      <Button type={"primary"} size={"large"} onClick={to_work_order}>Return</Button>
-      <Button type="primary" status="danger" size={"large"}>Delete This</Button>
+
+      <Button icon={<IconLeft />} type={"primary"} size={"large"} onClick={to_work_order}>Return</Button>
+
+      <Popconfirm
+        title="确定删除? 删除后不可恢复"
+        onOk={() => {
+          deleteOrder();
+        }}
+      >
+        <Button type="primary" status="danger" icon={<IconDelete />} size={"large"}>Delete This</Button>
+      </Popconfirm>
     </div>
     <Spin style={{ width: "100%" }} loading={loading}>
       <DynamicCard title={t["workplace.drawer.details.schedule"]}>
