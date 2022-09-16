@@ -156,7 +156,7 @@ export const OrderEdit: React.FC = () => {
   };
   return <div className={styles["content"]}>
     <div className={styles["edit-tool"]} id={"toTop"}>
-      <Button type={"outline"} size={"large"} onClick={to_work_order}>Return</Button>
+      <Button type={"primary"} size={"large"} onClick={to_work_order}>Return</Button>
       <Button type="primary" status="danger" size={"large"}>Delete This</Button>
     </div>
     <Spin style={{ width: "100%" }} loading={loading}>
