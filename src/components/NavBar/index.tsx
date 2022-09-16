@@ -23,7 +23,7 @@ import { setHelpKey } from "@/store/help";
 import { useHistory } from "react-router";
 import { LoginPath } from "@/utils/routingTable";
 
-function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boolean, title: string }) {
+function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boolean, title?: string }) {
   const t = useLocale();
   const userInfo = useSelector((state: GlobalState) => state.userInfo);
   const history = useHistory();
