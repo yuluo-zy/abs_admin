@@ -9,7 +9,7 @@ import DynamicDivider from "@/components/Dynamic/Divider";
 import { OrderDescriptions } from "@/open/work_order/order-descriptions";
 import { Button, Divider, Message, Popconfirm, Select, Space, Spin, Switch } from "@arco-design/web-react";
 import styles from "./style/edit.module.less";
-import { IconCheck, IconCheckCircle, IconExclamation } from "@arco-design/web-react/icon";
+import { IconCheck, IconCheckCircle, IconExclamation, IconToTop } from "@arco-design/web-react/icon";
 import RiceText from "@/rice_text";
 import { getSalesInfo, postSalesFile } from "@/api/file";
 import axios from "axios";
@@ -146,9 +146,16 @@ export const OrderEdit: React.FC = () => {
   const to_work_order = () => {
     history.push(`${ManagePath}${WorkOrderPath}`);
   };
-
+  const toTop = () => {
+    const node = document.getElementById("toTop");
+    if (node) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      node.scrollIntoView(false);
+    }
+  };
   return <div className={styles["content"]}>
-    <div className={styles["edit-tool"]}>
+    <div className={styles["edit-tool"]} id={"toTop"}>
       <Button type={"outline"} size={"large"} onClick={to_work_order}>Return</Button>
       <Button type="primary" status="danger" size={"large"}>Delete This</Button>
     </div>
@@ -179,8 +186,7 @@ export const OrderEdit: React.FC = () => {
                     }).finally(() => {
                       setButtonLoading(false);
                     });
-                  }
-                  }
+                  }}
           >{t["work.order.operate.accept"]}</Button>
           <OrderDescriptions descriptionData={data} encryption={false} feedback={false} download={true} copy={true} />
         </div>
@@ -250,10 +256,12 @@ export const OrderEdit: React.FC = () => {
                   onRef={riceTextRef}
                   imgDownload={getSalesImgById} />
       </DynamicCard>
-      <DynamicDivider />
+      <DynamicDivider />s
       <DynamicCard title={t["workplace.drawer.details.schedule.history"]}>
         <WorkOrderHistory order={id} onRef={orderHistory} />
       </DynamicCard>
     </Spin>
+    <Button type={"primary"} shape="circle" size={"large"} icon={<IconToTop />} className={styles["toTop"]}
+            onClick={toTop} />
   </div>;
 };
