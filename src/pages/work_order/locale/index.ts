@@ -73,7 +73,9 @@ const i18n = {
     // "work.order.operate.common.customer.email": "客户邮件通知",
     "work.order.operate.common.step": "阶段:",
     "work.order.operate.common.internal": "内部可见:",
-    "workplace.drawer.details.schedule.history": "工单处理记录"
+    "workplace.drawer.details.schedule.history": "工单处理记录",
+    "work.order.operate.common.custom": "客户可见",
+    "work.order.operate.common.custom.email": "发送邮件"
   }
 };
 

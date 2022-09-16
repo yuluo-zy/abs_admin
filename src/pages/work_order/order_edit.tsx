@@ -27,6 +27,7 @@ export const OrderEdit: React.FC = () => {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [change, setChange] = useState(false);
   const [riceText, setRiceText] = useState<Record<string, any>>();
+  const orderHistory = useRef<any>();
 
   useEffect(() => {
     let isUnmount = false;
@@ -113,6 +114,7 @@ export const OrderEdit: React.FC = () => {
         setChange(value => !value);
         Message.success("Successful operation");
         riceTextRef.current.clear();
+        orderHistory.current?.update();
       }
     });
   }
@@ -121,6 +123,7 @@ export const OrderEdit: React.FC = () => {
   const to_work_order = () => {
     history.push(`${ManagePath}${WorkOrderPath}`);
   };
+
   return <div className={styles["content"]}>
     <div className={styles["edit-tool"]}>
       <Button type={"outline"} size={"large"} onClick={to_work_order}>Return</Button>
@@ -215,7 +218,7 @@ export const OrderEdit: React.FC = () => {
       </DynamicCard>
       <DynamicDivider />
       <DynamicCard title={t["workplace.drawer.details.schedule.history"]}>
-        <WorkOrderHistory order={id} />
+        <WorkOrderHistory order={id} onRef={orderHistory} />
       </DynamicCard>
     </Spin>
   </div>;

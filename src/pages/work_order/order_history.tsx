@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Card, List, PaginationProps } from "@arco-design/web-react";
+import React, { useEffect, useImperativeHandle, useState } from "react";
+import { Card, List, PaginationProps, Space, Tag } from "@arco-design/web-react";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
-import RiceText from "@/rice_text";
 import { getOrderCommonHistory } from "@/api/cqapms";
+import RiceText from "@/rice_text";
+import { getSalesInfo } from "@/api/file";
+import useLocale from "@/utils/useHook/useLocale";
+import locale from "./locale/index";
 
-
-export default function WorkOrderHistory({ order }: { order: string }) {
+export default function WorkOrderHistory({ order, onRef }: { order: string, onRef: any }) {
 
   const [dataSource, setDataSource] = useState();
   const [pagination, setPagination] = useState<PaginationProps>({
@@ -16,6 +18,8 @@ export default function WorkOrderHistory({ order }: { order: string }) {
     pageSizeChangeResetCurrent: true,
     onChange: onChangeTable
   });
+  const t = useLocale(locale);
+
 
   function onChangeTable(page, pageSize) {
     setPagination({
@@ -26,7 +30,7 @@ export default function WorkOrderHistory({ order }: { order: string }) {
   }
 
   const [loading, setLoading] = useState(false);
-  const [orderId, setOrderId] = useState(order);
+  // const orderId, setOrderId] = useState(order);
 
   const fetchData = () => {
     const { current, pageSize } = pagination;
@@ -34,7 +38,7 @@ export default function WorkOrderHistory({ order }: { order: string }) {
     getOrderCommonHistory({
       pageNo: current,
       pageSize: pageSize,
-      id: orderId
+      id: order
     }).then(res => {
         if (res.data.success) {
           setDataSource(res.data.result.data);
@@ -54,13 +58,31 @@ export default function WorkOrderHistory({ order }: { order: string }) {
   };
 
   useEffect(() => {
-    if (orderId) {
+    if (order) {
       fetchData();
     }
   }, [
     pagination.current,
     pagination.pageSize
   ]);
+  const getSalesImgById = (data) => {
+    return getSalesInfo({
+      id: data,
+      orderId: order
+    });
+  };
+  const getSalesInfoById = (data) => {
+    return getSalesInfo({
+      ...data,
+      orderId: order
+    });
+  };
+
+  useImperativeHandle(onRef, () => ({
+    update: () => {
+      fetchData();
+    }
+  }));
 
   return (
     <DynamicSkeleton text={{ rows: 11, width: "90rem" }}>
@@ -75,8 +97,21 @@ export default function WorkOrderHistory({ order }: { order: string }) {
             key={index}
             style={{ margin: 10 }}
             hoverable>
-            {/*<UserInfo user={item} />*/}
-            <RiceText key={item.id} readOnly={true} initValue={item?.remarks} />
+            {/*// <div key={index} style={{ margin: 10 }}>*/}
+            <Space size={"large"}>
+              <Tag color="arcoblue">{item?.creator}</Tag>
+              {!item?.internal && <Tag color="red">{t["work.order.operate.common.custom"]}</Tag>}
+              {item?.sendEmail && <Tag color="green">{t["work.order.operate.common.custom.email"]}</Tag>}
+              <Tag>
+                {item?.created}
+              </Tag>
+            </Space>
+            <RiceText key={item.id} readOnly={true}
+                      fileDownload={getSalesInfoById}
+                      imgDownload={getSalesImgById}
+                      initValue={item?.commentText} />
+            {/*</div>*/}
+
           </Card>
         )}
       />
