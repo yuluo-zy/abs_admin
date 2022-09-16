@@ -88,7 +88,7 @@ export const OrderEdit: React.FC = () => {
     });
   };
   const options = ["Beijing", "Shanghai", "Guangzhou", "Disabled"];
-  const [customerVisibility, setCustomervisibility] = useState(false);
+  const [internal, setInternal] = useState(true);
   const [email, setEmail] = useState(false);
 
   const riceTextRef = useRef<any>();
@@ -99,13 +99,15 @@ export const OrderEdit: React.FC = () => {
       data = JSON.stringify(riceText.toJSON());
     }
     let fileList = "";
-    if (customerVisibility) {
+    if (!internal) {
       fileList = getFileID(riceText.toJSON());
     }
     addAfterSaleComment({
       afterSaleOrderId: id,
       commentText: data,
-      fileUuids: fileList
+      fileUuids: fileList,
+      internal: internal,
+      sendEmail: email
     }).then(res => {
       if (res.data.success) {
         setChange(value => !value);
@@ -181,8 +183,8 @@ export const OrderEdit: React.FC = () => {
           <DynamicTooltip content={t["work.order.operate.common.customer.visibility.help"]}>
             <p style={{ width: 100 }}>{t["work.order.operate.common.customer.visibility"]}</p>
           </DynamicTooltip>
-          <Switch checked={customerVisibility} onChange={(value) => {
-            setCustomervisibility(value);
+          <Switch checked={internal} onChange={(value) => {
+            setInternal(value);
           }
           } />
           <Divider type={"vertical"} />

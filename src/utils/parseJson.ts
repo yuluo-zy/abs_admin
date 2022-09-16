@@ -3,8 +3,11 @@ const getFile = (data, idList) => {
     if (i?.children) {
       getFile(i?.children, idList);
     }
-    if (i?.type === "fileNode" || i?.type === "image") {
+    if (i?.type === "fileNode") {
       idList.push(i?.src?.id);
+    }
+    if (i?.type === "image") {
+      idList.push(i?.fileId);
     }
   }
 };
