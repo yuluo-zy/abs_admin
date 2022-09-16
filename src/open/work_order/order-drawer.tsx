@@ -22,7 +22,7 @@ export const OrderDrawer: React.FC<DrawerProps> = (props: React.PropsWithChildre
     escToExit
     unmountOnExit
     title={null}
-    height={"90%"}
+    height={"95%"}
     className={styles["contour"]}
     visible={visible}
     footer={null}

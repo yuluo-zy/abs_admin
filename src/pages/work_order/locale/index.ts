@@ -1,5 +1,8 @@
 const i18n = {
-  "en-US": {},
+  "en-US": {
+    "work.order.operate.common.custom": "customer visible",
+    "work.order.operate.common.custom.email": "email alert"
+  },
 
   "zh-CN": {
     "work.order.title": "工单管理",
@@ -76,7 +79,7 @@ const i18n = {
     "work.order.operate.common.internal": "内部可见:",
     "workplace.drawer.details.schedule.history": "工单处理记录",
     "work.order.operate.common.custom": "客户可见",
-    "work.order.operate.common.custom.email": "发送邮件"
+    "work.order.operate.common.custom.email": "邮件提醒"
   }
 };
 

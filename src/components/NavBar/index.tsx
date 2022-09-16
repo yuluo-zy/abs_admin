@@ -16,7 +16,7 @@ import Logo from "@/assets/logo.svg";
 import IconButton from "./IconButton";
 import styles from "./style/index.module.less";
 import defaultLocale from "@/locale";
-import { useSessionStorage } from "@/utils/useHook/useStorage";
+import useStorage, { useSessionStorage } from "@/utils/useHook/useStorage";
 import { loginOut } from "@/api/login";
 import HelpInfo from "@/pages/help";
 import { setHelpKey } from "@/store/help";
@@ -29,6 +29,7 @@ function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boo
   const history = useHistory();
 
   const [_, setUserStatus] = useSessionStorage("userStatus");
+  const [userToken, setUserToken, removeUserToken] = useStorage("userToken");
 
   const get_avatar = (user_name: string): string => {
     if (user_name) {
@@ -49,6 +50,8 @@ function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boo
           title: "Success",
           content: t["menu.user.setting.login.out"]
         });
+        // 清除对应的token信息
+        removeUserToken();
       }
       history.replace(LoginPath);
     });

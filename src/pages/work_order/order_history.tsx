@@ -7,7 +7,7 @@ import { getSalesInfo } from "@/api/file";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 
-export default function WorkOrderHistory({ order, onRef }: { order: string, onRef: any }) {
+export default function WorkOrderHistory({ order, onRef, isLogin }: { order: string, onRef: any, isLogin?: boolean }) {
 
   const [dataSource, setDataSource] = useState();
   const [pagination, setPagination] = useState<PaginationProps>({
@@ -99,8 +99,8 @@ export default function WorkOrderHistory({ order, onRef }: { order: string, onRe
             hoverable>
             {/*// <div key={index} style={{ margin: 10 }}>*/}
             <Space size={"large"}>
-              <Tag color="arcoblue">{item?.creator}</Tag>
-              {!item?.internal && <Tag color="red">{t["work.order.operate.common.custom"]}</Tag>}
+              {item?.creator && <Tag color="arcoblue">{item?.creator}</Tag>}
+              {!item?.internal && isLogin && <Tag color="red">{t["work.order.operate.common.custom"]}</Tag>}
               {item?.sendEmail && <Tag color="green">{t["work.order.operate.common.custom.email"]}</Tag>}
               <Tag>
                 {item?.created}

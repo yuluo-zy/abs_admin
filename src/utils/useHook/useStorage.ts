@@ -39,7 +39,7 @@ function useStorage(
 
   const removeStorage = () => {
     if (!isSSR) {
-      localStorage.removeItem("key");
+      localStorage.removeItem(key);
     }
   };
 

@@ -258,7 +258,7 @@ export const OrderEdit: React.FC = () => {
       </DynamicCard>
       <DynamicDivider />s
       <DynamicCard title={t["workplace.drawer.details.schedule.history"]}>
-        <WorkOrderHistory order={id} onRef={orderHistory} />
+        <WorkOrderHistory order={id} onRef={orderHistory} isLogin={true} />
       </DynamicCard>
     </Spin>
     <Button type={"primary"} shape="circle" size={"large"} icon={<IconToTop />} className={styles["toTop"]}

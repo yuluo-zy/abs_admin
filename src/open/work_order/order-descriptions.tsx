@@ -7,7 +7,7 @@ import DynamicPreviewImg from "@/open/work_order/preview";
 import { IconCloudDownload } from "@arco-design/web-react/icon";
 import { getSalesInfo } from "@/api/file";
 import DynamicCard from "@/components/Dynamic/Card";
-import RiceText from "@/rice_text";
+import { OrderComment } from "@/open/work_order/order-comment";
 
 interface StepProps {
   descriptionData: any,
@@ -291,9 +291,7 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
     />
     <DynamicDivider />
     {feedback && <DynamicCard title={t["workplace.drawer.details.feedback"]}>
-      <RiceText readOnly={true} initValue={data?.remark}
-                fileDownload={getSalesInfoById}
-                imgDownload={getSalesImgById} />
+      <OrderComment orderId={data?.id} />
     </DynamicCard>}
   </div>;
 };
