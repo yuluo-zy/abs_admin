@@ -39,28 +39,30 @@ export type SerializedFileNode = Spread<{
   SerializedLexicalNode>;
 
 function DownLoad({ src, fileDownload }: { src: string, fileDownload: any }): JSX.Element {
+  const [loading, setLoading] = useState(false);
   const downFile = (event) => {
     event.stopPropagation();
     if (src) {
+      setLoading(true);
       fileDownload(src).then(res => {
-        if (res.status === 200) {
-          const url = URL.createObjectURL(new Blob([res.data]));
-          const link = document.createElement("a");
-          link.href = url;
-          let name = res.headers["content-disposition"]?.match(/fileName=(.*)/)[1]; // 获取filename的值
-          name = decodeURIComponent(name);
-          link.setAttribute("download", name);
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+          if (res.status === 200) {
+            const url = URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            let name = res.headers["content-disposition"]?.match(/fileName=(.*)/)[1]; // 获取filename的值
+            name = decodeURIComponent(name);
+            link.setAttribute("download", name);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
           }
         }
-      );
+      ).finally(() => {
+        setLoading(false);
+      });
     }
-
   };
-  // todo 下载菜单
-  return <Button type="primary" icon={<IconDownload />} onClick={downFile}>
+  return <Button type="primary" icon={<IconDownload />} onClick={downFile} loading={loading}>
     Download
   </Button>;
 }

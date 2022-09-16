@@ -111,7 +111,6 @@ export default function WorkOrderHistory({ order, onRef }: { order: string, onRe
                       imgDownload={getSalesImgById}
                       initValue={item?.commentText} />
             {/*</div>*/}
-
           </Card>
         )}
       />
