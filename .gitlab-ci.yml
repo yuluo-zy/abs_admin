@@ -19,8 +19,8 @@ stages:
 variables:
   TAG: 1.0.$CI_PIPELINE_ID
   ENV: "dev"
-  GIT_URL: xsystem.espressif.cn/IT/k8s-custom-frontend.git
-
+  GIT_URL: https://git-codecommit.ap-east-1.amazonaws.com/v1/repos/esp-customer-front
+  
 workflow:
   rules:
     - if: $CI_COMMIT_REF_NAME == "dev"
