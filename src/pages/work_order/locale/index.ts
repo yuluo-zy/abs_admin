@@ -79,6 +79,7 @@ const i18n = {
     "work.order.operate.common.internal": "内部可见:",
     "workplace.drawer.details.schedule.history": "工单处理记录",
     "work.order.operate.common.custom": "客户可见",
+    "work.order.operate.common.custom.add": "客户添加",
     "work.order.operate.common.custom.email": "邮件提醒"
   }
 };
