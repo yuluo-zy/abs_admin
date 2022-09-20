@@ -103,7 +103,7 @@ export default function WorkOrderHistory({ order, onRef, isLogin }: { order: str
                 {item?.isCustomer && isLogin && <Tag color="green">{t["work.order.operate.common.custom.add"]}</Tag>}
                 {item?.creator && <Tag color="arcoblue">{item?.creator}</Tag>}
                 {!item?.internal && isLogin && <Tag color="red">{t["work.order.operate.common.custom"]}</Tag>}
-                {item?.sendEmail && <Tag color="green">{t["work.order.operate.common.custom.email"]}</Tag>}
+                {item?.sendEmail && isLogin && <Tag color="green">{t["work.order.operate.common.custom.email"]}</Tag>}
                 <Tag>
                   {item?.created}
                 </Tag>

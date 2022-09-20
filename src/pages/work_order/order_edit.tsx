@@ -15,14 +15,7 @@ import DynamicDivider from "@/components/Dynamic/Divider";
 import { OrderDescriptions } from "@/open/work_order/order-descriptions";
 import { Button, Divider, Message, Popconfirm, Select, Space, Spin, Switch } from "@arco-design/web-react";
 import styles from "./style/edit.module.less";
-import {
-  IconCheck,
-  IconCheckCircle,
-  IconDelete,
-  IconExclamation,
-  IconLeft,
-  IconToTop
-} from "@arco-design/web-react/icon";
+import { IconCheck, IconCheckCircle, IconExclamation, IconLeft, IconToTop } from "@arco-design/web-react/icon";
 import RiceText from "@/rice_text";
 import { getSalesInfo, postSalesFile } from "@/api/file";
 import axios from "axios";
@@ -108,24 +101,12 @@ export const OrderEdit: React.FC = () => {
   const riceTextRef = useRef<any>();
 
   const endOrder = () => {
-    let data = "";
-    if (riceText) {
-      data = JSON.stringify(riceText.toJSON());
-    }
-    let fileList = "";
-    if (!internal) {
-      fileList = getFileID(riceText.toJSON());
-    }
     postAfterSaleComplete({
       id: id,
-      remark: data,
-      fileUuids: fileList
     }).then(res => {
       if (res.data.success) {
         setChange(value => !value);
         Message.success("Successful operation");
-        riceTextRef.current.clear();
-        orderHistory.current?.update();
       }
     });
   };
@@ -181,15 +162,26 @@ export const OrderEdit: React.FC = () => {
     <div className={styles["edit-tool"]} id={"toTop"}>
 
       <Button icon={<IconLeft />} type={"primary"} size={"large"} onClick={to_work_order}>Return</Button>
-
       <Popconfirm
-        title="确定删除? 删除后不可恢复"
+        title="结束工单则本条内容客户可见,并且将邮件通知客户"
         onOk={() => {
-          deleteOrder();
+          endOrder();
         }}
       >
-        <Button type="primary" status="danger" icon={<IconDelete />} size={"large"}>Delete This</Button>
+        <Button
+          type={"primary"}
+          status="danger"
+          icon={<IconExclamation />}>{t["work.order.operate.process.result.end"]}</Button>
       </Popconfirm>
+
+      {/*<Popconfirm*/}
+      {/*  title="确定删除? 删除后不可恢复"*/}
+      {/*  onOk={() => {*/}
+      {/*    deleteOrder();*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  <Button type="primary" status="danger" icon={<IconDelete />} size={"large"}>Delete This</Button>*/}
+      {/*</Popconfirm>*/}
     </div>
     <Spin style={{ width: "100%" }} loading={loading}>
       <DynamicCard title={t["workplace.drawer.details.schedule"]}>
@@ -239,19 +231,6 @@ export const OrderEdit: React.FC = () => {
               onClick={() => {
               }}>{t["work.order.operate.process.result.operate"]}</Button>
           </Popconfirm>
-          <Popconfirm
-            title="结束工单则本条内容客户可见,并且将邮件通知客户"
-            onOk={() => {
-              endOrder();
-            }}
-          >
-            <Button
-              type={"primary"}
-              status="danger"
-              icon={<IconExclamation />}
-              onClick={() => {
-              }}>{t["work.order.operate.process.result.end"]}</Button>
-          </Popconfirm>
         </Space>
 
         <Space>
@@ -288,7 +267,7 @@ export const OrderEdit: React.FC = () => {
                   onRef={riceTextRef}
                   imgDownload={getSalesImgById} />
       </DynamicCard>
-      <DynamicDivider />s
+      <DynamicDivider />
       <DynamicCard title={t["workplace.drawer.details.schedule.history"]}>
         <WorkOrderHistory order={id} onRef={orderHistory} isLogin={true} />
       </DynamicCard>
