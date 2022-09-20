@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import WorkOrderHistory from "@/pages/work_order/order_history";
-import { Button, Message, Popconfirm } from "@arco-design/web-react";
+import { Button, Form, Input, Message, Popconfirm } from "@arco-design/web-react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 import RiceText from "@/rice_text";
@@ -11,10 +11,13 @@ import { getFileID } from "@/utils/parseJson";
 import { addAfterSaleComment } from "@/api/cqapms";
 import { IconPlus } from "@arco-design/web-react/icon";
 import styles from "./style/comment.module.less";
+import useForm from "@arco-design/web-react/es/Form/useForm";
 
 interface Comment {
   orderId: string;
 }
+
+const FormItem = Form.Item;
 
 export const OrderComment: React.FC<Comment> = (props) => {
   const { orderId } = props;
@@ -22,6 +25,7 @@ export const OrderComment: React.FC<Comment> = (props) => {
   const orderHistory = useRef<any>();
   const t = useLocale(locale);
   const [riceText, setRiceText] = useState<Record<string, any>>();
+  const [form] = useForm();
 
   const uploadData = (option) => {
     const { onProgress, file, onSuccess, onError } = option;
@@ -67,6 +71,12 @@ export const OrderComment: React.FC<Comment> = (props) => {
   const riceTextRef = useRef<any>();
 
   const postData = () => {
+    try {
+      form.validate();
+    } catch (e) {
+      Message.error(t["work.order.operate.order.add.error"]);
+      return;
+    }
     let data = "";
     if (riceText === null) {
       Message.error(t["work.order.operate.order.add.error"]);
@@ -99,7 +109,28 @@ export const OrderComment: React.FC<Comment> = (props) => {
         {!open && <Button status="success" onClick={() => setOpen(value => !value)}>
           {t["work.order.operate.order.add"]}
         </Button>}
-        {open &&
+      </div>
+      {open && <div>
+        <b className={styles["title"]}>{t["work.order.operate.order.add.info"]}</b>
+        <Form form={form} autoComplete="off" layout="inline" className={styles["form-table"]}>
+          <FormItem label={t["work.order.operate.order.add.info.name"]} field="userName" rules={[{ required: true }]}>
+            <Input style={{ width: 200 }} placeholder="please enter your name" />
+          </FormItem>
+          <FormItem label={t["work.order.operate.order.add.info.phone"]} field="userPhone">
+            <Input style={{ width: 200 }} placeholder="please enter your phone" />
+          </FormItem>
+          <FormItem label={t["work.order.operate.order.add.info.email"]} field="userEmail">
+            <Input style={{ width: 200 }} placeholder="please enter your email" />
+          </FormItem>
+        </Form>
+        <b className={styles["title"]}>{t["work.order.operate.order.add.info.context"]}</b>
+        <RiceText onChange={setRiceText} readOnly={false}
+                  fileUpload={uploadData}
+                  fileDownload={getSalesInfoById}
+                  imgUpload={uploadData}
+                  onRef={riceTextRef}
+                  imgDownload={getSalesImgById} />
+        <div className={styles["tool-update"]}>
           <Popconfirm
             title={t["work.order.operate.order.add.help"]}
             onOk={() => {
@@ -107,17 +138,12 @@ export const OrderComment: React.FC<Comment> = (props) => {
             }}
           >
             <Button type={"primary"} icon={<IconPlus />}>{t["work.order.operate.order.add"]}</Button>
-          </Popconfirm>}
-      </div>
-      {open && <>
-        <RiceText onChange={setRiceText} readOnly={false}
-                  fileUpload={uploadData}
-                  fileDownload={getSalesInfoById}
-                  imgUpload={uploadData}
-                  onRef={riceTextRef}
-                  imgDownload={getSalesImgById} />
+          </Popconfirm>
+        </div>
+
         <DynamicDivider />
-      </>}
+      </div>
+      }
     </div>
     <WorkOrderHistory order={orderId} onRef={orderHistory} />
   </div>;

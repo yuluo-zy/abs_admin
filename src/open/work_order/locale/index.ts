@@ -93,7 +93,12 @@ const i18n = {
     "work.order.operate.order.c": "Processing completed",
     "work.order.operate.order.add": "Add new information",
     "work.order.operate.order.add.help": "Please confirm the completeness of the additional information, Espressif engineers will handle it for you as soon as possible",
-    "work.order.operate.order.add.error": "Please do not add empty content and illegal content"
+    "work.order.operate.order.add.error": "Please do not add empty content and illegal content",
+    "work.order.operate.order.add.info": "Information supplement:",
+    "work.order.operate.order.add.info.context": "information supplement:",
+    "work.order.operate.order.add.info.name": "name:",
+    "work.order.operate.order.add.info.phone": "phone:",
+    "work.order.operate.order.add.info.email": "email:"
   },
 
   "zh-CN": {
@@ -190,7 +195,12 @@ const i18n = {
     "work.order.operate.order.c": "处理完成",
     "work.order.operate.order.add": "新增信息补充",
     "work.order.operate.order.add.help": "请确认追加信息的完整性, 乐鑫工程师将尽快为你处理",
-    "work.order.operate.order.add.error": "请不要填写空内容及不合法内容"
+    "work.order.operate.order.add.error": "请不要填写空内容及不合法内容",
+    "work.order.operate.order.add.info": "信息补充人:",
+    "work.order.operate.order.add.info.context": "信息补充内容:",
+    "work.order.operate.order.add.info.name": "姓名:",
+    "work.order.operate.order.add.info.phone": "电话:",
+    "work.order.operate.order.add.info.email": "邮箱:"
   }
 };
 

@@ -253,19 +253,6 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
     }
   ];
 
-  const getSalesInfoById = (value) => {
-    return getSalesInfo({
-      ...value,
-      orderId: data?.id
-    });
-  };
-
-  const getSalesImgById = (value) => {
-    return getSalesInfo({
-      id: value,
-      orderId: data?.id
-    });
-  };
   return <div style={{ ...style }}>
     <Descriptions
       colon={" : "}
