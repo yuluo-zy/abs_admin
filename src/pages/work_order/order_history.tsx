@@ -98,15 +98,18 @@ export default function WorkOrderHistory({ order, onRef, isLogin }: { order: str
             key={index}
             className={item?.isCustomer ? styles["custom"] : styles["common"]}
             hoverable>
-            <Space size={"large"}>
-              {item?.isCustomer && isLogin && <Tag color="green">{t["work.order.operate.common.custom.add"]}</Tag>}
-              {item?.creator && <Tag color="arcoblue">{item?.creator}</Tag>}
-              {!item?.internal && isLogin && <Tag color="red">{t["work.order.operate.common.custom"]}</Tag>}
-              {item?.sendEmail && <Tag color="green">{t["work.order.operate.common.custom.email"]}</Tag>}
-              <Tag>
-                {item?.created}
-              </Tag>
-            </Space>
+            <div className={item?.isCustomer ? styles["custom-space"] : null}>
+              <Space size={"large"}>
+                {item?.isCustomer && isLogin && <Tag color="green">{t["work.order.operate.common.custom.add"]}</Tag>}
+                {item?.creator && <Tag color="arcoblue">{item?.creator}</Tag>}
+                {!item?.internal && isLogin && <Tag color="red">{t["work.order.operate.common.custom"]}</Tag>}
+                {item?.sendEmail && <Tag color="green">{t["work.order.operate.common.custom.email"]}</Tag>}
+                <Tag>
+                  {item?.created}
+                </Tag>
+              </Space>
+            </div>
+
             <RiceText key={item.id} readOnly={true}
                       fileDownload={getSalesInfoById}
                       imgDownload={getSalesImgById}
