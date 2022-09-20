@@ -121,6 +121,10 @@ export const OrderEdit: React.FC = () => {
     if (riceText) {
       data = JSON.stringify(riceText.toJSON());
     }
+    if (data.length <= 0) {
+      Message.error(t["work.order.operate.order.add.error"]);
+      return;
+    }
     let fileList = "";
     if (!internal) {
       fileList = getFileID(riceText.toJSON());
@@ -166,7 +170,9 @@ export const OrderEdit: React.FC = () => {
     });
   };
 
-  useEffect(() => {
+  const emailOptions = [];
+
+  const getInitValue = () => {
     const temp = [];
     if (data && data.length > 0) {
       if (data[0]?.customerEmail) {
@@ -176,8 +182,23 @@ export const OrderEdit: React.FC = () => {
         temp.push(data[0]?.espBusinessEmail);
       }
     }
-    setEmailValue([...temp]);
-  }, [data]);
+
+    emailOptions.push(...temp);
+    // setEmailValue([]);
+    return temp;
+  };
+  // useEffect(() => {
+  //   const temp = [];
+  //   if (data && data.length > 0) {
+  //     if (data[0]?.customerEmail) {
+  //       temp.push(data[0]?.customerEmail);
+  //     }
+  //     if (data[0]?.espBusinessEmail) {
+  //       temp.push(data[0]?.espBusinessEmail);
+  //     }
+  //   }
+  //   setEmailValue([...temp]);
+  // }, [data]);
 
 
   return <div className={styles["content"]}>
@@ -266,6 +287,11 @@ export const OrderEdit: React.FC = () => {
             <p style={{ width: 100 }}>{t["work.order.operate.common.customer.email"]}</p>
           </DynamicTooltip>
           <Switch checked={email} onChange={(value) => {
+            if (!value) {
+              setEmailValue([]);
+            } else {
+              setEmailValue(value => getInitValue());
+            }
             setEmail(value);
           }
           } />
@@ -276,12 +302,12 @@ export const OrderEdit: React.FC = () => {
                 mode="multiple"
                 placeholder="Please select"
                 style={{ width: 345 }}
-                defaultValue={emailValue}
+                defaultValue={getInitValue()}
                 allowClear
                 onChange={(value, _) => {
                   setEmailValue(value);
                 }}>
-                {emailValue.map((option, index) => (
+                {[].map((option, index) => (
                   <Select.Option key={index} value={option}>
                     {option}
                   </Select.Option>
