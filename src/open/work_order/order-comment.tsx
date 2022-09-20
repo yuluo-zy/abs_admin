@@ -70,9 +70,9 @@ export const OrderComment: React.FC<Comment> = (props) => {
 
   const riceTextRef = useRef<any>();
 
-  const postData = () => {
+  const postData = async () => {
     try {
-      form.validate();
+      await form.validate();
     } catch (e) {
       Message.error(t["work.order.operate.order.add.error"]);
       return;
