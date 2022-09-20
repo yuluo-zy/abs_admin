@@ -9,7 +9,8 @@ import { getSalesInfo, postSalesFile } from "@/api/file";
 import DynamicDivider from "@/components/Dynamic/Divider";
 import { getFileID } from "@/utils/parseJson";
 import { addAfterSaleComment } from "@/api/cqapms";
-import { IconShareExternal } from "@arco-design/web-react/icon";
+import { IconPlus } from "@arco-design/web-react/icon";
+import styles from "./style/comment.module.less";
 
 interface Comment {
   orderId: string;
@@ -94,18 +95,21 @@ export const OrderComment: React.FC<Comment> = (props) => {
 
   return <div>
     <div>
-      {!open && <Button status="success" onClick={() => setOpen(value => !value)}>
-        {t["work.order.operate.order.add"]}
-      </Button>}
+      <div className={styles["tool-button"]}>
+        {!open && <Button status="success" onClick={() => setOpen(value => !value)}>
+          {t["work.order.operate.order.add"]}
+        </Button>}
+        {open &&
+          <Popconfirm
+            title={t["work.order.operate.order.add.help"]}
+            onOk={() => {
+              postData();
+            }}
+          >
+            <Button type={"primary"} icon={<IconPlus />}>{t["work.order.operate.order.add"]}</Button>
+          </Popconfirm>}
+      </div>
       {open && <>
-        <Popconfirm
-          title={t["work.order.operate.order.add.help"]}
-          onOk={() => {
-            postData();
-          }}
-        >
-          <Button type={"primary"} icon={<IconShareExternal />}>{t["work.order.operate.order.add"]}</Button>
-        </Popconfirm>
         <RiceText onChange={setRiceText} readOnly={false}
                   fileUpload={uploadData}
                   fileDownload={getSalesInfoById}
@@ -113,8 +117,7 @@ export const OrderComment: React.FC<Comment> = (props) => {
                   onRef={riceTextRef}
                   imgDownload={getSalesImgById} />
         <DynamicDivider />
-      </>
-      }
+      </>}
     </div>
     <WorkOrderHistory order={orderId} onRef={orderHistory} />
   </div>;

@@ -51,7 +51,7 @@ export const OrderDrawer: React.FC<DrawerProps> = (props: React.PropsWithChildre
         </div>
       </DynamicCard>
       <Button type={"primary"} shape="circle" size={"large"} icon={<IconToTop />} className={styles["toTop"]}
-              onClick={toTop} />
+              onClick={() => toTop()} />
     </div>
   </Drawer>;
 };

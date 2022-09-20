@@ -87,11 +87,11 @@ const i18n = {
     "workplace.drawer.details.schedule.step2.description": "Espressif engineers are working on the ticket, please ensure smooth communication so that we can get in touch with you in time",
     "workplace.drawer.details.schedule.step3.title": "Closed",
     "workplace.drawer.details.schedule.step3.description": "Relevant solutions have been uploaded. Espressif team will keep serving you wholeheartedly",
-    "workplace.drawer.details.feedback": "Result feedback",
+    "workplace.drawer.details.feedback": "Processing status and information feedback",
     "work.order.operate.order.a": "To be processed",
     "work.order.operate.order.b": "Processing",
     "work.order.operate.order.c": "Processing completed",
-    "work.order.operate.order.add": "additional information",
+    "work.order.operate.order.add": "Add new information",
     "work.order.operate.order.add.help": "Please confirm the completeness of the additional information, Espressif engineers will handle it for you as soon as possible",
     "work.order.operate.order.add.error": "Please do not add empty content and illegal content"
   },
@@ -184,11 +184,11 @@ const i18n = {
     "workplace.drawer.details.schedule.step2.description": "乐鑫工程师正在快马加鞭中, 请确保通讯畅通, 以便及时联系",
     "workplace.drawer.details.schedule.step3.title": "工单结案",
     "workplace.drawer.details.schedule.step3.description": "相关解决方案已上传, 乐鑫工程师竭诚为您服务",
-    "workplace.drawer.details.feedback": "结果反馈",
+    "workplace.drawer.details.feedback": "处理状态与信息反馈",
     "work.order.operate.order.a": "待处理",
     "work.order.operate.order.b": "正在处理",
     "work.order.operate.order.c": "处理完成",
-    "work.order.operate.order.add": "追加信息",
+    "work.order.operate.order.add": "新增信息补充",
     "work.order.operate.order.add.help": "请确认追加信息的完整性, 乐鑫工程师将尽快为你处理",
     "work.order.operate.order.add.error": "请不要填写空内容及不合法内容"
   }
