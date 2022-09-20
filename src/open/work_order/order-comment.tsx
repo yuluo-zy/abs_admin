@@ -91,7 +91,8 @@ export const OrderComment: React.FC<Comment> = (props) => {
       commentText: data,
       fileUuids: fileList,
       internal: false,
-      sendEmail: true
+      sendEmail: true,
+      ...form.getFields()
     }).then(res => {
       if (res.data.success) {
         Message.success("Successful operation");

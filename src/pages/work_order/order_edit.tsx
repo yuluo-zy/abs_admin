@@ -34,6 +34,8 @@ export const OrderEdit: React.FC = () => {
   const [change, setChange] = useState(false);
   const [riceText, setRiceText] = useState<Record<string, any>>();
   const orderHistory = useRef<any>();
+  const emailOptions = [];
+  const [emailValue, setEmailValue] = useState([]);
 
   useEffect(() => {
     let isUnmount = false;
@@ -125,7 +127,8 @@ export const OrderEdit: React.FC = () => {
       commentText: data,
       fileUuids: fileList,
       internal: internal,
-      sendEmail: email
+      sendEmail: email,
+      externalEmails: emailValue.toString()
     }).then(res => {
       if (res.data.success) {
         setChange(value => !value);
@@ -158,6 +161,7 @@ export const OrderEdit: React.FC = () => {
       }
     });
   };
+
   return <div className={styles["content"]}>
     <div className={styles["edit-tool"]} id={"toTop"}>
 
@@ -249,6 +253,25 @@ export const OrderEdit: React.FC = () => {
             setEmail(value);
           }
           } />
+          {
+            email && <>
+              <Select
+                mode="multiple"
+                maxTagCount={2}
+                placeholder="Please select"
+                style={{ width: 345 }}
+                defaultValue={["Beijing", "Shenzhen", "Wuhan"]}
+                allowClear
+              >
+                {emailOptions.map((option, index) => (
+                  <Select.Option key={index} value={option}>
+                    {option}
+                  </Select.Option>
+                ))}
+              </Select>
+
+            </>
+          }
           <Divider type={"vertical"} />
           <p style={{ width: 50 }}>{t["work.order.operate.common.step"]}</p>
           <Select placeholder="Select Step" style={{ width: 150 }} allowClear>
