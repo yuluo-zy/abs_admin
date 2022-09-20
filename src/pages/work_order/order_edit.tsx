@@ -34,7 +34,6 @@ export const OrderEdit: React.FC = () => {
   const [change, setChange] = useState(false);
   const [riceText, setRiceText] = useState<Record<string, any>>();
   const orderHistory = useRef<any>();
-  const emailOptions = [];
   const [emailValue, setEmailValue] = useState([]);
 
   useEffect(() => {
@@ -104,7 +103,7 @@ export const OrderEdit: React.FC = () => {
 
   const endOrder = () => {
     postAfterSaleComplete({
-      id: id,
+      id: id
     }).then(res => {
       if (res.data.success) {
         setChange(value => !value);
@@ -115,6 +114,10 @@ export const OrderEdit: React.FC = () => {
 
   function handleOnClick() {
     let data = "";
+    if (!riceText || riceText.toJSON().length <= 0) {
+      Message.error(t["work.order.operate.order.add.error"]);
+      return;
+    }
     if (riceText) {
       data = JSON.stringify(riceText.toJSON());
     }
@@ -122,6 +125,7 @@ export const OrderEdit: React.FC = () => {
     if (!internal) {
       fileList = getFileID(riceText.toJSON());
     }
+
     addAfterSaleComment({
       afterSaleOrderId: id,
       commentText: data,
@@ -161,6 +165,20 @@ export const OrderEdit: React.FC = () => {
       }
     });
   };
+
+  useEffect(() => {
+    const temp = [];
+    if (data && data.length > 0) {
+      if (data[0]?.customerEmail) {
+        temp.push(data[0]?.customerEmail);
+      }
+      if (data[0]?.espBusinessEmail) {
+        temp.push(data[0]?.espBusinessEmail);
+      }
+    }
+    setEmailValue([...temp]);
+  }, [data]);
+
 
   return <div className={styles["content"]}>
     <div className={styles["edit-tool"]} id={"toTop"}>
@@ -231,9 +249,7 @@ export const OrderEdit: React.FC = () => {
           >
             <Button
               type={"primary"}
-              icon={<IconCheck />}
-              onClick={() => {
-              }}>{t["work.order.operate.process.result.operate"]}</Button>
+              icon={<IconCheck />}>{t["work.order.operate.process.result.operate"]}</Button>
           </Popconfirm>
         </Space>
 
@@ -256,14 +272,16 @@ export const OrderEdit: React.FC = () => {
           {
             email && <>
               <Select
+                allowCreate
                 mode="multiple"
-                maxTagCount={2}
                 placeholder="Please select"
                 style={{ width: 345 }}
-                defaultValue={["Beijing", "Shenzhen", "Wuhan"]}
+                defaultValue={emailValue}
                 allowClear
-              >
-                {emailOptions.map((option, index) => (
+                onChange={(value, _) => {
+                  setEmailValue(value);
+                }}>
+                {emailValue.map((option, index) => (
                   <Select.Option key={index} value={option}>
                     {option}
                   </Select.Option>

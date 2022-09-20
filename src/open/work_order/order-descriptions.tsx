@@ -149,11 +149,11 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
 
     {
       label: t["workplace.add.custom.custom.order"],
-      value: getEncryption(data?.customerPhone)
+      value: getCopy(getEncryption(data?.customerPhone))
     },
     {
       label: t["workplace.add.custom.custom.order.email"],
-      value: getEncryption(data?.customerEmail)
+      value: getCopy(getEncryption(data?.customerEmail))
     },
 
     {

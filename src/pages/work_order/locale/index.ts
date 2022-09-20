@@ -80,7 +80,8 @@ const i18n = {
     "workplace.drawer.details.schedule.history": "工单处理记录",
     "work.order.operate.common.custom": "客户可见",
     "work.order.operate.common.custom.add": "客户添加",
-    "work.order.operate.common.custom.email": "邮件提醒"
+    "work.order.operate.common.custom.email": "邮件提醒",
+    "work.order.operate.order.add.error": "不允许添加空内容或者非法内容"
   }
 };
 

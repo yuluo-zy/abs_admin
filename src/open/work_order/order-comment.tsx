@@ -114,7 +114,7 @@ export const OrderComment: React.FC<Comment> = (props) => {
       {open && <div>
         <b className={styles["title"]}>{t["work.order.operate.order.add.info"]}</b>
         <Form form={form} autoComplete="off" layout="inline" className={styles["form-table"]}>
-          <FormItem label={t["work.order.operate.order.add.info.name"]} field="userName" rules={[{ required: true }]}>
+          <FormItem label={t["work.order.operate.order.add.info.name"]} field="username" rules={[{ required: true }]}>
             <Input style={{ width: 200 }} placeholder="please enter your name" />
           </FormItem>
           <FormItem label={t["work.order.operate.order.add.info.phone"]} field="userPhone">
