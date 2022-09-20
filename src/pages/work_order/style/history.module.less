@@ -3,3 +3,16 @@
   justify-content: left;
   align-items: center;
 }
+
+.custom {
+  margin: 10px;
+  background: var(--color-neutral-2);
+
+  :global(.read-only) {
+    background: var(--color-neutral-2) !important;
+  }
+}
+
+.common {
+  margin: 10px;
+}

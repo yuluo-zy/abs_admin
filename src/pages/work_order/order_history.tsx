@@ -6,6 +6,7 @@ import RiceText from "@/rice_text";
 import { getSalesInfo } from "@/api/file";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
+import styles from "./style/history.module.less";
 
 export default function WorkOrderHistory({ order, onRef, isLogin }: { order: string, onRef: any, isLogin?: boolean }) {
 
@@ -95,9 +96,8 @@ export default function WorkOrderHistory({ order, onRef, isLogin }: { order: str
           <Card
             bordered
             key={index}
-            style={{ margin: 10 }}
+            className={item?.isisCustomer ? styles["custom"] : styles["common"]}
             hoverable>
-            {/*// <div key={index} style={{ margin: 10 }}>*/}
             <Space size={"large"}>
               {item?.creator && <Tag color="arcoblue">{item?.creator}</Tag>}
               {!item?.internal && isLogin && <Tag color="red">{t["work.order.operate.common.custom"]}</Tag>}
