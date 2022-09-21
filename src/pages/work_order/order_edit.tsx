@@ -136,7 +136,7 @@ export const OrderEdit: React.FC = () => {
       fileUuids: fileList,
       internal: internal,
       sendEmail: email,
-      externalEmails: emailValue.toString()
+      externalEmails: [...new Set(emailValue)].toString()
     }).then(res => {
       if (res.data.success) {
         setChange(value => !value);

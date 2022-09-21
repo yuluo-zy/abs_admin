@@ -95,7 +95,6 @@ function LazyImage({
       return {};
     });
   }, []);
-  console.log(read_only);
   if (read_only) {
     return (
       <Image
