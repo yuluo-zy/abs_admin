@@ -35,6 +35,7 @@ export const OrderEdit: React.FC = () => {
   const [riceText, setRiceText] = useState<Record<string, any>>();
   const orderHistory = useRef<any>();
   const [emailValue, setEmailValue] = useState([]);
+  const [stage, setStage] = useState();
 
   useEffect(() => {
     let isUnmount = false;
@@ -95,7 +96,14 @@ export const OrderEdit: React.FC = () => {
       orderId: id
     });
   };
-  const options = ["Beijing", "Shanghai", "Guangzhou", "Disabled"];
+  const options = [t["work.order.operate.order.common.step.a"],
+    t["work.order.operate.order.common.step.b"],
+    t["work.order.operate.order.common.step.c"],
+    t["work.order.operate.order.common.step.d"],
+    t["work.order.operate.order.common.step.e"],
+    t["work.order.operate.order.common.step.f"],
+    t["work.order.operate.order.common.step.g"],
+    t["work.order.operate.order.common.step.h"]];
   const [internal, setInternal] = useState(true);
   const [email, setEmail] = useState(false);
 
@@ -136,7 +144,8 @@ export const OrderEdit: React.FC = () => {
       fileUuids: fileList,
       internal: internal,
       sendEmail: email,
-      externalEmails: [...new Set(emailValue)].toString()
+      externalEmails: [...new Set(emailValue)].toString(),
+      stage: stage
     }).then(res => {
       if (res.data.success) {
         setChange(value => !value);
@@ -318,9 +327,10 @@ export const OrderEdit: React.FC = () => {
           }
           <Divider type={"vertical"} />
           <p style={{ width: 50 }}>{t["work.order.operate.common.step"]}</p>
-          <Select placeholder="Select Step" style={{ width: 150 }} allowClear>
+          <Select placeholder="选择状态" value={stage} allowClear size={"large"} style={{ width: 320 }}
+                  onChange={(value) => setStage(value)}>
             {options.map((option, index) => (
-              <Select.Option key={index} value={option}>
+              <Select.Option key={index} value={index}>
                 {option}
               </Select.Option>
             ))}
