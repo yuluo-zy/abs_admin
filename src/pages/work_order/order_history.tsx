@@ -85,6 +85,25 @@ export default function WorkOrderHistory({ order, onRef, isLogin }: { order: str
     }
   }));
 
+  const options = [
+    {
+      label: t["workplace.add.custom.product.stage.a"],
+      key: 1
+    },
+    {
+      label: t["workplace.add.custom.product.stage.b"],
+      key: 2
+    },
+    {
+      label: t["workplace.add.custom.product.stage.c"],
+      key: 3
+    },
+    {
+      label: t["workplace.add.custom.product.stage.d"],
+      key: 4
+    }
+  ];
+
   return (
     <DynamicSkeleton text={{ rows: 11, width: "90rem" }}>
       <List
@@ -104,6 +123,7 @@ export default function WorkOrderHistory({ order, onRef, isLogin }: { order: str
                 {item?.creator && <Tag color="arcoblue">{item?.creator}</Tag>}
                 {!item?.internal && isLogin && <Tag color="red">{t["work.order.operate.common.custom"]}</Tag>}
                 {item?.sendEmail && isLogin && <Tag color="green">{t["work.order.operate.common.custom.email"]}</Tag>}
+                {item?.stage && <Tag color={"cyan"}>{options[item?.stage]}</Tag>}
                 <Tag>
                   {item?.created}
                 </Tag>
