@@ -241,7 +241,8 @@ function BlockFormatDropDown({
   );
 
   return (
-    <Dropdown.Button type="secondary" droplist={dropList} onClick={formatParagraph} icon={<IconDown />}>
+    <Dropdown.Button type="secondary" style={{ minWidth: 142 }} droplist={dropList} onClick={formatParagraph}
+                     icon={<IconDown />}>
       <IconAlignCenter /> Normal
     </Dropdown.Button>
   );

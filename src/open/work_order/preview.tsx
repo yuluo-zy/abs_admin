@@ -8,7 +8,7 @@ export default function DynamicPreviewImg(props) {
     data,
     ...self_props
   } = props;
-  const [img, setImg] = useState(null);
+  const [img, setImg] = useState("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
   useEffect(() => {
     if (data?.id) {
       getSalesInfo(data).then(res => {

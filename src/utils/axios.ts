@@ -41,12 +41,11 @@ axios.interceptors.response.use(res => {
     Notification.error({ content: "权限不足,请联系管理员!" });
   } else if (err.response?.status == 401) {
     Notification.error({ content: "登录过期请 重新登录!" });
-    localStorage.setItem("userToken", null);
-    sessionStorage.setItem("userStatus", null);
+    localStorage.removeItem("userToken");
+    sessionStorage.removeItem("userStatus");
     window.setTimeout(() => {
       window.location.href = "/login";
     }, 3000);
-
   } else {
     Notification.error({ content: "system error!" });
   }

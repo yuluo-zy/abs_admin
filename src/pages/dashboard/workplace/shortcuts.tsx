@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Typography } from "@arco-design/web-react";
-import { IconStorage } from "@arco-design/web-react/icon";
+import { IconArchive, IconStorage } from "@arco-design/web-react/icon";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale";
 import styles from "./style/shortcuts.module.less";
@@ -13,9 +13,15 @@ function Shortcuts() {
   const shortcuts = [
     {
       title: t["workplace.contentStatistic"],
-      key: "Content Statistic",
+      key: "product",
       icon: <IconStorage />,
-      path: "/product"
+      path: "/manage/product"
+    },
+    {
+      title: t["workplace.work.order"],
+      key: "work_order",
+      icon: <IconArchive />,
+      path: "/manage/work_order"
     }
     // {
     //   title: t["workplace.advancedMgmt"],

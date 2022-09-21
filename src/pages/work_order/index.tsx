@@ -3,9 +3,9 @@ import SearchList from "@/components/Dynamic/List";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 import { SearchItem } from "@/components/type";
-import { getAfterSaleManage, postAfterSaleComplete, postAfterSaleReceive } from "@/api/cqapms";
-import { Button, Message, Popconfirm, Space, Tag, Tooltip } from "@arco-design/web-react";
-import { IconCheck, IconCheckCircle, IconEdit } from "@arco-design/web-react/icon";
+import { getAfterSaleManage } from "@/api/cqapms";
+import { Button, Space, Tag, Tooltip } from "@arco-design/web-react";
+import { IconEdit } from "@arco-design/web-react/icon";
 import { Route, Switch, useHistory } from "react-router";
 import { OrderEdit } from "@/pages/work_order/order_edit";
 import { ManagePath, WorkOrderPath } from "@/utils/routingTable";
@@ -72,37 +72,37 @@ export default function WorkOrderManagement() {
         dataIndex: "operations",
         render: (_, record) => (
           <Space>
-            <Popconfirm
-              title={t["work.order.operate.accept"]}
-              onOk={() => {
-                postAfterSaleReceive({
-                  id: record.id
-                }).then(res => {
-                  if (res.data.success) {
-                    callback();
-                    Message.success("Successful operation");
-                  }
-                });
+            {/*<Popconfirm*/}
+            {/*  title={t["work.order.operate.accept"]}*/}
+            {/*  onOk={() => {*/}
+            {/*    postAfterSaleReceive({*/}
+            {/*      id: record.id*/}
+            {/*    }).then(res => {*/}
+            {/*      if (res.data.success) {*/}
+            {/*        callback();*/}
+            {/*        Message.success("Successful operation");*/}
+            {/*      }*/}
+            {/*    });*/}
 
-              }}
-            >
-              <Button icon={<IconCheckCircle />} />
-            </Popconfirm>
-            <Popconfirm
-              title={t["work.order.operate.complete"]}
-              onOk={() => {
-                postAfterSaleComplete({
-                  id: record.id
-                }).then(res => {
-                  if (res.data.success) {
-                    callback();
-                    Message.success("Successful operation");
-                  }
-                });
-              }}
-            >
-              <Button icon={<IconCheck />} />
-            </Popconfirm>
+            {/*  }}*/}
+            {/*>*/}
+            {/*  <Button icon={<IconCheckCircle />} />*/}
+            {/*</Popconfirm>*/}
+            {/*<Popconfirm*/}
+            {/*  title={t["work.order.operate.complete"]}*/}
+            {/*  onOk={() => {*/}
+            {/*    postAfterSaleComplete({*/}
+            {/*      id: record.id*/}
+            {/*    }).then(res => {*/}
+            {/*      if (res.data.success) {*/}
+            {/*        callback();*/}
+            {/*        Message.success("Successful operation");*/}
+            {/*      }*/}
+            {/*    });*/}
+            {/*  }}*/}
+            {/*>*/}
+            {/*  <Button icon={<IconCheck />} />*/}
+            {/*</Popconfirm>*/}
             <Tooltip content={t["work.order.operate.edit"]}>
               <Button icon={<IconEdit />} onClick={() => {
                 history.push(`${ManagePath}${WorkOrderPath}/${record.id}`);

@@ -31,6 +31,10 @@
   }
 
   max-height: 500px;
+
+  .ContentEditable__root {
+    min-height: 1rem;
+  }
 }
 
 .editor-shell .editor-container.tree-view {
@@ -54,11 +58,12 @@
   display: flex;
   margin-bottom: 1px;
   background: var(--color-bg-3);
-  padding: 4px;
+  padding: 3px 3px 5px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   vertical-align: middle;
   overflow: auto;
+  overflow-y: hidden;
   height: 36px;
   justify-content: center;
 }

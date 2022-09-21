@@ -8,6 +8,7 @@ const i18n = {
     "workplace.shortcuts": "快捷入口",
     "workplace.announcement": "公告",
     "workplace.contentStatistic": "需求管理",
+    "workplace.work.order": "工单管理",
     "workplace.upcoming.title": "待办事项",
     "workplace.step.title": "定制流程概览",
     "workplace.step.label": "标签",

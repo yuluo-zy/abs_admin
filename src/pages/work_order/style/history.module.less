@@ -1,0 +1,25 @@
+.info {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.custom {
+  margin: 10px;
+  background: var(--color-neutral-2);
+
+  :global(.read-only) {
+    background: var(--color-neutral-2) !important;
+  }
+}
+
+.common {
+  margin: 10px;
+}
+
+.custom-space {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: right;
+}

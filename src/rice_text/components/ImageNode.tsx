@@ -29,10 +29,10 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection";
 import { mergeRegister } from "@lexical/utils";
 import * as React from "react";
-import { Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getFile } from "@/api/file";
 import ImageResizer from "./ui/ImageResizer";
-import { Message } from "@arco-design/web-react";
+import { Image, Message } from "@arco-design/web-react";
 import { useFunctions } from "@/rice_text/context/SettingsContext";
 
 export interface ImagePayload {
@@ -47,20 +47,7 @@ export interface ImagePayload {
   width?: number;
 }
 
-const imageCache = new Map();
 
-function useSuspenseImage(fileId: string, download): File {
-  if (!imageCache.has(fileId)) {
-    throw download(fileId).then(res => {
-      if (res.status === 200) {
-        imageCache.set(fileId, res.data);
-      }
-    }).finally(() => {
-      return {};
-    });
-  }
-  return imageCache.get(fileId);
-}
 
 function convertImageElement(domNode: Node): null | DOMConversionOutput {
   // html -> node
@@ -95,27 +82,39 @@ function LazyImage({
   customRequest: any;
   read_only: boolean;
 }): JSX.Element {
-  const file = useSuspenseImage(fileId, customRequest || getFile);
-  // if (read_only) {
-  //   return (
-  //     <Image
-  //       className={className || undefined}
-  //       src={URL.createObjectURL(file)}
-  //       alt={altText}
-  //       ref={imageRef}
-  //       style={{
-  //         height,
-  //         maxWidth,
-  //         width
-  //       }}
-  //       draggable="false"
-  //     />
-  //   );
-  // }
+  const [file, setFile] = useState("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+  useEffect(() => {
+    const download = customRequest || getFile;
+    download(fileId).then(res => {
+      if (res.status === 200) {
+        setFile(URL.createObjectURL(res.data));
+      }
+    }).catch((error) => {
+      return {};
+    }).finally(() => {
+      return {};
+    });
+  }, []);
+  if (read_only) {
+    return (
+      <Image
+        className={className || undefined}
+        src={file}
+        alt={altText}
+        ref={imageRef}
+        style={{
+          height,
+          maxWidth,
+          width
+        }}
+        draggable="false"
+      />
+    );
+  }
   return (
     <img
       className={className || undefined}
-      src={URL.createObjectURL(file)}
+      src={file}
       alt={altText}
       ref={imageRef}
       style={{
@@ -248,7 +247,7 @@ function ImageComponent({
   const isFocused = $isNodeSelection(selection) && (isSelected || isResizing);
 
   return (
-    <Suspense fallback={null}>
+    // <Suspense fallback={null}>
       <>
         <div draggable={draggable}>
           <LazyImage
@@ -273,7 +272,7 @@ function ImageComponent({
           />
         )}
       </>
-    </Suspense>
+    // </Suspense>
   );
 }
 

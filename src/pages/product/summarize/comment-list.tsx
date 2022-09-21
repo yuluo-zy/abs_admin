@@ -18,12 +18,6 @@ export default function CommentList() {
     pageSizeChangeResetCurrent: true,
     onChange: onChangeTable
   });
-  useEffect(() => {
-    fetchData();
-  }, [
-    pagination.current,
-    pagination.pageSize
-  ]);
 
   function onChangeTable(page, pageSize) {
     setPagination({
@@ -64,6 +58,13 @@ export default function CommentList() {
       }
     );
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [
+    pagination.current,
+    pagination.pageSize
+  ]);
 
   return (
     <DynamicSkeleton text={{ rows: 11, width: "90rem" }}>
