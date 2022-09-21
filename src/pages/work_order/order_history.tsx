@@ -1,5 +1,5 @@
 import React, { useEffect, useImperativeHandle, useState } from "react";
-import { Card, List, PaginationProps, Space, Tag } from "@arco-design/web-react";
+import { Card, List, PaginationProps, Space, Tag, Tooltip } from "@arco-design/web-react";
 import DynamicSkeleton from "@/components/Dynamic/Skeleton";
 import { getOrderCommonHistory } from "@/api/cqapms";
 import RiceText from "@/rice_text";
@@ -119,7 +119,16 @@ export default function WorkOrderHistory({ order, onRef, isLogin }: { order: str
             hoverable>
             <div className={item?.isCustomer ? styles["custom-space"] : null}>
               <Space size={"large"}>
-                {item?.isCustomer && isLogin && <Tag color="green">{t["work.order.operate.common.custom.add"]}</Tag>}
+                {item?.isCustomer && isLogin &&
+                  <Tooltip color={"#165DFF"} content={item?.username && <div style={{ width: 200 }}>
+                    <Space direction={"vertical"}>
+                      <div>{item?.username}</div>
+                      <div>{item?.userPhone}</div>
+                      <div>{item?.userEmail}</div>
+                    </Space>
+                  </div>}>
+                    <Tag color="green">{t["work.order.operate.common.custom.add"]}</Tag>
+                  </Tooltip>}
                 {item?.creator && <Tag color="arcoblue">{item?.creator}</Tag>}
                 {!item?.internal && isLogin && <Tag color="red">{t["work.order.operate.common.custom"]}</Tag>}
                 {item?.sendEmail && isLogin && <Tag color="green">{t["work.order.operate.common.custom.email"]}</Tag>}
