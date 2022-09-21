@@ -116,8 +116,7 @@ deploy-dev:
     - git init
     - git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@$GIT_URL
     - git remote add origin https://${GIT_USERNAME}:${GIT_PASSWORD}@$GIT_URL
-    - git config --global user.email "bot@espressif.com"
-    - git config --global user.name "bot"
+    - git config --global user.name "yanhan"
   script:
     - git checkout -B master
     - git pull origin master
