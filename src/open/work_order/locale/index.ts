@@ -98,7 +98,8 @@ const i18n = {
     "work.order.operate.order.add.info.context": "information supplement:",
     "work.order.operate.order.add.info.name": "name:",
     "work.order.operate.order.add.info.phone": "phone:",
-    "work.order.operate.order.add.info.email": "email:"
+    "work.order.operate.order.add.info.email": "email:",
+    "work.order.operate.order.add.info.help": "Please fill in the corresponding information as much as possible, so that Espressif engineers can contact you in time"
   },
 
   "zh-CN": {
@@ -200,7 +201,8 @@ const i18n = {
     "work.order.operate.order.add.info.context": "信息补充内容:",
     "work.order.operate.order.add.info.name": "姓名:",
     "work.order.operate.order.add.info.phone": "电话:",
-    "work.order.operate.order.add.info.email": "邮箱:"
+    "work.order.operate.order.add.info.email": "邮箱:",
+    "work.order.operate.order.add.info.help": "请您尽量填写对应信息, 以便乐鑫工程师能及时联系您"
   }
 };
 

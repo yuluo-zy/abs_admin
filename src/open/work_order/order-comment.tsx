@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import WorkOrderHistory from "@/pages/work_order/order_history";
-import { Button, Form, Input, Message, Popconfirm } from "@arco-design/web-react";
+import { Button, Form, Input, Message, Popconfirm, Tooltip } from "@arco-design/web-react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 import RiceText from "@/rice_text";
@@ -9,7 +9,7 @@ import { getSalesInfo, postSalesFile } from "@/api/file";
 import DynamicDivider from "@/components/Dynamic/Divider";
 import { getFileID } from "@/utils/parseJson";
 import { addAfterSaleComment } from "@/api/cqapms";
-import { IconPlus } from "@arco-design/web-react/icon";
+import { IconExclamationCircle, IconPlus } from "@arco-design/web-react/icon";
 import styles from "./style/comment.module.less";
 import useForm from "@arco-design/web-react/es/Form/useForm";
 
@@ -112,7 +112,11 @@ export const OrderComment: React.FC<Comment> = (props) => {
         </Button>}
       </div>
       {open && <div>
-        <b className={styles["title"]}>{t["work.order.operate.order.add.info"]}</b>
+        <b className={styles["title"]}>{t["work.order.operate.order.add.info"]}
+          <Tooltip content={t["work.order.operate.order.add.info.help"]}>
+            <IconExclamationCircle style={{ margin: "0 8px", color: "rgb(var(--arcoblue-6))" }} />
+          </Tooltip>
+        </b>
         <Form form={form} autoComplete="off" layout="inline" className={styles["form-table"]}>
           <FormItem label={t["work.order.operate.order.add.info.name"]} field="username" rules={[{ required: true }]}>
             <Input style={{ width: 200 }} placeholder="please enter your name" />
