@@ -21,7 +21,6 @@ import { getSalesInfo, postSalesFile } from "@/api/file";
 import axios from "axios";
 import WorkOrderHistory from "@/pages/work_order/order_history";
 import { getFileID } from "@/utils/parseJson";
-import TicketMark from "@/pages/work_order/ticket_mark";
 import { DynamicTooltip } from "@/components/Dynamic/Tooltip";
 import { ManagePath, WorkOrderPath } from "@/utils/routingTable";
 
@@ -239,10 +238,10 @@ export const OrderEdit: React.FC = () => {
       <DynamicCard title={t["workplace.drawer.details.schedule"]}>
         <OrderStep stepNumber={data} style={{ maxWidth: 800, margin: "0 auto" }} />
       </DynamicCard>
-      <DynamicDivider />
-      <DynamicCard title={t["workplace.drawer.ticket.mark"]}>
-        <TicketMark />
-      </DynamicCard>
+      {/*<DynamicDivider />*/}
+      {/*<DynamicCard title={t["workplace.drawer.ticket.mark"]}>*/}
+      {/*  <TicketMark />*/}
+      {/*</DynamicCard>*/}
       <DynamicDivider />
       <DynamicCard title={t["workplace.drawer.details"]}>
         <div style={{ paddingLeft: "3rem", paddingRight: "3rem" }}>
