@@ -22,6 +22,8 @@ const i18n = {
     "work.order.operate.order.a": "待处理",
     "work.order.operate.order.b": "正在处理",
     "work.order.operate.order.c": "处理完成",
+    "work.order.operate.order.d": "状态更新",
+    "work.order.operate.order.e": "等待客户补充",
     "work.order.operate.process.result": "处理状态与信息更新",
     "work.order.operate.process.result.operate": " 新增信息补充 ",
     "work.order.operate.process.result.end": "结束工单",

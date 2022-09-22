@@ -9,11 +9,15 @@ import { IconEdit } from "@arco-design/web-react/icon";
 import { Route, Switch, useHistory } from "react-router";
 import { OrderEdit } from "@/pages/work_order/order_edit";
 import { ManagePath, WorkOrderPath } from "@/utils/routingTable";
+import shallow from "zustand/shallow";
+import { TickerStorage } from "@/store/ticker";
 
 export default function WorkOrderManagement() {
   const t = useLocale(locale);
-  const searchListRef = useRef();
+  const searchListRef = useRef<any>();
   const history = useHistory();
+  const [current, setCurrent] = TickerStorage(state => [state.current, state.setCurrent], shallow);
+
   const orderStatus = [{
     label: t["work.order.operate.order.a"],
     value: 0
@@ -21,17 +25,28 @@ export default function WorkOrderManagement() {
     label: t["work.order.operate.order.b"],
     value: 10
   }, {
-    label: t["work.order.operate.order.c"],
-    value: 20
-  }];
+    label: t["work.order.operate.order.d"],
+    value: 12
+  },
+    {
+      label: t["work.order.operate.order.e"],
+      value: 15
+    }, {
+      label: t["work.order.operate.order.c"],
+      value: 20
+    }];
   const getOrderStatus = (value) => {
     switch (value) {
       case 0:
         return <Tag color={"red"}>{orderStatus[0].label}</Tag>;
       case 10:
         return <Tag color={"green"}>{orderStatus[1].label}</Tag>;
+      case 12:
+        return <Tag color={"cyan"}>{orderStatus[2].label}</Tag>;
+      case 15:
+        return <Tag color={"blue"}>{orderStatus[3].label}</Tag>;
       case 20:
-        return <Tag color={"gray"}>{orderStatus[2].label}</Tag>;
+        return <Tag color={"gray"}>{orderStatus[4].label}</Tag>;
     }
   };
   const getColumns = (callback: () => void) => {
@@ -106,6 +121,7 @@ export default function WorkOrderManagement() {
             <Tooltip content={t["work.order.operate.edit"]}>
               <Button icon={<IconEdit />} onClick={() => {
                 history.push(`${ManagePath}${WorkOrderPath}/${record.id}`);
+
               }} />
             </Tooltip>
           </Space>
@@ -159,6 +175,8 @@ export default function WorkOrderManagement() {
         download={false}
         upload={false}
         ref={searchListRef}
+        current={current}
+        setCurrent={setCurrent}
         fetchRemoteData={getAfterSaleManage}
         getColumns={getColumns}
         select={true}

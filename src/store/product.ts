@@ -1,6 +1,6 @@
 import create, { GetState, SetState } from "zustand";
 import { Recordable } from "@/components/type";
-import { devtools, persist } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 import { StoreSlice } from "@/store/type";
 
 // 项目信息设置
@@ -218,11 +218,11 @@ const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
   }
 });
 
-export const ProductStore = create(devtools(persist(createRootSlice,
+export const ProductStore = create(persist(createRootSlice,
   {
     name: "product-storage",
     getStorage: () => sessionStorage
-  })));
+  }));
 
 
 export const ProductMenuInfo = create(() => ({
@@ -231,11 +231,11 @@ export const ProductMenuInfo = create(() => ({
 
 export const setMenu = (menu) => ProductMenuInfo.setState({ menu });
 
-export const ProductDemandDescriptions = create(devtools(() => ({
+export const ProductDemandDescriptions = create(() => ({
   demandId: [-1],
   data: [],
   update: false
-})));
+}));
 export const setDemandDescriptions = (demandId, data) => ProductDemandDescriptions.setState({
   demandId,
   data
