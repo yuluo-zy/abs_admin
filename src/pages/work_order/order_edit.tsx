@@ -246,6 +246,7 @@ export const OrderEdit: React.FC = () => {
       <DynamicCard title={t["workplace.drawer.details"]}>
         <div style={{ paddingLeft: "3rem", paddingRight: "3rem" }}>
           <Button className={styles["edit-button"]}
+                  disabled={data?.[0]?.status !== 0}
                   type={"primary"}
                   loading={buttonLoading}
                   icon={<IconCheckCircle />}
@@ -269,7 +270,7 @@ export const OrderEdit: React.FC = () => {
       <DynamicDivider />
       {/*富文本回复内容*/}
       <DynamicCard title={t["work.order.operate.process.result"]} bodyStyle={{ paddingTop: 0 }}>
-        <Space className={styles["edit-button"]} size={"large"}>
+        <div className={styles["edit-button"]}>
           <Popconfirm
             title="确定您已经完成编辑并设置好相关设置了吗?"
             onOk={() => {
@@ -277,65 +278,68 @@ export const OrderEdit: React.FC = () => {
             }}
           >
             <Button
-              type={"primary"}
+              status={"success"}
               icon={<IconCheck />}>{t["work.order.operate.process.result.operate"]}</Button>
           </Popconfirm>
-        </Space>
-
-        <Space>
-          <DynamicTooltip content={t["work.order.operate.common.customer.visibility.help"]}>
-            <p style={{ width: 100 }}>{t["work.order.operate.common.customer.visibility"]}</p>
-          </DynamicTooltip>
-          <Switch checked={internal} onChange={(value) => {
-            setInternal(value);
-          }
-          } />
-          <Divider type={"vertical"} />
-          <DynamicTooltip content={t["work.order.operate.common.customer.email.help"]}>
-            <p style={{ width: 100 }}>{t["work.order.operate.common.customer.email"]}</p>
-          </DynamicTooltip>
-          <Switch checked={email} onChange={(value) => {
-            if (!value) {
-              setEmailValue([]);
-            } else {
-              setEmailValue(value => getInitValue());
+        </div>
+        <div style={{ overflow: "auto" }}>
+          <Space>
+            <DynamicTooltip content={t["work.order.operate.common.customer.visibility.help"]}>
+              <p style={{ width: 100 }}>{t["work.order.operate.common.customer.visibility"]}</p>
+            </DynamicTooltip>
+            <Switch checked={internal} onChange={(value) => {
+              setInternal(value);
             }
-            setEmail(value);
-          }
-          } />
-          {
-            email && <>
-              <Select
-                allowCreate
-                mode="multiple"
-                placeholder="Please select"
-                style={{ width: 345 }}
-                defaultValue={getInitValue()}
-                allowClear
-                onChange={(value, _) => {
-                  setEmailValue(value);
-                }}>
-                {[].map((option, index) => (
-                  <Select.Option key={index} value={option}>
-                    {option}
-                  </Select.Option>
-                ))}
-              </Select>
+            } />
+            <Divider type={"vertical"} />
+            <DynamicTooltip content={t["work.order.operate.common.customer.email.help"]}>
+              <p style={{ width: 100 }}>{t["work.order.operate.common.customer.email"]}</p>
+            </DynamicTooltip>
+            <Switch checked={email} onChange={(value) => {
+              if (!value) {
+                setEmailValue([]);
+              } else {
+                setEmailValue(value => getInitValue());
+              }
+              setEmail(value);
+            }
+            } />
+            {
+              email && <>
+                <Select
+                  allowCreate
+                  mode="multiple"
+                  placeholder="Please select"
+                  maxTagCount={1}
+                  style={{ width: 280 }}
+                  defaultValue={getInitValue()}
+                  allowClear
+                  onChange={(value, _) => {
+                    setEmailValue(value);
+                  }}>
+                  {[].map((option, index) => (
+                    <Select.Option key={index} value={option}>
+                      {option}
+                    </Select.Option>
+                  ))}
+                </Select>
 
-            </>
-          }
-          <Divider type={"vertical"} />
-          <p style={{ width: 50 }}>{t["work.order.operate.common.step"]}</p>
-          <Select placeholder="选择状态" value={stage} allowClear size={"large"} style={{ width: 320 }}
-                  onChange={(value) => setStage(value)}>
-            {options.map((option, index) => (
-              <Select.Option key={index} value={index}>
-                {option}
-              </Select.Option>
-            ))}
-          </Select>
-          <Divider type={"vertical"} />
-        </Space>
+              </>
+            }
+            <Divider type={"vertical"} />
+            <p style={{ width: 50 }}>{t["work.order.operate.common.step"]}</p>
+            <Select placeholder="选择状态" value={stage} allowClear style={{ width: 300 }}
+                    onChange={(value) => setStage(value)}>
+              {options.map((option, index) => (
+                <Select.Option key={index} value={index}>
+                  {option}
+                </Select.Option>
+              ))}
+            </Select>
+            <Divider type={"vertical"} />
+          </Space>
+        </div>
+
         <RiceText onChange={setRiceText} readOnly={false}
                   fileUpload={uploadData}
                   fileDownload={getSalesInfoById}
