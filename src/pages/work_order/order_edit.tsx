@@ -293,7 +293,7 @@ export const OrderEdit: React.FC = () => {
             } />
             <Divider type={"vertical"} />
             <DynamicTooltip content={t["work.order.operate.common.customer.email.help"]}>
-              <p style={{ width: 100 }}>{t["work.order.operate.common.customer.email"]}</p>
+              <p style={{ width: 80 }}>{t["work.order.operate.common.customer.email"]}</p>
             </DynamicTooltip>
             <Switch checked={email} onChange={(value) => {
               if (!value) {
@@ -336,7 +336,6 @@ export const OrderEdit: React.FC = () => {
                 </Select.Option>
               ))}
             </Select>
-            <Divider type={"vertical"} />
           </Space>
         </div>
 
