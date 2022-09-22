@@ -7,6 +7,7 @@ import { getSalesInfo } from "@/api/file";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 import styles from "./style/history.module.less";
+import { IconUserGroup } from "@arco-design/web-react/icon";
 
 export default function WorkOrderHistory({ order, onRef, isLogin }: { order: string, onRef: any, isLogin?: boolean }) {
 
@@ -103,7 +104,12 @@ export default function WorkOrderHistory({ order, onRef, isLogin }: { order: str
       key: 4
     }
   ];
-
+  const getEmail = (data) => {
+    if (data) {
+      return data.split(",");
+    }
+    return [];
+  };
   return (
     <DynamicSkeleton text={{ rows: 11, width: "90rem" }}>
       <List
@@ -117,21 +123,35 @@ export default function WorkOrderHistory({ order, onRef, isLogin }: { order: str
             key={index}
             className={item?.isCustomer ? styles["custom"] : styles["common"]}
             hoverable>
-            <div className={item?.isCustomer ? styles["custom-space"] : null}>
+            <div className={item?.isCustomer ? styles["custom-space"] : styles["user-space"]}>
+              {item?.isCustomer && <IconUserGroup className={styles["custom-icon"]} />}
               <Space size={"large"}>
                 {item?.isCustomer && isLogin &&
                   <Tooltip color={"#165DFF"} content={item?.username && <div style={{ width: 200 }}>
                     <Space direction={"vertical"}>
-                      <div>{item?.username}</div>
-                      <div>{item?.userPhone}</div>
-                      <div>{item?.userEmail}</div>
+                      <div>username: {item?.username}</div>
+                      <div>phone: {item?.userPhone}</div>
+                      <div>email: {item?.userEmail}</div>
                     </Space>
                   </div>}>
                     <Tag color="green">{t["work.order.operate.common.custom.add"]}</Tag>
                   </Tooltip>}
-                {item?.creator && <Tag color="arcoblue">{item?.creator}</Tag>}
+                {item?.creator && isLogin && <Tag color="arcoblue">{item?.creator}</Tag>}
+                {item?.creator && !isLogin && <Tag color="arcoblue">{t["work.order.operate.order.common.user"]}</Tag>}
                 {!item?.internal && isLogin && <Tag color="red">{t["work.order.operate.common.custom"]}</Tag>}
-                {item?.sendEmail && isLogin && <Tag color="green">{t["work.order.operate.common.custom.email"]}</Tag>}
+                {item?.sendEmail && isLogin &&
+                  <Tooltip color={"var(--color-bg-2)"} content={item?.username && <List
+                    style={{ width: 300 }}
+                    size="small"
+                    header="Email Send"
+                    dataSource={getEmail(item?.externalEmails)
+                    }
+                    render={(item, index) => <List.Item key={index}>{item}</List.Item>}
+                  />}>
+                    <Tag color="green">{t["work.order.operate.common.custom.email"]}</Tag>
+                  </Tooltip>}
+              </Space>
+              <Space>
                 {item?.stage && <Tag color={"cyan"}>{options[item?.stage]}</Tag>}
                 <Tag>
                   {item?.created}

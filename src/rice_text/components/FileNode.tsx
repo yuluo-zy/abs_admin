@@ -45,10 +45,10 @@ function DownLoad({ src, fileDownload, closeTag }: { src: string, fileDownload: 
     if (src) {
       setLoading(true);
       fileDownload(src).then(res => {
-        if (res.status === 200) {
-          const url = URL.createObjectURL(new Blob([res.data]));
-          const link = document.createElement("a");
-          link.href = url;
+          if (res.status === 200) {
+            const url = URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement("a");
+            link.href = url;
             let name = res.headers["content-disposition"]?.match(/fileName=(.*)/)[1]; // 获取filename的值
             name = decodeURIComponent(name);
             link.setAttribute("download", name);
