@@ -151,7 +151,7 @@ export default function WorkOrderHistory({ order, onRef, isLogin }: { order: str
                     <Tag color="green">{t["work.order.operate.common.custom.email"]}</Tag>
                   </Tooltip>}
               </Space>
-              <Space>
+              <Space style={{ marginLeft: 15 }}>
                 {item?.stage && <Tag color={"cyan"}>{options[item?.stage]}</Tag>}
                 <Tag>
                   {item?.created}
