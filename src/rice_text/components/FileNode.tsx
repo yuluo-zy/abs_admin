@@ -38,7 +38,7 @@ export type SerializedFileNode = Spread<{
 },
   SerializedLexicalNode>;
 
-function DownLoad({ src, fileDownload }: { src: string, fileDownload: any }): JSX.Element {
+function DownLoad({ src, fileDownload, closeTag }: { src: string, fileDownload: any, closeTag: any }): JSX.Element {
   const [loading, setLoading] = useState(false);
   const downFile = (event) => {
     event.stopPropagation();
@@ -59,6 +59,7 @@ function DownLoad({ src, fileDownload }: { src: string, fileDownload: any }): JS
         }
       ).finally(() => {
         setLoading(false);
+        closeTag(value => !value);
       });
     }
   };
@@ -143,12 +144,18 @@ function FileComponent({ src, name, nodeKey }: {
     }
   } = useFunctions();
 
-
+  const [visible, setVisible] = useState(false);
   return <div draggable={draggable} className={"FileNode_tag"} ref={ref}>
     <Trigger
-      popup={() => <DownLoad src={src} fileDownload={fileDownload || getFile} />}
+      popup={() => <DownLoad src={src} fileDownload={fileDownload || getFile} closeTag={setVisible} />}
       autoFitPosition
+      popupVisible={visible}
+      onVisibleChange={(visible) => {
+        setVisible(visible);
+      }}
       clickToClose
+      mouseLeaveToClose
+      unmountOnExit
       blurToHide
       alignPoint
       position="bl"

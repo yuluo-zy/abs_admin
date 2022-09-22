@@ -9,7 +9,8 @@ const i18n = {
     "work.order.operate.order.common.step.e": "In-depth analysis, failure cause analysis / improvement plan verification",
     "work.order.operate.order.common.step.f": "Improve the plan to update the customer, to be confirmed by the customer",
     "work.order.operate.order.common.step.g": "The problem has been solved, and the customer's use suggestions are supplemented",
-    "work.order.operate.order.common.step.h": "The problem has not yet found batch risks, and it is recommended that customers continue to observe"
+    "work.order.operate.order.common.step.h": "The problem has not yet found batch risks, and it is recommended that customers continue to observe",
+    "work.order.operate.order.common.user": "Espressif. CQE"
   },
 
   "zh-CN": {
@@ -21,6 +22,8 @@ const i18n = {
     "work.order.operate.order.a": "待处理",
     "work.order.operate.order.b": "正在处理",
     "work.order.operate.order.c": "处理完成",
+    "work.order.operate.order.d": "状态更新",
+    "work.order.operate.order.e": "等待客户补充",
     "work.order.operate.process.result": "处理状态与信息更新",
     "work.order.operate.process.result.operate": " 新增信息补充 ",
     "work.order.operate.process.result.end": "结束工单",
@@ -80,15 +83,15 @@ const i18n = {
     "work.order.operate.common.add": "追加评论",
     "work.order.operate.common.customer.visibility": "客户不可见:",
     "work.order.operate.common.customer.visibility.help": "关闭后,客户可查看本条内容,并允许下载查看本条内容上传的文件图片等内容",
-    "work.order.operate.common.customer.email": "客户邮件通知:",
-    "work.order.operate.common.customer.email.help": "开启后,相关状态将同步更新给客户",
+    "work.order.operate.common.customer.email": "邮件通知:",
+    "work.order.operate.common.customer.email.help": "开启后,相关状态将同步更新给相关人员",
     // "work.order.operate.common.customer.email": "客户邮件通知",
     "work.order.operate.common.step": "阶段:",
     "work.order.operate.common.internal": "内部可见:",
     "workplace.drawer.details.schedule.history": "工单处理记录",
     "work.order.operate.common.custom": "客户可见",
     "work.order.operate.common.custom.add": "客户添加",
-    "work.order.operate.common.custom.email": "邮件提醒",
+    "work.order.operate.common.custom.email": "邮件已通知客户",
     "work.order.operate.order.add.error": "不允许添加空内容或者非法内容",
     "work.order.operate.order.common.step.a": "已收到需求，等待样品送达",
     "work.order.operate.order.common.step.b": "已收到样品，待复现失效现象",
@@ -97,7 +100,8 @@ const i18n = {
     "work.order.operate.order.common.step.e": "深度分析中，失效原因分析/改善方案验证",
     "work.order.operate.order.common.step.f": "改善方案更新客户，待客户确认",
     "work.order.operate.order.common.step.g": "问题已解决，补充客户使用建议",
-    "work.order.operate.order.common.step.h": "问题暂未发现批量风险，建议客户持续观察中"
+    "work.order.operate.order.common.step.h": "问题暂未发现批量风险，建议客户持续观察中",
+    "work.order.operate.order.common.user": "Espressif. CQE"
   }
 };
 

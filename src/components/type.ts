@@ -116,6 +116,8 @@ export interface ListProps {
   rowSelection?: any;
   tools?: any;
   tableClassName?: any;
+  current?: number;
+  setCurrent?: any;
 }
 
 export interface MenuItemProps {

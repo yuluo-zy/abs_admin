@@ -15,7 +15,6 @@ const SearchList = React.forwardRef((props: ListProps, ref) => {
   const [called, setCalled] = useState(true);
 
 
-
   const tableCallback = async () => {
     setCalled(!called);
   };
@@ -32,7 +31,9 @@ const SearchList = React.forwardRef((props: ListProps, ref) => {
     selectItem,
     rowSelection,
     tools,
-    tableClassName
+    tableClassName,
+    current,
+    setCurrent
   } = props;
 
   const [data, setData] = useState([]);
@@ -42,7 +43,7 @@ const SearchList = React.forwardRef((props: ListProps, ref) => {
     sizeCanChange: true,
     showTotal: true,
     pageSize: 10,
-    current: 1,
+    current: current || 1,
     pageSizeChangeResetCurrent: true
   });
 
@@ -55,6 +56,9 @@ const SearchList = React.forwardRef((props: ListProps, ref) => {
 
   useEffect(() => {
     fetchData();
+    if (setCurrent) {
+      setCurrent(pagination.current);
+    }
   }, [
     pagination.current,
     pagination.pageSize,
@@ -114,6 +118,17 @@ const SearchList = React.forwardRef((props: ListProps, ref) => {
         // eslint-disable-next-line no-console
         console.error(error);
       });
+    },
+    setCurrentPage: (page) => {
+      setPatination(value => {
+        return {
+          ...value,
+          current: page
+        };
+      });
+    },
+    getCurrentPage: () => {
+      return pagination.current;
     }
   }));
 
@@ -190,6 +205,6 @@ const SearchList = React.forwardRef((props: ListProps, ref) => {
       </DynamicCard>
     </div>
   );
-})
+});
 
 export default SearchList;

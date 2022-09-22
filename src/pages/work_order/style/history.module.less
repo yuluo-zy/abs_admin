@@ -6,11 +6,18 @@
 
 .custom {
   margin: 10px;
-  background: var(--color-neutral-2);
+  background: var(--color-neutral-1);
 
   :global(.read-only) {
-    background: var(--color-neutral-2) !important;
+    background: var(--color-neutral-1) !important;
   }
+
+  //:global(.editor-shell) {
+  //  border: 4px inset;
+  //  border-image: linear-gradient(45deg, #94BFFF, #A871E3) 1;
+  //  clip-path: inset(0 round 3px);
+  //  filter: hue-rotate();
+  //}
 }
 
 .common {
@@ -22,4 +29,19 @@
   padding: 0;
   display: flex;
   justify-content: right;
+}
+
+.user-space {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.custom-icon {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  font-size: 23px;
+  color: rgb(var(--arcoblue-7));
 }

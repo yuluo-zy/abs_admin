@@ -18,7 +18,7 @@ export const OrderStep: React.FC<StepProps> = (props: React.PropsWithChildren<St
       if (temp === 0) {
         return 1;
       }
-      if (temp === 10) {
+      if (temp === 10 || temp === 15 || temp === 12) {
         return 2;
       }
       if (temp === 20) {

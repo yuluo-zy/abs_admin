@@ -33,8 +33,8 @@ export default function LoginForm() {
     }
     // 记录登录状态
     sessionStorage.setItem("userStatus", "login");
-    localStorage.setItem("userToken", result.token);
-    localStorage.setItem("userName", result.username);
+    sessionStorage.setItem("userToken", result.token);
+    sessionStorage.setItem("userName", result.username);
     history.replace(`${ManagePath}/` + defaultRoute);
   }
 

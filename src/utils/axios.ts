@@ -6,7 +6,7 @@ axios.defaults.headers["Content-Type"] = "application/json";
 axios.defaults.timeout = 100000;
 
 axios.interceptors.request.use((config) => {
-  const token = localStorage.getItem("userToken");
+  const token = sessionStorage.getItem("userToken");
   token && (config.headers["Access-Token"] = `${token}`);
   // config.data = JSON.stringify(config.data);
   return config;
@@ -41,7 +41,7 @@ axios.interceptors.response.use(res => {
     Notification.error({ content: "权限不足,请联系管理员!" });
   } else if (err.response?.status == 401) {
     Notification.error({ content: "登录过期请 重新登录!" });
-    localStorage.removeItem("userToken");
+    sessionStorage.removeItem("userToken");
     sessionStorage.removeItem("userStatus");
     window.setTimeout(() => {
       window.location.href = "/login";
