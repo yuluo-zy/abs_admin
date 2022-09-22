@@ -104,6 +104,47 @@ export default function WorkOrderHistory({ order, onRef, isLogin }: { order: str
       key: 4
     }
   ];
+
+  const stageList = [
+    {
+      label: t["work.order.operate.order.common.step.a"],
+      key: 1
+    },
+    {
+      label: t["work.order.operate.order.common.step.b"],
+      key: 2
+    },
+    {
+      label: t["work.order.operate.order.common.step.c"],
+      key: 3
+    },
+    {
+      label: t["work.order.operate.order.common.step.d"],
+      key: 4
+    },
+    {
+      label: t["work.order.operate.order.common.step.e"],
+      key: 5
+    },
+    {
+      label: t["work.order.operate.order.common.step.f"],
+      key: 6
+    },
+    {
+      label: t["work.order.operate.order.common.step.g"],
+      key: 7
+    },
+    {
+      label: t["work.order.operate.order.common.step.h"],
+      key: 8
+    }
+  ];
+  const getCommonStage = (value: number) => {
+    if (value && typeof (value) === "number") {
+      return stageList[value - 1].label;
+    }
+    return stageList[4];
+  };
   const getEmail = (data) => {
     if (data) {
       return data.split(",");
@@ -152,7 +193,7 @@ export default function WorkOrderHistory({ order, onRef, isLogin }: { order: str
                   </Tooltip>}
               </Space>
               <Space style={{ marginLeft: 15 }}>
-                {item?.stage && <Tag color={"cyan"}>{options[item?.stage].label}</Tag>}
+                {item?.stage && <Tag color={"cyan"}>{getCommonStage(item?.stage)}</Tag>}
                 <Tag>
                   {item?.created}
                 </Tag>

@@ -331,7 +331,7 @@ export const OrderEdit: React.FC = () => {
             <Select placeholder="选择状态" value={stage} allowClear style={{ width: 300 }}
                     onChange={(value) => setStage(value)}>
               {options.map((option, index) => (
-                <Select.Option key={index} value={index}>
+                <Select.Option key={index} value={index + 1}>
                   {option}
                 </Select.Option>
               ))}
