@@ -152,7 +152,7 @@ export default function WorkOrderHistory({ order, onRef, isLogin }: { order: str
                   </Tooltip>}
               </Space>
               <Space style={{ marginLeft: 15 }}>
-                {item?.stage && <Tag color={"cyan"}>{options[item?.stage]}</Tag>}
+                {item?.stage && <Tag color={"cyan"}>{options[item?.stage].label}</Tag>}
                 <Tag>
                   {item?.created}
                 </Tag>
