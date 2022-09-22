@@ -181,7 +181,7 @@ export default function WorkOrderHistory({ order, onRef, isLogin }: { order: str
                 {item?.creator && !isLogin && <Tag color="arcoblue">{t["work.order.operate.order.common.user"]}</Tag>}
                 {!item?.internal && isLogin && <Tag color="red">{t["work.order.operate.common.custom"]}</Tag>}
                 {item?.sendEmail && isLogin &&
-                  <Tooltip color={"var(--color-bg-2)"} content={item?.username && <List
+                  <Tooltip color={"var(--color-bg-2)"} content={<List
                     style={{ width: 300 }}
                     size="small"
                     header="Email Send"
