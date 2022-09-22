@@ -38,17 +38,17 @@ export type SerializedFileNode = Spread<{
 },
   SerializedLexicalNode>;
 
-function DownLoad({ src, fileDownload }: { src: string, fileDownload: any }): JSX.Element {
+function DownLoad({ src, fileDownload, closeTag }: { src: string, fileDownload: any, closeTag: any }): JSX.Element {
   const [loading, setLoading] = useState(false);
   const downFile = (event) => {
     event.stopPropagation();
     if (src) {
       setLoading(true);
       fileDownload(src).then(res => {
-          if (res.status === 200) {
-            const url = URL.createObjectURL(new Blob([res.data]));
-            const link = document.createElement("a");
-            link.href = url;
+        if (res.status === 200) {
+          const url = URL.createObjectURL(new Blob([res.data]));
+          const link = document.createElement("a");
+          link.href = url;
             let name = res.headers["content-disposition"]?.match(/fileName=(.*)/)[1]; // 获取filename的值
             name = decodeURIComponent(name);
             link.setAttribute("download", name);
@@ -59,6 +59,7 @@ function DownLoad({ src, fileDownload }: { src: string, fileDownload: any }): JS
         }
       ).finally(() => {
         setLoading(false);
+        closeTag(value => !value);
       });
     }
   };
@@ -143,12 +144,18 @@ function FileComponent({ src, name, nodeKey }: {
     }
   } = useFunctions();
 
-
+  const [visible, setVisible] = useState(false);
   return <div draggable={draggable} className={"FileNode_tag"} ref={ref}>
     <Trigger
-      popup={() => <DownLoad src={src} fileDownload={fileDownload || getFile} />}
+      popup={() => <DownLoad src={src} fileDownload={fileDownload || getFile} closeTag={setVisible} />}
       autoFitPosition
+      popupVisible={visible}
+      onVisibleChange={(visible) => {
+        setVisible(visible);
+      }}
       clickToClose
+      mouseLeaveToClose
+      unmountOnExit
       blurToHide
       alignPoint
       position="bl"

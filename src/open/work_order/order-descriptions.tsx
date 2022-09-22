@@ -278,7 +278,7 @@ export const OrderDescriptions: React.FC<StepProps> = (props: React.PropsWithChi
     />
     <DynamicDivider />
     {feedback && <DynamicCard title={t["workplace.drawer.details.feedback"]}>
-      <OrderComment orderId={data?.id} />
+      <OrderComment orderId={data?.id} step={data?.status} />
     </DynamicCard>}
   </div>;
 };

@@ -15,12 +15,13 @@ import useForm from "@arco-design/web-react/es/Form/useForm";
 
 interface Comment {
   orderId: string;
+  step?: number;
 }
 
 const FormItem = Form.Item;
 
 export const OrderComment: React.FC<Comment> = (props) => {
-  const { orderId } = props;
+  const { orderId, step } = props;
   const [open, setOpen] = useState(false);
   const orderHistory = useRef<any>();
   const t = useLocale(locale);
@@ -107,7 +108,7 @@ export const OrderComment: React.FC<Comment> = (props) => {
   return <div>
     <div>
       <div className={styles["tool-button"]}>
-        {!open && <Button status="success" onClick={() => setOpen(value => !value)}>
+        {!open && step !== 20 && <Button status="success" onClick={() => setOpen(value => !value)}>
           {t["work.order.operate.order.add"]}
         </Button>}
       </div>
