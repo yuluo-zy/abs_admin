@@ -36,3 +36,14 @@ export const addAfterSaleComment = (data) => {
 export const deleteSaleComment = (data) => {
   return httpPost("/afterSale/delete", data);
 };
+
+// 获取本工单进行的标记内容
+export const getTicketMark = (data) => {
+  return httpGet("/afterSale/tag", data);
+};
+
+// 获取本工单进行的标记内容
+export const addTicketMark = (data) => {
+  return httpPost("/afterSale/tag", data);
+};
+

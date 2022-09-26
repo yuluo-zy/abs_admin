@@ -13,7 +13,7 @@ import DynamicCard from "@/components/Dynamic/Card";
 import { OrderStep } from "@/open/work_order/order-step";
 import DynamicDivider from "@/components/Dynamic/Divider";
 import { OrderDescriptions } from "@/open/work_order/order-descriptions";
-import { Button, Divider, Message, Popconfirm, Select, Space, Spin, Switch } from "@arco-design/web-react";
+import { Button, Collapse, Divider, Message, Popconfirm, Select, Space, Spin, Switch } from "@arco-design/web-react";
 import styles from "./style/edit.module.less";
 import {
   IconCheck,
@@ -30,6 +30,7 @@ import WorkOrderHistory from "@/pages/work_order/order_history";
 import { getFileID } from "@/utils/parseJson";
 import { DynamicTooltip } from "@/components/Dynamic/Tooltip";
 import { ManagePath, WorkOrderPath } from "@/utils/routingTable";
+import TicketMark from "@/pages/work_order/ticket_mark";
 
 export const OrderEdit: React.FC = () => {
   const t = useLocale(locale);
@@ -247,10 +248,6 @@ export const OrderEdit: React.FC = () => {
       <DynamicCard title={t["workplace.drawer.details.schedule"]}>
         <OrderStep stepNumber={data} style={{ maxWidth: 800, margin: "0 auto" }} />
       </DynamicCard>
-      {/*<DynamicDivider />*/}
-      {/*<DynamicCard title={t["workplace.drawer.ticket.mark"]}>*/}
-      {/*  <TicketMark />*/}
-      {/*</DynamicCard>*/}
       <DynamicDivider />
       <DynamicCard title={t["workplace.drawer.details"]}>
         <div style={{ paddingLeft: "3rem", paddingRight: "3rem" }}>
@@ -275,6 +272,17 @@ export const OrderEdit: React.FC = () => {
           >{t["work.order.operate.accept"]}</Button>
           <OrderDescriptions descriptionData={data} encryption={false} feedback={false} download={true} copy={true} />
         </div>
+      </DynamicCard>
+      <DynamicDivider />
+      <DynamicCard title={t["workplace.drawer.ticket.mark"]}>
+        <Collapse>
+          <Collapse.Item header="附加信息" name="1">
+            <TicketMark />
+          </Collapse.Item>
+          <Collapse.Item header="样品信息" name="2">
+            <TicketMark />
+          </Collapse.Item>
+        </Collapse>
       </DynamicCard>
 
       {/*富文本回复内容*/}
@@ -314,15 +322,15 @@ export const OrderEdit: React.FC = () => {
                 allowClear
                 onChange={(value, _) => {
                   setEmailValue(value);
-                  }}>
-                  {[].map((option, index) => (
-                    <Select.Option key={index} value={option}>
-                      {option}
-                    </Select.Option>
-                  ))}
-                </Select>
+                }}>
+                {[].map((option, index) => (
+                  <Select.Option key={index} value={option}>
+                    {option}
+                  </Select.Option>
+                ))}
+              </Select>
 
-              </>
+            </>
             }
             <Divider type={"vertical"} />
             <p style={{ width: 50 }}>{t["work.order.operate.common.step"]}</p>

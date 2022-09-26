@@ -101,7 +101,19 @@ const i18n = {
     "work.order.operate.order.common.step.f": "改善方案更新客户，待客户确认",
     "work.order.operate.order.common.step.g": "问题已解决，补充客户使用建议",
     "work.order.operate.order.common.step.h": "问题暂未发现批量风险，建议客户持续观察中",
-    "work.order.operate.order.common.user": "Espressif. CQE"
+    "work.order.operate.order.common.user": "Espressif. CQE",
+    "work.ticket.info.factory": "工厂名称:",
+    "work.ticket.info.chip": "主芯片平台:",
+    "work.ticket.info.model": "产品型号:",
+    "work.ticket.info.location": "失效位号:",
+    "work.ticket.info.materials": "失效物料号:",
+    "work.ticket.info.customer": "客户优先级:",
+    "work.ticket.info.type": "失效类型:",
+    "work.ticket.info.soft": "软件失效:",
+    "work.ticket.info.idf": "IDF失效版本:",
+    "work.ticket.info.follow.up.measures": "闭环跟进措施:",
+    "work.ticket.info.improve": "持续改善确认:",
+    "work.ticket.info.button.update": "更新内容"
   }
 };
 
