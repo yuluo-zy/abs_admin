@@ -113,7 +113,9 @@ const i18n = {
     "work.ticket.info.idf": "IDF失效版本:",
     "work.ticket.info.follow.up.measures": "闭环跟进措施:",
     "work.ticket.info.improve": "持续改善确认:",
-    "work.ticket.info.button.update": "更新内容"
+    "work.ticket.info.button.update": "更新内容",
+    "work.ticket.info.owner": "工单Owner: ",
+    "work.ticket.info.owner.to": "指派给 -> "
   }
 };
 

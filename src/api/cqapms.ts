@@ -47,3 +47,13 @@ export const addTicketMark = (data) => {
   return httpPost("/afterSale/tag", data);
 };
 
+// 添加工单指派记录
+export const addTickOwner = (data) => {
+  return httpPost("/afterSale/owner", data);
+};
+
+// 获取工单指派记录
+export const getTickOwner = (data) => {
+  return httpGet("/afterSale/owner", data);
+};
+

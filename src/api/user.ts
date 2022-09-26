@@ -74,3 +74,8 @@ export const transformBusiness = (data) => {
 export const updatePassword = (data) => {
   return httpPut("/user/change/password", data);
 };
+
+// 获取工程师的用户列表
+export const getEngineerList = () => {
+  return httpGet("/user/engineer");
+};
