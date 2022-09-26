@@ -15,7 +15,14 @@ import DynamicDivider from "@/components/Dynamic/Divider";
 import { OrderDescriptions } from "@/open/work_order/order-descriptions";
 import { Button, Divider, Message, Popconfirm, Select, Space, Spin, Switch } from "@arco-design/web-react";
 import styles from "./style/edit.module.less";
-import { IconCheck, IconCheckCircle, IconExclamation, IconLeft, IconToTop } from "@arco-design/web-react/icon";
+import {
+  IconCheck,
+  IconCheckCircle,
+  IconExclamation,
+  IconLeft,
+  IconToTop,
+  IconUpload
+} from "@arco-design/web-react/icon";
 import RiceText from "@/rice_text";
 import { getSalesInfo, postSalesFile } from "@/api/file";
 import axios from "axios";
@@ -35,6 +42,7 @@ export const OrderEdit: React.FC = () => {
   const orderHistory = useRef<any>();
   const [emailValue, setEmailValue] = useState([]);
   const [stage, setStage] = useState();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     let isUnmount = false;
@@ -151,6 +159,7 @@ export const OrderEdit: React.FC = () => {
         Message.success("Successful operation");
         riceTextRef.current.clear();
         orderHistory.current?.update();
+        setOpen(value => !value);
       }
     });
   }
@@ -214,7 +223,7 @@ export const OrderEdit: React.FC = () => {
 
       <Button icon={<IconLeft />} type={"primary"} size={"large"} onClick={to_work_order}>Return</Button>
       <Popconfirm
-        title="结束工单则本条内容客户可见,并且将邮件通知客户"
+        title="结束工单 本条内容客户可见,并且将邮件通知客户"
         onOk={() => {
           endOrder();
         }}
@@ -267,21 +276,11 @@ export const OrderEdit: React.FC = () => {
           <OrderDescriptions descriptionData={data} encryption={false} feedback={false} download={true} copy={true} />
         </div>
       </DynamicCard>
-      <DynamicDivider />
+
       {/*富文本回复内容*/}
-      <DynamicCard title={t["work.order.operate.process.result"]} bodyStyle={{ paddingTop: 0 }}>
-        <div className={styles["edit-button"]}>
-          <Popconfirm
-            title="确定您已经完成编辑并设置好相关设置了吗?"
-            onOk={() => {
-              handleOnClick();
-            }}
-          >
-            <Button
-              status={"success"}
-              icon={<IconCheck />}>{t["work.order.operate.process.result.operate"]}</Button>
-          </Popconfirm>
-        </div>
+      {open && <>   <DynamicDivider /><DynamicCard title={t["work.order.operate.process.result"]}
+                                                   bodyStyle={{ paddingTop: 0 }}>
+
         <div style={{ overflow: "auto" }}>
           <Space>
             <DynamicTooltip content={t["work.order.operate.common.customer.visibility.help"]}>
@@ -304,18 +303,17 @@ export const OrderEdit: React.FC = () => {
               setEmail(value);
             }
             } />
-            {
-              email && <>
-                <Select
-                  allowCreate
-                  mode="multiple"
-                  placeholder="Please select"
-                  maxTagCount={1}
-                  style={{ width: 280 }}
-                  defaultValue={getInitValue()}
-                  allowClear
-                  onChange={(value, _) => {
-                    setEmailValue(value);
+            {email && <>
+              <Select
+                allowCreate
+                mode="multiple"
+                placeholder="Please select"
+                maxTagCount={1}
+                style={{ width: 280 }}
+                defaultValue={getInitValue()}
+                allowClear
+                onChange={(value, _) => {
+                  setEmailValue(value);
                   }}>
                   {[].map((option, index) => (
                     <Select.Option key={index} value={option}>
@@ -345,9 +343,28 @@ export const OrderEdit: React.FC = () => {
                   imgUpload={uploadData}
                   onRef={riceTextRef}
                   imgDownload={getSalesImgById} />
-      </DynamicCard>
+        <div className={styles["upload-button"]}>
+          <Popconfirm
+            title="确定您已经完成编辑并设置好相关设置了吗?"
+            onOk={() => {
+              handleOnClick();
+            }}
+          >
+            <Button
+              type={"primary"}
+              icon={<IconUpload />}>{t["work.order.operate.process.result.operate"]}</Button>
+          </Popconfirm>
+        </div>
+      </DynamicCard> </>}
       <DynamicDivider />
       <DynamicCard title={t["workplace.drawer.details.schedule.history"]}>
+        {!open && <Button
+          status={"success"}
+          className={styles["to-up"]}
+          onClick={() => {
+            setOpen(value => !value);
+          }}
+          icon={<IconCheck />}>{t["work.order.operate.process.result.operate"]}</Button>}
         <WorkOrderHistory order={id} onRef={orderHistory} isLogin={true} />
       </DynamicCard>
     </Spin>
