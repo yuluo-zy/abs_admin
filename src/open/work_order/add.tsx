@@ -1,6 +1,6 @@
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "@/open/work_order/locale";
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router";
 import styles from "./style/add.module.less";
 import DynamicCard from "@/components/Dynamic/Card";
@@ -58,6 +58,21 @@ const bodyStyle = {
   overflow: "auto"
 };
 const FormItem = Form.Item;
+
+function debounce(fn, waitTime = 500) {
+  let time = null; //首次进来时定义一个定时器
+  return function(args) {
+    //普通函数内部，arguments为特殊的类数组对象。包含了函数被调用时的参数列表。
+    if (time) {
+      clearTimeout(time); //如果上一次定时器存在，则把上一次的定时器给清除
+    }
+    //设置定时器
+    time = setTimeout(() => {
+      fn.apply(this, [args]); //fn直接调用指向window,apply改变this指向，指向调用的环境
+    }, waitTime);
+  };
+}
+
 export default function WorkOrderAdd() {
   const t = useLocale(locale);
   const history = useHistory();
@@ -156,7 +171,8 @@ export default function WorkOrderAdd() {
     }
 
   ];
-  const postData = async () => {
+  const [loading, setLoading] = useState(false);
+  const postData = debounce(async () => {
     try {
       await form.validate();
     } catch (error) {
@@ -180,6 +196,7 @@ export default function WorkOrderAdd() {
       }
       temp.imgIds = fileTemp.toString();
     }
+    setLoading(true);
     saveAfterSale({
       ...temp
     }).then(res => {
@@ -188,8 +205,10 @@ export default function WorkOrderAdd() {
         Message.success(t["message.ok"]);
         success(res.data.result?.id);
       }
+    }).finally(() => {
+      setLoading(false);
     });
-  };
+  }, 700);
   return <div className={styles["main"]}>
     <div className={styles["breadcrumb"]}>
       <Space size={40}>
@@ -420,6 +439,7 @@ export default function WorkOrderAdd() {
           <DynamicDivider />
           <Button type="primary"
                   size={"large"}
+                  loading={loading}
                   htmlType="submit"
                   icon={<IconArrowRise />}
           >
