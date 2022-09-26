@@ -275,12 +275,12 @@ export const OrderEdit: React.FC = () => {
       </DynamicCard>
       <DynamicDivider />
       <DynamicCard title={t["workplace.drawer.ticket.mark"]}>
-        <Collapse>
+        <Collapse destroyOnHide>
           <Collapse.Item header="附加信息" name="1">
-            <TicketMark />
+            <TicketMark orderId={id} />
           </Collapse.Item>
           <Collapse.Item header="样品信息" name="2">
-            <TicketMark />
+            {/*<TicketMark />*/}
           </Collapse.Item>
         </Collapse>
       </DynamicCard>

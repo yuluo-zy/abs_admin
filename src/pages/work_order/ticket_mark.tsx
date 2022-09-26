@@ -4,6 +4,7 @@ import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 import { addTicketMark, getTicketMark } from "@/api/cqapms";
 import styles from "./style/mark.module.less";
+import DynamicDivider from "@/components/Dynamic/Divider";
 
 export default function TicketMark(props: {
   orderId: string
@@ -11,7 +12,7 @@ export default function TicketMark(props: {
   // todo 针对工厂 和种类的定位
   const t = useLocale(locale);
   const { orderId } = props;
-  const [data, setData] = useState<Record<string, string>>({});
+  const [data, setData] = useState<Record<any, any>>({});
   useEffect(() => {
     getTicketMark({ id: orderId }).then((res) => {
       if (res.data.success) {
@@ -20,68 +21,119 @@ export default function TicketMark(props: {
     });
   }, []);
   const update = () => {
-    addTicketMark(data).then(res => {
+    addTicketMark({ ...data, orderId: orderId }).then(res => {
       if (res.data.success) {
         Message.success("update completed");
+        setData({
+          ...res.data.result
+        });
       }
     });
   };
+
+  const updateData = (key, value) => {
+    setData(_value => {
+      const temp = {
+        ..._value
+      };
+      temp[key] = value;
+      return temp;
+    });
+  };
   return <div>
-    <Button onClick={update} type={"primary"}
-            className={styles["update-button"]}>{t["work.ticket.info.button.update"]}</Button>
+
     <div></div>
     <div>
       <Space wrap size={[12, 18]}>
         <Space>
           {t["work.ticket.info.chip"]}
-          <Input defaultValue={data?.chip} style={{ width: 200 }} />
+          <Input value={data?.chip} onChange={(value) => {
+            updateData("chip", value);
+          }
+          } style={{ width: 200 }} />
         </Space>
         <Space>
           {t["work.ticket.info.model"]}
-          <Input defaultValue={data?.model} style={{ width: 200 }} />
+          <Input value={data?.model} onChange={(value) => {
+            updateData("model", value);
+          }
+          } style={{ width: 200 }} />
         </Space>
         <Space>
           {t["work.ticket.info.location"]}
-          <Input defaultValue={data?.failureLocation} style={{ width: 200 }} />
+          <Input value={data?.failureLocation} onChange={(value) => {
+            updateData("failureLocation", value);
+          }
+          } style={{ width: 200 }} />
         </Space>
         <Space>
           {t["work.ticket.info.materials"]}
-          <Input defaultValue={data?.materialNumber} style={{ width: 200 }} />
+          <Input value={data?.materialNumber} onChange={(value) => {
+            updateData("materialNumber", value);
+          }
+          } style={{ width: 200 }} />
         </Space>
         <Space>
           {t["work.ticket.info.customer"]}
-          <Input defaultValue={data?.customer} style={{ width: 200 }} />
+          <Input value={data?.customer} onChange={(value) => {
+            updateData("customer", value);
+          }
+          } style={{ width: 200 }} />
         </Space>
         <Space>
           {t["work.ticket.info.type"]}
-          <Input defaultValue={data?.failureType} style={{ width: 200 }} />
+          <Input value={data?.failureType} onChange={(value) => {
+            updateData("failureType", value);
+          }
+          } style={{ width: 200 }} />
         </Space>
         <Space>
           {t["work.ticket.info.soft"]}
-          <Input defaultValue={data?.software} style={{ width: 200 }} />
+          <Input value={data?.software} onChange={(value) => {
+            updateData("software", value);
+          }
+          } style={{ width: 200 }} />
         </Space>
         <Space>
           {t["work.ticket.info.idf"]}
-          <Input defaultValue={data?.version} style={{ width: 200 }} />
+          <Input value={data?.version} onChange={(value) => {
+            updateData("version", value);
+          }
+          } style={{ width: 200 }} />
         </Space>
         <Space>
           {t["work.ticket.info.factory"]}
-          <Input defaultValue={data?.factory} style={{ width: 200 }} />
+          <Input value={data?.factory} onChange={(value) => {
+            updateData("factory", value);
+          }
+          } style={{ width: 200 }} />
         </Space>
       </Space>
       <Space>
         <Space wrap size={[12, 18]}>
           <Space direction={"vertical"}>
             {t["work.ticket.info.follow.up.measures"]}
-            <Input.TextArea defaultValue={data?.measure} style={{ width: 400 }} />
+            <Input.TextArea value={data?.measure} onChange={(value) => {
+              updateData("measure", value);
+            }
+            } style={{ width: 400 }} />
           </Space>
           <Space direction={"vertical"}>
             {t["work.ticket.info.improve"]}
-            <Input.TextArea defaultValue={data?.improvement} style={{ width: 400 }} />
+            <Input.TextArea value={data?.improvement} onChange={(value) => {
+              updateData("improvement", value);
+            }
+            } style={{ width: 400 }} />
           </Space>
 
         </Space>
       </Space>
+      <DynamicDivider />
+      <div className={styles["update-button"]}>
+        <Button onClick={update} type={"primary"}
+        >{t["work.ticket.info.button.update"]}</Button>
+      </div>
+
     </div>
   </div>;
 }
