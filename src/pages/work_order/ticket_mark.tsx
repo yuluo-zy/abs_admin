@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Input, Message, Select, Space, Tag } from "@arco-design/web-react";
+import { Button, Input, Message, Select, Space, Table, TableColumnProps, Tag, Tooltip } from "@arco-design/web-react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale/index";
 import { addTicketMark, addTickOwner, getTicketMark, getTickOwner } from "@/api/cqapms";
@@ -83,12 +83,31 @@ export default function TicketMark(props: {
     });
   }, [open]);
 
+  const columns: TableColumnProps[] = [
+    {
+      title: "操作人",
+      width: 100,
+      dataIndex: "operatorName"
+    },
+    {
+      title: "指派给",
+      width: 100,
+      dataIndex: "ownerName"
+    },
+    {
+      title: "创建时间",
+      dataIndex: "createTime"
+    }
+  ];
 
   return <div className={styles["box"]}>
     <Space>
       <p>{t["work.ticket.info.owner"]}</p>
       {!open &&
-        <Tag color={"blue"} onClick={() => setOpen(value => !value)}>{owner}</Tag>}
+        <Tooltip color={"var(--color-bg-2)"} style={{ width: 500 }}
+                 content={<Table pagination={false} columns={columns} data={engineerHistory} />}>
+          <Tag color={"blue"} onClick={() => setOpen(value => !value)}>{owner}</Tag>
+        </Tooltip>}
       {open && <p>{t["work.ticket.info.owner.to"]}</p>}
       {open &&
         <Select
@@ -102,7 +121,7 @@ export default function TicketMark(props: {
             </Select.Option>
           ))}
         </Select>}
-      {open && <Button icon={<IconCheck />} type={"primary"} onClick={updateOwner}></Button>}
+      {open && <Button icon={<IconCheck />} type={"primary"} onClick={updateOwner} />}
     </Space>
 
     <DynamicDivider />
