@@ -18,7 +18,7 @@ interface StepProps {
   copy?: boolean;
 }
 
-const DownloadButton = (props) => {
+export const DownloadButton = (props) => {
   const { id, orderId } = props;
   const [loading, setLoading] = useState(false);
   const downFile = (event) => {

@@ -31,6 +31,7 @@ import { getFileID } from "@/utils/parseJson";
 import { DynamicTooltip } from "@/components/Dynamic/Tooltip";
 import { ManagePath, WorkOrderPath } from "@/utils/routingTable";
 import TicketMark from "@/pages/work_order/ticket_mark";
+import TicketSample from "@/pages/work_order/ticket_sample";
 
 export const OrderEdit: React.FC = () => {
   const t = useLocale(locale);
@@ -280,7 +281,7 @@ export const OrderEdit: React.FC = () => {
             <TicketMark orderId={id} />
           </Collapse.Item>
           <Collapse.Item header="样品信息" name="2">
-            {/*<TicketMark />*/}
+            <TicketSample orderId={id} />
           </Collapse.Item>
         </Collapse>
       </DynamicCard>

@@ -58,6 +58,7 @@ const i18n = {
     "workplace.add.custom.product.issue": "失效概述",
     "workplace.add.custom.product.issue.description": "失效描述",
     "workplace.add.custom.product.issue.picture": "失效图片",
+    "workplace.add.custom.product.issue.picture.img": "样品图片",
     "workplace.add.custom.product.issue.appendix": "附件上传",
     "workplace.add.custom.upload": "提交表单",
     "workplace.announcement": "公告",
@@ -115,7 +116,9 @@ const i18n = {
     "work.ticket.info.improve": "持续改善确认:",
     "work.ticket.info.button.update": "更新内容",
     "work.ticket.info.owner": "工单Owner: ",
-    "work.ticket.info.owner.to": "指派给 -> "
+    "work.ticket.info.owner.to": "指派给 -> ",
+    "workplace.add.custom.product.other.description": "其他描述",
+    "workplace.add.custom.upload.info": "提交内容"
   }
 };
 
