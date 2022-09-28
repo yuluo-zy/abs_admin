@@ -58,44 +58,94 @@ function DynamicUpload(props) {
   const t = useLocale(locale);
 
   const {
-    limit, onChange, listType, onPreview, fileList, title,
+    limit,
+    onChange,
+    listType,
+    onPreview,
+    fileList,
+    title,
     customRequest,
     customBeforeUpload,
     fileType,
-    customDownload
+    customDownload,
+    customInitImg,
+    customInitFile,
+    initDateFc
   } = props;
   const [defaultList, setDefaultList] = useState([]);
   const file_type = fileType || FileType;
-  const initDate = (value) => {
+  const initDate = initDateFc || ((value, setList) => {
     if (listType === "picture-card") {
       if (value !== undefined) {
-        getFile(value).then(res => {
-          if (res.status === 200) {
-            setDefaultList([{
-              uid: value,
-              originFile: res.data
-            }]);
+        const initImg = customInitImg || getFile;
+        if (limit > 1) {
+          // const index = value.split(",")
+          for (const i of value) {
+            initImg(i?.id).then(res => {
+                if (res.status === 200) {
+                  setList(value => {
+                    return [
+                      {
+                        uid: i?.id,
+                        originFile: res.data
+                      }, ...value
+                    ];
+                  });
+                }
+              }
+            );
           }
-          }
-        );
+        } else {
+          initImg(value).then(res => {
+              if (res.status === 200) {
+                setList([{
+                  uid: value,
+                  originFile: res.data
+                }]);
+              }
+            }
+          );
+        }
+
         return;
       }
     }
     if (value !== undefined) {
-      getFileInfo(value).then(res => {
-        if (res.data.success) {
-          const data = res.data.result;
-          setDefaultList([{
-            uid: data?.id,
-            name: data?.fileName
-          }]);
+      const initFile = customInitFile || getFileInfo;
+      if (limit > 1) {
+        // const index = value.split(",")
+        for (const i of value) {
+          initFile(i).then(res => {
+              if (res.data.success) {
+                const data = res.data.result;
+                setList(value => {
+                  return [
+                    {
+                      uid: data?.id,
+                      name: data?.fileName
+                    }, ...value
+                  ];
+                });
+              }
+            }
+          );
         }
-      });
+      } else {
+        initFile(value).then(res => {
+          if (res.data.success) {
+            const data = res.data.result;
+            setList([{
+              uid: data?.id,
+              name: data?.fileName
+            }]);
+          }
+        });
+      }
     }
-  };
+  });
 
   useEffect(() => {
-    initDate(fileList);
+    initDate(fileList, setDefaultList);
   }, []);
 
   const uploadData = (option) => {

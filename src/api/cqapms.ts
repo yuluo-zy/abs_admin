@@ -57,3 +57,13 @@ export const getTickOwner = (data) => {
   return httpGet("/afterSale/owner", data);
 };
 
+// 获取样品信息内容
+export const getTickSample = (data) => {
+  return httpGet("/afterSale/sample", data);
+};
+// 提交样品信息内容
+export const addTickSample = (data) => {
+  return httpPost("/afterSale/sample", data);
+};
+
+

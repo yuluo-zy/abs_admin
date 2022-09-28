@@ -4,11 +4,11 @@ import DynamicUpload from "@/components/Dynamic/Upload/index";
 
 const FileType = [
   "image/png",
-  "image/jpeg",
+  "image/jpeg"
 ];
 
-export function DynamicImgUpload(props: { limit, onChange, title?, fileList?, customRequest? }) {
-  const { limit, onChange, title, fileList, customRequest } = props;
+export function DynamicImgUpload(props: { limit, onChange, title?, fileList?, customRequest?, customInitImg? }) {
+  const { limit, onChange, title, fileList, customRequest, customInitImg } = props;
 
 
   return <DynamicUpload
@@ -16,6 +16,7 @@ export function DynamicImgUpload(props: { limit, onChange, title?, fileList?, cu
     fileList={fileList}
     fileType={FileType}
     customRequest={customRequest}
+    customInitImg={customInitImg}
     listType="picture-card"
     onPreview={file => {
       Modal.success({
