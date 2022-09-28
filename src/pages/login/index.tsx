@@ -28,9 +28,6 @@ function Login() {
 
   return (
     <div className={styles.container}>
-      {/*<div className={styles.logo}>*/}
-      {/*  <Logo />*/}
-      {/*</div>*/}
       <div className={styles.banner}>
         <img src={LoginNode} />
       </div>

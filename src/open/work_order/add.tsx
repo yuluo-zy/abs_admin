@@ -51,6 +51,8 @@ const FileType = [
   "application/x-7z-compressed"
   // "application/octet-stream"
 ];
+
+const Email = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 const bodyStyle = {
   padding: "1rem",
   paddingBottom: 0,
@@ -283,7 +285,15 @@ export default function WorkOrderAdd() {
                   <Input placeholder="Your name" maxLength={30} />
                 </Form.Item>
                 <Form.Item field="customerEmail"
-                           rules={[{ required: true, message: t["workplace.add.custom.email.error"] }]}
+                           rules={[{ required: true, message: t["workplace.add.custom.email.error"] },
+                             {
+                               validator(value, cb) {
+                                 if (!Email.test(value)) {
+                                   return cb(t["work.order.operate.order.email.error"]);
+                                 }
+                               }
+                             }
+                           ]}
                 >
                   <Input placeholder="Your email" maxLength={30} style={{ width: 300 }} />
                 </Form.Item>
@@ -335,12 +345,30 @@ export default function WorkOrderAdd() {
             <FormItem label={t["workplace.add.custom.espressif"]} required>
               <Space size={"large"}>
                 <Form.Item field="espBusinessName"
-                           rules={[{ required: true, message: t["workplace.add.custom.espressif.error"] }]}>
+                           rules={[{ required: true, message: t["workplace.add.custom.espressif.error"] }
+                           ]}>
                   <Input placeholder="Espressif business name" maxLength={30} style={{ maxWidth: 200 }} />
                 </Form.Item>
                 <Form.Item field="espBusinessEmail"
                            layout={"vertical"}
-                           rules={[{ required: true, message: t["workplace.add.custom.espressif.email.error"] }]}
+                           rules={[{ required: true, message: t["workplace.add.custom.espressif.email.error"] },
+                             {
+                               validator(value, cb) {
+                                 if (value.indexOf("@espressif.com") === -1) {
+                                   return cb(t["workplace.add.custom.espressif.email.content.error"]);
+                                 }
+                                 return cb();
+                               }
+                             }
+                             // {
+                             //   validator(value, cb) {
+                             //     if (Email.test(value)) {
+                             //       return cb(t["work.order.operate.order.email.error"]);
+                             //     }
+                             //     return cb();
+                             //   }
+                             // }
+                           ]}
                 >
                   <Input placeholder="Espressif business email" maxLength={30} style={{ width: 300 }} />
                 </Form.Item>
@@ -375,7 +403,7 @@ export default function WorkOrderAdd() {
             </Form.Item>
 
             <Form.Item field="failNum"
-                       rules={[{ required: true, message: "workplace.add.custom.product.number.defective.error" }]}
+                       rules={[{ required: true, message: t["workplace.add.custom.product.number.defective.error"] }]}
                        label={t["workplace.add.custom.product.number.defective"]}>
               <InputNumber
                 precision={0}

@@ -43,6 +43,7 @@ const i18n = {
     "workplace.add.custom.espressif": "Espressif business",
     "workplace.add.custom.espressif.error": "Espressif contact window cannot be null ",
     "workplace.add.custom.espressif.email.error": "Espressif Contact mail cannot be null",
+    "workplace.add.custom.espressif.email.content.error": "Espressif Contact mail incorrect content",
     "workplace.add.custom.product": "Product info.",
     "workplace.add.custom.module": "Product part number",
     "workplace.add.custom.module.error": "Part Number cannot be null",
@@ -99,10 +100,12 @@ const i18n = {
     "work.order.operate.order.add.info.name": "name:",
     "work.order.operate.order.add.info.phone": "phone:",
     "work.order.operate.order.add.info.email": "email:",
+    "work.order.operate.order.email.error": "Please enter email in correct format",
     "work.order.operate.order.add.info.help": "Please fill in the corresponding information as much as possible, so that Espressif engineers can contact you in time"
   },
 
   "zh-CN": {
+    "work.order.operate.order.email.error": "请输入正确邮箱格式内容",
     "workplace.welcomeBack": "Welcome Back,",
     "workplace.content": "欢迎来到乐鑫产品质量管理系统 !",
     "workplace.content.a": "如您在产品使用中遇到任何品质问题, 请提交产品质量服务工单, 乐鑫客户品质团队将尽快为您服务 !",
@@ -130,6 +133,7 @@ const i18n = {
     "workplace.add.custom.custom.order.title": "当前工单提交人",
     "workplace.add.custom.custom.order": "工单提交人电话",
     "workplace.add.custom.custom.order.email": "工单提交人邮箱",
+    "workplace.add.custom.espressif.email.content.error": "乐鑫联系人邮箱不正确",
     "workplace.add.custom.custom.order.error": "工单提交人电话不能为空",
     "workplace.add.custom.type.help": "感谢填写您使用的乐鑫产品型号,并说明当前使用产品开发的整机产品状态, 以便于更好的理解您的整机应用, 并快速分析您的问题",
     "workplace.add.custom.info.help": "感谢填写您的准确邮箱和电话,便于乐鑫客户品质团队与您直接联系,乐鑫联系人为当前对接贵司的商务联系人,也请准确填写",
