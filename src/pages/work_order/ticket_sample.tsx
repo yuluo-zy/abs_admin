@@ -123,7 +123,7 @@ export default function Ticket_sample(props: {
           style={{ margin: "1rem" }}
           size="small"
           header={null}
-          dataSource={data?.fileObjs}
+          dataSource={data?.fileObjs || []}
           render={(item, index) => <List.Item key={index}>
             <Space size={"large"}>
               {item?.fileName}
