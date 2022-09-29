@@ -140,12 +140,6 @@ export default function Ticket_sample(props: {
       orderId: orderId
     });
   };
-  const getSalesInfoById = (data) => {
-    return getSalesInfo({
-      id: data,
-      orderId: orderId
-    });
-  };
 
   return <div style={{ padding: "1rem" }}>
     {!open && <Button type={"primary"} className={styles["edit"]} icon={<IconEdit />} onClick={() => {
