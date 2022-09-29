@@ -76,17 +76,17 @@ function DynamicUpload(props) {
   const file_type = fileType || FileType;
   const initDate = initDateFc || ((value, setList) => {
     if (listType === "picture-card") {
-      if (value !== undefined) {
+      if (value) {
         const initImg = customInitImg || getFile;
         if (limit > 1) {
           // const index = value.split(",")
           for (const i of value) {
             initImg(i?.id).then(res => {
-                if (res.status === 200) {
-                  setList(value => {
-                    return [
-                      {
-                        uid: i?.id,
+              if (res.status === 200) {
+                setList(value => {
+                  return [
+                    {
+                      uid: i?.id,
                         originFile: res.data
                       }, ...value
                     ];
@@ -110,17 +110,17 @@ function DynamicUpload(props) {
         return;
       }
     }
-    if (value !== undefined) {
+    if (value) {
       const initFile = customInitFile || getFileInfo;
       if (limit > 1) {
         // const index = value.split(",")
         for (const i of value) {
           initFile(i).then(res => {
-              if (res.data.success) {
-                const data = res.data.result;
-                setList(value => {
-                  return [
-                    {
+            if (res.data.success) {
+              const data = res.data.result;
+              setList(value => {
+                return [
+                  {
                       uid: data?.id,
                       name: data?.fileName
                     }, ...value
