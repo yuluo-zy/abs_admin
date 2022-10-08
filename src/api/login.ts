@@ -1,9 +1,9 @@
-import { httpPost } from '@/utils/httpRequest';
+import { httpPost } from "@/utils/httpRequest";
 
 export const loginWithUserName = (data) => {
-  return httpPost('/auth/login', data);
+  return httpPost("/auth/login", data);
 };
 
 export const loginOut = () => {
-  return httpPost('/auth/logout');
+  return httpPost("/auth/logout");
 };

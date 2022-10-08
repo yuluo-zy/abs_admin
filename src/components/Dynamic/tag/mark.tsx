@@ -1,6 +1,6 @@
-import React from 'react';
-import {  Typography } from "@arco-design/web-react";
+import React from "react";
+import { Typography } from "@arco-design/web-react";
 
 export default function DynamicMark() {
-  return  <Typography.Text type={'error'}>*</Typography.Text>;
+  return <Typography.Text type={"error"}>*</Typography.Text>;
 }

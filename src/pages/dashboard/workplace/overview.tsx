@@ -1,147 +1,131 @@
-import React, { ReactNode, useEffect, useState } from 'react';
-import { Card, Divider, Grid, Link, Skeleton, Typography } from '@arco-design/web-react';
-import { useSelector } from 'react-redux';
-import { IconCaretUp } from '@arco-design/web-react/icon';
-import OverviewAreaLine from '@/components/Chart/overview-area-line';
-import axios from 'axios';
-import locale from './locale';
-import useLocale from '@/utils/useHook/useLocale';
-import styles from './style/overview.module.less';
-import IconCalendar from './assets/calendar.svg';
-import IconComments from './assets/comments.svg';
-import IconContent from './assets/content.svg';
-import IconIncrease from './assets/increase.svg';
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Card, Carousel, Divider, Grid, Tag, Typography } from "@arco-design/web-react";
+import { useSelector } from "react-redux";
+import locale from "./locale";
+import useLocale from "@/utils/useHook/useLocale";
+import styles from "./style/overview.module.less";
+import IconTag from "./assets/Tag.svg";
+import IconMac from "./assets/mac.svg";
+import IconInfo from "./assets/info.svg";
+import IconFirmWare from "./assets/firmware.svg";
+import IconConfigure from "./assets/configure.svg";
+import cs from "classnames";
 
 const { Row, Col } = Grid;
 
-type StatisticItemType = {
-  icon?: ReactNode;
-  title?: ReactNode;
-  count?: ReactNode;
-  loading?: boolean;
-  unit?: ReactNode;
-};
-
-function StatisticItem(props: StatisticItemType) {
-  const { icon, title, count, loading, unit } = props;
-  return (
-    <div className={styles.item}>
-      <div className={styles.icon}>{icon}</div>
-      <div>
-        <Skeleton loading={loading} text={{ rows: 2, width: 60 }} animation>
-          <div className={styles.title}>{title}</div>
-          <div className={styles.count}>
-            {count}
-            <span className={styles.unit}>{unit}</span>
-          </div>
-        </Skeleton>
+function StatisticItem(props) {
+  const { icon, item, title } = props;
+  const [hover, setHover] = useState(false);
+  useEffect(() => {
+    if (props.index === item) {
+      // 设置 鼠标覆盖样式
+      setHover(true);
+    } else {
+      setHover(false);
+    }
+  }, [props.index]);
+  return useMemo(() => {
+    const cssList = [styles.icon];
+    if (hover) {
+      cssList.push(styles.iconhover);
+    }
+    return <>
+      <div className={styles.item}>
+        <div className={cs(cssList)}>
+          {icon}
+        </div>
+        {hover && < Tag color="blue" className={styles["title"]}>
+          {title}
+        </Tag>}
       </div>
-    </div>
-  );
+    </>;
+  }, [hover]);
 }
 
-type DataType = {
-  allContents?: string;
-  liveContents?: string;
-  increaseComments?: string;
-  growthRate?: string;
-  chartData?: { count?: number; date?: string }[];
-  down?: boolean;
-};
+const iconList = [
+  <IconTag key={"IconTag"} />,
+  <IconMac key={"IconMac"} />,
+  <IconInfo key={"IconInfo"} />,
+  <IconFirmWare key={"IconFirmWare"} />,
+  <IconConfigure key={"IconConfigure"} />
+];
 
 function Overview() {
-  const [data, setData] = useState<DataType>({});
-  const [loading, setLoading] = useState(true);
   const t = useLocale(locale);
-
   const userInfo = useSelector((state: any) => state.userInfo || {});
-
-  const fetchData = () => {
-    setLoading(true);
-    axios
-      .get('/api/workplace/overview-content')
-      .then((res) => {
-        setData(res.data);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+  const [indexNode, setIndexNode] = useState(0);
+  const carouselRef = useRef(null);
+  const titleList = [
+    t["workplace.step.label"],
+    t["workplace.step.mac"],
+    t["workplace.step.info"],
+    t["workplace.step.firmware"],
+    t["workplace.step.configure"]
+  ];
+  const context = [
+    t["workplace.step.label.context"],
+    t["workplace.step.mac.context"],
+    t["workplace.step.info.context"],
+    t["workplace.step.firmware.context"],
+    t["workplace.step.configure.context"]
+  ];
   return (
     <Card>
       <Typography.Title heading={5}>
-        {t['workplace.welcomeBack']}
+        {t["workplace.welcomeBack"]}
         {userInfo.name}
       </Typography.Title>
+      <Tag color="blue" size={"large"} className={styles["title"]}>
+        {t["workplace.step.title"]}
+      </Tag>
       <Divider />
       <Row>
-        <Col flex={1}>
-          <StatisticItem
-            icon={<IconCalendar />}
-            title={t['workplace.totalOnlyData']}
-            count={data.allContents}
-            loading={loading}
-            unit={t['workplace.pecs']}
-          />
-        </Col>
-        <Divider type="vertical" className={styles.divider} />
-        <Col flex={1}>
-          <StatisticItem
-            icon={<IconContent />}
-            title={t['workplace.contentInMarket']}
-            count={data.liveContents}
-            loading={loading}
-            unit={t['workplace.pecs']}
-          />
-        </Col>
-        <Divider type="vertical" className={styles.divider} />
-        <Col flex={1}>
-          <StatisticItem
-            icon={<IconComments />}
-            title={t['workplace.comments']}
-            count={data.increaseComments}
-            loading={loading}
-            unit={t['workplace.pecs']}
-          />
-        </Col>
-        <Divider type="vertical" className={styles.divider} />
-        <Col flex={1}>
-          <StatisticItem
-            icon={<IconIncrease />}
-            title={t['workplace.growth']}
-            count={
-              <span>
-                {data.growthRate}{' '}
-                <IconCaretUp
-                  style={{ fontSize: 18, color: 'rgb(var(--green-6))' }}
+        {
+          React.Children.toArray(iconList.map((item, index) => {
+            return <>
+              <Col flex={1} onMouseEnter={() => {
+                if (carouselRef.current) {
+                  carouselRef.current.goto({
+                    index: index,
+                    resetAutoPlayInterval: true
+                  });
+                }
+              }
+              }>
+                <StatisticItem
+                  index={indexNode}
+                  item={index}
+                  icon={item}
+                  title={titleList[index]}
                 />
-              </span>
-            }
-            loading={loading}
-          />
-        </Col>
+              </Col>
+              {index + 1 !== iconList.length && <div className={styles.divider} />}
+            </>;
+          }))
+        }
       </Row>
-      <Divider />
-      <div>
-        <div className={styles.ctw}>
-          <Typography.Paragraph
-            className={styles['chart-title']}
-            style={{ marginBottom: 0 }}
+      <br />
+      <Carousel
+        autoPlay
+        animation="card"
+        showArrow="never"
+        carousel={carouselRef}
+        indicatorType={"line"}
+        indicatorPosition={"top"}
+        className={styles["carousel"]}
+        onChange={(index, prevIndex, isManual) => {
+          setIndexNode(index);
+        }}
+      >
+        {context.map((text, index) => (
+          <div
+            key={index}
+            className={styles["context"]}
           >
-            {t['workplace.contentData']}
-            <span className={styles['chart-sub-title']}>
-              ({t['workplace.1year']})
-            </span>
-          </Typography.Paragraph>
-          <Link>{t['workplace.seeMore']}</Link>
-        </div>
-        <OverviewAreaLine data={data.chartData} loading={loading} />
-      </div>
+            <p>{text}</p>
+          </div>
+        ))}
+      </Carousel>
     </Card>
   );
 }

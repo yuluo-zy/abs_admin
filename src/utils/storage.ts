@@ -1,4 +1,4 @@
-import { isSSR } from './is';
+import { isSSR } from "./is";
 
 function getStorage() {
   if (!isSSR) {
@@ -6,8 +6,8 @@ function getStorage() {
   }
 
   return {
-    getItem: () => '',
-    setItem: () => ''
+    getItem: () => "",
+    setItem: () => ""
   };
 }
 
@@ -19,7 +19,7 @@ export function getSessionStorage() {
   }
 
   return {
-    getItem: () => '',
-    setItem: () => ''
+    getItem: () => "",
+    setItem: () => ""
   };
 }

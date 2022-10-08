@@ -1,11 +1,13 @@
-import create, { GetState, SetState } from 'zustand';
-import { Recordable } from '@/components/type';
-import { devtools, persist } from 'zustand/middleware';
+import create, { GetState, SetState } from "zustand";
+import { Recordable } from "@/components/type";
+import { persist } from "zustand/middleware";
+import { StoreSlice } from "@/store/type";
 
-export type StoreSlice<T extends object, E extends object = T> = (
-  set: SetState<E extends T ? E : E & T>,
-  get: GetState<E extends T ? E : E & T>
-) => T;
+// 项目信息设置
+interface ProjectInfo {
+  projectData: Recordable;
+  setProjectInfo: any;
+}
 
 // 相关步骤设定
 export interface StepSetting {
@@ -35,6 +37,7 @@ export interface ProductDemand {
 
 export interface FirmwareDemand {
   info: Recordable;
+  setInfo: (value) => void;
 }
 
 export interface MacDemand {
@@ -45,6 +48,10 @@ export interface LabelDemand {
   labelData: Recordable;
 }
 
+export interface ServiceDemand {
+  serviceData: Recordable;
+}
+
 export interface BurnDemand {
   burnData: Recordable;
 }
@@ -52,14 +59,25 @@ export interface BurnDemand {
 export interface PreFitDemand {
   fitData: Recordable;
 }
+
 export interface CheckDemand {
   checkData: Recordable;
 }
 
+const createProjectInfo: StoreSlice<ProjectInfo> = (set, get) => ({
+  setProjectInfo: value => set((state) => ({
+    projectData: {
+      ...state.projectData,
+      ...value
+    }
+  })),
+  projectData: {}
+});
+
 const createBearSlice: StoreSlice<StepSetting> = (set, get) => ({
-  stepKey: '',
+  stepKey: "",
   stepList: [],
-  stepRouter: '',
+  stepRouter: "",
   collapse: true,
 
   setStepKey: (value) => set(() => ({
@@ -135,6 +153,17 @@ const createBurnDemand: StoreSlice<BurnDemand> = (set, get) => ({
   }))
 });
 
+// 获得本产品提供的详情服务
+const createServiceDemand: StoreSlice<ServiceDemand> = (set, get) => ({
+  serviceData: null,
+  setServiceData: value => set((state) => ({
+    serviceData: {
+      ...state.serviceData,
+      ...value
+    }
+  }))
+});
+
 // 定制烧录内容
 const createPreFitDemand: StoreSlice<PreFitDemand> = (set, get) => ({
   fitData: null,
@@ -164,9 +193,12 @@ const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
   ...createLabelDemand(set, get),
   ...createBurnDemand(set, get),
   ...createPreFitDemand(set, get),
-  ...createCheckDemand(set,get),
+  ...createCheckDemand(set, get),
+  ...createServiceDemand(set, get),
+  ...createProjectInfo(set, get),
   reset: () => {
     set({
+      projectData: null,
       fitData: null,
       burnData: null,
       labelData: null,
@@ -177,20 +209,20 @@ const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
       demandId: -1,
       moduleInfo: {},
       serviceType: [],
-      stepKey: '',
+      stepKey: "",
       stepList: [],
-      stepRouter: '',
+      stepRouter: "",
       collapse: true,
-    })
-  },
+      serviceData: null
+    });
+  }
 });
 
-export const ProductStore = create(devtools(persist(createRootSlice,
+export const ProductStore = create(persist(createRootSlice,
   {
-    name: 'product-storage',
+    name: "product-storage",
     getStorage: () => sessionStorage
-  })));
-
+  }));
 
 
 export const ProductMenuInfo = create(() => ({
@@ -198,3 +230,16 @@ export const ProductMenuInfo = create(() => ({
 }));
 
 export const setMenu = (menu) => ProductMenuInfo.setState({ menu });
+
+export const ProductDemandDescriptions = create(() => ({
+  demandId: [-1],
+  data: [],
+  update: false
+}));
+export const setDemandDescriptions = (demandId, data) => ProductDemandDescriptions.setState({
+  demandId,
+  data
+});
+export const setDemandUpdate = () => ProductDemandDescriptions.setState((state) => ({
+  update: !state.update
+}));

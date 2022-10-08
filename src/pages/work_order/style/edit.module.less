@@ -1,0 +1,45 @@
+.edit-button {
+  position: absolute;
+  right: 1rem;
+  top: 0.7rem;
+}
+
+.upload-button {
+  display: flex;
+  justify-content: right;
+}
+
+.edit-tool {
+  margin: 10px 0 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.content {
+  margin: 1px 2rem 4rem;
+  position: relative;
+  overflow: auto;
+}
+
+.toTop {
+  position: fixed;
+
+  bottom: 3rem;
+  right: 2rem;
+  z-index: 10;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  transition: 0.5s;
+
+  &:hover {
+    transform: scale(1.18);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.to-up {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}

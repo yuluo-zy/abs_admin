@@ -1,5 +1,5 @@
-import React from 'react';
-import { ReadonlyRecordable, RoleItem } from '@/components/type';
+import React from "react";
+import { RoleItem } from "@/components/type";
 
 export interface InitialRole {
   roleId: string;
@@ -12,47 +12,47 @@ export interface InitialRole {
 export const RoleContext = React.createContext(null);
 
 export const initialRole: InitialRole = {
-  roleId: '',
-  update: false,
+  roleId: "",
+  update: false
 };
 
 export default function RoleStore(state: InitialRole, action) {
   switch (action.type) {
-    case 'RoleId': {
+    case "RoleId": {
       const roleId = action.payload;
       return {
         ...state,
-        roleId,
+        roleId
       };
     }
-    case 'RoleInfo': {
+    case "RoleInfo": {
       const roleInfo = action.payload;
       return {
         ...state,
-        roleInfo,
+        roleInfo
       };
     }
-    case 'RoleList': {
+    case "RoleList": {
       const roleList = action.payload;
       return {
         ...state,
-        roleList,
+        roleList
       };
     }
 
-    case 'Permission': {
+    case "Permission": {
       const permission = action.payload;
       return {
         ...state,
-        permission,
+        permission
       };
     }
 
-    case 'Update': {
+    case "Update": {
       const update = action.payload;
       return {
         ...state,
-        update,
+        update
       };
     }
     default:

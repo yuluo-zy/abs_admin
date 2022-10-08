@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { MenuItemProps } from '@/components/type';
-import { Menu } from '@arco-design/web-react';
-import styles from './style/index.module.less';
-import { ProductMenuInfo, ProductStore } from '@/store/product';
-import shallow from 'zustand/shallow';
+import React, { useEffect, useState } from "react";
+import { MenuItemProps } from "@/components/type";
+import { Menu } from "@arco-design/web-react";
+import styles from "./style/index.module.less";
+import { ProductMenuInfo, ProductStore } from "@/store/product";
+import shallow from "zustand/shallow";
+import { useDebounce, useWindowSize } from "react-use";
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
 
 export default function ProductMenu(props) {
-  const {clickMenuItem } = props;
-  const [setStepKey] = ProductStore(state => [state.setStepKey], shallow)
+  const { clickMenuItem } = props;
+  const [setStepKey, collapse, setCollapse] = ProductStore(state => [state.setStepKey, state.collapse, state.setCollapse], shallow);
   const [serviceType] = ProductStore(state => [state.serviceType], shallow);
-  const menu = ProductMenuInfo(state => state.menu)
+  const menu = ProductMenuInfo(state => state.menu);
   const updateMenuKey = (key: string) => {
-    setStepKey(key)
+    setStepKey(key);
     clickMenuItem(key);
   };
   const getMenuItem = (key: MenuItemProps) => {
@@ -30,20 +31,20 @@ export default function ProductMenu(props) {
     if (item instanceof Array) {
       item.forEach((i) => {
         if (i.child != null) {
-          getMenuInfo(i.child, list)
+          getMenuInfo(i.child, list);
         } else {
-          getMenuInfo(i, list)
+          getMenuInfo(i, list);
         }
 
       });
     } else {
-      if(list.includes(item.value)){
-        item.show = true
-      } else if(item.show != null){
-        item.show = false
+      if (list.includes(item.value)) {
+        item.show = true;
+      } else if (item.show != null) {
+        item.show = false;
       }
     }
-    return item
+    return item;
   };
 
   const getMenu = (item: MenuItemProps[] | MenuItemProps) => {
@@ -57,40 +58,56 @@ export default function ProductMenu(props) {
             </SubMenu>
           );
         } else {
-          if(i.show != false){
-          menu.push(<MenuItem key={i.key}> {getMenuItem(i)}</MenuItem>);
+          if (i.show != false) {
+            menu.push(<MenuItem key={i.key}> {getMenuItem(i)}</MenuItem>);
           }
         }
       });
       return menu;
     } else {
-      if(item.show != false){
+      if (item.show != false) {
         return <MenuItem key={item.key}> {getMenuItem(item)}</MenuItem>;
       }
     }
   };
 
-  const [context, setContext] = useState()
+  const [context, setContext] = useState();
 
   useEffect(() => {
-    console.log("重新渲染")
-    const temp = getMenuInfo(menu, serviceType)
-     // @ts-ignore
+    const temp = getMenuInfo(menu, serviceType);
+    // @ts-ignore
     setContext(getMenu([...temp]));
-     return null
-  }, [menu,serviceType])
+    return null;
+  }, [menu, serviceType]);
 
-  return <div className={styles['menu-demo-round']}>
+  // 设置 窗口监测 如果小于 1200px, 设置收起
+  const { width } = useWindowSize();
+  // todo 这里收起的操作需要再次确认
+  const [_, cancel] = useDebounce(
+    () => {
+      if (width < 1500) {
+        setCollapse(true);
+      }
+    },
+    1000,
+    [width]
+  );
+
+  return <div className={styles["menu-demo-round"]}>
     <Menu
       style={{ width: 170 }}
       hasCollapseButton
       autoOpen
       levelIndent={30}
-      collapse={false}
+      collapse={collapse}
       selectable={true}
       onClickMenuItem={updateMenuKey}
+      onCollapseChange={(value) => {
+        setCollapse(value);
+      }
+      }
     >
       {context}
     </Menu>
-  </div>
+  </div>;
 }

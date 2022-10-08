@@ -1,9 +1,22 @@
 
 .context {
+
+  //> .arco-form-item > .arco-form-label-item{
+  //  min-width: 15rem;
+  //}
+
+  flex-direction: row;
+  display: flex;
+  justify-content: flex-start;
+  width: 50rem;
+  overflow: hidden;
+
   &-text {
     position: absolute;
-    right: 6rem;
+    right: 3rem;
+    top: 7.5rem;
   }
+
   &-next {
     display: flex;
     flex-direction: row;
@@ -15,8 +28,25 @@
     right: 6rem;
     bottom: 7rem;
   }
-  .arco-space-item {
-    min-width: 30rem !important;
-  }
 
+  &-offset {
+    position: absolute;
+    top: 4rem;
+    left: 23rem;
+    width: 30rem;
+
+    div:nth-child(2) {
+      min-width: 12rem;
+    }
+  }
+}
+
+.offset-address {
+  float: left;
+}
+
+.self-mac {
+  position: absolute;
+  right: 6rem;
+  bottom: 8rem;
 }

@@ -1,14 +1,14 @@
-declare module '*.svg' {
+declare module "*.svg" {
   const content: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
   export default content;
 }
 
-declare module '*.less' {
+declare module "*.less" {
   const classes: { [className: string]: string };
   export default classes;
 }
 
-declare module '*/settings.json' {
+declare module "*/settings.json" {
   const value: {
     colorWeek: boolean;
     navbar: boolean;
@@ -21,7 +21,7 @@ declare module '*/settings.json' {
   export default value;
 }
 
-declare module '*.png' {
+declare module "*.png" {
   const value: string;
   export default value;
 }

@@ -1,32 +1,31 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
-import { Breadcrumb, Layout, Menu } from '@arco-design/web-react';
-import cs from 'classnames';
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Link, Route, Switch, useHistory } from "react-router-dom";
+import { Breadcrumb, Layout, Menu } from "@arco-design/web-react";
+import cs from "classnames";
 import {
-  IconApps,
-  IconCheckCircle,
+  IconArchive,
   IconDashboard,
-  IconExclamationCircle,
-  IconFile,
-  IconList,
   IconMenuFold,
   IconMenuUnfold,
   IconNav,
-  IconSettings,
-  IconUser
-} from '@arco-design/web-react/icon';
-import { useSelector } from 'react-redux';
-import qs from 'query-string';
-import NProgress from 'nprogress';
-import Navbar from './components/NavBar';
-import Footer from './components/Footer';
-import { isArray } from './utils/is';
-import useLocale from './utils/useHook/useLocale';
-import getUrlParams from './utils/getUrlParams';
-import lazyload from './utils/lazyload';
-import { GlobalState } from './store';
-import styles from './style/layout.module.less';
-import { useMenu } from '@/routes';
+  IconUser,
+  IconUserGroup
+} from "@arco-design/web-react/icon";
+import { useDispatch, useSelector } from "react-redux";
+import qs from "query-string";
+import NProgress from "nprogress";
+import Navbar from "./components/NavBar";
+import Footer from "./components/Footer";
+import { isArray } from "./utils/is";
+import useLocale from "./utils/useHook/useLocale";
+import getUrlParams from "./utils/getUrlParams";
+import lazyload from "./utils/lazyload";
+import { GlobalState } from "./store";
+import styles from "./style/layout.module.less";
+import { useMenu } from "@/routes";
+import { getUserInfo, getUserMenu } from "@/api/user";
+import { ManagePath } from "@/utils/routingTable";
+import { Redirect } from "react-router";
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
@@ -36,32 +35,25 @@ const Content = Layout.Content;
 
 function getIconFromKey(key) {
   switch (key) {
-    case 'dashboard':
+    case "dashboard":
       return <IconDashboard className={styles.icon} />;
-    case 'list':
-      return <IconList className={styles.icon} />;
-    case 'form':
-      return <IconSettings className={styles.icon} />;
-    case 'profile':
-      return <IconFile className={styles.icon} />;
-    case 'visualization':
-      return <IconApps className={styles.icon} />;
-    case 'result':
-      return <IconCheckCircle className={styles.icon} />;
-    case 'exception':
-      return <IconExclamationCircle className={styles.icon} />;
-    case 'user':
+    case "account":
+      return <IconUserGroup className={styles.icon} />;
+    case "user":
       return <IconUser className={styles.icon} />;
-    case 'product':
+    case "product":
       return <IconNav className={styles.icon} />;
-    default:
-      return <div className={styles['icon-empty']} />;
+    case "work_order":
+      return <IconArchive className={styles.icon} />;
+    // default:
+    //   return <IconTag className={styles.icon} />;
   }
 }
 
 function getFlattenRoutes(routes) {
-  const mod = import.meta.glob('./pages/**/[a-z[]*.tsx');
+  const mod = import.meta.glob("./pages/**/[a-z[]*.tsx");
   const res = [];
+
   function travel(_routes) {
     _routes.forEach((route) => {
       if (route.key && !route.children) {
@@ -72,16 +64,17 @@ function getFlattenRoutes(routes) {
       }
     });
   }
+
   travel(routes);
   return res;
 }
 
 function getUrlParamsPrefix(url: string): string[] {
   const res = [];
-  let temp = '';
-  for (const str of url.split('/')) {
+  let temp = "";
+  for (const str of url.split("/")) {
     if (str.length > 0) {
-      temp = temp + '/' + str;
+      temp = temp + "/" + str;
       res.push(temp);
     }
   }
@@ -94,13 +87,19 @@ function PageLayout() {
   const pathname = history.location.pathname;
   const currentComponent = qs.parseUrl(pathname).url.slice(1);
   const locale = useLocale();
-  const settings = useSelector((state: GlobalState) => state.settings);
-  // const userInfo = useSelector((state: GlobalState) => state.userInfo);
-  const userMenu = useSelector((state: GlobalState) => state.menu);
 
+
+  useEffect(() => {
+    Promise.all([fetchUserInfo(), fetchUserMenu()])
+      .then();
+  }, []);
+
+  const settings = useSelector((state: GlobalState) => state.settings);
+  const userMenu = useSelector((state: GlobalState) => state.menu);
+  const dispatch = useDispatch();
   const [routes, defaultRoute] = useMenu(userMenu);
   const defaultSelectedKeys = [currentComponent || defaultRoute];
-  const paths = (currentComponent || defaultRoute).split('/');
+  const paths = (currentComponent || defaultRoute).split("/");
   const defaultOpenKeys = paths.slice(0, paths.length - 1);
 
   const [breadcrumb, setBreadCrumb] = useState([]);
@@ -116,6 +115,24 @@ function PageLayout() {
   const showMenu = settings.menu && urlParams.menu !== false;
   const showFooter = settings.footer && urlParams.footer !== false;
 
+  function fetchUserInfo() {
+    return getUserInfo().then((res) => {
+      dispatch({
+        type: "update-userInfo",
+        payload: { userInfo: res.data.result }
+      });
+    });
+  }
+
+  function fetchUserMenu() {
+    return getUserMenu().then((res) => {
+      dispatch({
+        type: "update-userMenu",
+        payload: { menu: res.data.result }
+      });
+    });
+  }
+
   const flattenRoutes = useMemo(() => getFlattenRoutes(routes) || [], [routes]);
 
   function onClickMenuItem(key) {
@@ -125,7 +142,7 @@ function PageLayout() {
     NProgress.start();
     preload.then(() => {
       setSelectedKeys([key]);
-      history.push(currentRoute.path ? currentRoute.path : `/${key}`);
+      history.push(currentRoute.path ? currentRoute.path : `${ManagePath}/${key}`);
       NProgress.done();
     });
   }
@@ -141,6 +158,7 @@ function PageLayout() {
   function renderRoutes(locale) {
     routeMap.current.clear();
     const nodes = [];
+
     function travel(_routes, level, parentNode = []) {
       return _routes.map((route) => {
         const { breadcrumb = true } = route;
@@ -165,7 +183,7 @@ function PageLayout() {
           }
           nodes.push(
             <MenuItem key={route.key}>
-              <Link to={`/${route.key}`}>{titleDom}</Link>
+              <Link to={`${ManagePath}/${route.key}`}>{titleDom}</Link>
             </MenuItem>
           );
         }
@@ -190,6 +208,7 @@ function PageLayout() {
         }
       });
     }
+
     travel(routes, 1);
     return nodes;
   }
@@ -210,8 +229,8 @@ function PageLayout() {
   return (
     <Layout className={styles.layout}>
       <div
-        className={cs(styles['layout-navbar'], {
-          [styles['layout-navbar-hidden']]: !showNavbar,
+        className={cs(styles["layout-navbar"], {
+          [styles["layout-navbar-hidden"]]: !showNavbar
         })}
       >
         <Navbar show={showNavbar} />
@@ -219,7 +238,7 @@ function PageLayout() {
       <Layout>
         {showMenu && (
           <Sider
-            className={styles['layout-sider']}
+            className={styles["layout-sider"]}
             width={menuWidth}
             collapsed={collapsed}
             onCollapse={setCollapsed}
@@ -228,7 +247,7 @@ function PageLayout() {
             breakpoint="xl"
             style={paddingTop}
           >
-            <div className={styles['menu-wrapper']}>
+            <div className={styles["menu-wrapper"]}>
               <Menu
                 collapse={collapsed}
                 onClickMenuItem={onClickMenuItem}
@@ -241,19 +260,20 @@ function PageLayout() {
                 {renderRoutes(locale)}
               </Menu>
             </div>
-            <div className={styles['collapse-btn']} onClick={toggleCollapse}>
+            <div className={styles["collapse-btn"]} onClick={toggleCollapse}>
               {collapsed ? <IconMenuUnfold /> : <IconMenuFold />}
             </div>
           </Sider>
         )}
-        <Layout className={styles['layout-content']} style={paddingStyle}>
-          <div className={styles['layout-content-wrapper']}>
+        {/*todo 菜单栏收起导致的重复渲染bug*/}
+        <Layout className={styles["layout-content"]} style={paddingStyle}>
+          <div className={styles["layout-content-wrapper"]}>
             {!!breadcrumb.length && (
-              <div className={styles['layout-breadcrumb']}>
+              <div className={styles["layout-breadcrumb"]}>
                 <Breadcrumb>
                   {breadcrumb.map((node, index) => (
                     <Breadcrumb.Item key={index}>
-                      {typeof node === 'string' ? locale[node] || node : node}
+                      {typeof node === "string" ? locale[node] || node : node}
                     </Breadcrumb.Item>
                   ))}
                 </Breadcrumb>
@@ -265,17 +285,17 @@ function PageLayout() {
                   return (
                     <Route
                       key={index}
-                      path={`/${route.key}`}
+                      path={`${ManagePath}/${route.key}`}
                       component={route.component}
                     />
                   );
                 })}
-                <Route exact path="/">
-                  <Redirect to={`/${defaultRoute}`} />
+                <Route exact path={ManagePath}>
+                  <Redirect to={`${ManagePath}/${defaultRoute}`} />
                 </Route>
                 <Route
                   path="*"
-                  component={lazyload(() => import('./pages/exception/403'))}
+                  component={lazyload(() => import("@/components/Exception/404"))}
                 />
               </Switch>
             </Content>

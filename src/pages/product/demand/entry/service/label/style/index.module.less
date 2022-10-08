@@ -1,5 +1,5 @@
 .remark {
-  width: 65%;
+  width: 70%;
 }
 
 .context {
@@ -7,6 +7,17 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+  }
+}
+
+.alert {
+  position: absolute;
+  max-width: 25rem;
+  top: 5rem;
+  right: 3rem;
+
+  p {
+    margin: 0;
   }
 }
 
@@ -27,10 +38,10 @@
 
     &-context {
       min-width: 15rem;
-      margin: 2rem;
+      margin: 1rem;
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      //flex-direction: column;
+      //align-items: center;
 
       :global {
         .arco-upload-list-item-picture {
@@ -55,5 +66,20 @@
       height: 100%;
     }
   }
+
+}
+
+.model-img {
+  //text-align:center;
+  display: flex;
+  margin-left: 2rem;
+  flex-direction: column;
+  align-content: center;
+
+  img {
+    height: 40rem;
+    width: 40rem;
+  }
+
 
 }

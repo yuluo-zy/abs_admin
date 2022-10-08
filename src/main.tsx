@@ -1,64 +1,48 @@
-import './style/global.less';
-import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { ConfigProvider } from '@arco-design/web-react';
-import zhCN from '@arco-design/web-react/es/locale/zh-CN';
-import enUS from '@arco-design/web-react/es/locale/en-US';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import rootReducer from './store';
-import PageLayout from './layout';
-import { GlobalContext } from './context';
-import Login from './pages/login';
-import checkLogin from './utils/checkLogin';
-import changeTheme from './utils/changeTheme';
-import useStorage from './utils/useHook/useStorage';
-import { userInfo, userMenu } from '@/api/user';
-
+import "./style/global.less";
+import React, { useEffect } from "react";
+import ReactDOM from "react-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import { ConfigProvider } from "@arco-design/web-react";
+import zhCN from "@arco-design/web-react/es/locale/zh-CN";
+import enUS from "@arco-design/web-react/es/locale/en-US";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import rootReducer from "./store";
+import { GlobalContext } from "./context";
+import Login from "./pages/login";
+import checkLogin from "./utils/checkLogin";
+import changeTheme from "./utils/changeTheme";
+import useStorage from "./utils/useHook/useStorage";
+import { Redirect } from "react-router";
+import lazyload from "@/utils/lazyload";
+import { AnyPath, LoginPath, ManagePath, RootPath, TicketPath } from "@/utils/routingTable";
+import PageLayout from "@/layout";
+// todo 去除 redux
 const store = createStore(rootReducer);
 
 function Index() {
-  const [lang, setLang] = useStorage('arco-lang', 'en-US');
-  const [theme, setTheme] = useStorage('arco-theme', 'light');
+  const [lang, setLang] = useStorage("arco-lang", "zh-CN");
+  const [theme, setTheme] = useStorage("arco-theme", "light");
 
   function getArcoLocale() {
     switch (lang) {
-      case 'zh-CN':
+      case "zh-CN":
         return zhCN;
-      case 'en-US':
+      case "en-US":
         return enUS;
       default:
         return zhCN;
     }
   }
 
-  function fetchUserInfo() {
-    return userInfo().then((res) => {
-      store.dispatch({
-        type: 'update-userInfo',
-        payload: { userInfo: res.data.result },
-      });
-    });
-  }
-
-  function fetchUserMenu() {
-    return userMenu().then((res) => {
-      store.dispatch({
-        type: 'update-userMenu',
-        payload: { menu: res.data.result }
-      });
-    });
-  }
-
-  useEffect(() => {
+  const toMain = () => {
     if (checkLogin()) {
-      Promise.all([fetchUserInfo(), fetchUserMenu()])
-        .then();
-    } else if (window.location.pathname.replace(/\//g, '') !== 'login') {
-      window.location.pathname = '/login';
+      // return lazyload(() => import("@/layout"));
+      return <PageLayout />;
+    } else {
+      return <Redirect to={{ pathname: "/login" }} />;
     }
-  }, []);
+  };
 
   useEffect(() => {
     changeTheme(theme);
@@ -77,21 +61,30 @@ function Index() {
         locale={getArcoLocale()}
         componentConfig={{
           Card: {
-            bordered: false,
+            bordered: false
           },
           List: {
-            bordered: false,
+            bordered: false
           },
           Table: {
-            border: false,
-          },
+
+            border: false
+          }
         }}
       >
         <Provider store={store}>
           <GlobalContext.Provider value={contextValue}>
             <Switch>
-              <Route path="/login" component={Login} />
-              <Route path="/" component={PageLayout} />
+              <Route path={LoginPath} component={Login} />
+              <Route path={TicketPath} component={lazyload(() => import("@/open/work_order"))} />
+              <Route path={ManagePath} render={toMain} />
+              <Route path={RootPath} exact>
+                <Redirect to={{ pathname: TicketPath }} />
+              </Route>
+              <Route
+                path={AnyPath}
+                component={lazyload(() => import("@/components/Exception/404"))}
+              />
             </Switch>
           </GlobalContext.Provider>
         </Provider>
@@ -100,4 +93,4 @@ function Index() {
   );
 }
 
-ReactDOM.render(<Index />, document.getElementById('root'));
+ReactDOM.render(<Index />, document.getElementById("root"));

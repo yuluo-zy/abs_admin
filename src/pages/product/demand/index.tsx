@@ -1,18 +1,26 @@
-import React, { useEffect, useMemo } from 'react';
-import useLocale from '@/pages/product/demand/locale/useLocale';
-import ProductMenu from '@/pages/product/demand/menu';
+import React, { useEffect, useMemo, useState } from "react";
+import useLocale from "@/pages/product/demand/locale/useLocale";
+import ProductMenu from "@/pages/product/demand/menu";
 
-import styles from './style/index.module.less';
-import { useHistory } from 'react-router-dom';
-import { isArray } from '@/utils/is';
-import { MenuItemProps } from '@/components/type';
-import { IconCalendar, IconMindMapping, IconSubscribed } from '@arco-design/web-react/icon';
-import NProgress from 'nprogress';
-import lazyload from '@/utils/lazyload';
-import { Route, Switch } from 'react-router';
-import { ProductStore, setMenu } from '@/store/product';
-import shallow from 'zustand/shallow';
-import { Button } from '@arco-design/web-react';
+import styles from "./style/index.module.less";
+import { useHistory } from "react-router-dom";
+import { isArray } from "@/utils/is";
+import { MenuItemProps } from "@/components/type";
+import { IconArrowRight, IconCalendar, IconMindMapping, IconSubscribed } from "@arco-design/web-react/icon";
+import NProgress from "nprogress";
+import lazyload from "@/utils/lazyload";
+import { Route, Switch } from "react-router";
+import { ProductStore, setMenu } from "@/store/product";
+import shallow from "zustand/shallow";
+import { Button, Form, Input, Message, Select, Spin } from "@arco-design/web-react";
+import DynamicRadioGroup from "@/components/Dynamic/Radio";
+import axios from "axios";
+import { getProjectList } from "@/api/project";
+import { getMpnList, postFWPNsave } from "@/api/demand";
+import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
+import style from "@/pages/product/demand/entry/service/label/style/index.module.less";
+import DynamicDivider from "@/components/Dynamic/Divider";
+import { ManagePath, ProductDemandPath, ProductPath } from "@/utils/routingTable";
 
 function getFlattenRoutes(routes) {
   const res = [];
@@ -36,7 +44,9 @@ function getFlattenRoutes(routes) {
   return res;
 }
 
-export default function ProductDemand(props) {
+const Option = Select.Option;
+
+export default function ProductDemand() {
   const t = useLocale();
 
 
@@ -110,9 +120,34 @@ export default function ProductDemand(props) {
   const flattenRoutes = useMemo(() => getFlattenRoutes(MenuTree) || [], []);
   const history = useHistory();
   const [setStepRouter, setCollapse] = ProductStore(state => [state.setStepRouter, state.setCollapse, state.setStepList], shallow);
-
+  const [project, setProject] = useState([]);
+  const [mpnList, setMpnList] = useState([]);
+  const [info, setInfo, demandId] = ProductStore(state => [state.projectData, state.setProjectInfo, state.demandId], shallow);
+  const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm();
   useEffect(() => {
-    setMenu(MenuTree)
+    setMenu(MenuTree);
+  }, []);
+  useEffect(() => {
+    // 用来获取相关的固件项目信息
+    setLoading(value => !value);
+    axios.all([
+      getProjectList(),
+      getMpnList()
+    ]).then(axios.spread((projectList, mpnList) => {
+      if (projectList.data.success) {
+        setProject(projectList.data.result);
+      }
+      if (mpnList.data.success) {
+        setMpnList(mpnList.data.result);
+      }
+    }))
+      .catch(() => {
+          Message.error(t["message.service.notfound"]);
+        }
+      ).finally(() => {
+      setLoading(value => !value);
+    });
   }, []);
 
   function onClickMenuItem(key) {
@@ -122,14 +157,14 @@ export default function ProductDemand(props) {
     NProgress.start();
     preload.then(() => {
       setStepRouter(currentRoute.path);
-      history.push(`/product/demand/${currentRoute.path}`);
+      history.push(`${ManagePath}${ProductPath}${ProductDemandPath}/${currentRoute.path}`);
       NProgress.done();
     });
   }
 
   const nextStep = () => {
-    history.push(`/product/demand/hardware`)
-  }
+    history.push(`${ManagePath}${ProductPath}${ProductDemandPath}/hardware`);
+  };
 
   const bodyStyle = {
     paddingLeft: "2rem",
@@ -137,6 +172,33 @@ export default function ProductDemand(props) {
     paddingTop: "0.5rem",
     paddingBottom: "0.5rem",
     transition: " 0.5s all ease-in-out"
+  };
+
+  const postData = () => {
+    try {
+      form.validate();
+    } catch (error) {
+      return;
+    }
+    const temp = {
+      ...info,
+      ...form.getFieldsValue()
+    };
+    setInfo({
+      ...temp
+    });
+    postFWPNsave({
+      ...temp,
+      demandId: demandId
+    }).then(res => {
+      if (res.data.success) {
+        setInfo({
+          id: res.data.result
+        });
+        nextStep();
+        Message.success(t["submit.hardware.success"]);
+      }
+    });
   };
   return (
 
@@ -151,18 +213,112 @@ export default function ProductDemand(props) {
               return (
                 <Route
                   key={index}
-                  path={`/product/demand/${route.path}`}
+                  path={`${ManagePath}${ProductPath}${ProductDemandPath}/${route.path}`}
                   component={route.component}
                 />
               );
             })}
-            <Route exact path={"/product/demand"}>
-              <div>todo 添加导入过程声明和足以事项</div>
-              <div>
-                <Button type='primary' onClick={nextStep}>
-                  {t['index.start']}
-                </Button>
-              </div>
+            <Route exact path={`${ManagePath}${ProductPath}${ProductDemandPath}`}>
+              <Spin style={{ width: "100%" }} loading={loading}>
+                <DynamicOuterCard title={t["menu.title"]}>
+                  <Form
+                    form={form}
+                    scrollToFirstError
+                    labelAlign="left"
+                    onSubmit={postData}
+                    initialValues={info}
+                    labelCol={{ span: 4, offset: 0 }}
+                  >
+                    <Form.Item field="firmwareVersion" label={t["firmware.customization.info.version"]}
+
+                               required={true} rules={[{
+                      required: true,
+                      message: t["firmware.customization.info.version.error"]
+                    }]}>
+                      <Input
+                        style={{ width: 300 }}
+                        allowClear
+                        size={"large"}
+                        placeholder={t["firmware.customization.info.version.hint"]}
+                      />
+
+                    </Form.Item>
+                    <Form.Item field="firmwareProject" label={t["firmware.customization.info.project"]}
+
+                               required={true} rules={[{
+                      required: true,
+                      message: t["firmware.customization.info.project.error"]
+                    }]}>
+                      <Select
+                        size={"large"}
+                        placeholder={t["firmware.customization.info.project.hint"]}
+                        style={{ width: 300 }}
+                      >
+                        {project.map((option) => (
+                          <Option key={option.id} value={option.name}>
+                            {option.name}
+                          </Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                    <Form.Item field="firstImport" label={t["firmware.customization.info.project.history"]}
+
+                               required={true} rules={[{
+                      required: true,
+                      message: t["firmware.customization.info.project.history.error"]
+                    }]}>
+                      <DynamicRadioGroup
+                        direction="vertical"
+                        defaultValue={info?.firstImport}
+                        options={[
+                          { label: t["firmware.customization.info.project.history.first"], value: 1 },
+                          { label: t["firmware.customization.info.project.history.next"], value: 0 }
+                        ]}
+                        onChange={(value) => {
+                          form.setFieldValue("firstImport", value);
+                          setInfo({ firstImport: value });
+                        }}
+                      />
+                    </Form.Item>
+                    {
+                      info?.firstImport === 0 && mpnList.length > 0 &&
+                      <Form.Item field="lastMpn" label={t["firmware.customization.info.project.history.old"]}
+
+                                 required={true} rules={[{
+                        required: true,
+                        message: t["firmware.customization.info.version.error"]
+                      }]}>
+                        <Select
+                          size={"large"}
+                          style={{ width: 300 }}
+                          placeholder={t["firmware.customization.info.project.hint"]}
+                          onChange={(value) => {
+                            setInfo({ lastMpn: value });
+                            form.setFieldValue("lastMpn", value);
+                          }}
+                        >
+                          {mpnList.map((option, index) => (
+                            <Option key={index} value={option?.id}>
+                              {option?.fwPn}
+                            </Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                    }
+                    <DynamicDivider />
+                    <div className={style["context-next"]}>
+                      <Button type="primary"
+                              size={"large"}
+                              htmlType="submit"
+                              icon={<IconArrowRight />}
+                      >
+                        {t["hardware.production.info.next"]}
+                      </Button>
+                    </div>
+                  </Form>
+
+                </DynamicOuterCard>
+              </Spin>
             </Route>
           </Switch>
         </div>

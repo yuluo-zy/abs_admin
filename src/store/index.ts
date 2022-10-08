@@ -1,8 +1,9 @@
-import defaultSettings from '../settings.json';
+import defaultSettings from "../settings.json";
 
 export interface GlobalState {
   settings?: typeof defaultSettings;
   userInfo?: {
+    id?: string;
     name?: string;
     avatar?: string;
     job?: string;
@@ -17,28 +18,28 @@ export interface GlobalState {
 const initialState: GlobalState = {
   settings: defaultSettings,
   userInfo: {
-    permissions: {},
-  },
+    permissions: {}
+  }
 };
 
 export default function store(state = initialState, action) {
   switch (action.type) {
-    case 'update-settings': {
+    case "update-settings": {
       const { settings } = action.payload;
       return {
         ...state,
-        settings,
+        settings
       };
     }
-    case 'update-userInfo': {
+    case "update-userInfo": {
       const { userInfo = initialState.userInfo, userLoading } = action.payload;
       return {
         ...state,
         userLoading,
-        userInfo,
+        userInfo
       };
     }
-    case 'update-userMenu': {
+    case "update-userMenu": {
       const { menu } = action.payload;
       return {
         ...state,

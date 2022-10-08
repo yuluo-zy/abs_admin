@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import cs from 'classnames';
-import { Card, Skeleton, Switch, Tag } from '@arco-design/web-react';
-import { IconCheckCircleFill, IconStarFill } from '@arco-design/web-react/icon';
-import styles from './style/index.module.less';
-import useLocale from '@/pages/product/demand/locale/useLocale';
+import React, { useEffect, useState } from "react";
+import cs from "classnames";
+import { Card, Skeleton, Switch, Tag } from "@arco-design/web-react";
+import { IconCheckCircleFill, IconStarFill } from "@arco-design/web-react/icon";
+import styles from "./style/index.module.less";
+import useLocale from "@/pages/product/demand/locale/useLocale";
 
 
 function CardBlock(props) {
@@ -11,7 +11,7 @@ function CardBlock(props) {
   const [status, setStatus] = useState(data.status);
   const [loading, setLoading] = useState(false);
   const t = useLocale();
-  const className = cs(styles['card-block'], styles[`rules-card`]);
+  const className = cs(styles["card-block"], styles[`rules-card`]);
 
   const changeStatus = async () => {
     setLoading(true);
@@ -41,12 +41,12 @@ function CardBlock(props) {
     if (status) {
       return (
         <Tag
-          color='green'
+          color="green"
           icon={<IconCheckCircleFill />}
           className={styles.status}
-          size='small'
+          size="small"
         >
-          {t['service.preselection.model.info.title.open']}
+          {t["service.preselection.model.info.title.open"]}
         </Tag>
       );
     }
@@ -62,9 +62,9 @@ function CardBlock(props) {
         loading ? (
           <Skeleton
             animation
-            text={{ rows: 1, width: ['100%'] }}
-            style={{ width: '120px', height: '24px' }}
-            className={styles['card-block-skeleton']}
+            text={{ rows: 1, width: ["100%"] }}
+            style={{ width: "120px", height: "24px" }}
+            className={styles["card-block-skeleton"]}
           />
         ) : (
           <>

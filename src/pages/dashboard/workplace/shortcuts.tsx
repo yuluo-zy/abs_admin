@@ -1,97 +1,53 @@
-import React from 'react';
-import { Card, Divider, Link, Message, Typography } from '@arco-design/web-react';
-import { IconFile, IconFire, IconMobile, IconSettings, IconStorage } from '@arco-design/web-react/icon';
-import useLocale from '@/utils/useHook/useLocale';
-import locale from './locale';
-import styles from './style/shortcuts.module.less';
+import React from "react";
+import { Card, Typography } from "@arco-design/web-react";
+import { IconArchive, IconStorage } from "@arco-design/web-react/icon";
+import useLocale from "@/utils/useHook/useLocale";
+import locale from "./locale";
+import styles from "./style/shortcuts.module.less";
+import { useHistory } from "react-router";
 
 function Shortcuts() {
   const t = useLocale(locale);
+  const history = useHistory();
 
   const shortcuts = [
     {
-      title: t['workplace.contentMgmt'],
-      key: 'Content Management',
-      icon: <IconFile />,
-    },
-    {
-      title: t['workplace.contentStatistic'],
-      key: 'Content Statistic',
+      title: t["workplace.contentStatistic"],
+      key: "product",
       icon: <IconStorage />,
+      path: "/manage/product"
     },
     {
-      title: t['workplace.advancedMgmt'],
-      key: 'Advanced Management',
-      icon: <IconSettings />,
-    },
-    {
-      title: t['workplace.onlinePromotion'],
-      key: 'Online Promotion',
-      icon: <IconMobile />,
-    },
-    {
-      title: t['workplace.marketing'],
-      key: 'Marketing',
-      icon: <IconFire />,
-    },
+      title: t["workplace.work.order"],
+      key: "work_order",
+      icon: <IconArchive />,
+      path: "/manage/work_order"
+    }
+    // {
+    //   title: t["workplace.advancedMgmt"],
+    //   key: "Advanced Management",
+    //   icon: <IconSettings />,
+    //   path: "/"
+    // }
   ];
 
-  const recentShortcuts = [
-    {
-      title: t['workplace.contentStatistic'],
-      key: 'Content Statistic',
-      icon: <IconStorage />,
-    },
-    {
-      title: t['workplace.contentMgmt'],
-      key: 'Content Management',
-      icon: <IconFile />,
-    },
-    {
-      title: t['workplace.advancedMgmt'],
-      key: 'Advanced Management',
-      icon: <IconSettings />,
-    },
-  ];
-
-  function onClickShortcut(key) {
-    Message.info({
-      content: (
-        <span>
-          You clicked <b>{key}</b>
-        </span>
-      ),
-    });
+  function onClickShortcut(path) {
+    history.push(path);
   }
 
   return (
     <Card>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         <Typography.Title heading={6}>
-          {t['workplace.shortcuts']}
+          {t["workplace.shortcuts"]}
         </Typography.Title>
-        <Link>{t['workplace.seeMore']}</Link>
       </div>
       <div className={styles.shortcuts}>
         {shortcuts.map((shortcut) => (
           <div
             className={styles.item}
             key={shortcut.key}
-            onClick={() => onClickShortcut(shortcut.key)}
-          >
-            <div className={styles.icon}>{shortcut.icon}</div>
-            <div className={styles.title}>{shortcut.title}</div>
-          </div>
-        ))}
-      </div>
-      <Divider />
-      <div className={styles.recent}>{t['workplace.recent']}</div>
-      <div className={styles.shortcuts}>
-        {recentShortcuts.map((shortcut) => (
-          <div
-            className={styles.item}
-            key={shortcut.key}
-            onClick={() => onClickShortcut(shortcut.key)}
+            onClick={() => onClickShortcut(shortcut.path)}
           >
             <div className={styles.icon}>{shortcut.icon}</div>
             <div className={styles.title}>{shortcut.title}</div>

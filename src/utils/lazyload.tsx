@@ -1,7 +1,7 @@
-import React from 'react';
-import loadable from '@loadable/component';
-import { Spin } from '@arco-design/web-react';
-import styles from '../style/layout.module.less';
+import React from "react";
+import loadable from "@loadable/component";
+import { Spin } from "@arco-design/web-react";
+import styles from "../style/layout.module.less";
 
 function load(fn, options) {
   const Component = loadable(fn, options);
@@ -29,6 +29,6 @@ export default (loader) =>
     fallback: LoadingComponent({
       pastDelay: true,
       error: false,
-      timedOut: false,
-    }),
+      timedOut: false
+    })
   });

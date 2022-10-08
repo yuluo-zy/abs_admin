@@ -1,30 +1,34 @@
-import { RulesProps } from '@arco-design/web-react';
-import { AxiosResponse } from 'axios';
-import { Data } from '@/utils/httpRequest';
-import React from 'react';
+import { RulesProps } from "@arco-design/web-react";
+import { AxiosResponse } from "axios";
+import { Data } from "@/utils/httpRequest";
+import React from "react";
 
 export type Recordable<T = any> = Record<string, T>;
-
+export type Ref = HTMLElement
+export type Props = Recordable
 export type ReadonlyRecordable<T = any> = Readonly<Record<string, T>>;
 
 export interface CallBackHandle {
   confirmCallback?: () => void;
   cancelCallback?: () => void;
+  data?: any;
 }
 
 export interface FormItemProps {
   label?: string;
-  type:
-    | 'input'
-    | 'select'
-    | 'date'
-    | 'multiple'
-    | 'rate'
-    | 'password'
-    | 'number'
-    | 'text'
-    | 'tree'
-    | 'upload' | 'self';
+  type?:
+    | "input"
+    | "select"
+    | "date"
+    | "multiple"
+    | "rate"
+    | "password"
+    | "number"
+    | "text"
+    | "tree"
+    | "cascader"
+    | "upload"
+    | "self";
   onChange?: () => void;
   field: string;
   options?: any;
@@ -34,7 +38,10 @@ export interface FormItemProps {
   labelCol?: Recordable | number;
   node?: any;
   limit?: number;
-  header?: string
+  header?: string;
+  loading?: boolean;
+  render?: any;
+  style?: any;
 }
 
 export interface FormList {
@@ -57,7 +64,8 @@ export interface FormProps {
   col?: number | number[];
   className?: string | string[];
   children?: any;
-  layout?: 'horizontal' | 'vertical' | 'inline';
+  style?: any;
+  layout?: "horizontal" | "vertical" | "inline";
   formList?: FormList;
 }
 
@@ -81,7 +89,6 @@ export interface ModeProps {
   onCancel?: () => void;
   onOk?: () => void;
   footer?: boolean;
-  children: any;
 }
 
 export interface DynamicCardProps {
@@ -91,6 +98,7 @@ export interface DynamicCardProps {
   headerStyle?: any;
   bodyStyle?: any;
   style?: any;
+  className?: any;
 }
 
 export interface ListProps {
@@ -107,6 +115,9 @@ export interface ListProps {
   size?: "mini" | "small" | "default" | "middle";
   rowSelection?: any;
   tools?: any;
+  tableClassName?: any;
+  current?: number;
+  setCurrent?: any;
 }
 
 export interface MenuItemProps {

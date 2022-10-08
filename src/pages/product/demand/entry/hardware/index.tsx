@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import DynamicOuterCard from '@/components/Dynamic/Card/outer-frame';
-import useLocale from '@/pages/product/demand/locale/useLocale';
-import { getProductionInfo } from '@/api/production';
+import React, { useEffect, useState } from "react";
+import DynamicOuterCard from "@/components/Dynamic/Card/outer-frame";
+import useLocale from "@/pages/product/demand/locale/useLocale";
+import { getProductionInfo } from "@/api/production";
 import {
   Button,
   Descriptions,
@@ -11,20 +11,22 @@ import {
   Radio,
   Space,
   Table,
+  Tag,
   Typography
-} from '@arco-design/web-react';
-import DynamicSkeleton from '@/components/Dynamic/Skeleton';
-import ResizableTitle from '@/components/Dynamic/Resizeable';
-import style from './style/index.module.less';
-import { ProductSelectItem } from '@/components/type';
-import cs from 'classnames';
-import { IconArrowRight, IconDelete } from '@arco-design/web-react/icon';
-import useFilter, { multiFilter } from '@/utils/useHook/useFilter';
-import DynamicRadioGroup from '@/components/Dynamic/Radio';
-import { ProductStore } from '@/store/product';
-import shallow from 'zustand/shallow';
-import { postProduction } from '@/api/demand';
-import { useHistory } from 'react-router';
+} from "@arco-design/web-react";
+import DynamicSkeleton from "@/components/Dynamic/Skeleton";
+import ResizableTitle from "@/components/Dynamic/Resizeable";
+import style from "./style/index.module.less";
+import { ProductSelectItem } from "@/components/type";
+import cs from "classnames";
+import { IconArrowRight, IconDelete } from "@arco-design/web-react/icon";
+import useFilter, { multiFilter } from "@/utils/useHook/useFilter";
+import DynamicRadioGroup from "@/components/Dynamic/Radio";
+import { ProductStore } from "@/store/product";
+import shallow from "zustand/shallow";
+import { postProduction } from "@/api/demand";
+import { useHistory } from "react-router";
+import { ManagePath, ProductDemandPath, ProductPath } from "@/utils/routingTable";
 
 const bodyCellStyle = {};
 const originColumns = [
@@ -154,22 +156,6 @@ export default function HardwareSelection() {
   const t = useLocale();
   const socSelect: ProductSelectItem[] = [
     {
-      name: t["hardware.production.info.soc"],
-      type: "core",
-      select: ["SINGLE", "DUAL"]
-    },
-    {
-      name: t["hardware.production.info.soc.antenna"],
-      type: "antenna",
-      select: ["N/A", "PCB", "IPEX"]
-    },
-    {
-      name: t["hardware.production.info.soc.package"],
-      type: "dimensions",
-      select: ["QFN56(7*7)", "QFN48(5*5)", "QFN48(6*6)",
-        "LGA48(7*7)", "QFN32(5*5)", "QFN28(4*4)"]
-    },
-    {
       name: t["hardware.production.info.soc.model"],
       type: "series",
       select: ["ESP8685", "ESP32-S3", "ESP32-C3(含ESP8685)", "ESP32-S2", "ESP32", "ESP8266"]
@@ -214,14 +200,14 @@ export default function HardwareSelection() {
   ];
   const product = [
     {
-      name: t["hardware.production.info.chip"],
-      type: "SoC",
-      description: t["hardware.production.info.chip.description"]
-    },
-    {
       name: t["hardware.production.info.modules"],
       type: "Module",
       description: t["hardware.production.info.modules.description"]
+    },
+    {
+      name: t["hardware.production.info.chip"],
+      type: "SoC",
+      description: t["hardware.production.info.chip.description"]
     }
   ];
 
@@ -247,7 +233,8 @@ export default function HardwareSelection() {
 
   useEffect(() => {
     fetchProductionList();
-    setCollapse(true)
+    setCollapse(false);
+    setSelectedRowKeys([moduleInfo?.id]);
   }, []);
 
   const [columns, setColumns] = useState(
@@ -329,7 +316,7 @@ export default function HardwareSelection() {
 
   const getSelectItem = (value: ProductSelectItem) => {
     // 获取 查询选项
-    let res = [];
+    const res = [];
     for (const element of value.select) {
       res.push({
         label: element, value: element
@@ -344,6 +331,7 @@ export default function HardwareSelection() {
     for (const key in item) {
       for (const info of originColumns) {
         if (info.dataIndex === key) {
+          if (info.dataIndex === "mpn") continue;
           res.push(
             {
               label: info.title,
@@ -358,33 +346,47 @@ export default function HardwareSelection() {
   };
 
   const postHardWare = (moduleInfo, demandId) => {
-    if(Object.keys(moduleInfo).length <= 0 || moduleInfo.id === undefined){
-      console.log(moduleInfo)
-      Notification.error({ title: "error", content: t["hardware.production.info.select.model.error"] })
-      return
+    if (Object.keys(moduleInfo).length <= 0 || moduleInfo.id === undefined) {
+      Notification.error({ title: "error", content: t["hardware.production.info.select.model.error"] });
+      return;
     }
-    if(demandId == undefined || demandId<=0){
-      Notification.error({ title: "error", content: t["hardware.production.info.select.model.demand.error"] })
-      return
+    if (demandId == undefined || demandId <= 0) {
+      Notification.error({ title: "error", content: t["hardware.production.info.select.model.demand.error"] });
+      return;
     }
     postProduction({
       demandId: demandId,
-      id:moduleInfo?.sid,
+      id: moduleInfo?.sid,
       productionId: moduleInfo.id
     }).then(res => {
-      if(res.data.success){
+      if (res.data.success) {
         Message.success(t["submit.hardware.success"]);
         setModuleInfo({
           sid: res.data.result
-        })
-        setVisible(false)
-        history.push(`/product/demand/service/preselection`)
+        });
+        setVisible(false);
+        history.push(`${ManagePath}${ProductPath}${ProductDemandPath}/service/preselection`);
       }
     }).catch(error => {
       Message.error(t["submit.hardware.error"]);
     });
   };
 
+  // const tableRef = useRef(null)
+
+  const [tableNode, setTableNode] = useState(null);
+
+  useEffect(() => {
+    if (tableNode) {
+      const node = tableNode.getElementsByClassName("arco-table-tr arco-table-row-checked");
+      if (node && node.length > 0) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        node[0].scrollIntoView();
+      }
+    }
+    return null;
+  }, [tableNode]);
 
   return (
     <div>
@@ -437,12 +439,35 @@ export default function HardwareSelection() {
                                                           onClick={onEmpty}>{t["hardware.production.info.operate"]}</Button>
         </div>
       </DynamicOuterCard>
+
       <DynamicOuterCard>
         <DynamicSkeleton text={{ rows: 10, width: "90rem" }}>
+          <div className={style["product-top"]}>
+            {
+              productList &&
+              <div className={style["product-total"]}>
+                <p>{t["hardware.production.info.total"] + productList.length}</p>
+              </div>
+            }
+            {
+              moduleInfo.mpn &&
+              <div className={style["product-info"]}>
+                <p>{t["hardware.production.info.select.model"]}
+                  <Tag color={"purple"} size="large" style={{ margin: "1px 5px 1px" }}> {moduleInfo.mpn}</Tag>
+                </p>
+              </div>
+            }
+          </div>
+
           <Table
-            className={style["table-resizable-column"]}
             scroll={{ x: true, y: 450 }}
             border
+            ref={value => {
+              if (value) {
+                const { getRootDomElement } = value;
+                setTableNode(getRootDomElement());
+              }
+            }}
             borderCell
             rowKey="id"
             components={components}
@@ -462,18 +487,7 @@ export default function HardwareSelection() {
         </DynamicSkeleton>
       </DynamicOuterCard>
       <div className={style["product-nuxt"]}>
-        {
-          productList &&
-          <div className={style["product-total"]}>
-            <p>{t["hardware.production.info.total"] + productList.length}</p>
-          </div>
-        }
-        {
-          moduleInfo.mpn &&
-          <div className={style["product-info"]}>
-            <p>{t["hardware.production.info.select.model"] + moduleInfo.mpn}</p>
-          </div>
-        }
+
         <Button type="primary"
                 size={"large"}
                 icon={<IconArrowRight />}
@@ -484,13 +498,18 @@ export default function HardwareSelection() {
         <Modal
           title={t["hardware.modal.title"]}
           visible={visible}
-          style={{ width: "50%" }}
-          onOk={() => postHardWare(moduleInfo,demandId)}
+          style={{ minWidth: "50rem" }}
+          onOk={() => postHardWare(moduleInfo, demandId)}
           onCancel={() => setVisible(false)}
           autoFocus={false}
           focusLock={true}
         >
-          <p>{t["hardware.production.info.select.model"]} <b>{moduleInfo.mpn}</b></p>
+          <p>
+            {t["hardware.production.info.select.model"]}
+            <Tag color={"purple"} size="large"
+                 style={{ margin: "1px 5px 1px" }}>{moduleInfo.mpn}
+            </Tag>
+          </p>
           <Descriptions
             column={2}
             border

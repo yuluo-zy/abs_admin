@@ -32,11 +32,9 @@ body {
 
 .chart-wrapper {
   .bizcharts-tooltip {
-    background: linear-gradient(
-      304.17deg,
+    background: linear-gradient(304.17deg,
       rgb(253 254 255 / 60%) -6.04%,
-      rgb(244 247 252 / 60%) 85.2%
-    ) !important;
+    rgb(244 247 252 / 60%) 85.2%) !important;
     border-radius: 6px;
     backdrop-filter: blur(10px);
     padding: 8px !important;
@@ -48,16 +46,41 @@ body {
 body[arco-theme='dark'] {
   .chart-wrapper {
     .bizcharts-tooltip {
-      background: linear-gradient(
-        304.17deg,
+      background: linear-gradient(304.17deg,
         rgba(90, 92, 95, 0.6) -6.04%,
-        rgba(87, 87, 87, 0.6) 85.2%
-      ) !important;
+      rgba(87, 87, 87, 0.6) 85.2%) !important;
       backdrop-filter: blur(10px);
       border-radius: 6px;
       box-shadow: none !important;
     }
   }
 }
-@import "@wangeditor/editor/dist/css/style.css";
+
+.slate-HeadingToolbar {
+  padding: 17px 60px !important;
+}
+
+.tippy-box[data-theme~='tomato'] {
+  background-color: tomato;
+  color: yellow;
+}
+
+.drag-button {
+  overflow: hidden;
+  padding: 0;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border-style: none;
+  cursor: pointer;
+  outline: 0;
+
+  min-width: 18px;
+  min-height: 18px;
+}
+
+.MuiSvgIcon-root {
+  font-size: 18px !important;
+}
+
+//@import "@wangeditor/editor/dist/css/style.css";
 

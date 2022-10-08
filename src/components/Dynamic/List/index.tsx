@@ -1,17 +1,19 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Button, PaginationProps, Space, Table } from '@arco-design/web-react';
-import { IconDownload, IconPlus } from '@arco-design/web-react/icon';
-import useLocale from '@/utils/useHook/useLocale';
-import SearchForm from './search-form';
-import locale from './locale';
-import styles from './style/index.module.less';
-import DynamicCard from '@/components/Dynamic/Card';
-import { ListProps } from '@/components/type';
-import DynamicModal from '@/components/Dynamic/Modal';
+import React, { useEffect, useImperativeHandle, useMemo, useState } from "react";
+import { Button, PaginationProps, Space, Table } from "@arco-design/web-react";
+import { IconDownload, IconPlus } from "@arco-design/web-react/icon";
+import useLocale from "@/utils/useHook/useLocale";
+import SearchForm from "./search-form";
+import locale from "./locale";
+import styles from "./style/index.module.less";
+import DynamicCard from "@/components/Dynamic/Card";
+import { ListProps } from "@/components/type";
+import DynamicModal from "@/components/Dynamic/Modal";
+import { isArray } from "@/utils/is";
 
-export default function SearchList(props: ListProps) {
+const SearchList = React.forwardRef((props: ListProps, ref) => {
   const t = useLocale(locale);
   const [called, setCalled] = useState(true);
+
 
   const tableCallback = async () => {
     setCalled(!called);
@@ -28,7 +30,10 @@ export default function SearchList(props: ListProps) {
     select,
     selectItem,
     rowSelection,
-    tools
+    tools,
+    tableClassName,
+    current,
+    setCurrent
   } = props;
 
   const [data, setData] = useState([]);
@@ -38,25 +43,33 @@ export default function SearchList(props: ListProps) {
     sizeCanChange: true,
     showTotal: true,
     pageSize: 10,
-    current: 1,
-    pageSizeChangeResetCurrent: true,
+    current: current || 1,
+    pageSizeChangeResetCurrent: true
   });
 
   const [loading, setLoading] = useState(true);
   const [formParams, setFormParams] = useState({});
 
-  useEffect(() => {
-    fetchData();
-  }, [props.onChange]);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
     fetchData();
+    if (setCurrent) {
+      setCurrent(pagination.current);
+    }
   }, [
     pagination.current,
     pagination.pageSize,
     called,
-    JSON.stringify(formParams),
+    props.onChange,
+    JSON.stringify(formParams)
   ]);
+
+  // const getFetchData = (value) => {
+  //   if()
+  // }
 
   function fetchData() {
     const { current, pageSize } = pagination;
@@ -64,15 +77,15 @@ export default function SearchList(props: ListProps) {
     fetchRemoteData({
       pageNo: current,
       pageSize,
-      ...formParams,
+      ...formParams
     }).then((res) => {
-      setData(res.data.result.data);
+      setData(res.data.result.data || res.data.result);
       if (res.data.result.totalCount) {
         setPatination({
           ...pagination,
           current,
           pageSize,
-          total: res.data.result.totalCount,
+          total: res.data.result.totalCount
         });
       }
 
@@ -85,11 +98,39 @@ export default function SearchList(props: ListProps) {
   }
 
   function handleSearch(params) {
-    setFormParams(params);
+    const temp = {};
+    for (const i in params) {
+      if (isArray(params[i])) {
+        temp[i] = params[i].toString();
+      } else {
+        temp[i] = params[i];
+      }
+    }
+    setFormParams(temp);
   }
 
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
+
+  useImperativeHandle(ref, () => ({
+    callBack: () => {
+      tableCallback().catch(error => {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      });
+    },
+    setCurrentPage: (page) => {
+      setPatination(value => {
+        return {
+          ...value,
+          current: page
+        };
+      });
+    },
+    getCurrentPage: () => {
+      return pagination.current;
+    }
+  }));
 
   return (
     <div>
@@ -99,7 +140,7 @@ export default function SearchList(props: ListProps) {
             <SearchForm onSearch={handleSearch} searchItem={selectItem} />
           </>
         )}
-        <div className={styles['button-group']}>
+        <div className={styles["button-group"]}>
           <Space>
             {add && (
               <>
@@ -108,7 +149,7 @@ export default function SearchList(props: ListProps) {
                   icon={<IconPlus />}
                   onClick={() => setVisible(true)}
                 >
-                  {t['searchTable.operations.add']}
+                  {t["searchTable.operations.add"]}
                 </Button>
 
                 <DynamicModal
@@ -126,15 +167,15 @@ export default function SearchList(props: ListProps) {
                       setVisible(false);
                       setConfirmLoading(false);
                       tableCallback();
-                    },
+                    }
                   })}
                 </DynamicModal>
               </>
             )}
             {upload === true && (
               <>
-                {' '}
-                <Button>{t['searchTable.operations.upload']}</Button>{' '}
+                {" "}
+                <Button>{t["searchTable.operations.upload"]}</Button>{" "}
               </>
             )}
             {tools}
@@ -143,7 +184,7 @@ export default function SearchList(props: ListProps) {
             {download === true && (
               <>
                 <Button icon={<IconDownload />}>
-                  {t['searchTable.operation.download']}
+                  {t["searchTable.operation.download"]}
                 </Button>
               </>
             )}
@@ -151,15 +192,19 @@ export default function SearchList(props: ListProps) {
         </div>
         <Table
           rowKey="id"
+          scroll={{ x: true }}
           loading={loading}
           onChange={onChangeTable}
           pagination={pagination}
           columns={columns}
           data={data}
           size={size}
-          rowSelection ={rowSelection}
+          className={tableClassName}
+          rowSelection={rowSelection}
         />
       </DynamicCard>
     </div>
   );
-}
+});
+
+export default SearchList;

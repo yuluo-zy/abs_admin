@@ -1,0 +1,60 @@
+.home {
+  margin: 1rem;
+  width: 100%;
+
+  .right {
+    width: 100%;
+    vertical-align: center;
+
+    :global(.arco-link) {
+      height: 18px;
+    }
+  }
+}
+
+@nav-size-height: 60px;
+@layout-max-width: 1200px;
+
+.layout {
+  min-width: @layout-max-width;
+  width: 100%;
+  min-height: 99vh;
+}
+
+.layout-navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: @nav-size-height;
+  z-index: 100;
+
+  &-hidden {
+    height: 0;
+  }
+}
+
+.layout-content {
+  width: 100%;
+  height: 100vh;
+  padding-top: @nav-size-height;
+}
+
+.table {
+  margin: 3rem 3%;
+}
+
+.c2 {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.c2-style {
+  width: 100%;
+  height: calc(60vh - 150px);
+  background-color: var(--color-bg-1);
+  @media screen and (max-height: 800px) {
+    height: calc(60vh - 200px);
+  }
+}
+
