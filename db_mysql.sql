@@ -2,11 +2,11 @@
 --
 -- Host: 127.0.0.1    Database: test
 -- ------------------------------------------------------
--- Server version	5.7.33
-
+-- Server version	5.7.3
 --
 -- Table structure for table `sys_dict`
 --
+use abs;
 
 DROP TABLE IF EXISTS `sys_dict`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
