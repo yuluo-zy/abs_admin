@@ -4,14 +4,8 @@
   min-width: 1200px;
 
   .banner {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-
-    img {
-      height: 100%;
-    }
+    width: 550px;
+    background: linear-gradient(163.85deg, #1d2129 0%, #00308f 100%);
   }
 
   .content {
@@ -49,6 +43,18 @@
     color: var(--color-fill-1);
   }
 }
+
+.banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &-inner {
+    height: 100%;
+    flex: 1;
+  }
+}
+
 .protocol {
   display: flex;
 

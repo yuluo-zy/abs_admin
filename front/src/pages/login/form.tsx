@@ -7,11 +7,10 @@ import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale";
 import styles from "./style/index.module.less";
 import { loginWithUserName } from "@/api/login";
-import { UserToken } from "@/components/type";
 import LoginProtocol from "@/pages/login/protocol";
 import { defaultRoute } from "@/routes";
 import { useHistory } from "react-router";
-import { ManagePath } from "@/utils/routingTable";
+import {code_success} from "@/utils/httpRequest";
 
 export default function LoginForm() {
   const formRef = useRef<FormInstance>();
@@ -24,7 +23,7 @@ export default function LoginForm() {
   const t = useLocale(locale);
 
   const [rememberPassword, setRememberPassword] = useState(!!loginParams);
-  function afterLoginSuccess(result: UserToken) {
+  function afterLoginSuccess(result) {
     // 记住密码
     if (rememberPassword) {
       setLoginParams(JSON.stringify(result));
@@ -33,9 +32,9 @@ export default function LoginForm() {
     }
     // 记录登录状态
     sessionStorage.setItem("userStatus", "login");
-    sessionStorage.setItem("userToken", result.token);
-    sessionStorage.setItem("userName", result.username);
-    history.replace(`${ManagePath}/` + defaultRoute);
+    sessionStorage.setItem("userToken", result?.access_token);
+    sessionStorage.setItem("userName", result?.user?.name);
+    history.replace(defaultRoute);
   }
 
   function login(data) {
@@ -43,9 +42,9 @@ export default function LoginForm() {
     setLoading(true);
     loginWithUserName(data)
       .then((res) => {
-        const { success: success, result, message } = res.data;
-        if (success === true) {
-          afterLoginSuccess(result);
+        const { code, data, message } = res.data;
+        if (code === code_success) {
+          afterLoginSuccess(data);
         } else {
           setErrorMessage(message || t["login.system.user.login.error"]);
         }
@@ -61,15 +60,15 @@ export default function LoginForm() {
     });
   }
 
-  // 读取 localStorage，设置初始值
-  useEffect(() => {
-    const rememberPassword = !!loginParams;
-    setRememberPassword(rememberPassword);
-    if (formRef.current && rememberPassword) {
-      const parseParams: UserToken = JSON.parse(loginParams);
-      formRef.current.setFieldsValue(parseParams);
-    }
-  }, [loginParams]);
+  // // 读取 localStorage，设置初始值
+  // useEffect(() => {
+  //   const rememberPassword = !!loginParams;
+  //   setRememberPassword(rememberPassword);
+  //   if (formRef.current && rememberPassword) {
+  //     const parseParams = JSON.parse(loginParams);
+  //     formRef.current.setFieldsValue(parseParams);
+  //   }
+  // }, [loginParams]);
 
   return (
     <div className={styles["login-form-wrapper"]}>
@@ -82,7 +81,7 @@ export default function LoginForm() {
       <div className={styles["login-form-error-msg"]}>{errorMessage}</div>
       <Form className={styles["login-form"]} layout="vertical" ref={formRef}>
         <Form.Item
-          field="userName"
+          field="account"
           rules={[{ required: true, message: t["login.form.userName.errMsg"] }]}
         >
           <Input prefix={<IconUser />} onPressEnter={onSubmitClick} />

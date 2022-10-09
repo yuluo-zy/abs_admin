@@ -143,10 +143,6 @@ export interface MessageItemProps {
   data: RoleItem;
 }
 
-export interface UserToken {
-  token: string;
-  username: string;
-}
 
 export interface ProductSelectItem {
   name: string,

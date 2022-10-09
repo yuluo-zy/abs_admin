@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import cs from "classnames";
 import { Button, Message } from "@arco-design/web-react";
 import useLocale from "@/utils/useHook/useLocale";
@@ -13,9 +12,9 @@ import { FormItemProps } from "@/components/type";
 function Security() {
   const t = useLocale(locale);
 
-  const userInfo = useSelector((state: any) => {
-    return state.userInfo || {};
-  });
+  // const userInfo = useSelector((state: any) => {
+  //   return state.userInfo || {};
+  // });
 
   const data = [
     {
@@ -112,16 +111,16 @@ function Security() {
   const [model, setModel] = useState(false);
   const [server, setServer] = useState(null);
   const [loading, setLoading] = useState(false);
-  const postData = () => {
-    if (server === "password") {
-      putUserPassword(userInfo.id, { password: info }).then(res => {
-        if (res.data.success) {
-          Message.info("Successfully modified");
-          setModel(value => !value);
-        }
-      });
-    }
-  };
+  // const postData = () => {
+  //   if (server === "password") {
+  //     putUserPassword(userInfo.id, { password: info }).then(res => {
+  //       if (res.data.success) {
+  //         Message.info("Successfully modified");
+  //         setModel(value => !value);
+  //       }
+  //     });
+  //   }
+  // };
   return (
     <div className={styles["security"]}>
       {data.map((item, index) => (

@@ -148,7 +148,7 @@ impl SysUserService {
                     .cache_service
                     .get_string(&format!("captch:account_{}", &arg.account))
                     .await?;
-                if cache_code.eq(&arg.vcode) {
+                if  arg.vcode.is_none() || cache_code.eq(arg.vcode.as_ref().unwrap()) {
                     error = Some(Error::from("验证码不正确!"))
                 }
                 // check pwd
@@ -170,7 +170,7 @@ impl SysUserService {
                         CONTEXT.config.sms_cache_send_key_prefix, &arg.account
                     ))
                     .await?;
-                if sms_code.eq(&arg.vcode) {
+                if arg.vcode.is_none() || sms_code.eq(arg.vcode.as_ref().unwrap()) {
                     error = Some(Error::from("验证码不正确!"));
                 }
             }

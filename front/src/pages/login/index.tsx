@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import Footer from "@/components/Footer";
+import Logo from "@/assets/logo.svg";
 import LoginForm from "./form";
+import LoginBanner from "./banner";
 import styles from "./style/index.module.less";
 import checkLogin from "@/utils/checkLogin";
 import { useHistory } from "react-router";
@@ -12,7 +14,6 @@ import IconButton from "@/components/NavBar/IconButton";
 import { IconLanguage } from "@arco-design/web-react/icon";
 import defaultLocale from "@/locale";
 import { GlobalContext } from "@/context";
-import LoginNode from "@/assets/login_node.png";
 
 function Login() {
   const { setLang, lang } = useContext(GlobalContext);
@@ -27,40 +28,45 @@ function Login() {
   }, []);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.banner}>
-        <img src={LoginNode} />
+      <div className={styles.container}>
+        <div className={styles.logo}>
+          <Logo />
+        </div>
+        <div className={styles.banner}>
+          <div className={styles["banner-inner"]}>
+            <LoginBanner />
+          </div>
+        </div>
+        <div className={styles.content}>
+          <div className={styles.multi}>
+            <Select
+                triggerElement={<IconButton icon={<IconLanguage />} />}
+                options={[
+                  { label: "中文", value: "zh-CN" },
+                  { label: "English", value: "en-US" }
+                ]}
+                value={lang}
+                triggerProps={{
+                  autoAlignPopupWidth: false,
+                  autoAlignPopupMinWidth: true,
+                  position: "br"
+                }}
+                trigger="hover"
+                onChange={(value) => {
+                  setLang(value);
+                  const nextLang = defaultLocale[value];
+                  Message.info(`${nextLang["message.lang.tips"]}${value}`);
+                }}
+            />
+          </div>
+          <div className={styles["content-inner"]}>
+            <LoginForm />
+          </div>
+          <div className={styles.footer}>
+            <Footer isLink={true} />
+          </div>
+        </div>
       </div>
-      <div className={styles.content}>
-        <div className={styles.multi}>
-          <Select
-            triggerElement={<IconButton icon={<IconLanguage />} />}
-            options={[
-              { label: "中文", value: "zh-CN" },
-              { label: "English", value: "en-US" }
-            ]}
-            value={lang}
-            triggerProps={{
-              autoAlignPopupWidth: false,
-              autoAlignPopupMinWidth: true,
-              position: "br"
-            }}
-            trigger="hover"
-            onChange={(value) => {
-              setLang(value);
-              const nextLang = defaultLocale[value];
-              Message.info(`${nextLang["message.lang.tips"]}${value}`);
-            }}
-          />
-        </div>
-        <div className={styles["content-inner"]}>
-          <LoginForm />
-        </div>
-        <div className={styles.footer}>
-          <Footer isLink={true} />
-        </div>
-      </div>
-    </div>
   );
 }
 

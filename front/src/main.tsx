@@ -69,11 +69,7 @@ function Index() {
           <GlobalContext.Provider value={contextValue}>
             <Switch>
               <Route path={LoginPath} component={Login} />
-              {/*<Route path={TicketPath} component={lazyload(() => import("@/open/work_order"))} />*/}
-              <Route path={ManagePath} render={toMain} />
-              <Route path={RootPath} exact>
-                <Redirect to={{ pathname: TicketPath }} />
-              </Route>
+              <Route path={RootPath} render={toMain} />
               <Route
                 path={AnyPath}
                 component={lazyload(() => import("@/components/Exception/404"))}

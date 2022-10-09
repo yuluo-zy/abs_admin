@@ -2,11 +2,12 @@ import Axios from "@/utils/axios";
 import { AxiosResponse } from "axios";
 
 export interface Data {
-  code: number;
+  code: number | string;
   message: string;
-  result: any;
-  success: boolean;
+  data: any;
 }
+
+export const code_success = "SUCCESS"
 
 export const httpGet = (url: string, data?): Promise<AxiosResponse<Data>> => {
   return Axios({
