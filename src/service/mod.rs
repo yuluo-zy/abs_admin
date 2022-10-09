@@ -108,7 +108,9 @@ impl Default for ServiceContext {
             sys_dict_service: SysDictService {},
             sys_auth_service: SysAuthService {},
             sys_trash_service: SysTrashService {},
-            sys_file_service: SysFileService {},
+            sys_file_service: SysFileService {
+                file_path: config.file_path.clone()
+            },
             config,
         }
     }

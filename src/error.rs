@@ -2,6 +2,9 @@
 use std::error::Error as StdError;
 use std::fmt::{self, Debug, Display};
 use std::io;
+use actix_multipart::MultipartError;
+use actix_web::error::BlockingError;
+use actix_web::ResponseError;
 
 use serde::de::Visitor;
 use serde::ser::{Serialize, Serializer};
@@ -57,6 +60,18 @@ impl From<&dyn std::error::Error> for Error {
 impl From<Error> for std::io::Error {
     fn from(arg: Error) -> Self {
         arg.into()
+    }
+}
+
+impl From<MultipartError> for Error {
+    fn from(arg: MultipartError) -> Self {
+        return Error::E(arg.to_string())
+    }
+}
+
+impl From<BlockingError> for Error{
+    fn from(arg: BlockingError) -> Self {
+        return Error::E(arg.to_string())
     }
 }
 

@@ -13,12 +13,14 @@ use std::{
     rc::Rc,
 };
 
+use log::{log, Level};
+
 pub struct Auth;
 
 impl<S: 'static> Transform<S, ServiceRequest> for Auth
-where
-    S: Service<ServiceRequest, Response = ServiceResponse<BoxBody>, Error = Error>,
-    S::Future: 'static,
+    where
+        S: Service<ServiceRequest, Response=ServiceResponse<BoxBody>, Error=Error>,
+        S::Future: 'static,
 {
     type Response = ServiceResponse<BoxBody>;
     type Error = Error;
@@ -39,9 +41,9 @@ pub struct AuthMiddleware<S> {
 }
 
 impl<S> Service<ServiceRequest> for AuthMiddleware<S>
-where
-    S: Service<ServiceRequest, Response = ServiceResponse<BoxBody>, Error = Error> + 'static,
-    S::Future: 'static,
+    where
+        S: Service<ServiceRequest, Response=ServiceResponse<BoxBody>, Error=Error> + 'static,
+        S::Future: 'static,
 {
     type Response = ServiceResponse<BoxBody>;
     type Error = Error;
@@ -60,44 +62,42 @@ where
 
         let token = req
             .headers()
-            .get("access_token")
-            .map(|v| v.to_str().unwrap_or_default().to_string())
+            .get("Authorization")
+            .map(|v| v.to_str().unwrap_or_default().to_string().replace("Bearer ", ""))
             .unwrap_or_default();
         let path = req.path().to_string();
-        // let fut = srv.call(req);
 
         Box::pin(async move {
             //debug mode not enable auth
-            if !CONTEXT.config.debug {
-                if !is_white_list_api(&path) {
-                    //非白名单检查token是否有效
-                    match checked_token(&token, &path).await {
-                        Ok(data) => {
-                            match check_auth(&data, &path).await {
-                                Ok(_) => {}
-                                Err(e) => {
-                                    //仅提示拦截
-                                    let resp: RespVO<String> = RespVO {
-                                        code: Some("-1".to_string()),
-                                        msg: Some(format!("无权限访问:{}", e.to_string())),
-                                        data: None,
-                                    };
-                                    return Ok(req.into_response(resp.resp_json()));
-                                }
+            if !is_white_list_api(&path) {
+                //非白名单检查token是否有效
+                match checked_token(&token, &path).await {
+                    Ok(data) => {
+                        match check_auth(&data, &path).await {
+                            Ok(_) => {}
+                            Err(e) => {
+                                //仅提示拦截
+                                let resp: RespVO<String> = RespVO {
+                                    code: Some("-1".to_string()),
+                                    msg: Some(format!("无权限访问:{}", e.to_string())),
+                                    data: None,
+                                };
+                                return Ok(req.into_response(resp.resp_json()));
                             }
                         }
-                        Err(e) => {
-                            //401 http状态码会强制前端退出当前登陆状态
-                            let resp: RespVO<String> = RespVO {
-                                code: Some("-1".to_string()),
-                                msg: Some(format!("Unauthorized for:{}", e.to_string())),
-                                data: None,
-                            };
-                            return Err(ErrorUnauthorized(serde_json::json!(&resp).to_string()));
-                        }
+                    }
+                    Err(e) => {
+                        //401 http状态码会强制前端退出当前登陆状态
+                        let resp: RespVO<String> = RespVO {
+                            code: Some("-1".to_string()),
+                            msg: Some(format!("Unauthorized for:{}", e.to_string())),
+                            data: None,
+                        };
+                        return Err(ErrorUnauthorized(serde_json::json!(&resp).to_string()));
                     }
                 }
             }
+
             let res = svc.call(req).await?;
             Ok(res)
         })

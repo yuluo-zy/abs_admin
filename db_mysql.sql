@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS `storage_file`;
 SET character_set_client = utf8mb4 ;
 CREATE TABLE `storage_file` (
                             `id` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '键',
+                            `old_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
                             `file_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
                             `file_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
                             `del` int(1) NOT NULL DEFAULT '1',

@@ -83,6 +83,7 @@ pub struct SysTrash {
 #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 pub struct StorageFile {
     pub id: Option<String>,
+    pub old_name: Option<String>,
     pub file_name: Option<String>,
     pub file_path: Option<String>,
     pub del: Option<i32>,

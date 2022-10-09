@@ -38,6 +38,8 @@ pub struct ApplicationConfig {
     pub login_fail_retry: u64,
     ///重试等待时间
     pub login_fail_retry_wait_sec: u64,
+    ///存储位置
+    pub file_path: String
 }
 
 ///默认配置
