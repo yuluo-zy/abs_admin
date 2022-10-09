@@ -9,7 +9,6 @@ import {
   IconTag
 } from "@arco-design/web-react/icon";
 import { useSelector } from "react-redux";
-import { GlobalState } from "@/store";
 import { GlobalContext } from "@/context";
 import useLocale from "@/utils/useHook/useLocale";
 import Logo from "@/assets/logo.svg";
@@ -18,14 +17,12 @@ import styles from "./style/index.module.less";
 import defaultLocale from "@/locale";
 import { useSessionStorage } from "@/utils/useHook/useStorage";
 import { loginOut } from "@/api/login";
-import HelpInfo from "@/pages/help";
-import { setHelpKey } from "@/store/help";
 import { useHistory } from "react-router";
 import { LoginPath } from "@/utils/routingTable";
 
 function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boolean, title?: string }) {
   const t = useLocale();
-  const userInfo = useSelector((state: GlobalState) => state.userInfo);
+  // const userInfo = useSelector((state: GlobalState) => state.userInfo);
   const history = useHistory();
 
   const [_, setUserStatus] = useSessionStorage("userStatus");
@@ -118,18 +115,6 @@ function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boo
               }}
             />
           </li>
-          {isLogIn && <li>
-            <Tooltip
-              content={
-                "help"
-              }
-            >
-              <IconButton
-                icon={<IconTag />}
-                onClick={() => setHelpKey("1")}
-              />
-            </Tooltip>
-          </li>}
           <li>
             <Tooltip
               content={
@@ -144,18 +129,17 @@ function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boo
               />
             </Tooltip>
           </li>
-          {isLogIn && userInfo && (
-            <li>
-              <Dropdown droplist={droplist} position="br">
-                <Avatar size={32} style={{ cursor: "pointer" }}>
-                  <img src={get_avatar(userInfo.name)} alt={userInfo.name} />
-                </Avatar>
-              </Dropdown>
-            </li>
-          )}
+          {/*{isLogIn && userInfo && (*/}
+          {/*  <li>*/}
+          {/*    <Dropdown droplist={droplist} position="br">*/}
+          {/*      <Avatar size={32} style={{ cursor: "pointer" }}>*/}
+          {/*        <img src={get_avatar(userInfo.name)} alt={userInfo.name} />*/}
+          {/*      </Avatar>*/}
+          {/*    </Dropdown>*/}
+          {/*  </li>*/}
+          {/*)}*/}
         </ul>
       </div>
-      <HelpInfo />
     </>
 
   );

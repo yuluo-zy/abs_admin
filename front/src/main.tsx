@@ -1,13 +1,10 @@
 import "./style/global.less";
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-import { createStore } from "redux";
-import { Provider } from "react-redux";
 import { ConfigProvider } from "@arco-design/web-react";
 import zhCN from "@arco-design/web-react/es/locale/zh-CN";
 import enUS from "@arco-design/web-react/es/locale/en-US";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import rootReducer from "./store";
 import { GlobalContext } from "./context";
 import Login from "./pages/login";
 import checkLogin from "./utils/checkLogin";
@@ -17,8 +14,6 @@ import { Redirect } from "react-router";
 import lazyload from "@/utils/lazyload";
 import { AnyPath, LoginPath, ManagePath, RootPath, TicketPath } from "@/utils/routingTable";
 import PageLayout from "@/layout";
-// todo 去除 redux
-const store = createStore(rootReducer);
 
 function Index() {
   const [lang, setLang] = useStorage("arco-lang", "zh-CN");
@@ -37,7 +32,6 @@ function Index() {
 
   const toMain = () => {
     if (checkLogin()) {
-      // return lazyload(() => import("@/layout"));
       return <PageLayout />;
     } else {
       return <Redirect to={{ pathname: "/login" }} />;
@@ -72,11 +66,10 @@ function Index() {
           }
         }}
       >
-        <Provider store={store}>
           <GlobalContext.Provider value={contextValue}>
             <Switch>
               <Route path={LoginPath} component={Login} />
-              <Route path={TicketPath} component={lazyload(() => import("@/open/work_order"))} />
+              {/*<Route path={TicketPath} component={lazyload(() => import("@/open/work_order"))} />*/}
               <Route path={ManagePath} render={toMain} />
               <Route path={RootPath} exact>
                 <Redirect to={{ pathname: TicketPath }} />
@@ -87,7 +80,6 @@ function Index() {
               />
             </Switch>
           </GlobalContext.Provider>
-        </Provider>
       </ConfigProvider>
     </BrowserRouter>
   );

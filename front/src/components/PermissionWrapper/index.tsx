@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { GlobalState } from "@/store";
-import { useSelector } from "react-redux";
 import authentication, { AuthParams } from "@/utils/authentication";
 
 type PermissionWrapperProps = AuthParams & {
@@ -12,15 +10,15 @@ const PermissionWrapper = (
 ) => {
   const { backup, requiredPermissions, oneOfPerm } = props;
   const [hasPermission, setHasPermission] = useState(false);
-  const userInfo = useSelector((state: GlobalState) => state.userInfo);
+  // const userInfo = useSelector((state: GlobalState) => state.userInfo);
 
-  useEffect(() => {
-    const hasPermission = authentication(
-      { requiredPermissions, oneOfPerm },
-      userInfo.permissions
-    );
-    setHasPermission(hasPermission);
-  }, [requiredPermissions, oneOfPerm, userInfo.permissions]);
+  // useEffect(() => {
+  //   const hasPermission = authentication(
+  //     { requiredPermissions, oneOfPerm },
+  //     userInfo.permissions
+  //   );
+  //   setHasPermission(hasPermission);
+  // }, [requiredPermissions, oneOfPerm, userInfo.permissions]);
 
   if (hasPermission) {
     return <>{convertReactElement(props.children)}</>;
