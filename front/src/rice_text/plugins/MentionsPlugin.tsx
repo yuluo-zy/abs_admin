@@ -10,8 +10,6 @@ import {
 } from "./LexicalTypeaheadMenuPlugin";
 import { $createMentionNode } from "@/rice_text/components/MentionNode";
 import "./styles/MentionsPlugin.less";
-import { getRelatable } from "@/api/demand";
-import { ProductStore } from "@/store/product";
 import shallow from "zustand/shallow";
 import { IconUser } from "@arco-design/web-react/icon";
 
@@ -24,18 +22,19 @@ interface UserInfo {
 function useMentionLookupService() {
   // TODO 人员查询功能
   const [results, setResults] = useState<Array<UserInfo>>([]);
-  const [demandId] = ProductStore(state => [state.demandId], shallow);
+  // const [demandId] = ProductStore(state => [state.demandId], shallow);
   // 进行 人员查询
+    const demandId = []
   useEffect(() => {
     let isUnmount = false;
     if (demandId) {
-      getRelatable({
-        demandId
-      }).then(res => {
-        if (res.data.success && !isUnmount) {
-          setResults(res.data.result);
-        }
-      });
+      // getRelatable({
+      //   demandId
+      // }).then(res => {
+      //   if (res.data.success && !isUnmount) {
+      //     setResults(res.data.result);
+      //   }
+      // });
     }
     return () => {
       isUnmount = true;

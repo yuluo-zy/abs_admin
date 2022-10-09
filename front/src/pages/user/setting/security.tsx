@@ -4,7 +4,6 @@ import { Button, Message } from "@arco-design/web-react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale";
 import styles from "./style/index.module.less";
-import { putUserPassword, updatePassword } from "@/api/user";
 import DynamicModal from "@/components/Dynamic/Modal";
 import DynamicForm from "@/components/Dynamic/Form";
 import { FormItemProps } from "@/components/type";
@@ -170,17 +169,17 @@ function Security() {
               return;
             }
             setLoading(true);
-            await updatePassword({ oldPassword: oldPassword, newPassword: password1 }).then(
-              (res) => {
-                if (res.data.success === true) {
-                  Message.success(
-                    t["userTable.columns.user.operation.success"]
-                  );
-                  setLoading(false);
-                  setModel(false);
-                }
-              }
-            );
+            // await updatePassword({ oldPassword: oldPassword, newPassword: password1 }).then(
+            //   (res) => {
+            //     if (res.data.success === true) {
+            //       Message.success(
+            //         t["userTable.columns.user.operation.success"]
+            //       );
+            //       setLoading(false);
+            //       setModel(false);
+            //     }
+            //   }
+            // );
           }}
         />
       </DynamicModal>

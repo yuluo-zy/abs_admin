@@ -36,7 +36,7 @@ function getIconFromKey(key) {
             return <IconUserGroup className={styles.icon}/>;
         case "user":
             return <IconUser className={styles.icon}/>;
-        case "product":
+        case "storage":
             return <IconNav className={styles.icon}/>;
         case "work_order":
             return <IconArchive className={styles.icon}/>;
@@ -52,6 +52,7 @@ function getFlattenRoutes(routes) {
     function travel(_routes) {
         _routes.forEach((route) => {
             if (route.key && !route.children) {
+                console.log(route.key)
                 route.component = lazyload(mod[`./pages/${route.key}/index.tsx`]);
                 res.push(route);
             } else if (isArray(route.children) && route.children.length) {

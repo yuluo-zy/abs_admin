@@ -62,6 +62,7 @@ const i18n = {
     "menu.dashboard": "仪表盘",
     "menu.list": "列表页",
     "menu.result": "结果页",
+    "menu.storage": "实验结果",
     "menu.exception": "异常页",
     "menu.form": "表单页",
     "menu.profile": "详情页",

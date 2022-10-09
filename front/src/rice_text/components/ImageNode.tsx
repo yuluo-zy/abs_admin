@@ -30,7 +30,6 @@ import { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection"
 import { mergeRegister } from "@lexical/utils";
 import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getFile } from "@/api/file";
 import ImageResizer from "./ui/ImageResizer";
 import { Image, Message } from "@arco-design/web-react";
 import { useFunctions } from "@/rice_text/context/SettingsContext";
@@ -84,7 +83,7 @@ function LazyImage({
 }): JSX.Element {
   const [file, setFile] = useState("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
   useEffect(() => {
-    const download = customRequest || getFile;
+    const download = customRequest ;
     download(fileId).then(res => {
       if (res.status === 200) {
         setFile(URL.createObjectURL(res.data));

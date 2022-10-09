@@ -78,3 +78,24 @@ pub struct SysTrash {
     pub data: Option<String>,
     pub create_date: Option<FastDateTime>,
 }
+
+/// 文件存储表
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+pub struct StorageFile {
+    pub id: Option<String>,
+    pub file_name: Option<String>,
+    pub file_path: Option<String>,
+    pub del: Option<i32>,
+    pub create_date: Option<FastDateTime>
+}
+
+/// 实验结果记录
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+pub struct StorageInfo {
+    pub id: Option<String>,
+    pub file_id: Option<String>,
+    pub user_name: Option<String>,
+    pub user_email: Option<String>,
+    pub user_send: bool,
+    pub create_date: Option<FastDateTime>
+}

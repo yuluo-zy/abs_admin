@@ -1,6 +1,6 @@
 use abs_admin::controller::{
     img_controller, sys_auth_controller, sys_dict_controller, sys_res_controller,
-    sys_role_controller, sys_user_controller,
+    sys_role_controller, sys_user_controller, sys_file_controller
 };
 use abs_admin::middleware::auth_actix::Auth;
 use abs_admin::service::CONTEXT;
@@ -117,6 +117,10 @@ async fn main() -> std::io::Result<()> {
             .route(
                 "/admin/auth/check",
                 web::post().to(sys_auth_controller::check),
+            )
+            .route(
+                "admin/file/add",
+                web::post().to(sys_file_controller::saveFile)
             )
     })
     .bind(&CONTEXT.config.server_url)?

@@ -21,7 +21,7 @@ import { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection"
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { mergeRegister } from "@lexical/utils";
 import "./styles/FileNode.less";
-import { getFile } from "@/api/file";
+// import { getFile } from "@/api/file";
 import { useFunctions } from "@/rice_text/context/SettingsContext";
 
 export interface FilePayload {
@@ -147,7 +147,7 @@ function FileComponent({ src, name, nodeKey }: {
   const [visible, setVisible] = useState(false);
   return <div draggable={draggable} className={"FileNode_tag"} ref={ref}>
     <Trigger
-      popup={() => <DownLoad src={src} fileDownload={fileDownload || getFile} closeTag={setVisible} />}
+      popup={() => <DownLoad src={src} fileDownload={fileDownload} closeTag={setVisible} />}
       autoFitPosition
       popupVisible={visible}
       onVisibleChange={(visible) => {

@@ -8,6 +8,32 @@
 --
 use abs;
 
+DROP TABLE IF EXISTS `storage_file`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+SET character_set_client = utf8mb4 ;
+CREATE TABLE `storage_file` (
+                            `id` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '键',
+                            `file_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                            `file_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                            `del` int(1) NOT NULL DEFAULT '1',
+                            `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+                            PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='文件存储';
+
+DROP TABLE IF EXISTS `storage_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+SET character_set_client = utf8mb4 ;
+CREATE TABLE `storage_info` (
+                                `id` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '键',
+                                `file_id` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文件键',
+                                `user_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                `user_email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                `user_send` BOOLEAN NOT NULL DEFAULT FALSE,
+                                `del` int(1) NOT NULL DEFAULT '1',
+                                `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+                                PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='实验存储';
+
 DROP TABLE IF EXISTS `sys_dict`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;

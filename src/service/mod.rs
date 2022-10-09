@@ -26,6 +26,7 @@ mod sys_trash_service;
 mod sys_user_role_service;
 /// 系统用户服务
 mod sys_user_service;
+mod sys_file_service;
 
 pub use crate::config::config::ApplicationConfig;
 pub use cache_service::*;
@@ -44,6 +45,7 @@ pub use sys_sms_service::*;
 pub use sys_trash_service::*;
 pub use sys_user_role_service::*;
 pub use sys_user_service::*;
+pub use sys_file_service::*;
 
 /// CONTEXT is all of the service struct
 pub static CONTEXT: Lazy<ServiceContext> = Lazy::new(|| ServiceContext::default());
@@ -67,6 +69,7 @@ pub struct ServiceContext {
     pub sys_dict_service: SysDictService,
     pub sys_auth_service: SysAuthService,
     pub sys_trash_service: SysTrashService,
+    pub sys_file_service: SysFileService
 }
 
 impl ServiceContext {
@@ -105,6 +108,7 @@ impl Default for ServiceContext {
             sys_dict_service: SysDictService {},
             sys_auth_service: SysAuthService {},
             sys_trash_service: SysTrashService {},
+            sys_file_service: SysFileService {},
             config,
         }
     }

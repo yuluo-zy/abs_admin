@@ -6,9 +6,7 @@ import {
   IconPoweroff,
   IconSettings,
   IconSunFill,
-  IconTag
 } from "@arco-design/web-react/icon";
-import { useSelector } from "react-redux";
 import { GlobalContext } from "@/context";
 import useLocale from "@/utils/useHook/useLocale";
 import Logo from "@/assets/logo.svg";
@@ -19,6 +17,7 @@ import { useSessionStorage } from "@/utils/useHook/useStorage";
 import { loginOut } from "@/api/login";
 import { useHistory } from "react-router";
 import { LoginPath } from "@/utils/routingTable";
+import {code_success} from "@/utils/httpRequest";
 
 function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boolean, title?: string }) {
   const t = useLocale();
@@ -41,8 +40,8 @@ function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boo
   function logout() {
     setUserStatus("logout");
     loginOut().then((r) => {
-      const { success } = r.data;
-      if (success === true) {
+      const { code } = r.data;
+      if (code === code_success) {
         Notification.success({
           title: "Success",
           content: t["menu.user.setting.login.out"]

@@ -23,6 +23,10 @@ export const routes: Route[] = [
             }
         ]
     },
+    {
+        name: "menu.storage",
+        key: "storage",
+    },
 ];
 
 export const getName = (path: string, routes) => {
@@ -79,7 +83,6 @@ export const useMenu = (userMenu: []): [Route[], string] => {
     const [permissionMenu, setPermissionMenu] = useState(routes);
     useMemo(() => {
         const newRoutes = filterUserMenu(userMenu,routes);
-        console.log(newRoutes)
         setPermissionMenu(value => newRoutes);
     }, [userMenu]);
 

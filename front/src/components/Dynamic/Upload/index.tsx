@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Message, Trigger, Upload } from "@arco-design/web-react";
 import useLocale from "@/utils/useHook/useLocale";
 import locale from "./locale";
-import { getFile, getFileInfo, postFile } from "@/api/file";
 import axios from "axios";
 import { UploadItem } from "@arco-design/web-react/es/Upload";
 import { IconDownload } from "@arco-design/web-react/icon";
@@ -77,7 +76,7 @@ function DynamicUpload(props) {
   const initDate = initDateFc || ((value, setList) => {
     if (listType === "picture-card") {
       if (value) {
-        const initImg = customInitImg || getFile;
+        const initImg = customInitImg;
         if (limit > 1) {
           // const index = value.split(",")
           for (const i of value) {
@@ -111,7 +110,7 @@ function DynamicUpload(props) {
       }
     }
     if (value) {
-      const initFile = customInitFile || getFileInfo;
+      const initFile = customInitFile;
       if (limit > 1) {
         // const index = value.split(",")
         for (const i of value) {
@@ -157,16 +156,16 @@ function DynamicUpload(props) {
       const complete = progressEvent.loaded / progressEvent.total * 100 | 0;
       onProgress(parseInt(String(complete), 10), progressEvent);
     };
-    postFile(formData, onprogress, source.token).then(r => {
-      const { success, result } = r.data;
-      if (success) {
-        Message.success(t["message.ok"]);
-        onSuccess(result);
-      }
-    }).catch(() => {
-      Message.error(t["message.error"]);
-      onError(t["message.error"]);
-    });
+    // postFile(formData, onprogress, source.token).then(r => {
+    //   const { success, result } = r.data;
+    //   if (success) {
+    //     Message.success(t["message.ok"]);
+    //     onSuccess(result);
+    //   }
+    // }).catch(() => {
+    //   Message.error(t["message.error"]);
+    //   onError(t["message.error"]);
+    // });
     return {
       abort() {
         source.cancel("cancel");
@@ -191,7 +190,7 @@ function DynamicUpload(props) {
     <Trigger
       popup={() => {
         if (defaultList && defaultList.length > 0 && limit === 1) {
-          return <DownLoad src={defaultList} customDownload={customDownload || getFile} />;
+          return <DownLoad src={defaultList} customDownload={customDownload} />;
         }
         return <div></div>;
       }}
