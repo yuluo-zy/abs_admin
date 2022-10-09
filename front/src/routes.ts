@@ -23,28 +23,6 @@ export const routes: Route[] = [
             }
         ]
     },
-    {
-        name: "menu.account",
-        key: "account",
-        permission: "user:mgr",
-        children: [
-            {
-                name: "menu.account.manage",
-                key: "account/manage",
-                permission: "user:view"
-            },
-            {
-                name: "menu.account.role",
-                key: "account/role",
-                permission: "role:view"
-            },
-            {
-                name: "menu.account.permission",
-                key: "account/permission",
-                permission: "permission:view"
-            }
-        ]
-    }
 ];
 
 export const getName = (path: string, routes) => {
@@ -60,15 +38,16 @@ export const getName = (path: string, routes) => {
 
 
 export const useMenu = (userMenu: []): [Route[], string] => {
-    const filterUserMenu = (user_menu:Route[], routes: Route[], arr = []): Route[] => {
-        if (!routes.length) {
+    const filterUserMenu = ( routes: Route[], arr = []): Route[] => {
+        // todo this is a error about get user router
+        if (routes.length === 0 && arr.length === 0) {
             return [];
         }
 
         // collect permission
         const menu = [];
-        if (user_menu != null && user_menu.length > 0) {
-            user_menu.forEach(item => {
+        if (userMenu != null && userMenu.length > 0) {
+            userMenu.forEach(item => {
                 if (item["permission"]) {
                     menu.push(item["permission"]);
                 }
@@ -86,7 +65,7 @@ export const useMenu = (userMenu: []): [Route[], string] => {
             }
             if (route.children && route.children.length) {
                 const newRoute = {...route, children: []};
-                filterUserMenu(user_menu, route.children, newRoute.children);
+                filterUserMenu( route.children, newRoute.children);
                 if (newRoute.children.length) {
                     arr.push(newRoute);
                 }
@@ -98,10 +77,10 @@ export const useMenu = (userMenu: []): [Route[], string] => {
     };
 
     const [permissionMenu, setPermissionMenu] = useState(routes);
-
-    useEffect(() => {
+    useMemo(() => {
         const newRoutes = filterUserMenu(userMenu,routes);
-        setPermissionMenu(newRoutes);
+        console.log(newRoutes)
+        setPermissionMenu(value => newRoutes);
     }, [userMenu]);
 
     const defaultMenu = useMemo(() => {

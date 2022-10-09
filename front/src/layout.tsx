@@ -1,7 +1,6 @@
 import React, {useEffect, useMemo, useRef, useState} from "react";
 import {Link, Route, Switch, useHistory} from "react-router-dom";
 import {Breadcrumb, Layout, Menu} from "@arco-design/web-react";
-import cs from "classnames";
 import {
     IconArchive,
     IconDashboard,
@@ -21,7 +20,6 @@ import getUrlParams from "./utils/getUrlParams";
 import lazyload from "./utils/lazyload";
 import styles from "./style/layout.module.less";
 import {useMenu} from "@/routes";
-import {ManagePath} from "@/utils/routingTable";
 import {Redirect} from "react-router";
 
 const MenuItem = Menu.Item;
@@ -77,7 +75,7 @@ function getUrlParamsPrefix(url: string): string[] {
     }
     return res;
 }
-
+const userMenu = [];
 function PageLayout() {
     const urlParams = getUrlParams();
     const history = useHistory();
@@ -88,8 +86,7 @@ function PageLayout() {
     useEffect(() => {
         fetchUserInfo()
     }, []);
-
-    const [routes, defaultRoute] = useMenu([]);
+    const [routes, defaultRoute] = useMenu(userMenu as Route);
     const defaultSelectedKeys = [currentComponent || defaultRoute];
     const paths = (currentComponent || defaultRoute).split("/");
     const defaultOpenKeys = paths.slice(0, paths.length - 1);
@@ -122,7 +119,7 @@ function PageLayout() {
         NProgress.start();
         preload.then(() => {
             setSelectedKeys([key]);
-            history.push(currentRoute.path ? currentRoute.path : `${ManagePath}/${key}`);
+            history.push(currentRoute.path ? currentRoute.path : `/${key}`);
             NProgress.done();
         });
     }
@@ -163,7 +160,7 @@ function PageLayout() {
                     }
                     nodes.push(
                         <MenuItem key={route.key}>
-                            <Link to={`${ManagePath}/${route.key}`}>{titleDom}</Link>
+                            <Link to={`/${route.key}`}>{titleDom}</Link>
                         </MenuItem>
                     );
                 }
@@ -262,13 +259,13 @@ function PageLayout() {
                                     return (
                                         <Route
                                             key={index}
-                                            path={`${ManagePath}/${route.key}`}
+                                            path={`/${route.key}`}
                                             component={route.component}
                                         />
                                     );
                                 })}
-                                <Route exact path={ManagePath}>
-                                    <Redirect to={`${ManagePath}/${defaultRoute}`}/>
+                                <Route>
+                                    <Redirect to={`${defaultRoute}`}/>
                                 </Route>
                                 <Route
                                     path="*"
