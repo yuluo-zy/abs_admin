@@ -1,0 +1,437 @@
+.editor-shell {
+  margin: 10px auto;
+  padding: 10px;
+  padding-top: 5px;
+  border-radius: 2px;
+  max-width: 100%;
+  max-height: 700px;
+  overflow: auto;
+  position: relative;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+
+  p {
+    margin: 5px;
+  }
+}
+
+.editor-shell .editor-container {
+  background: var(--color-neutral-1);
+  position: relative;
+  cursor: text;
+  display: block;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.read-only {
+  background: var(--color-bg-2) !important;
+
+  > div {
+    resize: none !important;
+  }
+
+  max-height: 500px;
+
+  .ContentEditable__root {
+    min-height: 1rem;
+  }
+}
+
+.editor-shell .editor-container.tree-view {
+  border-radius: 0;
+}
+
+.editor-shell .editor-container.plain-text {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.ltr {
+  text-align: left;
+}
+
+.rtl {
+  text-align: right;
+}
+
+.toolbar {
+  display: flex;
+  margin-bottom: 1px;
+  background: var(--color-bg-3);
+  padding: 3px 3px 5px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  vertical-align: middle;
+  overflow: auto;
+  overflow-y: hidden;
+  height: 36px;
+  justify-content: center;
+}
+
+.toolbar button.toolbar-item {
+  border: 0;
+  display: flex;
+  background: none;
+  border-radius: 10px;
+  padding: 8px;
+  cursor: pointer;
+  vertical-align: middle;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.toolbar button.toolbar-item:disabled {
+  cursor: not-allowed;
+}
+
+.toolbar button.toolbar-item.spaced {
+  margin-right: 2px;
+}
+
+.toolbar button.toolbar-item i.format {
+  background-size: contain;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  vertical-align: -0.25em;
+  display: flex;
+  opacity: 0.6;
+}
+
+.toolbar button.toolbar-item:disabled i.format {
+  opacity: 0.2;
+}
+
+.toolbar button.toolbar-item.active {
+  background-color: rgba(223, 232, 250, 0.3);
+}
+
+.toolbar button.toolbar-item.active i {
+  opacity: 1;
+}
+
+.toolbar .toolbar-item:hover:not([disabled]) {
+  background-color: #eee;
+}
+
+.toolbar select.toolbar-item {
+  border: 0;
+  display: flex;
+  background: none;
+  border-radius: 10px;
+  padding: 8px;
+  padding-right: 24px;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 70px;
+  font-size: 14px;
+  color: #777;
+  text-overflow: ellipsis;
+}
+
+.toolbar select.code-language {
+  width: 150px;
+}
+
+.toolbar .toolbar-item .text {
+  display: flex;
+  line-height: 20px;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #777;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 20px;
+  text-align: left;
+  padding-right: 10px;
+}
+
+.toolbar .toolbar-item .icon {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  user-select: none;
+  margin-right: 8px;
+  line-height: 16px;
+  background-size: contain;
+}
+
+.toolbar i.chevron-down {
+  margin-top: 3px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  user-select: none;
+}
+
+.toolbar i.chevron-down.inside {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  margin-left: -25px;
+  margin-top: 11px;
+  margin-right: 10px;
+  pointer-events: none;
+}
+
+.toolbar .divider {
+  width: 1px;
+  background-color: var(--color-border-3);
+  margin: 0 4px;
+}
+
+.editor-shell span.editor-image {
+  cursor: default;
+  display: inline-block;
+  position: relative;
+  user-select: none;
+}
+
+.editor-shell .editor-image img {
+  max-width: 100%;
+}
+
+.editor-shell .editor-image img.focused {
+  outline: 2px solid rgb(var(--arcoblue-5));
+  user-select: none;
+}
+
+.editor-shell .editor-image .image-caption-container .tree-view-output {
+  margin: 0;
+  border-radius: 0;
+}
+
+.editor-shell .editor-image .image-caption-container {
+  display: block;
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  padding: 0;
+  margin: 0;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-bg-2);
+  min-width: 100px;
+  color: #000;
+  overflow: hidden;
+}
+
+.editor-shell .editor-image .image-caption-button {
+  display: block;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  width: 30%;
+  margin: 0 auto;
+  border-radius: 5px;
+  min-width: 100px;
+  cursor: pointer;
+  user-select: none;
+}
+
+
+.editor-shell .editor-image .image-resizer {
+  display: block;
+  width: 7px;
+  height: 7px;
+  position: absolute;
+  background-color: rgb(var(--arcoblue-3));
+  border: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.editor-shell .editor-image .image-resizer.image-resizer-n {
+  top: -6px;
+  left: 48%;
+  cursor: n-resize;
+}
+
+.editor-shell .editor-image .image-resizer.image-resizer-ne {
+  top: -6px;
+  right: -6px;
+  cursor: ne-resize;
+}
+
+.editor-shell .editor-image .image-resizer.image-resizer-e {
+  bottom: 48%;
+  right: -6px;
+  cursor: e-resize;
+}
+
+.editor-shell .editor-image .image-resizer.image-resizer-se {
+  bottom: -2px;
+  right: -6px;
+  cursor: nwse-resize;
+}
+
+.editor-shell .editor-image .image-resizer.image-resizer-s {
+  bottom: -2px;
+  left: 48%;
+  cursor: s-resize;
+}
+
+.editor-shell .editor-image .image-resizer.image-resizer-sw {
+  bottom: -2px;
+  left: -6px;
+  cursor: sw-resize;
+}
+
+.editor-shell .editor-image .image-resizer.image-resizer-w {
+  bottom: 48%;
+  left: -6px;
+  cursor: w-resize;
+}
+
+.editor-shell .editor-image .image-resizer.image-resizer-nw {
+  top: -6px;
+  left: -6px;
+  cursor: nw-resize;
+}
+
+.table-cell-action-button-container {
+  position: absolute;
+}
+
+.table-cell-action-button {
+  //background-color: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  position: relative;
+  border-radius: 15px;
+  color: #222;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.dropdown {
+  z-index: 30;
+  display: block;
+  position: absolute;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  min-width: 100px;
+  min-height: 30px;
+  background-color: var(--color-bg-2);
+}
+
+.dropdown .item {
+  margin: 0 8px 0 8px;
+  padding: 8px;
+  color: var(--color-neutral-10);
+  cursor: pointer;
+  line-height: 16px;
+  font-size: 15px;
+  display: flex;
+  align-content: center;
+  flex-direction: row;
+  flex-shrink: 0;
+  justify-content: space-between;
+  background-color: var(--color-bg-2);
+  border-radius: 8px;
+  border: 0;
+  max-width: 250px;
+}
+
+.dropdown .item .active {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+}
+
+.dropdown .item:first-child {
+  margin-top: 8px;
+}
+
+.dropdown .item:last-child {
+  margin-bottom: 8px;
+}
+
+.dropdown .item:hover {
+  background-color: var(--color-neutral-3);
+}
+
+.dropdown .item .text {
+  display: flex;
+  line-height: 20px;
+  flex-grow: 1;
+  min-width: 150px;
+}
+
+.dropdown .item .icon {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  user-select: none;
+  margin-right: 12px;
+  line-height: 16px;
+  background-size: contain;
+}
+
+.dropdown .divider {
+  width: auto;
+  background-color: var(--color-neutral-6);
+  margin: 4px 8px;
+  height: 1px;
+}
+
+@media screen and (max-width: 1000px) {
+  .dropdown-button-text {
+    display: none !important;
+  }
+}
+
+
+.keyword {
+  color: rgb(var(--red-3));
+  font-weight: bold;
+}
+
+.actions {
+  position: relative;
+  text-align: right;
+  padding: 2px 5px;
+}
+
+.action-button {
+  border: 0;
+  padding: 0px 12px;
+  position: relative;
+  margin-left: 5px;
+  border-radius: 7px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.editor-file {
+  margin: 0 5px 0;
+  display: inline-block;
+}
+
+.mention {
+  margin: 1px 5px 1px;
+  background: rgb(var(--arcoblue-1));
+  color: rgb(var(--arcoblue-6));
+  display: inline-flex;
+  height: 24px;
+  line-height: 22px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-small);
+  box-sizing: border-box;
+  font-weight: 500;
+  vertical-align: middle;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mention:before {
+  content: " @ ";
+  display: inline-block;
+  margin-inline: 2px;
+}

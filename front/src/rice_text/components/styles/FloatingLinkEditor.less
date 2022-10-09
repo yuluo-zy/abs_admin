@@ -1,0 +1,52 @@
+.link-editor {
+  background: var(--color-bg-2);
+  position: absolute;
+  z-index: 10;
+  padding: 2px;
+  top: -10000px;
+  left: -10000px;
+  margin-top: -6px;
+  max-width: 400px;
+  width: 100%;
+  opacity: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition: opacity 0.5s;
+}
+
+.link-editor .link-input {
+  display: block;
+  width: calc(100% - 14px);
+  box-sizing: border-box;
+  margin: 4px 8px;
+  padding: 4px 10px;
+  border-radius: 15px;
+  background-color: var(--color-neutral-2);
+  color: var(--color-neutral-8);
+  border: 0;
+  outline: 0;
+  position: relative;
+}
+
+.link-editor div.link-edit {
+  width: 35px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  cursor: pointer;
+
+  svg {
+    vertical-align: -7px;
+  }
+}
+
+.link-editor .link-input p {
+  color: rgb(var(--arcoblue-6));
+  text-decoration: none;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0 30px 0 0;
+  text-overflow: ellipsis;
+}
