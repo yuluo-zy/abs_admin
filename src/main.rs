@@ -125,7 +125,16 @@ async fn main() -> std::io::Result<()> {
             .route(
                 "admin/file/info",
                 web::post().to(sys_file_controller::get_file),
-            ).route(
+            )
+            .route(
+                "admin/info/page",
+                web::post().to(sys_file_controller::page),
+            )
+            .route(
+                "admin/info/add",
+                web::post().to(sys_file_controller::add),
+            )
+            .route(
             "admin/file/down",
             web::post().to(sys_file_controller::down_load_file),
         )

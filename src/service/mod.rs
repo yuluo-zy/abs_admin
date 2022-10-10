@@ -69,7 +69,8 @@ pub struct ServiceContext {
     pub sys_dict_service: SysDictService,
     pub sys_auth_service: SysAuthService,
     pub sys_trash_service: SysTrashService,
-    pub sys_file_service: SysFileService
+    pub sys_file_service: SysFileService,
+    pub sys_file_info: SysInfoService,
 }
 
 impl ServiceContext {
@@ -111,6 +112,7 @@ impl Default for ServiceContext {
             sys_file_service: SysFileService {
                 file_path: config.file_path.clone()
             },
+            sys_file_info: SysInfoService {},
             config,
         }
     }

@@ -10,7 +10,9 @@ use log::{Level, log};
 use rbatis::object_id::ObjectId;
 use rbatis::rbdc::datetime::FastDateTime;
 use rbatis::rbdc::uuid::Uuid;
-use crate::domain::table::StorageFile;
+use rbatis::sql::{Page, PageRequest};
+use crate::domain::dto::{FileAddDTO, FilePageDTO};
+use crate::domain::table::{StorageFile, StorageInfo};
 use crate::error::{Error, Result};
 use crate::pool;
 
@@ -79,9 +81,8 @@ impl SysFileService {
             }
             Some(value) => {
                 let response = NamedFile::open(value.file_path.unwrap())?
-                    .set_content_disposition(ContentDisposition{
+                    .set_content_disposition(ContentDisposition {
                         disposition: DispositionType::Inline,
-
                         parameters: vec![
                             FilenameExt(ExtendedValue {
                                 charset: Charset::Ext(String::from("UTF-8")),
@@ -89,10 +90,10 @@ impl SysFileService {
                                 value: value.old_name.clone().unwrap().into_bytes(),
                             }),
                             // FilenameExt(String::from(value.old_name.clone().unwrap()))
-                        ]
+                        ],
                     })
                     .set_content_type(
-                     file_extension_to_mime(value.old_name.unwrap().as_str())
+                        file_extension_to_mime(value.old_name.unwrap().as_str())
                     )
                     .prefer_utf8(true)
                     .into_response(&request);
@@ -102,4 +103,24 @@ impl SysFileService {
     }
 
     pub async fn update_invalid() {}
+}
+
+pub struct SysInfoService {}
+
+impl SysInfoService {
+
+    pub async fn add_info(&self, mut arg: FileAddDTO) -> Result<u64>{
+        Ok(
+            StorageInfo::insert(pool!(), &StorageInfo::from(arg)).await?.rows_affected
+        )
+    }
+
+    pub async fn page_info(&self, arg: &FilePageDTO) -> Result<Page<StorageInfo>> {
+        let sys_info_page: Page<StorageInfo> = StorageInfo::select_page(
+            pool!(),
+            &PageRequest::from(arg),
+        )
+            .await?;
+        return Ok(sys_info_page);
+    }
 }
