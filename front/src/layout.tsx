@@ -21,6 +21,7 @@ import lazyload from "./utils/lazyload";
 import styles from "./style/layout.module.less";
 import {useMenu} from "@/routes";
 import {Redirect} from "react-router";
+import {ManagePath} from "@/utils/routingTable";
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
@@ -52,7 +53,7 @@ function getFlattenRoutes(routes) {
     function travel(_routes) {
         _routes.forEach((route) => {
             if (route.key && !route.children) {
-                console.log(route.key)
+
                 route.component = lazyload(mod[`./pages/${route.key}/index.tsx`]);
                 res.push(route);
             } else if (isArray(route.children) && route.children.length) {
@@ -120,7 +121,7 @@ function PageLayout() {
         NProgress.start();
         preload.then(() => {
             setSelectedKeys([key]);
-            history.push(currentRoute.path ? currentRoute.path : `/${key}`);
+            history.push(currentRoute.path ? currentRoute.path : `${ManagePath}/${key}`);
             NProgress.done();
         });
     }
@@ -152,7 +153,7 @@ function PageLayout() {
                         (isArray(route.children) && !route.children.length))
                 ) {
                     routeMap.current.set(
-                        `/${route.key}`,
+                        `${ManagePath}/${route.key}`,
                         breadcrumb ? [...parentNode, route.name] : []
                     );
 
@@ -161,7 +162,7 @@ function PageLayout() {
                     }
                     nodes.push(
                         <MenuItem key={route.key}>
-                            <Link to={`/${route.key}`}>{titleDom}</Link>
+                            <Link to={`${ManagePath}/${route.key}`}>{titleDom}</Link>
                         </MenuItem>
                     );
                 }
@@ -260,13 +261,13 @@ function PageLayout() {
                                     return (
                                         <Route
                                             key={index}
-                                            path={`/${route.key}`}
+                                            path={`${ManagePath}/${route.key}`}
                                             component={route.component}
                                         />
                                     );
                                 })}
                                 <Route>
-                                    <Redirect to={`${defaultRoute}`}/>
+                                    <Redirect to={`${ManagePath}/${defaultRoute}`}/>
                                 </Route>
                                 <Route
                                     path="*"

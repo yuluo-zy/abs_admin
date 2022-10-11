@@ -1,22 +1,15 @@
-import React, { useContext } from "react";
-import { Avatar, Divider, Dropdown, Menu, Message, Notification, Select, Tooltip } from "@arco-design/web-react";
-import {
-  IconLanguage,
-  IconMoonFill,
-  IconPoweroff,
-  IconSettings,
-  IconSunFill,
-} from "@arco-design/web-react/icon";
-import { GlobalContext } from "@/context";
+import React, {useContext} from "react";
+import {Divider, Menu, Message, Notification, Tooltip} from "@arco-design/web-react";
+import {IconMoonFill, IconPoweroff, IconSettings, IconSunFill,} from "@arco-design/web-react/icon";
+import {GlobalContext} from "@/context";
 import useLocale from "@/utils/useHook/useLocale";
 import Logo from "@/assets/logo.svg";
 import IconButton from "./IconButton";
 import styles from "./style/index.module.less";
-import defaultLocale from "@/locale";
-import { useSessionStorage } from "@/utils/useHook/useStorage";
-import { loginOut } from "@/api/login";
-import { useHistory } from "react-router";
-import { LoginPath } from "@/utils/routingTable";
+import {useSessionStorage} from "@/utils/useHook/useStorage";
+import {loginOut} from "@/api/login";
+import {useHistory} from "react-router";
+import {LoginPath} from "@/utils/routingTable";
 import {code_success} from "@/utils/httpRequest";
 
 function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boolean, title?: string }) {

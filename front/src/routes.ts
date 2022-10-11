@@ -10,7 +10,7 @@ export type Route = AuthParams & {
     children?: Route[];
 };
 
-export const defaultRoute = "user/setting";
+export const defaultRoute = "/manage/user/setting";
 
 export const routes: Route[] = [
     {
