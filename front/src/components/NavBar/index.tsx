@@ -93,27 +93,27 @@ function Navbar({ show, isLogIn = true, title }: { show?: boolean, isLogIn?: boo
           {/*    placeholder={t["navbar.search.placeholder"]}*/}
           {/*  />*/}
           {/*</li>*/}
-          <li>
-            <Select
-              triggerElement={<IconButton icon={<IconLanguage />} />}
-              options={[
-                { label: "中文", value: "zh-CN" },
-                { label: "English", value: "en-US" }
-              ]}
-              value={lang}
-              triggerProps={{
-                autoAlignPopupWidth: false,
-                autoAlignPopupMinWidth: true,
-                position: "br"
-              }}
-              trigger="hover"
-              onChange={(value) => {
-                setLang(value);
-                const nextLang = defaultLocale[value];
-                Message.info(`${nextLang["message.lang.tips"]}${value}`);
-              }}
-            />
-          </li>
+          {/*<li>*/}
+          {/*  <Select*/}
+          {/*    triggerElement={<IconButton icon={<IconLanguage />} />}*/}
+          {/*    options={[*/}
+          {/*      { label: "中文", value: "zh-CN" },*/}
+          {/*      { label: "English", value: "en-US" }*/}
+          {/*    ]}*/}
+          {/*    value={lang}*/}
+          {/*    triggerProps={{*/}
+          {/*      autoAlignPopupWidth: false,*/}
+          {/*      autoAlignPopupMinWidth: true,*/}
+          {/*      position: "br"*/}
+          {/*    }}*/}
+          {/*    trigger="hover"*/}
+          {/*    onChange={(value) => {*/}
+          {/*      setLang(value);*/}
+          {/*      const nextLang = defaultLocale[value];*/}
+          {/*      Message.info(`${nextLang["message.lang.tips"]}${value}`);*/}
+          {/*    }}*/}
+          {/*  />*/}
+          {/*</li>*/}
           <li>
             <Tooltip
               content={

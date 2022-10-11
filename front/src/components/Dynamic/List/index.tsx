@@ -75,17 +75,17 @@ const SearchList = React.forwardRef((props: ListProps, ref) => {
     const { current, pageSize } = pagination;
     setLoading(true);
     fetchRemoteData({
-      pageNo: current,
-      pageSize,
+      page_no: current,
+      page_size: pageSize,
       ...formParams
     }).then((res) => {
-      setData(res.data.result.data || res.data.result);
-      if (res.data.result.totalCount) {
+      setData(res.data.data?.records);
+      if (res.data.data?.total) {
         setPatination({
           ...pagination,
           current,
           pageSize,
-          total: res.data.result.totalCount
+          total: res.data.data?.total
         });
       }
 

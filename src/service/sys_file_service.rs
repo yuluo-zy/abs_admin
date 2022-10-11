@@ -84,12 +84,12 @@ impl SysFileService {
                     .set_content_disposition(ContentDisposition {
                         disposition: DispositionType::Inline,
                         parameters: vec![
-                            FilenameExt(ExtendedValue {
-                                charset: Charset::Ext(String::from("UTF-8")),
-                                language_tag: None,
-                                value: value.old_name.clone().unwrap().into_bytes(),
-                            }),
-                            // FilenameExt(String::from(value.old_name.clone().unwrap()))
+                            // FilenameExt(ExtendedValue {
+                            //     charset: Charset::Ext(String::from("UTF-8")),
+                            //     language_tag: None,
+                            //     value: value.old_name.clone().unwrap().into_bytes(),
+                            // }),
+                            Filename(value.old_name.clone().unwrap())
                         ],
                     })
                     .set_content_type(
@@ -108,11 +108,19 @@ impl SysFileService {
 pub struct SysInfoService {}
 
 impl SysInfoService {
-
-    pub async fn add_info(&self, mut arg: FileAddDTO) -> Result<u64>{
-        Ok(
-            StorageInfo::insert(pool!(), &StorageInfo::from(arg)).await?.rows_affected
-        )
+    pub async fn add_info(&self, mut arg: FileAddDTO) -> Result<u64> {
+        match arg.id {
+            None => {
+                Ok(
+                    StorageInfo::insert(pool!(), &StorageInfo::from(arg)).await?.rows_affected
+                )
+            }
+            Some(_) => {
+                Ok(
+                    StorageInfo::update_by_column(pool!(), &StorageInfo::from(arg), "id").await?.rows_affected
+                )
+            }
+        }
     }
 
     pub async fn page_info(&self, arg: &FilePageDTO) -> Result<Page<StorageInfo>> {

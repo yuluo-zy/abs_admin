@@ -97,6 +97,6 @@ pub struct StorageInfo {
     pub file_id: Option<String>,
     pub user_name: Option<String>,
     pub user_email: Option<String>,
-    pub user_send: bool,
+    pub user_send: Option<i32>,
     pub create_date: Option<FastDateTime>
 }

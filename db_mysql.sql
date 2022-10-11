@@ -16,7 +16,7 @@ CREATE TABLE `storage_file` (
                             `old_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
                             `file_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
                             `file_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-                            `del` int(1) NOT NULL DEFAULT '1',
+                            `del` int(1) NOT NULL DEFAULT 0,
                             `create_date` datetime DEFAULT NULL COMMENT '创建时间',
                             PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='文件存储';
@@ -29,8 +29,7 @@ CREATE TABLE `storage_info` (
                                 `file_id` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文件键',
                                 `user_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
                                 `user_email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-                                `user_send` BOOLEAN NOT NULL DEFAULT FALSE,
-                                `del` int(1) NOT NULL DEFAULT '1',
+                                `user_send` int(1) NOT NULL DEFAULT '0' COMMENT '该字段是否有效，默认1有效0无效',
                                 `create_date` datetime DEFAULT NULL COMMENT '创建时间',
                                 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='实验存储';

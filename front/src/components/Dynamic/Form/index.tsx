@@ -180,7 +180,7 @@ function DynamicForm(props: FormProps) {
               form.setFieldValue(item.field, res);
             } else {
               if (fileList.length > 0) {
-                form.setFieldValue(item.field, file.response);
+                form.setFieldValue(item.field, file.response?.toString());
               } else {
                 form.setFieldValue(item.field, undefined);
               }

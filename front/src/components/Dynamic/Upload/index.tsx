@@ -5,18 +5,22 @@ import locale from "./locale";
 import axios from "axios";
 import { UploadItem } from "@arco-design/web-react/es/Upload";
 import { IconDownload } from "@arco-design/web-react/icon";
+import {download, getFileInfo, postFile} from "@/api/file";
+import {code_success} from "@/utils/httpRequest";
 
 function DownLoad({ src, customDownload }) {
   const downFile = (event) => {
     event.stopPropagation();
     if (src) {
-      customDownload(src[0]?.response || src[0]?.uid).then(res => {
+      customDownload({id: src[0]?.response || src[0]?.uid}).then(res => {
         if (res.status === 200) {
           const url = URL.createObjectURL(new Blob([res.data]));
           const link = document.createElement("a");
           link.href = url;
-          let name = res.headers["content-disposition"]?.match(/fileName=(.*)/)[1]; // 获取filename的值
+          console.log( res.headers)
+          let name = res.headers["content-disposition"]?.match(/filename="(.*)"/)[1]; // 获取filename的值
           name = decodeURIComponent(name);
+          console.log(name)
           link.setAttribute("download", name);
           document.body.appendChild(link);
           link.click();
@@ -74,72 +78,16 @@ function DynamicUpload(props) {
   const [defaultList, setDefaultList] = useState([]);
   const file_type = fileType || FileType;
   const initDate = initDateFc || ((value, setList) => {
-    if (listType === "picture-card") {
-      if (value) {
-        const initImg = customInitImg;
-        if (limit > 1) {
-          // const index = value.split(",")
-          for (const i of value) {
-            initImg(i?.id).then(res => {
-              if (res.status === 200) {
-                setList(value => {
-                  return [
-                    {
-                      uid: i?.id,
-                        originFile: res.data
-                      }, ...value
-                    ];
-                  });
-                }
-              }
-            );
-          }
-        } else {
-          initImg(value).then(res => {
-              if (res.status === 200) {
-                setList([{
-                  uid: value,
-                  originFile: res.data
-                }]);
-              }
-            }
-          );
-        }
-
-        return;
-      }
-    }
-    if (value) {
-      const initFile = customInitFile;
-      if (limit > 1) {
-        // const index = value.split(",")
-        for (const i of value) {
-          initFile(i).then(res => {
-            if (res.data.success) {
-              const data = res.data.result;
-              setList(value => {
-                return [
-                  {
-                      uid: data?.id,
-                      name: data?.fileName
-                    }, ...value
-                  ];
-                });
-              }
-            }
-          );
-        }
-      } else {
-        initFile(value).then(res => {
-          if (res.data.success) {
-            const data = res.data.result;
+    if (value)  {
+      getFileInfo({id: value}).then(res => {
+          if (res.data.code === code_success) {
+            const data = res.data.data;
             setList([{
               uid: data?.id,
-              name: data?.fileName
+              name: data?.old_name
             }]);
           }
         });
-      }
     }
   });
 
@@ -156,16 +104,16 @@ function DynamicUpload(props) {
       const complete = progressEvent.loaded / progressEvent.total * 100 | 0;
       onProgress(parseInt(String(complete), 10), progressEvent);
     };
-    // postFile(formData, onprogress, source.token).then(r => {
-    //   const { success, result } = r.data;
-    //   if (success) {
-    //     Message.success(t["message.ok"]);
-    //     onSuccess(result);
-    //   }
-    // }).catch(() => {
-    //   Message.error(t["message.error"]);
-    //   onError(t["message.error"]);
-    // });
+    postFile(formData, onprogress, source.token).then(r => {
+      const { code, data } = r.data;
+      if (code === code_success) {
+        Message.success("文件上传成功");
+        onSuccess(data);
+      }
+    }).catch(() => {
+      Message.error("文件上传失败");
+      onError("message.error");
+    });
     return {
       abort() {
         source.cancel("cancel");
@@ -190,7 +138,7 @@ function DynamicUpload(props) {
     <Trigger
       popup={() => {
         if (defaultList && defaultList.length > 0 && limit === 1) {
-          return <DownLoad src={defaultList} customDownload={customDownload} />;
+          return <DownLoad src={defaultList} customDownload={download} />;
         }
         return <div></div>;
       }}

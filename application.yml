@@ -43,6 +43,6 @@ white_list_api:
  - "/"
  - "/admin/sys_login"
  - "/admin/captcha"
-file_path: "/var/tmp"
+file_path: "D:/"
 
 

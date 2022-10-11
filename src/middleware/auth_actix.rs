@@ -62,8 +62,8 @@ impl<S> Service<ServiceRequest> for AuthMiddleware<S>
 
         let token = req
             .headers()
-            .get("Authorization")
-            .map(|v| v.to_str().unwrap_or_default().to_string().replace("Bearer ", ""))
+            .get("Access-Token")
+            .map(|v| v.to_str().unwrap_or_default().to_string())
             .unwrap_or_default();
         let path = req.path().to_string();
 

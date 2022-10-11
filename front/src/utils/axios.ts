@@ -29,7 +29,7 @@ axios.defaults.transformRequest = [function(data, config) {
 }];
 
 axios.interceptors.response.use(res => {
-  if (res.status && res.status == 200 && res.data.success === false) {
+  if (res.status && res.status == 200 && res.data.code === "FAIL") {
     Notification.error({ title: "Error", content: res.data.message });
     return;
   }

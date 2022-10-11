@@ -8,19 +8,25 @@ use crate::util::password_encoder::PasswordEncoder;
 /// 实验文件添加
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct FileAddDTO {
+    pub id: Option<String>,
     pub file_id: Option<String>,
     pub user_name: Option<String>,
     pub user_email: Option<String>,
 }
 
-impl From<FileAddDTO> for StorageInfo{
+impl From<FileAddDTO> for StorageInfo {
     fn from(arg: FileAddDTO) -> Self {
         StorageInfo {
-            id: ObjectId::new().to_string().into(),
+            id: match arg.id {
+                Some(value) => {
+                    Some(value)
+                }
+                None => { ObjectId::new().to_string().into() }
+            },
             file_id: arg.file_id,
             user_name: arg.user_name,
             user_email: arg.user_email,
-            user_send: false,
+            user_send: Some(0),
             create_date: FastDateTime::now().set_micro(0).into(),
         }
     }
@@ -35,14 +41,14 @@ pub struct FileEditDTO {
     pub user_email: Option<String>,
 }
 
-impl From<FileEditDTO> for StorageInfo{
+impl From<FileEditDTO> for StorageInfo {
     fn from(arg: FileEditDTO) -> Self {
         StorageInfo {
             id: arg.id,
             file_id: arg.file_id,
             user_name: arg.user_name,
             user_email: arg.user_email,
-            user_send: false,
+            user_send: Some(0),
             create_date: FastDateTime::now().set_micro(0).into(),
         }
     }
@@ -53,8 +59,6 @@ impl From<FileEditDTO> for StorageInfo{
 pub struct FilePageDTO {
     pub page_no: Option<u64>,
     pub page_size: Option<u64>,
-    pub account: Option<String>,
-    pub name: Option<String>,
 }
 
 impl From<&FilePageDTO> for PageRequest {
