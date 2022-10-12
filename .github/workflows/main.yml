@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v2
     # 步骤名称
     - name: cargo build
-      run: cargo build --color=always --message-format=json-diagnostic-rendered-ansi --package abs_admin --release
+      run: cargo build --color=always --package abs_admin --release
     - name: front build
       run: cd ./front
     - name: npm install
