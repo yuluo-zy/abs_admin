@@ -17,12 +17,12 @@ jobs:
     # 步骤名称
     - name: cargo build
       run: cargo build --color=always --package abs_admin --release
-    - name: front build
-      run: cd ./front
     - name: npm install
       # 步骤执行指令
+      working-directory: ./front
       run: npm install
     - name: npm run build
+      working-directory: ./front
       run: npm run build
     # 命名这个任务为发布Deploy
     - name: Deploy
