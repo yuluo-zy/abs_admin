@@ -18,7 +18,7 @@ jobs:
     - name: cargo build
       run: cargo build --color=always --message-format=json-diagnostic-rendered-ansi --package abs_admin --release
     - name: front build
-      run: cd front
+      run: cd ./front
     - name: npm install
       # 步骤执行指令
       run: npm install
