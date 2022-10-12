@@ -38,7 +38,7 @@ jobs:
         connect_timeout: 10s
         scp: | 
           './front/dist/*' => /www/wwwroot/abs_admin
-          './target/release/*' => /home/ubuntu/work_code/
+          './target/release/abs*' => /home/ubuntu/work_code/
         last_ssh: |
             sudo /etc/init.d/nginx stop
             sudo /etc/init.d/nginx start
