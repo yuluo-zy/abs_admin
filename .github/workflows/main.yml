@@ -36,16 +36,10 @@ jobs:
         user: ${{ secrets.USER_NAME }}
         pass: ${{ secrets.USER_PASS }}
         connect_timeout: 10s
-        local: './dist/*'
-        remote: /www/wwwroot/abs_admin
-    - name: nginx restart
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.USER_HOST }}
-        username: ${{ secrets.USER_NAME }}
-        password: ${{ secrets.USER_PASS }}
-        script: |
-           sudo /etc/init.d/nginx stop
-           sudo /etc/init.d/nginx start
-
+        scp: | 
+          './front/dist/*' => /www/wwwroot/abs_admin
+          './target/release/*' => /home/ubuntu/work_code/
+        last_ssh: |
+            sudo /etc/init.d/nginx stop
+            sudo /etc/init.d/nginx start
       
