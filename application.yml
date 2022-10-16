@@ -44,6 +44,6 @@ white_list_api:
  - "/admin/sys_login"
  - "/admin/captcha"
  - "/admin/file/down"
-file_path: "D:/"
+file_path: "./file"
 
 
