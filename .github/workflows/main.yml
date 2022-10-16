@@ -42,4 +42,7 @@ jobs:
         last_ssh: |
             sudo /etc/init.d/nginx stop
             sudo /etc/init.d/nginx start
+            cd /home/ubuntu/work_code
+            kill -9 `cat ./pidfile.txt`
+            nohup ./abs_admin & > logfile.txt & echo $! > pidfile.txt
       
