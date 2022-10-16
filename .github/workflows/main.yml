@@ -39,10 +39,18 @@ jobs:
         scp: | 
           './front/dist/*' => /www/wwwroot/abs_admin
           './target/release/abs*' => /home/ubuntu/work_code/
-        last_ssh: |
+    - name: run
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.USER_HOST }}
+        username: ${{ secrets.USER_NAME }}
+        password: ${{ secrets.USER_PASS }}
+        script: |
             sudo /etc/init.d/nginx stop
             sudo /etc/init.d/nginx start
             cd /home/ubuntu/work_code
             kill -9 `cat ./pidfile.txt`
             nohup ./abs_admin & > logfile.txt & echo $! > pidfile.txt
+        
+      
       
